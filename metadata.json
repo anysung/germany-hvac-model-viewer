@@ -1,0 +1,5 @@
+{
+  "name": "German Heat Pump Finder",
+  "description": "A specialized tool to find and compare heat pump specifications for the German market, filtered by manufacturer and capacity.",
+  "requestFramePermissions": []
+}

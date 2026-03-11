@@ -1,0 +1,134 @@
+{
+  "generatedAt": "2025-11-23T18:42:44.649Z",
+  "version": "1.0",
+  "products": [
+    {
+      "manufacturer": "Buderus",
+      "unitType": "ODU",
+      "model": "Logatherm WLW196i-5 AR S",
+      "capacityRange": "4.8 kW",
+      "dimensions": "815 x 1100 x 500 mm",
+      "refrigerant": "R290 (Propane)",
+      "cop": "5.1 (A7/W35)",
+      "scop": "4.90 (W35)",
+      "noiseLevel": "49 dB(A)",
+      "description": "A compact, highly efficient air-to-water heat pump outdoor unit designed for quiet operation and using natural refrigerant R290.",
+      "others": "Weight: 130 kg; Max flow temperature: 75°C; Electrical connection: 230V, 1-phase.",
+      "marketPrice": "€9,800 - €11,800"
+    }
+  ],
+  "newsFeed": [
+    {
+      "id": "news-001",
+      "title": "German Heat Pump Sales Update Q1 2025",
+      "summary": "The latest market data shows a continued shift towards propane (R290) heat pumps in residential buildings as GEG regulations take full effect. Sales have stabilized after a volatile 2024.",
+      "sourceUrl": "https://www.waermepumpe.de/",
+      "date": "2025-03-01T10:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1599690925058-90e1a0b327b8?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-002",
+      "title": "BAFA Subsidy Application Process Simplified",
+      "summary": "The Federal Office for Economic Affairs and Export Control (BAFA) has announced streamlined procedures for BEG funding applications starting this month, reducing wait times for approval.",
+      "sourceUrl": "https://www.bafa.de/",
+      "date": "2025-02-20T14:30:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-003",
+      "title": "High Temperature Heat Pumps Gaining Traction",
+      "summary": "New models capable of 75°C flow temperatures are making heat pump retrofits viable for older unrenovated buildings without underfloor heating, driving adoption in the renovation sector.",
+      "sourceUrl": "https://www.heizungsfinder.de/",
+      "date": "2025-02-15T09:15:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1504384308090-c54be3855091?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-004",
+      "title": "Viessmann Expands R290 Production in Germany",
+      "summary": "Leading manufacturer Viessmann announces a significant investment in its German production facilities to meet the soaring demand for natural refrigerant heat pumps.",
+      "sourceUrl": "https://www.viessmann.de/de/presse",
+      "date": "2025-02-28T11:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1664574654529-b60630f33fdb?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-005",
+      "title": "Installer Shortage Remains a Bottleneck for Heat Pump Rollout",
+      "summary": "The German Sanitation, Heating and Air Conditioning Association (ZVSHK) warns that a lack of skilled installers is the primary obstacle to achieving national heating transition goals.",
+      "sourceUrl": "https://www.zvshk.de/presse",
+      "date": "2025-02-25T09:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1558611848-73f7eb4001a1?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-006",
+      "title": "R290 vs. R32: A Technical Deep Dive for Installers",
+      "summary": "A new technical guide from the Fraunhofer Institute for Solar Energy Systems ISE analyzes the pros and cons of R290 (propane) and R32 refrigerants in residential applications.",
+      "sourceUrl": "https://www.ise.fraunhofer.de/en/press-media",
+      "date": "2025-02-22T15:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1617953141905-4528e392d9a5?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-007",
+      "title": "BWP Demands Stable Policy Framework to Secure Investments",
+      "summary": "The German Heat Pump Association (BWP) has called on the government to provide long-term stability in funding and regulation to encourage further investment in manufacturing and training.",
+      "sourceUrl": "https://www.waermepumpe.de/presse/",
+      "date": "2025-02-18T13:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-008",
+      "title": "Major Distributors Report Shifting Stock Priorities",
+      "summary": "Wholesale distributors like GC-Gruppe are adjusting their inventory to prioritize monobloc and high-temperature heat pumps, reflecting changing installer and consumer demand.",
+      "sourceUrl": "https://www.gc-gruppe.de/aktuelles",
+      "date": "2025-02-12T10:30:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1586528116311-0692421b3547?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-009",
+      "title": "Berlin Apartment Block Successfully Retrofitted with Heat Pumps",
+      "summary": "A flagship renovation project in Berlin demonstrates the successful implementation of a cascaded air-source heat pump system in a multi-family building from the 1960s.",
+      "sourceUrl": "https://www.energie-experten.org/",
+      "date": "2025-02-10T16:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1516999654410-4924a359d9a3?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-010",
+      "title": "Smart Grid Integration: Heat Pumps as Virtual Batteries",
+      "summary": "A pilot project in Bavaria is testing how a network of smart, grid-connected heat pumps can help stabilize the electrical grid by adjusting consumption based on renewable energy availability.",
+      "sourceUrl": "https://www.bayernwerk.de/de/presse.html",
+      "date": "2025-02-05T12:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1624397640148-94b817113175?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-011",
+      "title": "Geothermal Drilling Costs and Availability in 2025",
+      "summary": "While air-source heat pumps dominate the market, a new analysis explores the current costs, geological suitability, and specialized labor market for geothermal probes in Germany.",
+      "sourceUrl": "https://www.geothermie.de/aktuelles.html",
+      "date": "2025-01-29T14:00:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1585641150484-aade4296b349?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+      "id": "news-012",
+      "title": "Market Forecast: 500,000 Heat Pumps Annually by 2026?",
+      "summary": "A market study by Agora Energiewende predicts that Germany is on track to meet its ambitious targets for heat pump installations, provided the political and economic conditions remain favorable.",
+      "sourceUrl": "https://www.agora-energiewende.de/",
+      "date": "2025-01-25T11:30:00Z",
+      "imageUrl": "https://images.unsplash.com/photo-1630650639554-4638e5358924?auto=format&fit=crop&q=80&w=600"
+    }
+  ],
+  "policySummary": [
+    {
+      "id": "pol-geg-2025",
+      "title": "GEG 2025 Overview",
+      "category": "Regulation",
+      "summary": "The Building Energy Act (GEG) requires every newly installed heating system to run on at least 65% renewable energy. Heat pumps are the standard solution to meet this requirement.",
+      "sourceUrl": "https://www.bmwk.de/"
+    }
+  ],
+  "bafaListLinks": [
+    {
+      "id": "bafa-list",
+      "title": "BAFA Eligible Equipment List (Official PDF)",
+      "downloadUrl": "https://www.bafa.de/SharedDocs/Downloads/DE/Energie/beg_waermepumpen_anlagenliste.html?utm"
+    }
+  ]
+}

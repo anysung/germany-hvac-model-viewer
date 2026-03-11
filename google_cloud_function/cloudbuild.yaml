@@ -1,0 +1,27 @@
+# cloudbuild.yaml (빌드 과정을 명시적으로 지정)
+steps:
+# 1. Install dependencies (Node.js 환경에서 npm install 실행)
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+  dir: '.' # 프로젝트 루트에서 실행
+
+# 2. Build the application (Vite build 실행)
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+  dir: '.'
+
+# 3. Deploy the built application to Cloud Run
+# 'gcloud run deploy' 명령어 대신, Cloud Build에 내장된 배포 단계를 사용합니다.
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - run
+    - deploy
+    - german-heat-pump-finder  # 서비스 이름
+    - --region=us-west1
+    - --image=gcr.io/$PROJECT_ID/cloud-run-source-deploy/german-heat-pump-finder:$COMMIT_SHA
+    - --source=.
+    - --allow-unauthenticated
+  env:
+    - 'GOOGLE_CLOUD_PROJECT=$PROJECT_ID'
+
+timeout: 1600s
