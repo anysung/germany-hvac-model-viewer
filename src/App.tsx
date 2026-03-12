@@ -7,7 +7,7 @@ import { translations } from './translations';
 // Use Firestore Service
 import { getProducts, getNews, getPolicies, getBAFA } from './services/dbService';
 
-type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'APP' | 'ADMIN_GATE' | 'ADMIN_LOGIN' | 'ADMIN_DASHBOARD';
+type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'APP' | 'ADMIN_GATE' | 'ADMIN_LOGIN' | 'ADMIN_DASHBOARD';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('LANDING');
@@ -30,8 +30,16 @@ const App: React.FC = () => {
     const unsubscribe = onUserChange((user) => {
       setCurrentUser(user);
       if (user) {
-        if (currentView === 'LANDING' || currentView === 'LOGIN' || currentView === 'SIGNUP') {
-          setCurrentView('APP');
+        const isAuthView = currentView === 'LANDING' || currentView === 'LOGIN' || currentView === 'SIGNUP';
+        if (isAuthView) {
+          // Block pending/suspended users even if Firebase session exists
+          if (user.status === 'pending') {
+            setCurrentView('PENDING_APPROVAL');
+          } else if (user.status === 'suspended' || user.status === 'rejected') {
+            logoutUser();
+          } else {
+            setCurrentView('APP');
+          }
         }
       } else {
         if (currentView === 'APP') {
@@ -89,7 +97,7 @@ const App: React.FC = () => {
     setIsLoading(true);
     try {
       await registerUser(signupData);
-      alert("Registration Successful!");
+      setCurrentView('PENDING_APPROVAL');
     } catch (err: any) {
       alert(err.message);
     } finally {
@@ -98,7 +106,9 @@ const App: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    await logoutUser();
+    const email = currentUser?.email || '';
+    const name = currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : '';
+    await logoutUser(email, name);
   };
 
   const handleAdminPinSubmit = (e: React.FormEvent) => {
@@ -208,7 +218,37 @@ const App: React.FC = () => {
       </div>
     );
   }
-  if (currentView === 'ADMIN_GATE') { 
+  if (currentView === 'PENDING_APPROVAL') {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 font-sans relative">
+        <LanguageSwitcher />
+        <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-10 text-center">
+          <div className="text-6xl mb-6">⏳</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">Registration Submitted</h2>
+          <p className="text-gray-600 mb-2">Your application is <span className="font-semibold text-yellow-600">pending approval</span>.</p>
+          <p className="text-gray-500 text-sm mb-8">
+            An administrator will review your registration and notify you by email once your account is activated. This typically takes 1–2 business days.
+          </p>
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-sm text-blue-700 mb-8 text-left">
+            <p className="font-bold mb-1">What happens next?</p>
+            <ol className="list-decimal list-inside space-y-1 text-blue-600">
+              <li>Admin reviews your profile</li>
+              <li>Account is approved &amp; activated</li>
+              <li>You can log in with your credentials</li>
+            </ol>
+          </div>
+          <button
+            onClick={() => setCurrentView('LANDING')}
+            className="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+          >
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (currentView === 'ADMIN_GATE') {
     // ... (Same as previous App.tsx)
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 font-sans relative">

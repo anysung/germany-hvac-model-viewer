@@ -1,46 +1,60 @@
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
 } from 'firebase/auth';
-import { 
-  doc, 
-  setDoc, 
-  getDoc, 
-  updateDoc, 
-  deleteDoc, 
-  collection, 
-  getDocs 
+import {
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  getDocs,
+  addDoc,
+  query,
+  orderBy,
+  limit,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { User, ActivityLog } from '../types';
 
-const ADMIN_PASS_KEY = 'ghpd_admin_pass';
-const DEFAULT_ADMIN_PASS = '10041004';
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
 
-// --- Activity Logging ---
-export const logActivity = async (userId: string, action: string, details: string) => {
+// --- Activity Logging (Firestore) ---
+export const logActivity = async (
+  userId: string, action: string, details: string,
+  userEmail = '', userName = ''
+) => {
   try {
-    const newLog = {
-      userId,
-      action,
-      details,
-      timestamp: new Date().toISOString()
-    };
-    const logs = JSON.parse(localStorage.getItem('ghpd_logs') || '[]');
-    localStorage.setItem('ghpd_logs', JSON.stringify([newLog, ...logs].slice(0, 500)));
+    await addDoc(collection(db, 'activityLogs'), {
+      userId, userEmail, userName, action, details,
+      timestamp: new Date().toISOString(),
+    });
   } catch (error) {
-    console.error("Log error", error);
+    console.error('Log error', error);
   }
 };
 
-export const getLogs = (): ActivityLog[] => {
-  return JSON.parse(localStorage.getItem('ghpd_logs') || '[]');
+export const getLogs = async (fromDate?: string, toDate?: string): Promise<ActivityLog[]> => {
+  try {
+    const q = query(collection(db, 'activityLogs'), orderBy('timestamp', 'desc'), limit(2000));
+    const snapshot = await getDocs(q);
+    let logs = snapshot.docs.map(d => ({ id: d.id, ...d.data() })) as ActivityLog[];
+    if (fromDate) logs = logs.filter(l => l.timestamp.slice(0, 10) >= fromDate);
+    if (toDate)   logs = logs.filter(l => l.timestamp.slice(0, 10) <= toDate);
+    return logs;
+  } catch (error) {
+    console.error('Fetch Logs Error', error);
+    return [];
+  }
 };
 
-// --- Admin Auth ---
+// --- Admin Auth (local password) ---
+const ADMIN_PASS_KEY = 'ghpd_admin_pass';
+const DEFAULT_ADMIN_PASS = '10041004';
+
 export const verifyAdminPassword = (inputPass: string): boolean => {
   const storedPass = localStorage.getItem(ADMIN_PASS_KEY) || DEFAULT_ADMIN_PASS;
   return inputPass === storedPass;
@@ -51,86 +65,92 @@ export const changeAdminPassword = (newPass: string) => {
   logActivity('ADMIN', 'PASS_CHANGE', 'Admin password updated');
 };
 
-// --- Firestore User Management (Modular) ---
+// --- Registration (status: pending, auto sign-out) ---
+export const registerUser = async (userData: any): Promise<void> => {
+  const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
+  const uid = userCredential.user?.uid;
+  if (!uid) throw new Error('User ID missing');
 
-export const registerUser = async (userData: any): Promise<User> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
-    const uid = userCredential.user?.uid;
+  const newUser: User = {
+    id: uid,
+    email: userData.email,
+    firstName: userData.firstName,
+    lastName: userData.lastName,
+    companyType: userData.companyType,
+    jobRole: userData.jobRole,
+    companyName: userData.companyName || '',
+    companyCity: userData.companyCity || '',
+    referralSource: userData.referralSource || '',
+    isActive: false,
+    status: 'pending',
+    registeredAt: new Date().toISOString(),
+    role: 'user',
+  };
 
-    if (!uid) throw new Error("User ID missing");
-
-    const newUser: User = {
-      id: uid,
-      email: userData.email,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      companyType: userData.companyType,
-      jobRole: userData.jobRole,
-      companyName: userData.companyName,
-      companyCity: userData.companyCity,
-      referralSource: userData.referralSource,
-      isActive: true,
-      registeredAt: new Date().toISOString(),
-    };
-
-    // Modular: setDoc
-    await setDoc(doc(db, 'users', uid), newUser);
-    
-    logActivity(uid, 'REGISTER', `User registered: ${newUser.email}`);
-    return newUser;
-  } catch (error: any) {
-    console.error("Registration Error", error);
-    throw new Error(error.message);
-  }
+  await setDoc(doc(db, 'users', uid), newUser);
+  // Sign out immediately — must wait for admin approval
+  await signOut(auth);
+  await logActivity(uid, 'REGISTER_PENDING', `Registration pending: ${userData.email}`, userData.email, `${userData.firstName} ${userData.lastName}`);
 };
 
+// --- Login (blocks pending/suspended) ---
 export const loginUser = async (email: string, pass: string): Promise<User> => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     const uid = userCredential.user?.uid;
-    
-    if (!uid) throw new Error("Login failed");
+    if (!uid) throw new Error('Login failed');
 
-    // Modular: getDoc
     const userDocRef = doc(db, 'users', uid);
     const userDoc = await getDoc(userDocRef);
-    
+
     if (!userDoc.exists()) {
-      console.warn(`Profile missing for user ${uid}. Creating default profile.`);
+      // Owner fallback
       const fallbackUser: User = {
-        id: uid,
-        email: email,
+        id: uid, email,
         firstName: email === OWNER_EMAIL ? 'Christopher' : 'User',
         lastName: email === OWNER_EMAIL ? 'Sung' : '',
-        companyType: 'Private Individual',
-        jobRole: 'General Public',
-        isActive: true,
+        companyType: 'Private Individual', jobRole: 'General Public',
+        isActive: true, status: 'active',
         registeredAt: new Date().toISOString(),
         role: email === OWNER_EMAIL ? 'owner' : 'user',
       };
       await setDoc(userDocRef, fallbackUser);
-      logActivity(fallbackUser.id, 'LOGIN', 'User logged in (Profile Created)');
+      await logActivity(fallbackUser.id, 'LOGIN', 'User logged in (profile created)', email, `${fallbackUser.firstName} ${fallbackUser.lastName}`);
       return fallbackUser;
     }
 
-    const userData = { ...userDoc.data() as User, role: email === OWNER_EMAIL ? 'owner' : (userDoc.data() as User).role || 'user' };
-    
+    const userData = {
+      ...userDoc.data() as User,
+      role: email === OWNER_EMAIL ? 'owner' as const : (userDoc.data() as User).role || 'user' as const,
+    };
+
+    if (userData.status === 'pending') {
+      await signOut(auth);
+      throw new Error('Your registration is pending admin approval. You will be notified once approved.');
+    }
+    if (userData.status === 'suspended') {
+      await signOut(auth);
+      throw new Error('Your account has been suspended. Please contact the administrator.');
+    }
+    if (userData.status === 'rejected') {
+      await signOut(auth);
+      throw new Error('Your registration was not approved. Please contact the administrator.');
+    }
     if (!userData.isActive) {
       await signOut(auth);
-      throw new Error("Account is deactivated by Admin.");
+      throw new Error('Account is deactivated.');
     }
 
-    logActivity(userData.id, 'LOGIN', 'User logged in');
+    await logActivity(userData.id, 'LOGIN', 'User logged in', email, `${userData.firstName} ${userData.lastName}`);
     return userData;
   } catch (error: any) {
     throw new Error(error.message);
   }
 };
 
-export const logoutUser = async () => {
+export const logoutUser = async (userEmail = '', userName = '') => {
   const user = auth.currentUser;
-  if(user) logActivity(user.uid, 'LOGOUT', 'User logged out');
+  if (user) await logActivity(user.uid, 'LOGOUT', 'User logged out', userEmail, userName);
   await signOut(auth);
 };
 
@@ -140,27 +160,28 @@ export const onUserChange = (callback: (user: User | null) => void) => {
       try {
         const userDocRef = doc(db, 'users', firebaseUser.uid);
         const userDoc = await getDoc(userDocRef);
-        
         if (userDoc.exists()) {
           const userData = userDoc.data() as User;
-          const enriched = { ...userData, role: firebaseUser.email === OWNER_EMAIL ? 'owner' as const : userData.role || 'user' as const };
+          const enriched = {
+            ...userData,
+            role: firebaseUser.email === OWNER_EMAIL ? 'owner' as const : userData.role || 'user' as const,
+          };
           callback(enriched);
         } else {
-          const fallbackUser: User = {
+          const fallback: User = {
             id: firebaseUser.uid,
             email: firebaseUser.email || '',
             firstName: firebaseUser.email === OWNER_EMAIL ? 'Christopher' : 'User',
             lastName: firebaseUser.email === OWNER_EMAIL ? 'Sung' : '',
-            companyType: 'Private Individual',
-            jobRole: 'General Public',
-            isActive: true,
+            companyType: 'Private Individual', jobRole: 'General Public',
+            isActive: true, status: 'active',
             registeredAt: new Date().toISOString(),
             role: firebaseUser.email === OWNER_EMAIL ? 'owner' : 'user',
           };
-          callback(fallbackUser);
+          callback(fallback);
         }
       } catch (e) {
-        console.error("Auth State Error", e);
+        console.error('Auth State Error', e);
         callback(null);
       }
     } else {
@@ -169,23 +190,45 @@ export const onUserChange = (callback: (user: User | null) => void) => {
   });
 };
 
+// --- User CRUD ---
 export const getUsers = async (): Promise<User[]> => {
   try {
     const snapshot = await getDocs(collection(db, 'users'));
-    return snapshot.docs.map(doc => doc.data() as User);
+    return snapshot.docs.map(d => d.data() as User);
   } catch (error) {
-    console.error("Fetch Users Error", error);
+    console.error('Fetch Users Error', error);
     return [];
   }
 };
 
+export const approveUser = async (userId: string, adminName = 'Admin') => {
+  await updateDoc(doc(db, 'users', userId), { status: 'active', isActive: true });
+  await logActivity('ADMIN', 'APPROVE_USER', `User approved: ${userId}`, '', adminName);
+};
+
+export const rejectUser = async (userId: string, adminName = 'Admin') => {
+  await updateDoc(doc(db, 'users', userId), { status: 'rejected', isActive: false });
+  await logActivity('ADMIN', 'REJECT_USER', `User rejected: ${userId}`, '', adminName);
+};
+
+export const suspendUser = async (userId: string, adminName = 'Admin') => {
+  await updateDoc(doc(db, 'users', userId), { status: 'suspended', isActive: false });
+  await logActivity('ADMIN', 'SUSPEND_USER', `User suspended: ${userId}`, '', adminName);
+};
+
+export const reactivateUser = async (userId: string, adminName = 'Admin') => {
+  await updateDoc(doc(db, 'users', userId), { status: 'active', isActive: true });
+  await logActivity('ADMIN', 'REACTIVATE_USER', `User reactivated: ${userId}`, '', adminName);
+};
+
 export const updateUserStatus = async (userId: string, isActive: boolean) => {
   try {
-    const userDocRef = doc(db, 'users', userId);
-    await updateDoc(userDocRef, { isActive });
+    await updateDoc(doc(db, 'users', userId), {
+      isActive,
+      status: isActive ? 'active' : 'suspended',
+    });
   } catch (e) {
-    console.error("Update Status Error", e);
-    alert("Failed to update status");
+    console.error('Update Status Error', e);
   }
 };
 
@@ -193,7 +236,6 @@ export const deleteUser = async (userId: string) => {
   try {
     await deleteDoc(doc(db, 'users', userId));
   } catch (e) {
-    console.error("Delete Error", e);
-    alert("Failed to delete user profile");
+    console.error('Delete Error', e);
   }
 };

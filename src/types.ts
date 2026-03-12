@@ -93,6 +93,7 @@ export interface User {
   companyCity?: string;
   referralSource?: string;
   isActive: boolean;
+  status?: 'pending' | 'active' | 'suspended' | 'rejected';
   registeredAt: string;
   role?: 'owner' | 'user';
 }
@@ -100,6 +101,8 @@ export interface User {
 export interface ActivityLog {
   id: string;
   userId: string;
+  userEmail?: string;
+  userName?: string;
   action: string;
   details: string;
   timestamp: string;
