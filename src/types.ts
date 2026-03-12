@@ -94,6 +94,7 @@ export interface User {
   referralSource?: string;
   isActive: boolean;
   registeredAt: string;
+  role?: 'owner' | 'user';
 }
 
 export interface ActivityLog {

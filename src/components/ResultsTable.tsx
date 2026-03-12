@@ -1,131 +1,344 @@
+/**
+ * ResultsTable — Display Rules (v3)
+ *
+ * STICKY HEADER : thead row stays fixed on vertical scroll (top-0 z-30)
+ * STICKY COLS   : Manufacturer + Type + Model fixed on horizontal scroll (z-20/z-40)
+ * SCROLL BAR    : Horizontal progress bar + arrow buttons at table top-right
+ * WEIGHT COL    : Extracted from Others field, placed between Noise and Price
+ * OTHERS COL    : Last column (remaining after weight extraction), max ~30 chars, 2-line split at ';'
+ *
+ * TWO-LINE SPLIT RULES (splitTwo helper):
+ *   Dimensions  : ';'  → IDU spec / ODU spec
+ *   Noise       : ';'  → primary / secondary value
+ *   COP / SCOP  : '; ' → primary condition / secondary condition
+ *   Capacity    : ' (' → range / condition note
+ *   Price       : ' (' → price range / parenthetical note
+ *   Others      : ';'  → first spec / remaining (line-clamp-2 fallback)
+ *
+ * MODEL TRUNCATION : max 35 chars, full name on hover (title attribute)
+ * MODEL BLOCKLIST  : enforced in Cloud Function (e.g. / >80 chars rejected)
+ */
 
-import React from 'react';
+import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { HeatPump } from '../types';
 
 interface ResultsTableProps {
   data: HeatPump[];
   isLoading: boolean;
-  labels: any; // Dictionary for translated labels
+  labels: any;
   isSelectionMode?: boolean;
   selectedModels?: HeatPump[];
   onToggleSelection?: (model: HeatPump) => void;
 }
 
-export const ResultsTable: React.FC<ResultsTableProps> = ({ 
-  data, 
-  isLoading, 
-  labels, 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Split text at the first matching separator → [line1, line2|null] */
+function splitTwo(text: string, separators: string[]): [string, string | null] {
+  if (!text) return [text, null];
+  for (const sep of separators) {
+    const idx = text.indexOf(sep);
+    if (idx > 0 && idx < text.length - 1) {
+      const l1 = text.slice(0, idx).trim();
+      const l2 = sep === ' (' ? '(' + text.slice(idx + sep.length).trim() : text.slice(idx + sep.length).trim();
+      if (l1 && l2) return [l1, l2];
+    }
+  }
+  return [text, null];
+}
+
+/** Extract weight from the others string, return {weight, remaining} */
+function extractWeight(others: string): { weight: string; remaining: string } {
+  if (!others || others === 'N/A') return { weight: '—', remaining: others || '' };
+  // Try labelled weight first: "Weight: 130 kg", "Gewicht: 82 kg", "Wt: 95 kg"
+  const labelled = others.match(/(?:weight|wt\.?|gewicht)[:\s]+(\d+(?:[.,]\d+)?\s*kg)/i);
+  if (labelled) {
+    const remaining = others.replace(labelled[0], '').replace(/^[\s;,]+|[\s;,]+$/g, '').trim();
+    return { weight: labelled[1].trim(), remaining };
+  }
+  // Fallback: standalone "130 kg"
+  const standalone = others.match(/\b(\d+(?:[.,]\d+)?\s*kg)\b/i);
+  if (standalone) {
+    const remaining = others.replace(standalone[0], '').replace(/^[\s;,]+|[\s;,]+$/g, '').trim();
+    return { weight: standalone[1].trim(), remaining };
+  }
+  return { weight: '—', remaining: others };
+}
+
+/** Two-line cell component */
+const TwoLine: React.FC<{ l1: React.ReactNode; l2?: string | null; l1Cls?: string }> = ({ l1, l2, l1Cls = '' }) => (
+  <div className="text-center leading-tight">
+    <div className={l1Cls}>{l1}</div>
+    {l2 && <div className="text-[11px] text-gray-400 mt-0.5">{l2}</div>}
+  </div>
+);
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
+export const ResultsTable: React.FC<ResultsTableProps> = ({
+  data, isLoading, labels,
   isSelectionMode = false,
   selectedModels = [],
-  onToggleSelection
+  onToggleSelection,
 }) => {
-  if (isLoading) {
-    return (
-      <div className="w-full h-64 flex flex-col items-center justify-center text-gray-500 animate-pulse">
-        <svg className="w-10 h-10 mb-3 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <p className="text-sm font-medium">{labels.loading}</p>
-      </div>
-    );
-  }
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const mfrThRef  = useRef<HTMLTableCellElement>(null);
+  const typeThRef = useRef<HTMLTableCellElement>(null);
 
-  if (data.length === 0) {
-    return (
-      <div className="w-full h-64 flex flex-col items-center justify-center text-gray-400 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 mb-2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-        </svg>
-        <p>{labels.noResults}</p>
-      </div>
-    );
-  }
+  const [canScrollLeft,  setCanScrollLeft]  = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [scrollPct,      setScrollPct]      = useState(0);
+  // Measured left offsets for sticky Type / Model columns
+  const [typeLeft,  setTypeLeft]  = useState(0);
+  const [modelLeft, setModelLeft] = useState(0);
+
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < max - 4);
+    setScrollPct(max > 0 ? (el.scrollLeft / max) * 100 : 0);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    checkScroll();
+    el.addEventListener('scroll', checkScroll, { passive: true });
+    const ro = new ResizeObserver(checkScroll);
+    ro.observe(el);
+    return () => { el.removeEventListener('scroll', checkScroll); ro.disconnect(); };
+  }, [checkScroll, data]);
+
+  useLayoutEffect(() => {
+    const mfr  = mfrThRef.current;
+    const type = typeThRef.current;
+    if (mfr && type) {
+      setTypeLeft(mfr.offsetWidth);
+      setModelLeft(mfr.offsetWidth + type.offsetWidth);
+    }
+  }, [data]);
+
+  const scroll = (dir: 'left' | 'right') => {
+    scrollRef.current?.scrollBy({ left: dir === 'left' ? -280 : 280, behavior: 'smooth' });
+  };
+
+  if (isLoading) return (
+    <div className="w-full h-64 flex flex-col items-center justify-center text-gray-500 animate-pulse">
+      <svg className="w-10 h-10 mb-3 animate-spin text-blue-500" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+      </svg>
+      <p className="text-sm font-medium">{labels.loading}</p>
+    </div>
+  );
+
+  if (data.length === 0) return (
+    <div className="w-full h-64 flex flex-col items-center justify-center text-gray-400 border-2 border-dashed border-gray-200 rounded-lg bg-gray-50">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 mb-2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+      </svg>
+      <p>{labels.noResults}</p>
+    </div>
+  );
+
+  // Shared styles — font sizes bumped ~15% from v2 (10px→12px, 11px→13px, 9px→11px)
+  const TH_BASE = 'px-2 py-1.5 text-center text-[12px] font-bold uppercase tracking-wide whitespace-nowrap bg-gray-50';
+  const TD_BASE = 'px-2 py-1 text-[13px] text-center align-middle';
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 shadow-sm bg-white">
-      <div className="overflow-x-auto custom-scrollbar">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
+    <div className="relative rounded-lg border border-gray-200 shadow-sm bg-white overflow-hidden">
+
+      {/* ── Scroll Control Bar ──────────────────────────────────────── */}
+      <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 border-b border-gray-200 select-none">
+        {/* Progress bar */}
+        <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-blue-400 rounded-full transition-all duration-150"
+            style={{ width: `${scrollPct}%` }}
+          />
+        </div>
+
+        {/* Left button */}
+        <button
+          onClick={() => scroll('left')}
+          disabled={!canScrollLeft}
+          className={`flex items-center justify-center w-6 h-6 rounded transition-colors ${canScrollLeft ? 'text-blue-600 hover:bg-blue-100' : 'text-gray-300 cursor-default'}`}
+          aria-label="Scroll left"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        {/* Right button — animated when more content exists */}
+        <button
+          onClick={() => scroll('right')}
+          disabled={!canScrollRight}
+          className={`flex items-center justify-center gap-0.5 h-6 px-2 rounded text-[10px] font-semibold transition-colors ${
+            canScrollRight
+              ? 'text-white bg-blue-500 hover:bg-blue-600 shadow-sm'
+              : 'text-gray-300 bg-gray-100 cursor-default'
+          }`}
+          aria-label="Scroll right"
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/>
+          </svg>
+          {canScrollRight && <span>more</span>}
+        </button>
+      </div>
+
+      {/* Right-edge fade gradient (visual cue) */}
+      {canScrollRight && (
+        <div className="pointer-events-none absolute right-0 top-[32px] bottom-0 w-12 bg-gradient-to-l from-white/70 to-transparent z-10" />
+      )}
+
+      {/* ── Table ───────────────────────────────────────────────────── */}
+      <div ref={scrollRef} className="overflow-x-auto custom-scrollbar overflow-y-auto max-h-[70vh]">
+        <table className="min-w-full divide-y divide-gray-100" style={{ borderCollapse: 'separate', borderSpacing: 0 }}>
+
+          {/* ── STICKY HEADER ─────────────────────────────────────── */}
+          <thead>
+            <tr className="border-b border-gray-200">
               {isSelectionMode && (
-                <th scope="col" className="px-2 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap w-12 sticky left-0 bg-gray-50 z-10">
-                  {labels.colSelect || "Select"}
-                </th>
+                <th className={`${TH_BASE} w-8 sticky top-0 left-0 z-40`}>{labels.colSelect || ''}</th>
               )}
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colManufacturer}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colUnitType}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colModel}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colCapacity}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colRefrigerant}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colDim}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-blue-600 uppercase tracking-wider whitespace-nowrap bg-blue-50">COP</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-blue-600 uppercase tracking-wider whitespace-nowrap bg-blue-50">SCOP</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-blue-600 uppercase tracking-wider whitespace-nowrap bg-blue-50">{labels.colNoise}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">{labels.colOther}</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-green-700 uppercase tracking-wider whitespace-nowrap bg-green-50">{labels.colPrice}</th>
+              {/* Manufacturer — sticky top + left */}
+              <th ref={mfrThRef}
+                className={`${TH_BASE} text-center text-gray-600 sticky top-0 left-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.08)]`}>
+                {labels.colManufacturer}
+              </th>
+              {/* Type — sticky top + left */}
+              <th ref={typeThRef}
+                style={{ left: typeLeft }}
+                className={`${TH_BASE} text-gray-500 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)]`}>
+                Type
+              </th>
+              {/* Model — sticky top + left */}
+              <th style={{ left: modelLeft }}
+                className={`${TH_BASE} text-gray-500 text-left pl-3 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.05)]`}>
+                {labels.colModel}
+              </th>
+              {/* Scrollable columns */}
+              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colCapacity}</th>
+              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colRefrigerant}</th>
+              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colDim}</th>
+              <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>COP</th>
+              <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>SCOP</th>
+              <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>{labels.colNoise}</th>
+              <th className={`${TH_BASE} text-purple-600 bg-purple-50 sticky top-0 z-30`}>Weight</th>
+              <th className={`${TH_BASE} text-green-700 bg-green-50 sticky top-0 z-30`}>{labels.colPrice}</th>
+              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colOther}</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+
+          {/* ── BODY ──────────────────────────────────────────────── */}
+          <tbody className="bg-white divide-y divide-gray-100">
             {data.map((item, index) => {
               const isSelected = selectedModels.some(m => m.model === item.model);
+              const rowBg = isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50';
+
+              // Per-field splits
+              const modelTxt  = item.model.length > 35 ? item.model.slice(0, 35) + '…' : item.model;
+              const [cap1, cap2]   = splitTwo(item.capacityRange || '', [' (', ';']);
+              const [dim1, dim2]   = splitTwo(item.dimensions    || '', ['; ', ';']);
+              const [cop1, cop2]   = splitTwo(item.cop           || '', ['; ', ' / ']);
+              const [scop1, scop2] = splitTwo(item.scop          || '', ['; ', ' / ']);
+              const [noise1, noise2] = splitTwo(item.noiseLevel  || '', ['; ', ';']);
+              const [price1, price2] = splitTwo(item.marketPrice || '', [' (', '\n']);
+              const { weight, remaining } = extractWeight(item.others || '');
+              const [oth1, oth2] = splitTwo(remaining, ['; ', '; ']);
+
+              // Sticky cols: always solid white so scrolled content doesn't bleed through
+              const stickyBg = 'bg-white';
+
               return (
-                <tr key={index} className={`hover:bg-blue-50 transition-colors ${isSelected ? 'bg-blue-50' : ''}`}>
+                <tr key={index} className={`hover:bg-blue-50/60 transition-colors ${rowBg}`}>
                   {isSelectionMode && (
-                    <td className="px-2 py-4 whitespace-nowrap text-center sticky left-0 bg-inherit z-10 border-r border-gray-100">
-                      <input 
-                        type="checkbox" 
-                        checked={isSelected}
+                    <td className={`${TD_BASE} sticky left-0 z-20 ${stickyBg} border-r border-gray-100`}>
+                      <input type="checkbox" checked={isSelected}
                         onChange={() => onToggleSelection && onToggleSelection(item)}
-                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
-                      />
+                        className="w-3.5 h-3.5 text-blue-600 border-gray-300 rounded cursor-pointer"/>
                     </td>
                   )}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="text-sm font-medium text-gray-900">{item.manufacturer}</div>
-                    </div>
+
+                  {/* Manufacturer — sticky, solid white */}
+                  <td className={`px-2 py-1 text-[13px] font-semibold text-gray-900 text-center whitespace-nowrap sticky left-0 z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)] ${stickyBg}`}>
+                    {item.manufacturer}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${item.unitType === 'IDU' ? 'bg-purple-100 text-purple-800' : 'bg-orange-100 text-orange-800'}`}>
+
+                  {/* Type — sticky, solid white */}
+                  <td style={{ left: typeLeft }}
+                    className={`${TD_BASE} whitespace-nowrap sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.04)] ${stickyBg}`}>
+                    <span className={`px-1.5 py-0.5 inline-flex text-[11px] leading-4 font-bold rounded-full ${item.unitType === 'IDU' ? 'bg-purple-100 text-purple-800' : 'bg-orange-100 text-orange-800'}`}>
                       {item.unitType}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-blue-600 font-semibold">{item.model}</div>
-                    <div className="text-xs text-gray-500 mt-1 max-w-[200px] truncate">{item.description}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    <span className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-xs font-medium">
-                      {item.capacityRange}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    {item.refrigerant === 'R290' ? (
-                      <span className="text-green-600 font-bold flex items-center gap-1">
-                        🌿 {item.refrigerant}
-                      </span>
-                    ) : (
-                      <span>{item.refrigerant}</span>
+
+                  {/* Model — sticky, solid white, +10% width via max-w */}
+                  <td style={{ left: modelLeft }}
+                    className={`pl-3 pr-2 py-1 text-left align-middle sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.03)] ${stickyBg}`}>
+                    <div className="text-[13px] text-blue-600 font-semibold whitespace-nowrap" title={item.model}>
+                      {modelTxt}
+                    </div>
+                    {item.description && (
+                      <div className="text-[11px] text-gray-400 mt-0.5 max-w-[210px] truncate">{item.description}</div>
                     )}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {item.dimensions}
+
+                  {/* Capacity */}
+                  <td className={TD_BASE}>
+                    <TwoLine
+                      l1={<span className="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[12px] font-medium whitespace-nowrap">{cap1}</span>}
+                      l2={cap2}
+                    />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700 bg-blue-50/30">
-                    {item.cop}
+
+                  {/* Refrigerant */}
+                  <td className={`${TD_BASE} whitespace-nowrap`}>
+                    {item.refrigerant.includes('R290')
+                      ? <span className="text-green-600 font-bold text-[11px]">🌿 {item.refrigerant}</span>
+                      : <span className="text-gray-600">{item.refrigerant}</span>}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700 bg-blue-50/30">
-                    {item.scop}
+
+                  {/* Dimensions */}
+                  <td className={TD_BASE}>
+                    <TwoLine l1={dim1} l2={dim2} l1Cls="text-gray-600" />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-700 bg-blue-50/30">
-                    {item.noiseLevel}
+
+                  {/* COP */}
+                  <td className={`${TD_BASE} bg-blue-50/30`}>
+                    <TwoLine l1={cop1} l2={cop2} l1Cls="font-medium text-gray-700" />
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500 min-w-[200px]">
-                    {item.others}
+
+                  {/* SCOP */}
+                  <td className={`${TD_BASE} bg-blue-50/30`}>
+                    <TwoLine l1={scop1} l2={scop2} l1Cls="font-medium text-gray-700" />
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-700 bg-green-50/30">
-                    {item.marketPrice}
+
+                  {/* Noise */}
+                  <td className={`${TD_BASE} bg-blue-50/30`}>
+                    <TwoLine l1={noise1} l2={noise2} l1Cls="font-medium text-gray-700" />
+                  </td>
+
+                  {/* Weight (extracted from Others) */}
+                  <td className={`${TD_BASE} bg-purple-50/30`}>
+                    <span className="text-[13px] font-medium text-purple-700 whitespace-nowrap">{weight}</span>
+                  </td>
+
+                  {/* Price */}
+                  <td className={`${TD_BASE} bg-green-50/30`}>
+                    <TwoLine l1={price1} l2={price2} l1Cls="font-bold text-green-700 whitespace-nowrap" />
+                  </td>
+
+                  {/* Others (remaining, last column) — 2× width, same font as Price */}
+                  <td className={`${TD_BASE} min-w-[400px] max-w-[400px]`}>
+                    {oth2
+                      ? <TwoLine l1={oth1} l2={oth2} l1Cls="text-[13px] text-gray-500 text-left" />
+                      : <div className="text-[13px] text-gray-500 text-left line-clamp-2 leading-tight">{oth1}</div>
+                    }
                   </td>
                 </tr>
               );

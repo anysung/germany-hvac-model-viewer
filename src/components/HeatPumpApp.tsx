@@ -13,7 +13,8 @@ import { translations } from '../translations';
 interface HeatPumpAppProps {
   user: User;
   onLogout: () => void;
-  dbData: HeatPumpDatabase | null; 
+  onAdminAccess?: () => void;
+  dbData: HeatPumpDatabase | null;
   lastUpdated: string | null;
   language: Language;
   appMode: AppMode;
@@ -40,7 +41,7 @@ const extractCapacityValue = (capacityString: string): number | null => {
 
 type Tab = 'SEARCH' | 'COMPARISON' | 'NEWS' | 'POLICY' | 'BAFA';
 
-export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData, lastUpdated, language, appMode }) => {
+export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdminAccess, dbData, lastUpdated, language, appMode }) => {
   // Navigation State
   const [activeTab, setActiveTab] = useState<Tab>('SEARCH');
 
@@ -56,6 +57,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedRange, setSelectedRange] = useState<string | null>(null);
   const [selectedUnitType, setSelectedUnitType] = useState<string | null>(null);
+  const [selectedRefrigerant, setSelectedRefrigerant] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [localSearchInput, setLocalSearchInput] = useState('');
 
@@ -81,7 +83,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
       console.error(error);
       setStatus('error');
     }
-  }, [selectedBrand, selectedRange, selectedUnitType, searchQuery, user.id, language]);
+  }, [selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, user.id, language]);
 
   // Database Filtering Logic
   const executeDbSearch = useCallback(() => {
@@ -103,7 +105,11 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
       }
 
       if (selectedUnitType) {
-        filtered = filtered.filter((item: HeatPump) => item.unitType === (selectedUnitType === UnitType.IDU ? 'IDU' : 'ODU'));
+        filtered = filtered.filter((item: HeatPump) => item.unitType.includes(selectedUnitType === UnitType.IDU ? 'IDU' : 'ODU'));
+      }
+
+      if (selectedRefrigerant) {
+        filtered = filtered.filter((item: HeatPump) => item.refrigerant.includes(selectedRefrigerant));
       }
 
       if (searchQuery) {
@@ -114,8 +120,8 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
         );
       }
       
-      if (searchQuery || selectedBrand || selectedRange) {
-         logActivity(user.id, 'FILTER_DB', `Brand: ${selectedBrand}, Range: ${selectedRange}, Q: ${searchQuery}`);
+      if (searchQuery || selectedBrand || selectedRange || selectedRefrigerant) {
+         logActivity(user.id, 'FILTER_DB', `Brand: ${selectedBrand}, Range: ${selectedRange}, Refrigerant: ${selectedRefrigerant}, Q: ${searchQuery}`);
       }
 
       setData(filtered);
@@ -123,19 +129,19 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
     } else {
       setData([]);
     }
-  }, [dbData, selectedBrand, selectedRange, selectedUnitType, searchQuery, user.id]);
+  }, [dbData, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, user.id]);
 
   // Trigger Search
   useEffect(() => {
     // Search triggers for both SEARCH and COMPARISON tabs (to populate list)
     if (activeTab === 'SEARCH' || activeTab === 'COMPARISON') {
       if (appMode === 'LIVE_API') {
-        if (selectedBrand || selectedRange || selectedUnitType || searchQuery) executeLiveSearch();
+        if (selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery) executeLiveSearch();
       } else {
         executeDbSearch();
       }
     }
-  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedUnitType, searchQuery, activeTab]);
+  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, activeTab]);
 
   const onSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -226,8 +232,13 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
               <div className="flex items-center gap-2 border-l pl-3 ml-1">
                  <div className="text-right hidden sm:block">
                     <div className="text-xs font-bold text-gray-700">{user.firstName} {user.lastName}</div>
-                    <div className="text-xs text-gray-500">{user.companyType}</div>
+                    <div className="text-xs text-gray-500">{user.role === 'owner' ? '👑 Owner' : user.companyType}</div>
                  </div>
+                 {user.role === 'owner' && onAdminAccess && (
+                   <button onClick={onAdminAccess} title="Admin Dashboard" className="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-50 transition-colors">
+                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                   </button>
+                 )}
                  <button onClick={onLogout} className="text-gray-500 hover:text-red-600 p-2 rounded-full hover:bg-gray-100 transition-colors">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
                  </button>
@@ -261,14 +272,14 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
           </div>
         </div>
 
-        <div className="max-w-[96%] mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          
+        <div className="max-w-[96%] mx-auto px-4 sm:px-6 lg:px-8 py-2">
+
           {/* SHARED FILTERS (Visible on SEARCH and COMPARISON when not comparing) */}
           {(activeTab === 'SEARCH' || (activeTab === 'COMPARISON' && !isComparing)) && (
             <>
               {/* Selected Models Area (Comparison Tab Only) */}
               {activeTab === 'COMPARISON' && (
-                <div className="mb-6 bg-indigo-50 border border-indigo-100 rounded-xl p-4 shadow-sm animate-fade-in">
+                <div className="mb-2 bg-indigo-50 border border-indigo-100 rounded-xl p-3 shadow-sm animate-fade-in">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex-grow">
                       <h3 className="text-sm font-bold text-indigo-900 mb-2 flex items-center gap-2">
@@ -305,29 +316,42 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
               )}
 
               {/* Filters */}
-              <section className="mb-6 space-y-4">
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                  <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{t.filterManufacturer}</h3>
-                  <div className="flex flex-wrap gap-2">
+              <section className="mb-2 space-y-1.5">
+                <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                  <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterManufacturer}</h3>
+                  <div className="flex flex-wrap gap-1.5">
                     {(Object.values(Manufacturer) as string[]).map((brand) => (
                       <FilterBadge key={brand} label={brand} isActive={selectedBrand === brand} onClick={() => setSelectedBrand(selectedBrand === brand ? null : brand)} />
                     ))}
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{t.filterCapacity}</h3>
-                    <div className="flex flex-wrap gap-2">
+                <div style={{ display: 'grid', gridTemplateColumns: '5fr 4fr 2.5fr', gap: '6px' }}>
+                  <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                    <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterCapacity}</h3>
+                    <div className="flex flex-wrap gap-1.5">
                       {(Object.values(CapacityRange) as string[]).map((range) => (
                         <FilterBadge key={range} label={range} isActive={selectedRange === range} onClick={() => setSelectedRange(selectedRange === range ? null : range)} />
                       ))}
                     </div>
                   </div>
-                  <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-                    <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{t.filterUnitType}</h3>
-                    <div className="flex flex-wrap gap-2">
+                  <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                    <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterUnitType}</h3>
+                    <div className="flex flex-wrap gap-1.5">
                       {(Object.values(UnitType) as string[]).map((type) => (
                         <FilterBadge key={type} label={type} isActive={selectedUnitType === type} onClick={() => setSelectedUnitType(selectedUnitType === type ? null : type)} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                    <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">REFRIGERANT TYPE</h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {['R290', 'R32', 'R410A'].map((ref) => (
+                        <FilterBadge
+                          key={ref}
+                          label={ref === 'R290' ? '🌿 R290' : ref}
+                          isActive={selectedRefrigerant === ref}
+                          onClick={() => setSelectedRefrigerant(selectedRefrigerant === ref ? null : ref)}
+                        />
                       ))}
                     </div>
                   </div>
@@ -335,12 +359,13 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, dbData
               </section>
 
               {/* Active Filters Display */}
-              {(selectedBrand || selectedRange || selectedUnitType || searchQuery) && (
-                <div className="mb-4 flex flex-wrap items-center gap-2 text-sm text-gray-600">
+              {(selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery) && (
+                <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-gray-600">
                   <span className="font-semibold text-gray-700">{t.activeFilters}:</span>
                   {searchQuery && <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded border border-yellow-200">"{searchQuery}"</span>}
                   {selectedBrand && <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200">{selectedBrand}</span>}
-                  <button onClick={() => { setSelectedBrand(null); setSelectedRange(null); setSelectedUnitType(null); setSearchQuery(''); setLocalSearchInput(''); }} className="ml-auto text-red-500 hover:text-red-700 text-xs font-medium hover:underline">{t.clearAll}</button>
+                  {selectedRefrigerant && <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded border border-green-200">{selectedRefrigerant === 'R290' ? '🌿 R290' : selectedRefrigerant}</span>}
+                  <button onClick={() => { setSelectedBrand(null); setSelectedRange(null); setSelectedUnitType(null); setSelectedRefrigerant(null); setSearchQuery(''); setLocalSearchInput(''); }} className="ml-auto px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded border border-red-700 shadow-sm transition-colors">{t.clearAll}</button>
                 </div>
               )}
 

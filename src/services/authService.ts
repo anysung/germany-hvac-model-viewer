@@ -18,6 +18,7 @@ import { User, ActivityLog } from '../types';
 
 const ADMIN_PASS_KEY = 'ghpd_admin_pass';
 const DEFAULT_ADMIN_PASS = '10041004';
+const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
 
 // --- Activity Logging ---
 export const logActivity = async (userId: string, action: string, details: string) => {
@@ -100,19 +101,20 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
       const fallbackUser: User = {
         id: uid,
         email: email,
-        firstName: 'User',
-        lastName: '',
+        firstName: email === OWNER_EMAIL ? 'Christopher' : 'User',
+        lastName: email === OWNER_EMAIL ? 'Sung' : '',
         companyType: 'Private Individual',
         jobRole: 'General Public',
         isActive: true,
-        registeredAt: new Date().toISOString()
+        registeredAt: new Date().toISOString(),
+        role: email === OWNER_EMAIL ? 'owner' : 'user',
       };
       await setDoc(userDocRef, fallbackUser);
       logActivity(fallbackUser.id, 'LOGIN', 'User logged in (Profile Created)');
       return fallbackUser;
     }
 
-    const userData = userDoc.data() as User;
+    const userData = { ...userDoc.data() as User, role: email === OWNER_EMAIL ? 'owner' : (userDoc.data() as User).role || 'user' };
     
     if (!userData.isActive) {
       await signOut(auth);
@@ -140,20 +142,21 @@ export const onUserChange = (callback: (user: User | null) => void) => {
         const userDoc = await getDoc(userDocRef);
         
         if (userDoc.exists()) {
-          callback(userDoc.data() as User);
+          const userData = userDoc.data() as User;
+          const enriched = { ...userData, role: firebaseUser.email === OWNER_EMAIL ? 'owner' as const : userData.role || 'user' as const };
+          callback(enriched);
         } else {
-           const fallbackUser: User = {
+          const fallbackUser: User = {
             id: firebaseUser.uid,
             email: firebaseUser.email || '',
-            firstName: 'User',
-            lastName: '',
+            firstName: firebaseUser.email === OWNER_EMAIL ? 'Christopher' : 'User',
+            lastName: firebaseUser.email === OWNER_EMAIL ? 'Sung' : '',
             companyType: 'Private Individual',
             jobRole: 'General Public',
             isActive: true,
-            registeredAt: new Date().toISOString()
+            registeredAt: new Date().toISOString(),
+            role: firebaseUser.email === OWNER_EMAIL ? 'owner' : 'user',
           };
-          // Save fallback to DB? Optional, but good for consistency
-          // await setDoc(userDocRef, fallbackUser);
           callback(fallbackUser);
         }
       } catch (e) {

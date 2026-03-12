@@ -162,12 +162,61 @@ JSON array:`;
       return [];
     }
 
-    // Filter out obviously invalid entries
-    return products.filter(p => p && p.model && p.manufacturer);
+    // Filter out obviously invalid entries and blocklisted patterns
+    return products.filter(p => {
+      if (!p || !p.model || !p.manufacturer) return false;
+      // Reject bundled multi-model entries (contains "e.g." or model name > 80 chars)
+      if (p.model.toLowerCase().includes('e.g.') || p.model.toLowerCase().includes('e.g,')) return false;
+      if (p.model.length > 80) return false;
+      return true;
+    });
   } catch (err) {
     console.error(`  Error researching ${manufacturer}: ${err.message}`);
     return [];
   }
+}
+
+// -------------------------------------------------------------------
+// Curated open-source image library for news articles
+// All images: Unsplash (free to use, no attribution required for web)
+// Rule: assign based on keyword match in title/summary; never let AI hallucinate URLs
+// -------------------------------------------------------------------
+const NEWS_IMAGES = {
+  heatpump:     'https://images.unsplash.com/photo-1621905251189-08b1059efa82?auto=format&fit=crop&q=80&w=600',
+  subsidy:      'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=600',
+  house:        'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&q=80&w=600',
+  government:   'https://images.unsplash.com/photo-1555900234-35b55afe19df?auto=format&fit=crop&q=80&w=600',
+  solar:        'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=600',
+  technology:   'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=600',
+  installation: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600',
+  market:       'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600',
+  energy:       'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=600',
+};
+
+const NEWS_IMAGE_RULES = [
+  { key: 'subsidy',      keywords: ['bafa', 'beg', 'subsidy', 'funding', 'grant', 'zuschuss', 'kfw', 'förder', 'förderung'] },
+  { key: 'government',   keywords: ['parliament', 'bundestag', 'bundesrat', 'minister', 'government', 'geg', 'regulation', 'gesetz', 'policy', 'law', 'legislation'] },
+  { key: 'solar',        keywords: ['solar', 'photovoltaic', 'pv', 'renewable', 'wind', 'erneuerbar', 'green energy'] },
+  { key: 'technology',   keywords: ['r290', 'r32', 'refrigerant', 'cop', 'scop', 'efficiency', 'innovation', 'technology', 'inverter', 'compressor'] },
+  { key: 'installation', keywords: ['install', 'installer', 'montage', 'handwerk', 'technician', 'fachmann', 'workforce'] },
+  { key: 'market',       keywords: ['market', 'sales', 'statistics', 'stat', 'trend', 'bwp', 'report', 'record', 'growth', 'demand', 'forecast'] },
+  { key: 'energy',       keywords: ['energy', 'electricity', 'power', 'grid', 'strom', 'energie', 'tariff', 'price hike'] },
+  { key: 'house',        keywords: ['house', 'home', 'building', 'residential', 'gebäude', 'renovation', 'refurb', 'retrofit'] },
+  { key: 'heatpump',     keywords: ['heat pump', 'heatpump', 'wärmepumpe', 'outdoor unit', 'odu', 'idu', 'hvac', 'heating', 'viessmann', 'vaillant', 'stiebel', 'bosch', 'daikin', 'nibe', 'wolf', 'panasonic'] },
+];
+
+/**
+ * Select an appropriate image URL based on news title and summary keywords.
+ * Rule: always assign from curated map — never use AI-generated URLs.
+ */
+function selectNewsImage(title = '', summary = '') {
+  const text = `${title} ${summary}`.toLowerCase();
+  for (const rule of NEWS_IMAGE_RULES) {
+    if (rule.keywords.some(kw => text.includes(kw))) {
+      return NEWS_IMAGES[rule.key];
+    }
+  }
+  return NEWS_IMAGES.heatpump; // default fallback
 }
 
 // -------------------------------------------------------------------
@@ -202,8 +251,7 @@ Return ONLY valid JSON with this exact structure:
       "title": "Article title in English",
       "summary": "2-3 sentence summary in English",
       "sourceUrl": "https://actual-source-url.com",
-      "date": "YYYY-MM-DDT00:00:00Z",
-      "imageUrl": "https://images.unsplash.com/photo-1599690925058-90e1a0b327b8?auto=format&fit=crop&q=80&w=600"
+      "date": "YYYY-MM-DDT00:00:00Z"
     }
   ],
   "policies": [
@@ -217,7 +265,8 @@ Return ONLY valid JSON with this exact structure:
   ]
 }
 
-Use realistic Unsplash photo URLs for imageUrl. Increment the news ID counter (news-${yearMonth}-001, -002, etc.).
+Increment the news ID counter (news-${yearMonth}-001, -002, etc.).
+Do NOT include imageUrl — it will be assigned automatically by the system.
 Return ONLY the JSON object, no other text:`;
 
   try {
@@ -237,8 +286,14 @@ Return ONLY the JSON object, no other text:`;
       return { news: [], policies: [] };
     }
 
+    // Assign curated images based on keyword matching — never trust AI-generated URLs
+    const newsWithImages = (Array.isArray(result.news) ? result.news : []).map(item => ({
+      ...item,
+      imageUrl: selectNewsImage(item.title, item.summary),
+    }));
+
     return {
-      news: Array.isArray(result.news) ? result.news : [],
+      news: newsWithImages,
       policies: Array.isArray(result.policies) ? result.policies : [],
     };
   } catch (err) {

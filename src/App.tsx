@@ -104,10 +104,17 @@ const App: React.FC = () => {
   const handleAdminPinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (verifyAdminPassword(adminPinInput)) {
-      setCurrentView('ADMIN_DASHBOARD'); 
+      setCurrentView('ADMIN_DASHBOARD');
     } else {
       alert("Invalid Password");
       setAdminPinInput('');
+    }
+  };
+
+  // Owner can access Admin Dashboard directly from APP view
+  const handleOwnerAdminAccess = () => {
+    if (currentUser?.role === 'owner') {
+      setCurrentView('ADMIN_DASHBOARD');
     }
   };
 
@@ -237,9 +244,10 @@ const App: React.FC = () => {
     return (
       <div className="relative h-full">
         <LanguageSwitcher />
-        <HeatPumpApp 
-          user={currentUser} 
-          onLogout={handleLogout} 
+        <HeatPumpApp
+          user={currentUser}
+          onLogout={handleLogout}
+          onAdminAccess={currentUser.role === 'owner' ? handleOwnerAdminAccess : undefined}
           dbData={fullDatabase}
           lastUpdated={fullDatabase?.generatedAt || null}
           language={language}
