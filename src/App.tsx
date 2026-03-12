@@ -142,7 +142,7 @@ const App: React.FC = () => {
 
   // ... (Language Switcher Component - Keep same) ...
   const LanguageSwitcher = () => (
-    <div className="absolute top-6 right-6 z-50 flex gap-6">
+    <div className="fixed top-6 right-6 z-50 flex gap-6">
       <button onClick={() => setLanguage('en')} className={`text-5xl transition-transform hover:scale-110 drop-shadow-md ${language === 'en' ? 'opacity-100 scale-110' : 'opacity-60'}`}>🇬🇧</button>
       <button onClick={() => setLanguage('de')} className={`text-5xl transition-transform hover:scale-110 drop-shadow-md ${language === 'de' ? 'opacity-100 scale-110' : 'opacity-60'}`}>🇩🇪</button>
     </div>
