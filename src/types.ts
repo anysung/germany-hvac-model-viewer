@@ -1,17 +1,42 @@
 
 export interface HeatPump {
+  bafa_id: string;
   manufacturer: string;
-  unitType: string; // 'IDU' or 'ODU'
   model: string;
-  capacityRange: string;
-  dimensions: string; // H x W x D
-  refrigerant: string; // e.g., R290, R32
-  cop: string;
-  scop: string;
-  noiseLevel: string; // dB(A)
-  description: string;
-  others: string; // Additional specs
-  marketPrice: string;
+  type: string;                        // "Luft / Wasser"
+  refrigerant: string;
+  refrigerant_2: string | null;
+  installation_type: string | null;    // "Monoblock" or "Split"
+
+  // Performance (numeric)
+  power_35C_kw: number | null;
+  power_55C_kw: number | null;
+  cop_A7W35: number | null;
+  cop_A2W35: number | null;
+  cop_AMinus7W35: number | null;
+  scop: number | null;
+  noise_outdoor_dB: number | null;
+  noise_indoor_dB: number | null;
+
+  // Physical specs
+  width_mm: number | null;
+  height_mm: number | null;
+  depth_mm: number | null;
+  weight_kg: number | null;
+
+  // Grid readiness
+  grid_ready: boolean;
+  grid_ready_type: string | null;
+
+  // Pricing
+  equipment_price_low_eur: number | null;
+  equipment_price_typical_eur: number | null;
+  equipment_price_high_eur: number | null;
+  price_confidence: string | null;
+  brand_tier: string | null;
+  market_segment: string | null;
+  capacity_band: string | null;
+  refrigerant_group: string | null;
 }
 
 export type AppMode = 'DATABASE' | 'LIVE_API';
@@ -52,15 +77,16 @@ export interface HeatPumpDatabase {
   bafaListLinks?: BAFAItem[];
 }
 
+/** Top manufacturer filter badges — display label → substring match against manufacturer field */
 export enum Manufacturer {
-  Buderus = 'Buderus',
-  Bosch = 'Bosch',
+  Mitsubishi = 'Mitsubishi',
   Viessmann = 'Viessmann',
-  Vaillant = 'Vaillant',
-  LG_Electronics = 'LG Electronics',
+  Buderus = 'Buderus',
   Daikin = 'Daikin',
   Panasonic = 'Panasonic',
-  Stiebel_Eltron = 'Stiebel Eltron',
+  Samsung = 'Samsung',
+  Bosch = 'Bosch',
+  LG = 'LG',
 }
 
 export enum CapacityRange {
@@ -70,9 +96,9 @@ export enum CapacityRange {
   Range_13_17 = '13 kW ~ 17 kW',
 }
 
-export enum UnitType {
-  IDU = 'Indoor Unit (IDU)',
-  ODU = 'Outdoor Unit (ODU)',
+export enum InstallationType {
+  Monoblock = 'Monoblock',
+  Split = 'Split',
 }
 
 export type FetchState = 'idle' | 'loading' | 'success' | 'error';

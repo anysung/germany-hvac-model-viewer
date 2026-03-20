@@ -1,0 +1,813 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "last_updated": "2026-03-19",
+    "tier_rules": {
+      "S": "Core German/European premium heating brands with top installer-channel pricing power",
+      "A+": "Strong premium acceptance in DE hydronic market",
+      "A": "European heating specialists with solid channel positioning",
+      "B+": "Trusted brands, upper-mid pricing acceptance",
+      "B": "Recognized international brands, moderate premium acceptance",
+      "C": "Low DE pricing signal, non-China HQ or HQ unclear",
+      "D": "China-headquartered, low DE pricing signal (-15% to -10%)"
+    }
+  },
+  "brands": {
+    "Mitsubishi Electric Europe B.V.": {
+      "tier": "B+", "review_priority": "high",
+      "notes": "Global strong brand; not core DE premium hydronic tier"
+    },
+    "Viessmann Climate Solutions GmbH & Co.KG": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium heating brand"
+    },
+    "CLIVET GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "HVAC/project-oriented; lower consumer premium acceptance"
+    },
+    "Trane Deutschland GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "Commercial/HVAC strength; lower residential premium signal"
+    },
+    "Buderus": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium heating brand (Bosch group)"
+    },
+    "Aermec Deutschland GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "Project/HVAC-led market signal; Italian parent"
+    },
+    "Daikin Airconditioning Germany GmbH": {
+      "tier": "A+", "review_priority": "high",
+      "notes": "Strong premium acceptance in DE hydronic market"
+    },
+    "Panasonic Deutschland": {
+      "tier": "B+", "review_priority": "high",
+      "notes": "Trusted international brand; below German premium core"
+    },
+    "FläktGroup Deutschland GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "Commercial air/HVAC-oriented"
+    },
+    "ait-deutschland GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "German/European heating specialist (alpha innotec, KNV)"
+    },
+    "Samsung Klimatechnik": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Mass-market recognition; moderate hydronic premium acceptance"
+    },
+    "ELCO GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "European heating specialist positioning (Ariston group)"
+    },
+    "Johnson Controls Hitachi Air Conditioning Europe SAS": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Technical trust; not DE premium heating core"
+    },
+    "Carrier": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Global HVAC strength; moderate end-customer premium acceptance"
+    },
+    "Swegon Germany GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "Commercial HVAC skew; Swedish parent"
+    },
+    "Bosch": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium brand"
+    },
+    "August Brötje GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "German heating specialist (BDR Thermea group)"
+    },
+    "INVENTOR A.G. SINGLE MEMBER ELECTRIC APPLIANCES S.A.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Greek manufacturer; low DE pricing signal; non-China HQ"
+    },
+    "Ningbo AUX Electric Co., Ltd.": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ; low DE pricing signal"
+    },
+    "LG Electronics Deutschland GmbH": {
+      "tier": "B", "review_priority": "high",
+      "notes": "Competitive pricing; good recognition; Korean HQ"
+    },
+    "Malag&Soltau GmbH / M&S POWER": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Weak market signal; German distributor"
+    },
+    "Dimplex - Glen Dimplex Deutschland GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "Heating-channel friendly European brand; Irish parent"
+    },
+    "Germany GREE GmbH": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Gree Electric); low DE pricing signal"
+    },
+    "Johnson Controls Systems & Service GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Service/project-oriented signal"
+    },
+    "FUJITSU GENERAL (EURO) GmbH": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Trusted Japanese brand; moderate premium acceptance"
+    },
+    "STIEBEL ELTRON GmbH & Co. KG": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium heating brand"
+    },
+    "Olimpia Splendid S.p.A.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Competitive positioning; Italian; lower DE premium signal"
+    },
+    "REMKO GmbH & Co Kg": {
+      "tier": "B+", "review_priority": "high",
+      "notes": "German local signal; upper-mid acceptance"
+    },
+    "Midea Europe GmbH": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Midea Group); low DE pricing signal"
+    },
+    "WATERKOTTE GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "German specialist; should not be treated as low-price"
+    },
+    "Vaillant Deutschland GmbH & Co. KG": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium heating brand"
+    },
+    "Guangdong Answer Technology Co., Ltd": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Guangdong)"
+    },
+    "TEMPLARI SPA": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Italian manufacturer; low DE signal"
+    },
+    "Kampmann GmbH & Co. KG": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German ventilation/heating specialist"
+    },
+    "Guangdong PHNIX Eco-Energy Solutions Ltd.": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Guangdong)"
+    },
+    "Salvador Escoda SAU": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Spanish distributor; low DE signal"
+    },
+    "Tecalor GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "Stiebel Eltron subsidiary; German heating specialist"
+    },
+    "OUTES GmbH": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Zhejiang OUTES / A.O. Smith China division)"
+    },
+    "Advantix spa": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Italian manufacturer; low DE signal"
+    },
+    "ES Energy Save AB": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Swedish; low DE signal"
+    },
+    "Max Weishaupt SE": {
+      "tier": "A", "review_priority": "high",
+      "notes": "German heating specialist; premium burner/system brand"
+    },
+    "Rotenso sp. z o. o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish brand; low DE signal"
+    },
+    "MTF Marken-Distributions GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low pricing signal"
+    },
+    "Qingdao Economic and Technological Development Zone Haier Water Heater Co., Ltd.": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Haier Group, Qingdao)"
+    },
+    "WOLF GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "German heating specialist"
+    },
+    "IGLOO Sp. z o.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Remeha GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "European heating brand (BDR Thermea group)"
+    },
+    "SolaX Power Network Technology (Zhejiang) Co., Ltd.": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Zhejiang)"
+    },
+    "Stulz GmbH": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "German precision climate; mainly data center/commercial"
+    },
+    "FOSHAN SHUNDE ZEALUX ELECTRICAL APPLIANCES CO., LTD.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Foshan)"
+    },
+    "POWER WORLD MACHINERY EQUIPMENT CO., LTD": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ"
+    },
+    "S-Klima": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low DE signal; HQ unclear"
+    },
+    "Michl Technik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low-cost segment signal"
+    },
+    "GD Shenling Thermal Tech Co., Ltd": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Guangdong)"
+    },
+    "Beijer Ref Deutschland GmbH": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Swedish parent; HVAC wholesale/distribution"
+    },
+    "Cooldown": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; HQ unclear"
+    },
+    "Klima-Therm GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Distributor; low DE pricing signal"
+    },
+    "NIBE Systemtechnik GmbH": {
+      "tier": "A+", "review_priority": "high",
+      "notes": "Swedish premium heating brand; strong DE acceptance"
+    },
+    "Ochsner Wärmepumpen GmbH": {
+      "tier": "A", "review_priority": "high",
+      "notes": "Austrian heat pump specialist"
+    },
+    "SolarEast Heat Pump Ltd": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ"
+    },
+    "Guangdong New Energy Technology Co., Ltd": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Guangdong)"
+    },
+    "Heliotherm Wärmepumpentechnik Ges.m.b.H": {
+      "tier": "A", "review_priority": "medium",
+      "notes": "Austrian heat pump specialist"
+    },
+    "MTA Deutschland GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Italian parent; commercial/project focus"
+    },
+    "Groupe Airwell": {
+      "tier": "C", "review_priority": "low",
+      "notes": "French; moderate HVAC presence, low DE premium signal"
+    },
+    "Thermia AG": {
+      "tier": "A", "review_priority": "medium",
+      "notes": "NIBE group; Swedish heating specialist"
+    },
+    "CTA AG": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Swiss heating/ventilation specialist"
+    },
+    "Galletti S.p.A.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Italian; commercial HVAC focus"
+    },
+    "iDM Energiesysteme GmbH": {
+      "tier": "A", "review_priority": "medium",
+      "notes": "Austrian heat pump specialist"
+    },
+    "Orange Energy GmbH & Co. KG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; German entity"
+    },
+    "Austria Email GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating/hot water brand"
+    },
+    "AUTARK POWER GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; German entity"
+    },
+    "Photomate s.r.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Czech; low DE signal"
+    },
+    "TommaTech GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; HQ unclear"
+    },
+    "Hisense Gorenje Germany GmbH": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Hisense Group acquired Gorenje)"
+    },
+    "Pollmann Technik GmH & CoKG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Austrian; low DE signal"
+    },
+    "Aereco GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "French parent; mainly ventilation"
+    },
+    "Hargassner Ges mbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating specialist (biomass focus expanding to HP)"
+    },
+    "M-TEC GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heat pump specialist"
+    },
+    "Herz Energietechnik GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating/energy specialist"
+    },
+    "Roth Werke GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German heating/energy systems"
+    },
+    "ACCAMPS GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; German entity"
+    },
+    "Bulg Frank Topnik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; German entity"
+    },
+    "Rhoss Deutschland GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Italian parent; commercial HVAC"
+    },
+    "SOLVIS GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German solar/heating specialist"
+    },
+    "Xtherma GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; German entity"
+    },
+    "\u201eGalmet Sp. z o.o.\u201d Sp. K.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Hoval GmbH": {
+      "tier": "A", "review_priority": "medium",
+      "notes": "Liechtenstein/Swiss premium heating brand"
+    },
+    "Kaukora Oy": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Finnish; low DE signal"
+    },
+    "Kermi GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German radiator/heating brand"
+    },
+    "Ritter Energie GmbH & Co. KG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Schönknecht & Busch GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "VARMEKS ISITMA VE SOĞUTMA SANAYİ VE TİCARET A.Ş.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Turkish manufacturer; low DE signal"
+    },
+    "DVI Energi A/S": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Danish; low DE signal"
+    },
+    "FOXESS CO., LTD.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Jiangsu); solar inverter + HP"
+    },
+    "Heim AG Heizsysteme": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Swiss; low signal"
+    },
+    "Höcker Wärmepumpen GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "LumenHaus GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Riello S.p.A Zweigniederlassung Deutschland": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Italian; established heating brand in Europe"
+    },
+    "SOLARFOCUS GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating specialist"
+    },
+    "Tongyi Heat Pump Science and Technology Co., Ltd.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ"
+    },
+    "2G Heek GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German CHP specialist; low HP-specific signal"
+    },
+    "GEP German Energy Power GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German entity; low signal"
+    },
+    "NORD HT Sp. z o.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Olymp Werk GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "WRW Pipes GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "ACOND a.s.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Czech; low DE signal"
+    },
+    "Ecoforest S.A.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Spanish; low DE signal"
+    },
+    "Effidur GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Harreither Ges.m.b.H.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Austrian; low signal"
+    },
+    "Kensol Sp. z o.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "KNV Energietechnik GmbH": {
+      "tier": "A", "review_priority": "medium",
+      "notes": "NIBE subsidiary; Austrian specialist"
+    },
+    "Ovum Heiztechnik GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating specialist"
+    },
+    "DEFRO R. Dziubela sp. k.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Enpal Production GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "German energy company; new to HP, low pricing signal"
+    },
+    "Fuchs Group GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "NMT Heizsysteme GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "OEG GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low signal"
+    },
+    "1 SINQ GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Bosch Thermotechnik GmbH": {
+      "tier": "S", "review_priority": "high",
+      "notes": "Core German premium brand (Bosch group)"
+    },
+    "DEHER sp. z . o. o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Ecochi GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Foshan Goodheat Technology Ltd": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Foshan)"
+    },
+    "MHG Heiztechnik GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German heating brand"
+    },
+    "Qmex Technology B.V.,": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Dutch entity; low signal"
+    },
+    "SUNEX S.A.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Ventron GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "AWE AG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; HQ unclear"
+    },
+    "GZ AXEN Heat Pump Technology CO.,LTD": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Guangzhou)"
+    },
+    "heatrex GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "HOTJET CZ s.r.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Czech; low DE signal"
+    },
+    "Löwe Spitzentechnologie GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "ThermoCare GmbH, Gerrit Tijdeman": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Weider Wärmepumpen GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heat pump specialist"
+    },
+    "Zewotherm Heating GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Adlar Castra Deutschland GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German entity; low signal"
+    },
+    "ATAG Heizungstechnik GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Dutch/German heating brand"
+    },
+    "COPPEN GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "CTC Heizkessel Wärmetechnik Berthold GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Dream Maker Technologie GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German entity; low signal"
+    },
+    "Görrissen Manufacturing GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Guangdong JNOD New Energy Technology Co., LTD.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Guangdong)"
+    },
+    "HT Heiztechnik Spółka z ograniczoną odpowiedzialną": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "KWB Energiesysteme GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian biomass/heating specialist"
+    },
+    "Regulus Wärmetechnik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Czech parent; low DE signal"
+    },
+    "RP Handels und Service GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low signal"
+    },
+    "SmartHeat Deutschland GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German entity; low signal"
+    },
+    "Windhager(HIDU GmbH)": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating specialist"
+    },
+    "Ygnis AG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Swiss; low DE signal"
+    },
+    "ATTACK, s.r.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Slovak; low DE signal"
+    },
+    "BHT Deutschland GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "HKS Lazar Sp z o.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "LAMBDA Wärmepumpen GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heat pump specialist; innovative positioning"
+    },
+    "Qingdao Smad Electric Appliances Co., Ltd.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Qingdao)"
+    },
+    "Voß Wärmepumpen GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Atec GmbH & Co KG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Brunner GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German fireplace/heating specialist"
+    },
+    "EQ-Therm GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Genertec Europe Temax GmbH": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China state-owned parent (Genertec)"
+    },
+    "iZZiFAST Spółka z o.o. spółka komandytowa": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "Kołton": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "R5 Energy GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Roman Kriuchkovenko Cooper&Hunter DE": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; HQ unclear"
+    },
+    "Techno Therm AG": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Low signal; Swiss entity"
+    },
+    "TOP Wärmepumpen GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Tulip Wise B.V.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Dutch; low DE signal"
+    },
+    "Waermequelle GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "WunderWärme GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Aira Home Germany GmbH": {
+      "tier": "C", "review_priority": "medium",
+      "notes": "Swedish-backed startup; growing DE presence but low signal"
+    },
+    "Climalutions B.V.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Dutch; low DE signal"
+    },
+    "curam-Energia GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "HOME STAR SPÓŁKA Z OGRANICZONĄ ODPOWIDZIALNOŚCIĄ": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "INTERDOMO GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Kołton Spółka Komandytowa": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Polish; low DE signal"
+    },
+    "KRONE Kälte + Klima Vertriebs-GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low signal"
+    },
+    "Nilan GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Danish parent; ventilation focus"
+    },
+    "Ox int d.o.o.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Slovenian; low DE signal"
+    },
+    "Qvantum Energietechnik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German/Swedish; low signal"
+    },
+    "Solarbayer GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Solardirekt24 GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German distributor; low signal"
+    },
+    "TherMotion GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Zhejiang Deye Electrical Appliances Co., Ltd.": {
+      "tier": "D", "review_priority": "medium",
+      "notes": "China HQ (Zhejiang Deye); inverter/energy brand"
+    },
+    "BES BuildingEnergySolutions GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Chint PVSTAR Energy Solution B.V.": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (CHINT Group, Zhejiang)"
+    },
+    "CSR Autark Energie & Gebäudetechnik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "DeWarmte B.V.": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Dutch; low DE signal"
+    },
+    "drexel und weiss energieeffiziente Haustechniksysteme GmbH": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian ventilation/heating specialist"
+    },
+    "Guntamatic Heiztechnik Gmbh": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian heating specialist"
+    },
+    "HANSA Heiztechnik GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "HeatPump23 GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Inova d.o.o": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Slovenian; low DE signal"
+    },
+    "ÖkoFEN Forschungs- und Entwicklungsgesellschaft m.b.H.": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "Austrian specialist (pellet heating expanding to HP)"
+    },
+    "Ratiotherm GmbH & Co. KG": {
+      "tier": "B+", "review_priority": "medium",
+      "notes": "German heating/storage specialist"
+    },
+    "Robur SpA": {
+      "tier": "B", "review_priority": "medium",
+      "notes": "Italian; gas-absorption HP specialist"
+    },
+    "Shunhong Environmental Technology (Suzhou) Co., Ltd": {
+      "tier": "D", "review_priority": "low",
+      "notes": "China HQ (Suzhou)"
+    },
+    "Systemair GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "Swedish parent; ventilation focus"
+    },
+    "Thermion GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "HDG Bavaria GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German biomass; low HP signal"
+    },
+    "Luchs Werk": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    },
+    "Skadec GmbH": {
+      "tier": "C", "review_priority": "low",
+      "notes": "German; low signal"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHeatPumps } from '../services/geminiService';
 import { logActivity } from '../services/authService';
-import { HeatPump, Manufacturer, CapacityRange, UnitType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
+import { HeatPump, Manufacturer, CapacityRange, InstallationType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
 import { FilterBadge } from './FilterBadge';
 import { ResultsTable } from './ResultsTable';
 import { NewsView } from './NewsView';
@@ -20,22 +20,13 @@ interface HeatPumpAppProps {
   appMode: AppMode;
 }
 
-// --- Helper Functions for Numeric Capacity Parsing ---
+// --- Helper Functions for Capacity Range Filtering ---
 
 const getNumericBounds = (rangeLabel: string): { min: number, max: number } | null => {
   const numbers = rangeLabel.match(/(\d+(\.\d+)?)/g)?.map(Number);
   if (numbers && numbers.length >= 2) {
     return { min: numbers[0], max: numbers[1] };
   }
-  return null;
-};
-
-const extractCapacityValue = (capacityString: string): number | null => {
-  if (!capacityString) return null;
-  const kwMatch = capacityString.match(/(\d+(\.\d+)?)\s*kW/i);
-  if (kwMatch) return parseFloat(kwMatch[1]);
-  const anyNumMatch = capacityString.match(/(\d+(\.\d+)?)/);
-  if (anyNumMatch) return parseFloat(anyNumMatch[1]);
   return null;
 };
 
@@ -89,37 +80,45 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
   const executeDbSearch = useCallback(() => {
     if (dbData?.products) {
       let filtered = [...dbData.products];
-      if (selectedBrand) filtered = filtered.filter((item: HeatPump) => item.manufacturer === selectedBrand);
-      
+
+      // Brand filter — substring match (e.g. "Viessmann" matches "Viessmann Climate Solutions GmbH & Co.KG")
+      if (selectedBrand) {
+        const brandLower = selectedBrand.toLowerCase();
+        filtered = filtered.filter((item: HeatPump) => item.manufacturer.toLowerCase().includes(brandLower));
+      }
+
+      // Capacity range filter — numeric comparison against power_35C_kw
       if (selectedRange) {
         const bounds = getNumericBounds(selectedRange);
         if (bounds) {
           filtered = filtered.filter((item: HeatPump) => {
-            const val = extractCapacityValue(item.capacityRange);
+            const val = item.power_35C_kw;
             if (val === null) return false;
             return val >= bounds.min && val <= bounds.max;
           });
-        } else {
-          filtered = filtered.filter((item: HeatPump) => item.capacityRange.includes(selectedRange));
         }
       }
 
+      // Installation type filter (replaces old IDU/ODU unit type filter)
       if (selectedUnitType) {
-        filtered = filtered.filter((item: HeatPump) => item.unitType.includes(selectedUnitType === UnitType.IDU ? 'IDU' : 'ODU'));
+        const installType = selectedUnitType === InstallationType.Monoblock ? 'Monoblock' : 'Split';
+        filtered = filtered.filter((item: HeatPump) => item.installation_type === installType);
       }
 
+      // Refrigerant filter — contains match
       if (selectedRefrigerant) {
         filtered = filtered.filter((item: HeatPump) => item.refrigerant.includes(selectedRefrigerant));
       }
 
+      // Text search — model or manufacturer
       if (searchQuery) {
         const lowerQ = searchQuery.toLowerCase();
-        filtered = filtered.filter((item: HeatPump) => 
-          item.model.toLowerCase().includes(lowerQ) || 
+        filtered = filtered.filter((item: HeatPump) =>
+          item.model.toLowerCase().includes(lowerQ) ||
           item.manufacturer.toLowerCase().includes(lowerQ)
         );
       }
-      
+
       if (searchQuery || selectedBrand || selectedRange || selectedRefrigerant) {
          logActivity(user.id, 'FILTER_DB', `Brand: ${selectedBrand}, Range: ${selectedRange}, Refrigerant: ${selectedRefrigerant}, Q: ${searchQuery}`);
       }
@@ -337,7 +336,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                   <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
                     <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterUnitType}</h3>
                     <div className="flex flex-wrap gap-1.5">
-                      {(Object.values(UnitType) as string[]).map((type) => (
+                      {(Object.values(InstallationType) as string[]).map((type) => (
                         <FilterBadge key={type} label={type} isActive={selectedUnitType === type} onClick={() => setSelectedUnitType(selectedUnitType === type ? null : type)} />
                       ))}
                     </div>

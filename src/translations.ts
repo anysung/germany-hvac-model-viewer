@@ -88,8 +88,10 @@ export const translations = {
     colRefrigerant: "Refrigerant",
     colDim: "Dimensions",
     colNoise: "Noise",
-    colOther: "Other",
+    colWeight: "Weight",
     colPrice: "Price",
+    colInstallType: "Install Type",
+    colSGReady: "SG Ready",
     loading: "Loading...",
     noResults: "No results found.",
     
@@ -188,8 +190,10 @@ export const translations = {
     colRefrigerant: "Kältemittel",
     colDim: "Maße",
     colNoise: "Lärm",
-    colOther: "Sonstiges",
+    colWeight: "Gewicht",
     colPrice: "Preis",
+    colInstallType: "Bauart",
+    colSGReady: "SG Ready",
     loading: "Laden...",
     noResults: "Keine Ergebnisse.",
     

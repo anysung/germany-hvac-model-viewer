@@ -1,0 +1,40 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "market": "TODO: Country code (e.g. 'UK', 'FR', 'SE')",
+    "last_updated": "TODO: YYYY-MM-DD",
+    "total_brands": 0,
+    "tier_rules": {
+      "S":  "TODO: Define S-tier criteria for this market (e.g. 'Dominant domestic premium heating brands')",
+      "A+": "TODO: Define A+-tier criteria (e.g. 'Strong premium acceptance in local market')",
+      "A":  "TODO: Define A-tier criteria (e.g. 'Established specialist brands with local presence')",
+      "B+": "TODO: Define B+-tier criteria (e.g. 'Trusted international brands with meaningful local penetration')",
+      "B":  "TODO: Define B-tier criteria — this is the BASELINE tier (0% adjustment)",
+      "C":  "TODO: Define C-tier criteria (e.g. 'Low local pricing signal, limited distribution')",
+      "D":  "TODO: Define D-tier criteria (e.g. 'Aggressively priced brands, limited installer channel')"
+    },
+    "notes": [
+      "Brand positioning varies by country. A brand that is S-tier in one market may be A+ or A in another.",
+      "B-tier is baseline (0% price adjustment). All other tiers are relative to B.",
+      "Map ALL manufacturers in the country's heat pump registry.",
+      "Unmapped brands will default to C-tier with a 'brand_not_mapped' review flag."
+    ]
+  },
+  "brands": {
+    "Example Premium Brand": {
+      "tier": "S",
+      "review_priority": "low",
+      "notes": "TODO: Justification for tier assignment"
+    },
+    "Example Mid-Tier Brand": {
+      "tier": "B",
+      "review_priority": "low",
+      "notes": "TODO: Justification for tier assignment"
+    },
+    "Example Budget Brand": {
+      "tier": "D",
+      "review_priority": "medium",
+      "notes": "TODO: Justification for tier assignment"
+    }
+  }
+}

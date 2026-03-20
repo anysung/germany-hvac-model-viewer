@@ -1,0 +1,2041 @@
+{
+  "_meta": {
+    "version": "2.0",
+    "last_updated": "2026-03-20",
+    "description": "Curated physical specifications reference database for BAFA-listed heat pump product families. Organized by manufacturer and product family. Each family has one or more chassis variants mapped to capacity ranges.",
+    "source_note": "Dimensions and weights sourced from manufacturer technical datasheets and product documentation. Values represent the outdoor unit (ODU) for split systems and the main unit for monoblocks.",
+    "total_families": 49,
+    "coverage_note": "v2.0: Expanded from 34 to 49 families. Covers S/A+/A/B+ tiers plus major C/D tier Chinese OEM brands. Residential coverage: 72.6%."
+  },
+  "families": [
+    {
+      "id": "viessmann-vitocal-250a",
+      "manufacturer_pattern": "Viessmann",
+      "family_name": "Vitocal 250-A / 150-A (Monoblock R290)",
+      "model_patterns": ["251\\.A", "151\\.A", "AWMOF-251", "AWMOF-151", "HAWO", "221\\.A", "AWOT", "250-AH"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 6.5],
+          "model_hint": "A04|A06",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 89,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "89 kg",
+          "source_note": "Viessmann Vitocal 250-A datasheet AWO 251.A04/A06"
+        },
+        {
+          "capacity_range_kw": [6.5, 9],
+          "model_hint": "A08",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 92,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "92 kg",
+          "source_note": "Viessmann Vitocal 250-A datasheet AWO 251.A08"
+        },
+        {
+          "capacity_range_kw": [9, 11],
+          "model_hint": "A10",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 119,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "119 kg",
+          "source_note": "Viessmann Vitocal 250-A datasheet AWO 251.A10"
+        },
+        {
+          "capacity_range_kw": [11, 14],
+          "model_hint": "A13|A16",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 130,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "130 kg",
+          "source_note": "Viessmann Vitocal 250-A datasheet AWO 251.A13/A16"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "A19",
+          "width_mm": 1590,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 155,
+          "dimensions_raw": "1590 x 1060 x 540 mm",
+          "weight_raw": "155 kg",
+          "source_note": "Viessmann Vitocal 250-A datasheet AWO 251.A19"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "viessmann-vitocal-200a",
+      "manufacturer_pattern": "Viessmann",
+      "family_name": "Vitocal 200-A (Monoblock R290)",
+      "model_patterns": ["Vitocal 200-A", "201\\.A"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 6],
+          "model_hint": "A04|A06",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 85,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "85 kg",
+          "source_note": "Viessmann Vitocal 200-A datasheet AWO 201.A04/A06"
+        },
+        {
+          "capacity_range_kw": [6, 11],
+          "model_hint": "A09|A10",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 113,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "113 kg",
+          "source_note": "Viessmann Vitocal 200-A datasheet AWO 201.A09/A10"
+        },
+        {
+          "capacity_range_kw": [11, 20],
+          "model_hint": "A13",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 130,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "130 kg",
+          "source_note": "Viessmann Vitocal 200-A datasheet AWO 201.A13"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "viessmann-vitocal-200s-222s",
+      "manufacturer_pattern": "Viessmann",
+      "family_name": "Vitocal 200-S / 222-S (Split R32)",
+      "model_patterns": ["Vitocal 200-S", "Vitocal 222-S", "201\\.E", "201\\.D", "221\\.E", "221\\.C"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "04|06",
+          "width_mm": 880,
+          "height_mm": 638,
+          "depth_mm": 310,
+          "weight_kg": 43,
+          "dimensions_raw": "880 x 638 x 310 mm (ODU)",
+          "weight_raw": "43 kg (ODU)",
+          "source_note": "Viessmann Vitocal 200-S/222-S datasheet ODU small chassis"
+        },
+        {
+          "capacity_range_kw": [7, 11],
+          "model_hint": "08|09|10",
+          "width_mm": 880,
+          "height_mm": 798,
+          "depth_mm": 310,
+          "weight_kg": 55,
+          "dimensions_raw": "880 x 798 x 310 mm (ODU)",
+          "weight_raw": "55 kg (ODU)",
+          "source_note": "Viessmann Vitocal 200-S/222-S datasheet ODU medium chassis"
+        },
+        {
+          "capacity_range_kw": [11, 20],
+          "model_hint": "13",
+          "width_mm": 1050,
+          "height_mm": 798,
+          "depth_mm": 370,
+          "weight_kg": 72,
+          "dimensions_raw": "1050 x 798 x 370 mm (ODU)",
+          "weight_raw": "72 kg (ODU)",
+          "source_note": "Viessmann Vitocal 200-S/222-S datasheet ODU large chassis"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "vaillant-arotherm-plus",
+      "manufacturer_pattern": "Vaillant",
+      "family_name": "aroTHERM plus VWL (Monoblock R290)",
+      "model_patterns": ["VWL.*230V", "VWL.*400V"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 6],
+          "model_hint": "35/5|55/8",
+          "width_mm": 1098,
+          "height_mm": 800,
+          "depth_mm": 450,
+          "weight_kg": 84,
+          "dimensions_raw": "1098 x 800 x 450 mm",
+          "weight_raw": "84 kg",
+          "source_note": "Vaillant aroTHERM plus VWL 35/55 datasheet"
+        },
+        {
+          "capacity_range_kw": [6, 9],
+          "model_hint": "75/6|85/6",
+          "width_mm": 1098,
+          "height_mm": 1020,
+          "depth_mm": 450,
+          "weight_kg": 107,
+          "dimensions_raw": "1098 x 1020 x 450 mm",
+          "weight_raw": "107 kg",
+          "source_note": "Vaillant aroTHERM plus VWL 75/85 datasheet"
+        },
+        {
+          "capacity_range_kw": [9, 14],
+          "model_hint": "105/5|125/5",
+          "width_mm": 1380,
+          "height_mm": 1020,
+          "depth_mm": 450,
+          "weight_kg": 145,
+          "dimensions_raw": "1380 x 1020 x 450 mm",
+          "weight_raw": "145 kg",
+          "source_note": "Vaillant aroTHERM plus VWL 105/125 datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "vaillant-arotherm-split",
+      "manufacturer_pattern": "Vaillant",
+      "family_name": "aroTHERM Split (R410A/R32)",
+      "model_patterns": ["aroTHERM Split"],
+      "refrigerant": null,
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 6],
+          "model_hint": "35/5|55/5",
+          "width_mm": 879,
+          "height_mm": 650,
+          "depth_mm": 340,
+          "weight_kg": 42,
+          "dimensions_raw": "879 x 650 x 340 mm (ODU)",
+          "weight_raw": "42 kg (ODU)",
+          "source_note": "Vaillant aroTHERM Split VWL 35-55 ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [6, 10],
+          "model_hint": "75/5|85/5",
+          "width_mm": 879,
+          "height_mm": 800,
+          "depth_mm": 340,
+          "weight_kg": 54,
+          "dimensions_raw": "879 x 800 x 340 mm (ODU)",
+          "weight_raw": "54 kg (ODU)",
+          "source_note": "Vaillant aroTHERM Split VWL 75-85 ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [10, 20],
+          "model_hint": "105/5|125/5",
+          "width_mm": 1050,
+          "height_mm": 800,
+          "depth_mm": 370,
+          "weight_kg": 72,
+          "dimensions_raw": "1050 x 800 x 370 mm (ODU)",
+          "weight_raw": "72 kg (ODU)",
+          "source_note": "Vaillant aroTHERM Split VWL 105-125 ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "bosch-compress-7800i",
+      "manufacturer_pattern": "^Bosch$",
+      "family_name": "Compress 7800i AW (Monoblock R290)",
+      "model_patterns": ["7800i", "CS 7001i"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "5|7|8",
+          "width_mm": 1091,
+          "height_mm": 845,
+          "depth_mm": 508,
+          "weight_kg": 97,
+          "dimensions_raw": "1091 x 845 x 508 mm",
+          "weight_raw": "97 kg",
+          "source_note": "Bosch Compress 7800i AW 5-8 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 13],
+          "model_hint": "10|12|13",
+          "width_mm": 1091,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 125,
+          "dimensions_raw": "1091 x 1060 x 508 mm",
+          "weight_raw": "125 kg",
+          "source_note": "Bosch Compress 7800i AW 10-13 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [13, 20],
+          "model_hint": "14|17",
+          "width_mm": 1330,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 150,
+          "dimensions_raw": "1330 x 1060 x 508 mm",
+          "weight_raw": "150 kg",
+          "source_note": "Bosch Compress 7800i AW 14-17 kW datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "bosch-compress-5800i",
+      "manufacturer_pattern": "^Bosch$",
+      "family_name": "Compress 5800i AW (Split R32)",
+      "model_patterns": ["5800i", "CS 5800"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "24|36|38",
+          "width_mm": 940,
+          "height_mm": 700,
+          "depth_mm": 340,
+          "weight_kg": 44,
+          "dimensions_raw": "940 x 700 x 340 mm (ODU)",
+          "weight_raw": "44 kg (ODU)",
+          "source_note": "Bosch Compress 5800i AW ODU small chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "48|50|60",
+          "width_mm": 940,
+          "height_mm": 870,
+          "depth_mm": 340,
+          "weight_kg": 62,
+          "dimensions_raw": "940 x 870 x 340 mm (ODU)",
+          "weight_raw": "62 kg (ODU)",
+          "source_note": "Bosch Compress 5800i AW ODU large chassis datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "bosch-compress-6800i",
+      "manufacturer_pattern": "^Bosch$",
+      "family_name": "Compress 6800i AW (Monoblock R290 Hybrid)",
+      "model_patterns": ["6800", "Compress 6800"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "5|7",
+          "width_mm": 1091,
+          "height_mm": 845,
+          "depth_mm": 508,
+          "weight_kg": 97,
+          "dimensions_raw": "1091 x 845 x 508 mm",
+          "weight_raw": "97 kg",
+          "source_note": "Bosch Compress 6800i AW 5/7 datasheet (shared chassis with 7800i small)"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "10|12",
+          "width_mm": 1091,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 125,
+          "dimensions_raw": "1091 x 1060 x 508 mm",
+          "weight_raw": "125 kg",
+          "source_note": "Bosch Compress 6800i AW 10/12 datasheet (shared chassis with 7800i medium)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "buderus-logatherm-wlw-mb-ar",
+      "manufacturer_pattern": "^Buderus$",
+      "family_name": "Logatherm WLW MB AR (Monoblock R290)",
+      "model_patterns": ["WLW.*MB AR", "Logatherm WLW", "WLW196i", "WLW186i", "WLW-\\d", "Logaplus.*WLW"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 6],
+          "model_hint": "WLW-4|WLW-5",
+          "width_mm": 1091,
+          "height_mm": 845,
+          "depth_mm": 508,
+          "weight_kg": 97,
+          "dimensions_raw": "1091 x 845 x 508 mm",
+          "weight_raw": "97 kg",
+          "source_note": "Buderus Logatherm WLW-4/5 MB AR datasheet (Bosch platform)"
+        },
+        {
+          "capacity_range_kw": [6, 9],
+          "model_hint": "WLW-7|WLW-8",
+          "width_mm": 1091,
+          "height_mm": 845,
+          "depth_mm": 508,
+          "weight_kg": 100,
+          "dimensions_raw": "1091 x 845 x 508 mm",
+          "weight_raw": "100 kg",
+          "source_note": "Buderus Logatherm WLW-7/8 MB AR datasheet (Bosch platform)"
+        },
+        {
+          "capacity_range_kw": [9, 13],
+          "model_hint": "WLW-10|WLW-12",
+          "width_mm": 1091,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 125,
+          "dimensions_raw": "1091 x 1060 x 508 mm",
+          "weight_raw": "125 kg",
+          "source_note": "Buderus Logatherm WLW-10/12 MB AR datasheet (Bosch platform)"
+        },
+        {
+          "capacity_range_kw": [13, 20],
+          "model_hint": "WLW-14|WLW-17",
+          "width_mm": 1330,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 150,
+          "dimensions_raw": "1330 x 1060 x 508 mm",
+          "weight_raw": "150 kg",
+          "source_note": "Buderus Logatherm WLW-14/17 MB AR datasheet (Bosch platform)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "stiebel-eltron-wpl",
+      "manufacturer_pattern": "STIEBEL ELTRON",
+      "family_name": "WPL / LWZ (Monoblock R454C/R290)",
+      "model_patterns": ["WPL", "LWZ"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "05|07|5|7",
+          "width_mm": 1245,
+          "height_mm": 848,
+          "depth_mm": 603,
+          "weight_kg": 115,
+          "dimensions_raw": "1245 x 848 x 603 mm",
+          "weight_raw": "115 kg",
+          "source_note": "STIEBEL ELTRON WPL-A/LWZ 05/07 datasheet small chassis"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "10|12",
+          "width_mm": 1245,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 145,
+          "dimensions_raw": "1245 x 1098 x 603 mm",
+          "weight_raw": "145 kg",
+          "source_note": "STIEBEL ELTRON WPL-A/LWZ 10/12 datasheet medium chassis"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "15|17|19",
+          "width_mm": 1440,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 170,
+          "dimensions_raw": "1440 x 1098 x 603 mm",
+          "weight_raw": "170 kg",
+          "source_note": "STIEBEL ELTRON WPL-A 15-19 datasheet large chassis"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "daikin-altherma3-r",
+      "manufacturer_pattern": "Daikin",
+      "family_name": "Altherma 3 R (Monoblock R32)",
+      "model_patterns": ["Altherma 3 R", "EDLA\\d+D", "ERGA\\d+D"],
+      "refrigerant": "R32",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|06|08",
+          "width_mm": 884,
+          "height_mm": 735,
+          "depth_mm": 388,
+          "weight_kg": 51,
+          "dimensions_raw": "884 x 735 x 388 mm",
+          "weight_raw": "51 kg",
+          "source_note": "Daikin Altherma 3 R 4-8 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 12],
+          "model_hint": "10|12",
+          "width_mm": 884,
+          "height_mm": 870,
+          "depth_mm": 388,
+          "weight_kg": 63,
+          "dimensions_raw": "884 x 870 x 388 mm",
+          "weight_raw": "63 kg",
+          "source_note": "Daikin Altherma 3 R 10-12 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "14|16",
+          "width_mm": 884,
+          "height_mm": 1050,
+          "depth_mm": 388,
+          "weight_kg": 81,
+          "dimensions_raw": "884 x 1050 x 388 mm",
+          "weight_raw": "81 kg",
+          "source_note": "Daikin Altherma 3 R 14-16 kW datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "daikin-altherma3-h-ht",
+      "manufacturer_pattern": "Daikin",
+      "family_name": "Altherma 3 H HT (Split R32, high temp)",
+      "model_patterns": ["Altherma 3 H HT", "Altherma 3 H.*HT"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 20],
+          "model_hint": "14|16|18",
+          "width_mm": 900,
+          "height_mm": 1345,
+          "depth_mm": 320,
+          "weight_kg": 83,
+          "dimensions_raw": "900 x 1345 x 320 mm (ODU)",
+          "weight_raw": "83 kg (ODU)",
+          "source_note": "Daikin Altherma 3 H HT ODU datasheet (single chassis)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "wolf-cha-monoblock",
+      "manufacturer_pattern": "WOLF",
+      "family_name": "CHA Monoblock (R290)",
+      "model_patterns": ["CHA", "CHC-MONOBLOCK"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "07|10",
+          "width_mm": 1144,
+          "height_mm": 870,
+          "depth_mm": 545,
+          "weight_kg": 105,
+          "dimensions_raw": "1144 x 870 x 545 mm",
+          "weight_raw": "105 kg",
+          "source_note": "WOLF CHA-07/10 Monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "16|20|24",
+          "width_mm": 1384,
+          "height_mm": 1104,
+          "depth_mm": 545,
+          "weight_kg": 155,
+          "dimensions_raw": "1384 x 1104 x 545 mm",
+          "weight_raw": "155 kg",
+          "source_note": "WOLF CHA-16/20 Monoblock datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "panasonic-aquarea-j-mono",
+      "manufacturer_pattern": "Panasonic",
+      "family_name": "Aquarea J/L Generation (Monoblock R290)",
+      "model_patterns": ["WH.*J\\d+", "WH.*L\\d+"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "05|07",
+          "width_mm": 898,
+          "height_mm": 799,
+          "depth_mm": 385,
+          "weight_kg": 62,
+          "dimensions_raw": "898 x 799 x 385 mm",
+          "weight_raw": "62 kg",
+          "source_note": "Panasonic Aquarea J/L 5-7 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "09|12",
+          "width_mm": 898,
+          "height_mm": 964,
+          "depth_mm": 385,
+          "weight_kg": 77,
+          "dimensions_raw": "898 x 964 x 385 mm",
+          "weight_raw": "77 kg",
+          "source_note": "Panasonic Aquarea J/L 9-12 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "16",
+          "width_mm": 1050,
+          "height_mm": 964,
+          "depth_mm": 385,
+          "weight_kg": 92,
+          "dimensions_raw": "1050 x 964 x 385 mm",
+          "weight_raw": "92 kg",
+          "source_note": "Panasonic Aquarea J/L 16 kW monoblock datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "samsung-ehs-mono",
+      "manufacturer_pattern": "Samsung",
+      "family_name": "EHS Mono R290",
+      "model_patterns": ["AE.*CXYD", "AE.*BXYD"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "050|060",
+          "width_mm": 940,
+          "height_mm": 798,
+          "depth_mm": 330,
+          "weight_kg": 55,
+          "dimensions_raw": "940 x 798 x 330 mm",
+          "weight_raw": "55 kg",
+          "source_note": "Samsung EHS Mono 5-6 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "080|100|120",
+          "width_mm": 940,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 72,
+          "dimensions_raw": "940 x 998 x 330 mm",
+          "weight_raw": "72 kg",
+          "source_note": "Samsung EHS Mono 8-12 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "140|160",
+          "width_mm": 1200,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 96,
+          "dimensions_raw": "1200 x 998 x 330 mm",
+          "weight_raw": "96 kg",
+          "source_note": "Samsung EHS Mono 14-16 kW datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "nibe-f2120",
+      "manufacturer_pattern": "NIBE",
+      "family_name": "NIBE F2120 (Monoblock R290)",
+      "model_patterns": ["F2120", "F2040"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 10],
+          "model_hint": "8|12",
+          "width_mm": 1270,
+          "height_mm": 880,
+          "depth_mm": 555,
+          "weight_kg": 115,
+          "dimensions_raw": "1270 x 880 x 555 mm",
+          "weight_raw": "115 kg",
+          "source_note": "NIBE F2120/F2040 8-12 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [10, 20],
+          "model_hint": "16|20",
+          "width_mm": 1270,
+          "height_mm": 1130,
+          "depth_mm": 555,
+          "weight_kg": 145,
+          "dimensions_raw": "1270 x 1130 x 555 mm",
+          "weight_raw": "145 kg",
+          "source_note": "NIBE F2120/F2040 16-20 kW datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "nibe-ams",
+      "manufacturer_pattern": "NIBE",
+      "family_name": "NIBE AMS (Split R32)",
+      "model_patterns": ["AMS"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "10-6|10-8|20-6",
+          "width_mm": 900,
+          "height_mm": 616,
+          "depth_mm": 320,
+          "weight_kg": 35,
+          "dimensions_raw": "900 x 616 x 320 mm (ODU)",
+          "weight_raw": "35 kg (ODU)",
+          "source_note": "NIBE AMS 10-6/10-8 ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "10-12|10-16|20-10",
+          "width_mm": 1050,
+          "height_mm": 800,
+          "depth_mm": 370,
+          "weight_kg": 58,
+          "dimensions_raw": "1050 x 800 x 370 mm (ODU)",
+          "weight_raw": "58 kg (ODU)",
+          "source_note": "NIBE AMS 10-12/10-16 ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "alpha-innotec-hylix",
+      "manufacturer_pattern": "ait-deutschland",
+      "family_name": "alpha innotec Hylix / LWAV+ (Monoblock R290)",
+      "model_patterns": ["Hylix", "LWAV"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|06|08",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 90,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "90 kg",
+          "source_note": "alpha innotec Hylix / LWAV+ 4-8 kW datasheet (ait-deutschland platform)"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|12|13",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 120,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "120 kg",
+          "source_note": "alpha innotec Hylix / LWAV+ 10-13 kW datasheet (ait-deutschland platform)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "remko-arc",
+      "manufacturer_pattern": "REMKO",
+      "family_name": "REMKO ARC / WKF (Monoblock R290)",
+      "model_patterns": ["ARC", "WKF", "ARCTIC", "HTS", "WKM"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "050|070|080",
+          "width_mm": 1090,
+          "height_mm": 845,
+          "depth_mm": 510,
+          "weight_kg": 95,
+          "dimensions_raw": "1090 x 845 x 510 mm",
+          "weight_raw": "95 kg",
+          "source_note": "REMKO ARC/WKF small chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "100|120|140|170",
+          "width_mm": 1090,
+          "height_mm": 1060,
+          "depth_mm": 510,
+          "weight_kg": 130,
+          "dimensions_raw": "1090 x 1060 x 510 mm",
+          "weight_raw": "130 kg",
+          "source_note": "REMKO ARC/WKF large chassis datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "lg-therma-v-mono",
+      "manufacturer_pattern": "LG",
+      "family_name": "LG THERMA V R290 Monobloc",
+      "model_patterns": ["HM.*U\\d+", "HN.*U\\d+"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "051|071",
+          "width_mm": 954,
+          "height_mm": 834,
+          "depth_mm": 384,
+          "weight_kg": 63,
+          "dimensions_raw": "954 x 834 x 384 mm",
+          "weight_raw": "63 kg",
+          "source_note": "LG THERMA V R290 5-7 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 12],
+          "model_hint": "091|121",
+          "width_mm": 954,
+          "height_mm": 1074,
+          "depth_mm": 384,
+          "weight_kg": 82,
+          "dimensions_raw": "954 x 1074 x 384 mm",
+          "weight_raw": "82 kg",
+          "source_note": "LG THERMA V R290 9-12 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "141|161",
+          "width_mm": 1194,
+          "height_mm": 1074,
+          "depth_mm": 384,
+          "weight_kg": 104,
+          "dimensions_raw": "1194 x 1074 x 384 mm",
+          "weight_raw": "104 kg",
+          "source_note": "LG THERMA V R290 14-16 kW monoblock datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "brotje-blia",
+      "manufacturer_pattern": "Brötje",
+      "family_name": "August Brötje BLiA / BLW (Monoblock R290)",
+      "model_patterns": ["BLiA", "BLW"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "06|08",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 90,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "90 kg",
+          "source_note": "Brötje BLiA 6-8 kW datasheet (shared platform)"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|12|13",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 125,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "125 kg",
+          "source_note": "Brötje BLiA 10-13 kW datasheet (shared platform)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "mitsubishi-ecodan-puz",
+      "manufacturer_pattern": "Mitsubishi Electric",
+      "family_name": "Ecodan PUZ (Monoblock residential R32/R290)",
+      "model_patterns": ["PUZ", "SUZ"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "WM50|WM60|WM80",
+          "width_mm": 950,
+          "height_mm": 760,
+          "depth_mm": 330,
+          "weight_kg": 50,
+          "dimensions_raw": "950 x 760 x 330 mm",
+          "weight_raw": "50 kg",
+          "source_note": "Mitsubishi Ecodan PUZ 5-8 kW residential datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 15],
+          "model_hint": "WM100|WM112|WM120|WM140",
+          "width_mm": 1050,
+          "height_mm": 960,
+          "depth_mm": 370,
+          "weight_kg": 70,
+          "dimensions_raw": "1050 x 960 x 370 mm",
+          "weight_raw": "70 kg",
+          "source_note": "Mitsubishi Ecodan PUZ 10-14 kW residential datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "mitsubishi-ecodan-split-puhz",
+      "manufacturer_pattern": "Mitsubishi Electric",
+      "family_name": "Ecodan PUHZ/PUD Split (R32/R290)",
+      "model_patterns": ["PUHZ", "PUD-S"],
+      "refrigerant": null,
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "SHW.*50|SHW.*60|SWM60|SHWM60",
+          "width_mm": 800,
+          "height_mm": 550,
+          "depth_mm": 285,
+          "weight_kg": 37,
+          "dimensions_raw": "800 x 550 x 285 mm (ODU)",
+          "weight_raw": "37 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan PUHZ/PUD split 5-6 kW ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 11],
+          "model_hint": "SHW.*80|SHW.*100|SWM80|SHWM80|SWM100|SHWM100",
+          "width_mm": 800,
+          "height_mm": 714,
+          "depth_mm": 285,
+          "weight_kg": 48,
+          "dimensions_raw": "800 x 714 x 285 mm (ODU)",
+          "weight_raw": "48 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan PUHZ/PUD split 8-10 kW ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [11, 20],
+          "model_hint": "SHW.*120|SHW.*140|SWM120|SHWM120|SWM140|SHWM140",
+          "width_mm": 1050,
+          "height_mm": 770,
+          "depth_mm": 330,
+          "weight_kg": 62,
+          "dimensions_raw": "1050 x 770 x 330 mm (ODU)",
+          "weight_raw": "62 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan PUHZ/PUD split 12-14 kW ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "mitsubishi-ecodan-split-suz",
+      "manufacturer_pattern": "Mitsubishi Electric",
+      "family_name": "Ecodan SUZ Split (R32)",
+      "model_patterns": ["SUZ-SWM"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 5],
+          "model_hint": "SWM30|SWM40",
+          "width_mm": 800,
+          "height_mm": 550,
+          "depth_mm": 285,
+          "weight_kg": 35,
+          "dimensions_raw": "800 x 550 x 285 mm (ODU)",
+          "weight_raw": "35 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan SUZ-SWM30/40 ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [5, 10],
+          "model_hint": "SWM60|SWM80",
+          "width_mm": 800,
+          "height_mm": 714,
+          "depth_mm": 285,
+          "weight_kg": 45,
+          "dimensions_raw": "800 x 714 x 285 mm (ODU)",
+          "weight_raw": "45 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan SUZ-SWM60/80 ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [10, 20],
+          "model_hint": "SWM100",
+          "width_mm": 1050,
+          "height_mm": 770,
+          "depth_mm": 330,
+          "weight_kg": 60,
+          "dimensions_raw": "1050 x 770 x 330 mm (ODU)",
+          "weight_raw": "60 kg (ODU)",
+          "source_note": "Mitsubishi Ecodan SUZ-SWM100 ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "mitsubishi-ecodan-puz-wz-wm",
+      "manufacturer_pattern": "Mitsubishi Electric",
+      "family_name": "Ecodan PUZ-WZ/WM Monoblock (R290)",
+      "model_patterns": ["PUZ-WZ", "PUZ-WM", "PUZ-HWM", "PUZ-SWM", "PUZ-SHWM"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "50|60",
+          "width_mm": 950,
+          "height_mm": 760,
+          "depth_mm": 330,
+          "weight_kg": 52,
+          "dimensions_raw": "950 x 760 x 330 mm",
+          "weight_raw": "52 kg",
+          "source_note": "Mitsubishi Ecodan PUZ-WZ 5-6 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 11],
+          "model_hint": "80|85|100",
+          "width_mm": 1050,
+          "height_mm": 960,
+          "depth_mm": 370,
+          "weight_kg": 70,
+          "dimensions_raw": "1050 x 960 x 370 mm",
+          "weight_raw": "70 kg",
+          "source_note": "Mitsubishi Ecodan PUZ-WZ/WM 8-10 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [11, 20],
+          "model_hint": "112|120|140",
+          "width_mm": 1050,
+          "height_mm": 1170,
+          "depth_mm": 370,
+          "weight_kg": 90,
+          "dimensions_raw": "1050 x 1170 x 370 mm",
+          "weight_raw": "90 kg",
+          "source_note": "Mitsubishi Ecodan PUZ-WM 11-14 kW monoblock datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "panasonic-aquarea",
+      "manufacturer_pattern": "Panasonic",
+      "family_name": "Aquarea (general residential, various generations)",
+      "model_patterns": ["Aquarea", "AQUAREA", "WH-"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "05|07|5J|7J",
+          "width_mm": 898,
+          "height_mm": 799,
+          "depth_mm": 385,
+          "weight_kg": 62,
+          "dimensions_raw": "898 x 799 x 385 mm",
+          "weight_raw": "62 kg",
+          "source_note": "Panasonic Aquarea residential 5-7 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "09|12|9J|12J",
+          "width_mm": 898,
+          "height_mm": 964,
+          "depth_mm": 385,
+          "weight_kg": 77,
+          "dimensions_raw": "898 x 964 x 385 mm",
+          "weight_raw": "77 kg",
+          "source_note": "Panasonic Aquarea residential 9-12 kW monoblock datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "16",
+          "width_mm": 1050,
+          "height_mm": 964,
+          "depth_mm": 385,
+          "weight_kg": 92,
+          "dimensions_raw": "1050 x 964 x 385 mm",
+          "weight_raw": "92 kg",
+          "source_note": "Panasonic Aquarea residential 16 kW monoblock datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "daikin-altherma-general",
+      "manufacturer_pattern": "Daikin",
+      "family_name": "Daikin Altherma (general residential)",
+      "model_patterns": ["Altherma", "DAIKIN Altherma", "Daikin Altherma"],
+      "refrigerant": null,
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|06|08|4kW|6kW|8kW",
+          "width_mm": 884,
+          "height_mm": 735,
+          "depth_mm": 388,
+          "weight_kg": 51,
+          "dimensions_raw": "884 x 735 x 388 mm (ODU)",
+          "weight_raw": "51 kg (ODU)",
+          "source_note": "Daikin Altherma 3 general ODU small chassis"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|12|14|10kW|12kW|14kW",
+          "width_mm": 884,
+          "height_mm": 870,
+          "depth_mm": 388,
+          "weight_kg": 63,
+          "dimensions_raw": "884 x 870 x 388 mm (ODU)",
+          "weight_raw": "63 kg (ODU)",
+          "source_note": "Daikin Altherma 3 general ODU medium chassis"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "16|18|16kW|18kW",
+          "width_mm": 900,
+          "height_mm": 1345,
+          "depth_mm": 320,
+          "weight_kg": 83,
+          "dimensions_raw": "900 x 1345 x 320 mm (ODU)",
+          "weight_raw": "83 kg (ODU)",
+          "source_note": "Daikin Altherma 3 H HT general ODU large chassis"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "samsung-wplw",
+      "manufacturer_pattern": "Samsung",
+      "family_name": "Samsung WPLW (residential R290/R32)",
+      "model_patterns": ["WPLW"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "050|060",
+          "width_mm": 940,
+          "height_mm": 798,
+          "depth_mm": 330,
+          "weight_kg": 55,
+          "dimensions_raw": "940 x 798 x 330 mm",
+          "weight_raw": "55 kg",
+          "source_note": "Samsung WPLW residential 5-6 kW monoblock"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "080|100|120",
+          "width_mm": 940,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 72,
+          "dimensions_raw": "940 x 998 x 330 mm",
+          "weight_raw": "72 kg",
+          "source_note": "Samsung WPLW residential 8-12 kW monoblock"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "140|160",
+          "width_mm": 1200,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 96,
+          "dimensions_raw": "1200 x 998 x 330 mm",
+          "weight_raw": "96 kg",
+          "source_note": "Samsung WPLW residential 14-16 kW monoblock"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "hitachi-yutaki",
+      "manufacturer_pattern": "Johnson Controls Hitachi",
+      "family_name": "Hitachi Yutaki / airH2O (residential)",
+      "model_patterns": ["YUTAKI", "Yutaki", "airH2O"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "5|6|8",
+          "width_mm": 965,
+          "height_mm": 790,
+          "depth_mm": 390,
+          "weight_kg": 65,
+          "dimensions_raw": "965 x 790 x 390 mm",
+          "weight_raw": "65 kg",
+          "source_note": "Hitachi Yutaki M/S 5-8 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|11|14",
+          "width_mm": 965,
+          "height_mm": 990,
+          "depth_mm": 390,
+          "weight_kg": 82,
+          "dimensions_raw": "965 x 990 x 390 mm",
+          "weight_raw": "82 kg",
+          "source_note": "Hitachi Yutaki M 10-14 kW datasheet"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "16|18",
+          "width_mm": 1140,
+          "height_mm": 990,
+          "depth_mm": 390,
+          "weight_kg": 100,
+          "dimensions_raw": "1140 x 990 x 390 mm",
+          "weight_raw": "100 kg",
+          "source_note": "Hitachi Yutaki M 16-18 kW datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "elco-aerotop",
+      "manufacturer_pattern": "ELCO",
+      "family_name": "ELCO AEROTOP (Monoblock R290)",
+      "model_patterns": ["AEROTOP"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|06|08|4|6|8",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 90,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "90 kg",
+          "source_note": "ELCO AEROTOP 4-8 kW datasheet (shared platform with alpha innotec)"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|12|13",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 125,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "125 kg",
+          "source_note": "ELCO AEROTOP 10-13 kW datasheet (shared platform with alpha innotec)"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "16|19",
+          "width_mm": 1590,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 155,
+          "dimensions_raw": "1590 x 1060 x 540 mm",
+          "weight_raw": "155 kg",
+          "source_note": "ELCO AEROTOP 16-19 kW datasheet (shared platform)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "fujitsu-waterstage",
+      "manufacturer_pattern": "FUJITSU",
+      "family_name": "Fujitsu Waterstage (Split R32/R290)",
+      "model_patterns": ["WATERSTAGE", "WOYG", "WOHG", "WGYG"],
+      "refrigerant": null,
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "050|060|080",
+          "width_mm": 799,
+          "height_mm": 548,
+          "depth_mm": 290,
+          "weight_kg": 36,
+          "dimensions_raw": "799 x 548 x 290 mm (ODU)",
+          "weight_raw": "36 kg (ODU)",
+          "source_note": "Fujitsu Waterstage small ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "100|121|140",
+          "width_mm": 958,
+          "height_mm": 696,
+          "depth_mm": 300,
+          "weight_kg": 53,
+          "dimensions_raw": "958 x 696 x 300 mm (ODU)",
+          "weight_raw": "53 kg (ODU)",
+          "source_note": "Fujitsu Waterstage medium ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "160|180",
+          "width_mm": 1083,
+          "height_mm": 790,
+          "depth_mm": 330,
+          "weight_kg": 72,
+          "dimensions_raw": "1083 x 790 x 330 mm (ODU)",
+          "weight_raw": "72 kg (ODU)",
+          "source_note": "Fujitsu Waterstage large ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "lg-therma-v-split",
+      "manufacturer_pattern": "LG",
+      "family_name": "LG THERMA V (Split R32/R410A)",
+      "model_patterns": ["THERMA"],
+      "refrigerant": null,
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "051|071",
+          "width_mm": 880,
+          "height_mm": 638,
+          "depth_mm": 310,
+          "weight_kg": 40,
+          "dimensions_raw": "880 x 638 x 310 mm (ODU)",
+          "weight_raw": "40 kg (ODU)",
+          "source_note": "LG THERMA V split 5-7 kW ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "091|121",
+          "width_mm": 880,
+          "height_mm": 798,
+          "depth_mm": 310,
+          "weight_kg": 53,
+          "dimensions_raw": "880 x 798 x 310 mm (ODU)",
+          "weight_raw": "53 kg (ODU)",
+          "source_note": "LG THERMA V split 9-12 kW ODU datasheet"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "141|161",
+          "width_mm": 1050,
+          "height_mm": 798,
+          "depth_mm": 370,
+          "weight_kg": 72,
+          "dimensions_raw": "1050 x 798 x 370 mm (ODU)",
+          "weight_raw": "72 kg (ODU)",
+          "source_note": "LG THERMA V split 14-16 kW ODU datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "ait-deutschland-general",
+      "manufacturer_pattern": "ait-deutschland",
+      "family_name": "ait-deutschland (alpha innotec / Tecalor general)",
+      "model_patterns": ["LAVS", "LWDV", "Helox", "Hybrox", "LWD", "^L\\d+\\sS", "^LIV", "^LAV", "^LW\\s", "Jabbah", "Jersey", "Polaris", "Paros", "Sculptor", "Union", "LICV", "LWCV", "LWV", "LADV", "LAD\\s", "^LI\\s", "^LA\\s"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "06|08|04",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 90,
+          "dimensions_raw": "1290 x 850 x 540 mm",
+          "weight_raw": "90 kg",
+          "source_note": "ait-deutschland platform small chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "10|12|13",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 120,
+          "dimensions_raw": "1385 x 1060 x 540 mm",
+          "weight_raw": "120 kg",
+          "source_note": "ait-deutschland platform medium chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "16|19",
+          "width_mm": 1590,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 155,
+          "dimensions_raw": "1590 x 1060 x 540 mm",
+          "weight_raw": "155 kg",
+          "source_note": "ait-deutschland platform large chassis datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "dimplex-la",
+      "manufacturer_pattern": "Dimplex",
+      "family_name": "Dimplex LA (Monoblock R290)",
+      "model_patterns": ["LA\\s", "LIA", "System M"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "06|07|08|0712|0916",
+          "width_mm": 1270,
+          "height_mm": 870,
+          "depth_mm": 555,
+          "weight_kg": 110,
+          "dimensions_raw": "1270 x 870 x 555 mm",
+          "weight_raw": "110 kg",
+          "source_note": "Dimplex LA residential small chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "12|14|1117",
+          "width_mm": 1270,
+          "height_mm": 1130,
+          "depth_mm": 555,
+          "weight_kg": 140,
+          "dimensions_raw": "1270 x 1130 x 555 mm",
+          "weight_raw": "140 kg",
+          "source_note": "Dimplex LA residential medium chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "16|1525|18",
+          "width_mm": 1480,
+          "height_mm": 1130,
+          "depth_mm": 555,
+          "weight_kg": 165,
+          "dimensions_raw": "1480 x 1130 x 555 mm",
+          "weight_raw": "165 kg",
+          "source_note": "Dimplex LA residential large chassis datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "tecalor-ttl-thz",
+      "manufacturer_pattern": "Tecalor",
+      "family_name": "Tecalor TTL / THZ (Stiebel Eltron platform)",
+      "model_patterns": ["TTL", "THZ"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "4.5|5.1|5.5|5.6|6.5",
+          "width_mm": 1245,
+          "height_mm": 848,
+          "depth_mm": 603,
+          "weight_kg": 115,
+          "dimensions_raw": "1245 x 848 x 603 mm",
+          "weight_raw": "115 kg",
+          "source_note": "Tecalor TTL/THZ small chassis (Stiebel Eltron WPL platform)"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "7.1|7.6|8.5|9.5|9.6|10.1",
+          "width_mm": 1245,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 145,
+          "dimensions_raw": "1245 x 1098 x 603 mm",
+          "weight_raw": "145 kg",
+          "source_note": "Tecalor TTL/THZ medium chassis (Stiebel Eltron WPL platform)"
+        },
+        {
+          "capacity_range_kw": [12, 25],
+          "model_hint": "12.6|13.1|13.5|17.1|20|25",
+          "width_mm": 1440,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 170,
+          "dimensions_raw": "1440 x 1098 x 603 mm",
+          "weight_raw": "170 kg",
+          "source_note": "Tecalor TTL/THZ large chassis (Stiebel Eltron WPL platform)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "medium"
+    },
+    {
+      "id": "buderus-logatherm-wpls",
+      "manufacturer_pattern": "^Buderus$",
+      "family_name": "Logatherm WPLS (Split R32)",
+      "model_patterns": ["WPLS"],
+      "refrigerant": "R32",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 9],
+          "model_hint": "6.2|8.2",
+          "width_mm": 880,
+          "height_mm": 638,
+          "depth_mm": 310,
+          "weight_kg": 43,
+          "dimensions_raw": "880 x 638 x 310 mm (ODU)",
+          "weight_raw": "43 kg (ODU)",
+          "source_note": "Buderus WPLS split ODU small (Bosch/Viessmann split platform)"
+        },
+        {
+          "capacity_range_kw": [9, 20],
+          "model_hint": "13.2",
+          "width_mm": 1050,
+          "height_mm": 798,
+          "depth_mm": 370,
+          "weight_kg": 72,
+          "dimensions_raw": "1050 x 798 x 370 mm (ODU)",
+          "weight_raw": "72 kg (ODU)",
+          "source_note": "Buderus WPLS split ODU large (Bosch/Viessmann split platform)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "medium"
+    },
+    {
+      "id": "viessmann-vitocal-250s",
+      "manufacturer_pattern": "Viessmann",
+      "family_name": "Vitocal 250-S / 250-SH (Split R290 ODU)",
+      "model_patterns": ["250-S", "250-SH", "HAWB"],
+      "refrigerant": "R290",
+      "installation_type": "Split",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "B06|B08",
+          "width_mm": 1290,
+          "height_mm": 850,
+          "depth_mm": 540,
+          "weight_kg": 89,
+          "dimensions_raw": "1290 x 850 x 540 mm (ODU)",
+          "weight_raw": "89 kg (ODU)",
+          "source_note": "Viessmann Vitocal 250-S split ODU small (R290 platform)"
+        },
+        {
+          "capacity_range_kw": [8, 12],
+          "model_hint": "B10|A10",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 119,
+          "dimensions_raw": "1385 x 1060 x 540 mm (ODU)",
+          "weight_raw": "119 kg (ODU)",
+          "source_note": "Viessmann Vitocal 250-S split ODU medium (R290 platform)"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "A13|A16",
+          "width_mm": 1385,
+          "height_mm": 1060,
+          "depth_mm": 540,
+          "weight_kg": 130,
+          "dimensions_raw": "1385 x 1060 x 540 mm (ODU)",
+          "weight_raw": "130 kg (ODU)",
+          "source_note": "Viessmann Vitocal 250-S split ODU large (R290 platform)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "mtf-samsung-wplw",
+      "manufacturer_pattern": "MTF",
+      "family_name": "MTF WPLW-Hub (Samsung OEM)",
+      "model_patterns": ["WPLW", "AE\\s*\\d{3}"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "050|060",
+          "width_mm": 940,
+          "height_mm": 798,
+          "depth_mm": 330,
+          "weight_kg": 55,
+          "dimensions_raw": "940 x 798 x 330 mm",
+          "weight_raw": "55 kg",
+          "source_note": "Samsung EHS platform 5-6 kW (MTF OEM)"
+        },
+        {
+          "capacity_range_kw": [7, 12],
+          "model_hint": "080|100|120",
+          "width_mm": 940,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 72,
+          "dimensions_raw": "940 x 998 x 330 mm",
+          "weight_raw": "72 kg",
+          "source_note": "Samsung EHS platform 8-12 kW (MTF OEM)"
+        },
+        {
+          "capacity_range_kw": [12, 20],
+          "model_hint": "140|160",
+          "width_mm": 1200,
+          "height_mm": 998,
+          "depth_mm": 330,
+          "weight_kg": 96,
+          "dimensions_raw": "1200 x 998 x 330 mm",
+          "weight_raw": "96 kg",
+          "source_note": "Samsung EHS platform 14-16 kW (MTF OEM)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "medium"
+    },
+    {
+      "id": "aux-achp-h-r290",
+      "manufacturer_pattern": "AUX|Ningbo AUX",
+      "family_name": "AUX ACHP-H R290 Monoblock",
+      "model_patterns": ["ACHP-H"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 7],
+          "model_hint": "H04|H06",
+          "width_mm": 1130,
+          "height_mm": 710,
+          "depth_mm": 420,
+          "weight_kg": 93,
+          "dimensions_raw": "1130 x 710 x 420 mm",
+          "weight_raw": "93 kg",
+          "source_note": "AUX Baltic R290 monoblock datasheet ACHP-H06"
+        },
+        {
+          "capacity_range_kw": [7, 11],
+          "model_hint": "H08|H10",
+          "width_mm": 1280,
+          "height_mm": 1040,
+          "depth_mm": 420,
+          "weight_kg": 136,
+          "dimensions_raw": "1280 x 1040 x 420 mm",
+          "weight_raw": "136 kg",
+          "source_note": "AUX Baltic R290 monoblock datasheet ACHP-H08/H10"
+        },
+        {
+          "capacity_range_kw": [11, 20],
+          "model_hint": "H12|H14|H16",
+          "width_mm": 1280,
+          "height_mm": 1040,
+          "depth_mm": 420,
+          "weight_kg": 154,
+          "dimensions_raw": "1280 x 1040 x 420 mm",
+          "weight_raw": "154 kg",
+          "source_note": "AUX Baltic R290 monoblock datasheet ACHP-H12/H14/H16"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "haier-super-aqua",
+      "manufacturer_pattern": "Haier|Qingdao.*Haier",
+      "family_name": "Haier Super Aqua R290 Monoblock",
+      "model_patterns": ["HPM", "AU\\d{3}F", "Super Aqua"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 9],
+          "model_hint": "06|08|HPM06|HPM08",
+          "width_mm": 950,
+          "height_mm": 965,
+          "depth_mm": 395,
+          "weight_kg": 87,
+          "dimensions_raw": "950 x 965 x 395 mm",
+          "weight_raw": "87 kg",
+          "source_note": "Haier Super Aqua 7.8kW datasheet (eco-asset.eu)"
+        },
+        {
+          "capacity_range_kw": [9, 20],
+          "model_hint": "10|12|16|HPM10|HPM12|HPM16",
+          "width_mm": 950,
+          "height_mm": 1490,
+          "depth_mm": 380,
+          "weight_kg": 145,
+          "dimensions_raw": "950 x 1490 x 380 mm",
+          "weight_raw": "145 kg",
+          "source_note": "Haier Super Aqua 11-16kW datasheet (eco-asset.eu)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "gree-versati-mono",
+      "manufacturer_pattern": "GREE|Germany GREE",
+      "family_name": "GREE Versati III/IV/V Monoblock",
+      "model_patterns": ["GRS-CQ", "Versati"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "CQ06|CQ08|CQ6|CQ8",
+          "width_mm": 1150,
+          "height_mm": 758,
+          "depth_mm": 345,
+          "weight_kg": 85,
+          "dimensions_raw": "1150 x 758 x 345 mm",
+          "weight_raw": "~85 kg",
+          "source_note": "GREE Versati IV 6kW product page (green-innovation.gr)"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "CQ10|CQ12|CQ14|CQ16",
+          "width_mm": 1200,
+          "height_mm": 878,
+          "depth_mm": 460,
+          "weight_kg": 151,
+          "dimensions_raw": "1200 x 878 x 460 mm",
+          "weight_raw": "151 kg",
+          "source_note": "GREE Versati 16kW datasheet (tepse.gr) — applies to 10-16 kW chassis"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "carrier-30awh",
+      "manufacturer_pattern": "^Carrier$",
+      "family_name": "Carrier AquaSnap 30AWH (Monoblock R290)",
+      "model_patterns": ["30AWH", "AquaSnap"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 9],
+          "model_hint": "004|006|008|M004|M006|M008",
+          "width_mm": 946,
+          "height_mm": 927,
+          "depth_mm": 560,
+          "weight_kg": 79,
+          "dimensions_raw": "946 x 927 x 560 mm",
+          "weight_raw": "79 kg",
+          "source_note": "Carrier 30AWH-P 4-6kW datasheet (mksystems.lv)"
+        },
+        {
+          "capacity_range_kw": [9, 20],
+          "model_hint": "010|012|014|016|M010|M012|M014|M016",
+          "width_mm": 946,
+          "height_mm": 1375,
+          "depth_mm": 560,
+          "weight_kg": 128,
+          "dimensions_raw": "946 x 1375 x 560 mm",
+          "weight_raw": "128 kg",
+          "source_note": "Carrier 30AWH-P 12kW datasheet (mksystems.lv)"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "high"
+    },
+    {
+      "id": "midea-mha-v-r290",
+      "manufacturer_pattern": "Midea",
+      "family_name": "Midea M thermal Arctic R290 Monoblock",
+      "model_patterns": ["MHA-V", "MHC-V", "M thermal"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "V06|V08|04|06|08",
+          "width_mm": 1299,
+          "height_mm": 717,
+          "depth_mm": 426,
+          "weight_kg": 90,
+          "dimensions_raw": "1299 x 717 x 426 mm",
+          "weight_raw": "90 kg",
+          "source_note": "Midea R290 M thermal Arctic Mono small chassis datasheet"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "V10|V12|V14|V16|10|12|14|16",
+          "width_mm": 1385,
+          "height_mm": 865,
+          "depth_mm": 523,
+          "weight_kg": 137,
+          "dimensions_raw": "1385 x 865 x 523 mm",
+          "weight_raw": "137 kg",
+          "source_note": "Midea R290 M thermal Arctic Mono large chassis datasheet"
+        }
+      ],
+      "source_type": "manufacturer_datasheet",
+      "confidence": "medium"
+    },
+    {
+      "id": "jci-york-ykf",
+      "manufacturer_pattern": "Johnson Controls Systems",
+      "family_name": "York YKF Monoblock (R290)",
+      "model_patterns": ["YKF"],
+      "refrigerant": "R290",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|05|06|07",
+          "width_mm": 946,
+          "height_mm": 927,
+          "depth_mm": 560,
+          "weight_kg": 79,
+          "dimensions_raw": "946 x 927 x 560 mm",
+          "weight_raw": "79 kg",
+          "source_note": "York/Carrier shared platform small chassis (30AWH-P OEM)"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "08|09|10|12|14|16|18",
+          "width_mm": 946,
+          "height_mm": 1375,
+          "depth_mm": 560,
+          "weight_kg": 128,
+          "dimensions_raw": "946 x 1375 x 560 mm",
+          "weight_raw": "128 kg",
+          "source_note": "York/Carrier shared platform large chassis (30AWH-P OEM)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "medium"
+    },
+    {
+      "id": "inventor-atm-r290",
+      "manufacturer_pattern": "INVENTOR",
+      "family_name": "INVENTOR ATM/Matrix R290 Monoblock",
+      "model_patterns": ["ATM", "ATS", "XFMH", "Matrix"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "04|06|08",
+          "width_mm": 1130,
+          "height_mm": 710,
+          "depth_mm": 420,
+          "weight_kg": 93,
+          "dimensions_raw": "1130 x 710 x 420 mm",
+          "weight_raw": "~93 kg",
+          "source_note": "INVENTOR ATM small chassis (shared Chinese monoblock platform)"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "10|12|14|16",
+          "width_mm": 1280,
+          "height_mm": 1040,
+          "depth_mm": 420,
+          "weight_kg": 145,
+          "dimensions_raw": "1280 x 1040 x 420 mm",
+          "weight_raw": "~145 kg",
+          "source_note": "INVENTOR ATM large chassis (shared Chinese monoblock platform)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "low"
+    },
+    {
+      "id": "olimpia-splendid-sherpa",
+      "manufacturer_pattern": "Olimpia Splendid",
+      "family_name": "Olimpia Splendid Sherpa Aquadue S3 Monoblock",
+      "model_patterns": ["Sherpa"],
+      "refrigerant": "R32",
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "4|6|8|E 4|E 6|E 8",
+          "width_mm": 1130,
+          "height_mm": 710,
+          "depth_mm": 420,
+          "weight_kg": 93,
+          "dimensions_raw": "1130 x 710 x 420 mm",
+          "weight_raw": "~93 kg",
+          "source_note": "Olimpia Splendid Sherpa small chassis (shared OEM platform)"
+        },
+        {
+          "capacity_range_kw": [8, 20],
+          "model_hint": "10|12|14|16",
+          "width_mm": 1280,
+          "height_mm": 1040,
+          "depth_mm": 420,
+          "weight_kg": 145,
+          "dimensions_raw": "1280 x 1040 x 420 mm",
+          "weight_raw": "~145 kg",
+          "source_note": "Olimpia Splendid Sherpa large chassis (shared OEM platform)"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "low"
+    },
+    {
+      "id": "oem-chinese-monoblock-generic",
+      "manufacturer_pattern": "OUTES|Answer|PHNIX|Zealux|FOSHAN.*ZEALUX|Salvador Escoda|Malag.*Soltau|M&S POWER|Guangdong Answer|POWER WORLD|SolaX|Deye|Foxess|Shenling|ES Energy|Rotenso|IGLOO|TEMPLARI|Michl|Advantix|Hisense|SolarEast|Tongyi",
+      "family_name": "Generic Chinese R290/R32 Monoblock Platform",
+      "model_patterns": [".*"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "small",
+          "width_mm": 1130,
+          "height_mm": 720,
+          "depth_mm": 420,
+          "weight_kg": 95,
+          "dimensions_raw": "~1130 x 720 x 420 mm",
+          "weight_raw": "~95 kg",
+          "source_note": "Generic Chinese monoblock small chassis — estimated from common OEM platforms"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "medium",
+          "width_mm": 1280,
+          "height_mm": 1040,
+          "depth_mm": 420,
+          "weight_kg": 140,
+          "dimensions_raw": "~1280 x 1040 x 420 mm",
+          "weight_raw": "~140 kg",
+          "source_note": "Generic Chinese monoblock medium chassis — estimated from common OEM platforms"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "large",
+          "width_mm": 1380,
+          "height_mm": 1060,
+          "depth_mm": 460,
+          "weight_kg": 160,
+          "dimensions_raw": "~1380 x 1060 x 460 mm",
+          "weight_raw": "~160 kg",
+          "source_note": "Generic Chinese monoblock large chassis — estimated from common OEM platforms"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "low"
+    },
+    {
+      "id": "weishaupt-wab",
+      "manufacturer_pattern": "Weishaupt|Max Weishaupt",
+      "family_name": "Weishaupt WAB/WBB/WSB Heat Pump",
+      "model_patterns": ["WAB", "WBB", "WSB", "WWP"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "8-A|WSB 10",
+          "width_mm": 1245,
+          "height_mm": 848,
+          "depth_mm": 603,
+          "weight_kg": 115,
+          "dimensions_raw": "~1245 x 848 x 603 mm",
+          "weight_raw": "~115 kg",
+          "source_note": "Weishaupt small chassis — Stiebel Eltron/Tecalor OEM platform"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "11-A|14-A|WBB 12|WSB 12",
+          "width_mm": 1245,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 145,
+          "dimensions_raw": "~1245 x 1098 x 603 mm",
+          "weight_raw": "~145 kg",
+          "source_note": "Weishaupt medium chassis — Stiebel Eltron/Tecalor OEM platform"
+        },
+        {
+          "capacity_range_kw": [14, 25],
+          "model_hint": "WBB 20",
+          "width_mm": 1440,
+          "height_mm": 1098,
+          "depth_mm": 603,
+          "weight_kg": 170,
+          "dimensions_raw": "~1440 x 1098 x 603 mm",
+          "weight_raw": "~170 kg",
+          "source_note": "Weishaupt large chassis — Stiebel Eltron/Tecalor OEM platform"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "low"
+    },
+    {
+      "id": "waterkotte-basicline",
+      "manufacturer_pattern": "WATERKOTTE",
+      "family_name": "WATERKOTTE Basic Line Air / Air Bloc",
+      "model_patterns": ["Basic Line", "Air Bloc", "Ai1 Air", "Split 50"],
+      "refrigerant": null,
+      "installation_type": "Monoblock",
+      "variants": [
+        {
+          "capacity_range_kw": [0, 8],
+          "model_hint": "5004|5008|7008",
+          "width_mm": 1091,
+          "height_mm": 845,
+          "depth_mm": 508,
+          "weight_kg": 97,
+          "dimensions_raw": "~1091 x 845 x 508 mm",
+          "weight_raw": "~97 kg",
+          "source_note": "WATERKOTTE small chassis — Bosch/Buderus platform estimated"
+        },
+        {
+          "capacity_range_kw": [8, 14],
+          "model_hint": "5011|5012|7015",
+          "width_mm": 1091,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 125,
+          "dimensions_raw": "~1091 x 1060 x 508 mm",
+          "weight_raw": "~125 kg",
+          "source_note": "WATERKOTTE medium chassis — Bosch/Buderus platform estimated"
+        },
+        {
+          "capacity_range_kw": [14, 20],
+          "model_hint": "5015",
+          "width_mm": 1330,
+          "height_mm": 1060,
+          "depth_mm": 508,
+          "weight_kg": 150,
+          "dimensions_raw": "~1330 x 1060 x 508 mm",
+          "weight_raw": "~150 kg",
+          "source_note": "WATERKOTTE large chassis — Bosch/Buderus platform estimated"
+        }
+      ],
+      "source_type": "platform_shared",
+      "confidence": "low"
+    }
+  ]
+}

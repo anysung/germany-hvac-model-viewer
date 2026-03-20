@@ -3,17 +3,21 @@ import { db } from '../firebase';
 import { HeatPump, NewsItem, PolicyItem, BAFAItem } from '../types';
 
 // Collection References
-const COUNTRY_CODE = 'DE'; 
-const PRODUCTS_REF = `countries/${COUNTRY_CODE}/products`;
+const COUNTRY_CODE = 'DE';
 const NEWS_REF = `countries/${COUNTRY_CODE}/news`;
 const POLICY_REF = `countries/${COUNTRY_CODE}/policies`;
 const BAFA_REF = `countries/${COUNTRY_CODE}/bafa`;
 
+/**
+ * Load products from the new enriched residential dataset (static JSON).
+ * Replaces the old Firestore-based product loading.
+ */
 export const getProducts = async (): Promise<HeatPump[]> => {
   try {
-    // Modular syntax: getDocs(collection(...))
-    const snapshot = await getDocs(collection(db, PRODUCTS_REF));
-    return snapshot.docs.map(doc => doc.data() as HeatPump);
+    const resp = await fetch('/data/products.json');
+    if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
+    return (data.items || []) as HeatPump[];
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];

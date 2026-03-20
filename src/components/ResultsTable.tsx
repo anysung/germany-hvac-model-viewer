@@ -1,22 +1,15 @@
 /**
- * ResultsTable — Display Rules (v3)
+ * ResultsTable — Display Rules (v4)
  *
  * STICKY HEADER : thead row stays fixed on vertical scroll (top-0 z-30)
  * STICKY COLS   : Manufacturer + Type + Model fixed on horizontal scroll (z-20/z-40)
  * SCROLL BAR    : Horizontal progress bar + arrow buttons at table top-right
- * WEIGHT COL    : Extracted from Others field, placed between Noise and Price
- * OTHERS COL    : Last column (remaining after weight extraction), max ~30 chars, 2-line split at ';'
  *
- * TWO-LINE SPLIT RULES (splitTwo helper):
- *   Dimensions  : ';'  → IDU spec / ODU spec
- *   Noise       : ';'  → primary / secondary value
- *   COP / SCOP  : '; ' → primary condition / secondary condition
- *   Capacity    : ' (' → range / condition note
- *   Price       : ' (' → price range / parenthetical note
- *   Others      : ';'  → first spec / remaining (line-clamp-2 fallback)
+ * Column order: Manufacturer | Type | Model | Capacity | Refrigerant |
+ *               COP | SCOP | Noise | Weight | Dimensions | Price |
+ *               Install Type | SG Ready
  *
  * MODEL TRUNCATION : max 35 chars, full name on hover (title attribute)
- * MODEL BLOCKLIST  : enforced in Cloud Function (e.g. / >80 chars rejected)
  */
 
 import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
@@ -33,36 +26,60 @@ interface ResultsTableProps {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Split text at the first matching separator → [line1, line2|null] */
-function splitTwo(text: string, separators: string[]): [string, string | null] {
-  if (!text) return [text, null];
-  for (const sep of separators) {
-    const idx = text.indexOf(sep);
-    if (idx > 0 && idx < text.length - 1) {
-      const l1 = text.slice(0, idx).trim();
-      const l2 = sep === ' (' ? '(' + text.slice(idx + sep.length).trim() : text.slice(idx + sep.length).trim();
-      if (l1 && l2) return [l1, l2];
-    }
-  }
-  return [text, null];
+/** Format a numeric kW value for display */
+function fmtKw(v: number | null): string {
+  if (v == null) return '—';
+  return Number.isInteger(v) ? `${v} kW` : `${v.toFixed(1)} kW`;
 }
 
-/** Extract weight from the others string, return {weight, remaining} */
-function extractWeight(others: string): { weight: string; remaining: string } {
-  if (!others || others === 'N/A') return { weight: '—', remaining: others || '' };
-  // Try labelled weight first: "Weight: 130 kg", "Gewicht: 82 kg", "Wt: 95 kg"
-  const labelled = others.match(/(?:weight|wt\.?|gewicht)[:\s]+(\d+(?:[.,]\d+)?\s*kg)/i);
-  if (labelled) {
-    const remaining = others.replace(labelled[0], '').replace(/^[\s;,]+|[\s;,]+$/g, '').trim();
-    return { weight: labelled[1].trim(), remaining };
+/** Format a COP/SCOP number */
+function fmtCop(v: number | null): string {
+  if (v == null) return '—';
+  return v.toFixed(2);
+}
+
+/** Format noise dB */
+function fmtDb(v: number | null): string {
+  if (v == null) return '—';
+  return `${v} dB(A)`;
+}
+
+/** Format weight */
+function fmtWeight(v: number | null): string {
+  if (v == null) return '—';
+  return `${v} kg`;
+}
+
+/** Format dimensions from mm fields */
+function fmtDimensions(w: number | null, h: number | null, d: number | null): string {
+  if (w == null && h == null && d == null) return '—';
+  const wStr = w != null ? `${w}` : '?';
+  const hStr = h != null ? `${h}` : '?';
+  const dStr = d != null ? `${d}` : '?';
+  return `${wStr} × ${hStr} × ${dStr} mm`;
+}
+
+/** Format price range */
+function fmtPrice(low: number | null, typical: number | null, high: number | null): [string, string | null] {
+  if (typical == null && low == null && high == null) return ['—', null];
+  if (typical != null) {
+    const main = `€${typical.toLocaleString('de-DE')}`;
+    if (low != null && high != null) {
+      return [main, `€${low.toLocaleString('de-DE')} – €${high.toLocaleString('de-DE')}`];
+    }
+    return [main, null];
   }
-  // Fallback: standalone "130 kg"
-  const standalone = others.match(/\b(\d+(?:[.,]\d+)?\s*kg)\b/i);
-  if (standalone) {
-    const remaining = others.replace(standalone[0], '').replace(/^[\s;,]+|[\s;,]+$/g, '').trim();
-    return { weight: standalone[1].trim(), remaining };
+  if (low != null && high != null) {
+    return [`€${low.toLocaleString('de-DE')} – €${high.toLocaleString('de-DE')}`, null];
   }
-  return { weight: '—', remaining: others };
+  return ['—', null];
+}
+
+/** Format SG Ready */
+function fmtSGReady(ready: boolean, type: string | null): string {
+  if (!ready) return '—';
+  if (type) return type.replace(/_/g, ' ');
+  return 'Yes';
 }
 
 /** Two-line cell component */
@@ -88,7 +105,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
   const [canScrollLeft,  setCanScrollLeft]  = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [scrollPct,      setScrollPct]      = useState(0);
-  // Measured left offsets for sticky Type / Model columns
   const [typeLeft,  setTypeLeft]  = useState(0);
   const [modelLeft, setModelLeft] = useState(0);
 
@@ -143,7 +159,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
     </div>
   );
 
-  // Shared styles — font sizes bumped ~15% from v2 (10px→12px, 11px→13px, 9px→11px)
+  // Shared styles
   const TH_BASE = 'px-2 py-1.5 text-center text-[12px] font-bold uppercase tracking-wide whitespace-nowrap bg-gray-50';
   const TD_BASE = 'px-2 py-1 text-[13px] text-center align-middle';
 
@@ -152,15 +168,12 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
 
       {/* ── Scroll Control Bar ──────────────────────────────────────── */}
       <div className="flex items-center gap-2 px-3 py-1 bg-gray-100 border-b border-gray-200 select-none">
-        {/* Progress bar */}
         <div className="flex-1 h-1.5 bg-gray-200 rounded-full overflow-hidden">
           <div
             className="h-full bg-blue-400 rounded-full transition-all duration-150"
             style={{ width: `${scrollPct}%` }}
           />
         </div>
-
-        {/* Left button */}
         <button
           onClick={() => scroll('left')}
           disabled={!canScrollLeft}
@@ -171,8 +184,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
-
-        {/* Right button — animated when more content exists */}
         <button
           onClick={() => scroll('right')}
           disabled={!canScrollRight}
@@ -190,7 +201,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
         </button>
       </div>
 
-      {/* Right-edge fade gradient (visual cue) */}
+      {/* Right-edge fade gradient */}
       {canScrollRight && (
         <div className="pointer-events-none absolute right-0 top-[32px] bottom-0 w-12 bg-gradient-to-l from-white/70 to-transparent z-10" />
       )}
@@ -214,7 +225,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               <th ref={typeThRef}
                 style={{ left: typeLeft }}
                 className={`${TH_BASE} text-gray-500 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)]`}>
-                Type
+                {labels.colInstallType || 'Type'}
               </th>
               {/* Model — sticky top + left */}
               <th style={{ left: modelLeft }}
@@ -224,38 +235,49 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               {/* Scrollable columns */}
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colCapacity}</th>
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colRefrigerant}</th>
-              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colDim}</th>
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>COP</th>
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>SCOP</th>
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>{labels.colNoise}</th>
-              <th className={`${TH_BASE} text-purple-600 bg-purple-50 sticky top-0 z-30`}>Weight</th>
+              <th className={`${TH_BASE} text-purple-600 bg-purple-50 sticky top-0 z-30`}>{labels.colWeight || 'Weight'}</th>
+              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colDim}</th>
               <th className={`${TH_BASE} text-green-700 bg-green-50 sticky top-0 z-30`}>{labels.colPrice}</th>
-              <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colOther}</th>
+              <th className={`${TH_BASE} text-teal-600 bg-teal-50 sticky top-0 z-30`}>{labels.colSGReady || 'SG Ready'}</th>
             </tr>
           </thead>
 
           {/* ── BODY ──────────────────────────────────────────────── */}
           <tbody className="bg-white divide-y divide-gray-100">
             {data.map((item, index) => {
-              const isSelected = selectedModels.some(m => m.model === item.model);
+              const isSelected = selectedModels.some(m => m.model === item.model && m.manufacturer === item.manufacturer);
               const rowBg = isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50';
 
-              // Per-field splits
-              const modelTxt  = item.model.length > 35 ? item.model.slice(0, 35) + '…' : item.model;
-              const [cap1, cap2]   = splitTwo(item.capacityRange || '', [' (', ';']);
-              const [dim1, dim2]   = splitTwo(item.dimensions    || '', ['; ', ';']);
-              const [cop1, cop2]   = splitTwo(item.cop           || '', ['; ', ' / ']);
-              const [scop1, scop2] = splitTwo(item.scop          || '', ['; ', ' / ']);
-              const [noise1, noise2] = splitTwo(item.noiseLevel  || '', ['; ', ';']);
-              const [price1, price2] = splitTwo(item.marketPrice || '', [' (', '\n']);
-              const { weight, remaining } = extractWeight(item.others || '');
-              const [oth1, oth2] = splitTwo(remaining, ['; ', '; ']);
+              const modelTxt = item.model.length > 35 ? item.model.slice(0, 35) + '…' : item.model;
 
-              // Sticky cols: always solid white so scrolled content doesn't bleed through
+              // Format fields
+              const capacity = fmtKw(item.power_35C_kw);
+              const capacity2 = item.power_55C_kw ? `(55°C: ${fmtKw(item.power_55C_kw)})` : null;
+              const cop = fmtCop(item.cop_A7W35);
+              const cop2 = item.cop_A2W35 ? `A2/W35: ${fmtCop(item.cop_A2W35)}` : null;
+              const scop = fmtCop(item.scop);
+              const noise = fmtDb(item.noise_outdoor_dB);
+              const noise2 = item.noise_indoor_dB ? `Indoor: ${fmtDb(item.noise_indoor_dB)}` : null;
+              const weight = fmtWeight(item.weight_kg);
+              const dims = fmtDimensions(item.width_mm, item.height_mm, item.depth_mm);
+              const [price1, price2] = fmtPrice(item.equipment_price_low_eur, item.equipment_price_typical_eur, item.equipment_price_high_eur);
+              const sgReady = fmtSGReady(item.grid_ready, item.grid_ready_type);
+
+              // Type badge — Monoblock vs Split
+              const typeLabel = item.installation_type || '—';
+              const typeBadgeCls = typeLabel === 'Monoblock'
+                ? 'bg-orange-100 text-orange-800'
+                : typeLabel === 'Split'
+                  ? 'bg-purple-100 text-purple-800'
+                  : 'bg-gray-100 text-gray-600';
+
               const stickyBg = 'bg-white';
 
               return (
-                <tr key={index} className={`hover:bg-blue-50/60 transition-colors ${rowBg}`}>
+                <tr key={`${item.bafa_id}-${index}`} className={`hover:bg-blue-50/60 transition-colors ${rowBg}`}>
                   {isSelectionMode && (
                     <td className={`${TD_BASE} sticky left-0 z-20 ${stickyBg} border-r border-gray-100`}>
                       <input type="checkbox" checked={isSelected}
@@ -264,35 +286,32 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                     </td>
                   )}
 
-                  {/* Manufacturer — sticky, solid white */}
+                  {/* Manufacturer — sticky */}
                   <td className={`px-2 py-1 text-[13px] font-semibold text-gray-900 text-center whitespace-nowrap sticky left-0 z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)] ${stickyBg}`}>
                     {item.manufacturer}
                   </td>
 
-                  {/* Type — sticky, solid white */}
+                  {/* Type — sticky */}
                   <td style={{ left: typeLeft }}
                     className={`${TD_BASE} whitespace-nowrap sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.04)] ${stickyBg}`}>
-                    <span className={`px-1.5 py-0.5 inline-flex text-[11px] leading-4 font-bold rounded-full ${item.unitType === 'IDU' ? 'bg-purple-100 text-purple-800' : 'bg-orange-100 text-orange-800'}`}>
-                      {item.unitType}
+                    <span className={`px-1.5 py-0.5 inline-flex text-[11px] leading-4 font-bold rounded-full ${typeBadgeCls}`}>
+                      {typeLabel}
                     </span>
                   </td>
 
-                  {/* Model — sticky, solid white, +10% width via max-w */}
+                  {/* Model — sticky */}
                   <td style={{ left: modelLeft }}
                     className={`pl-3 pr-2 py-1 text-left align-middle sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.03)] ${stickyBg}`}>
                     <div className="text-[13px] text-blue-600 font-semibold whitespace-nowrap" title={item.model}>
                       {modelTxt}
                     </div>
-                    {item.description && (
-                      <div className="text-[11px] text-gray-400 mt-0.5 max-w-[210px] truncate">{item.description}</div>
-                    )}
                   </td>
 
                   {/* Capacity */}
                   <td className={TD_BASE}>
                     <TwoLine
-                      l1={<span className="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[12px] font-medium whitespace-nowrap">{cap1}</span>}
-                      l2={cap2}
+                      l1={<span className="bg-gray-100 text-gray-700 px-1.5 py-0.5 rounded text-[12px] font-medium whitespace-nowrap">{capacity}</span>}
+                      l2={capacity2}
                     />
                   </td>
 
@@ -303,29 +322,29 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                       : <span className="text-gray-600">{item.refrigerant}</span>}
                   </td>
 
-                  {/* Dimensions */}
-                  <td className={TD_BASE}>
-                    <TwoLine l1={dim1} l2={dim2} l1Cls="text-gray-600" />
-                  </td>
-
                   {/* COP */}
                   <td className={`${TD_BASE} bg-blue-50/30`}>
-                    <TwoLine l1={cop1} l2={cop2} l1Cls="font-medium text-gray-700" />
+                    <TwoLine l1={cop} l2={cop2} l1Cls="font-medium text-gray-700" />
                   </td>
 
                   {/* SCOP */}
                   <td className={`${TD_BASE} bg-blue-50/30`}>
-                    <TwoLine l1={scop1} l2={scop2} l1Cls="font-medium text-gray-700" />
+                    <span className="font-medium text-gray-700">{scop}</span>
                   </td>
 
                   {/* Noise */}
                   <td className={`${TD_BASE} bg-blue-50/30`}>
-                    <TwoLine l1={noise1} l2={noise2} l1Cls="font-medium text-gray-700" />
+                    <TwoLine l1={noise} l2={noise2} l1Cls="font-medium text-gray-700" />
                   </td>
 
-                  {/* Weight (extracted from Others) */}
+                  {/* Weight */}
                   <td className={`${TD_BASE} bg-purple-50/30`}>
                     <span className="text-[13px] font-medium text-purple-700 whitespace-nowrap">{weight}</span>
+                  </td>
+
+                  {/* Dimensions (moved right of Weight) */}
+                  <td className={TD_BASE}>
+                    <span className="text-gray-600 whitespace-nowrap text-[12px]">{dims}</span>
                   </td>
 
                   {/* Price */}
@@ -333,12 +352,11 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                     <TwoLine l1={price1} l2={price2} l1Cls="font-bold text-green-700 whitespace-nowrap" />
                   </td>
 
-                  {/* Others (remaining, last column) — 2× width, same font as Price */}
-                  <td className={`${TD_BASE} min-w-[400px] max-w-[400px]`}>
-                    {oth2
-                      ? <TwoLine l1={oth1} l2={oth2} l1Cls="text-[13px] text-gray-500 text-left" />
-                      : <div className="text-[13px] text-gray-500 text-left line-clamp-2 leading-tight">{oth1}</div>
-                    }
+                  {/* SG Ready */}
+                  <td className={`${TD_BASE} bg-teal-50/30`}>
+                    <span className={`text-[12px] font-medium ${item.grid_ready ? 'text-teal-700' : 'text-gray-400'}`}>
+                      {sgReady}
+                    </span>
                   </td>
                 </tr>
               );

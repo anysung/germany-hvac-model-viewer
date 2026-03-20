@@ -1,0 +1,96 @@
+{
+  "_template": {
+    "note": "Copy this file to scraper/pricing/config.json and replace all TODO values with market-specific data.",
+    "reference": "See Germany config.json for a complete working example.",
+    "version": "3.1"
+  },
+  "pricing_scope": {
+    "market": "TODO: Country name (e.g. 'UK', 'France', 'Sweden')",
+    "price_definition": "TODO: What does the price represent? (e.g. 'equipment_only_installer_to_customer_range')",
+    "installation_cost_included": false,
+    "currency": "TODO: ISO currency code (e.g. 'GBP', 'EUR', 'SEK')"
+  },
+  "base_capacity_matrix": [
+    {
+      "capacity_band": "4-6", "min_kw": 4, "max_kw": 6,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 4-6 kW range"
+    },
+    {
+      "capacity_band": ">6-8", "min_kw": 6.01, "max_kw": 8,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 6-8 kW range"
+    },
+    {
+      "capacity_band": ">8-10", "min_kw": 8.01, "max_kw": 10,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 8-10 kW range"
+    },
+    {
+      "capacity_band": ">10-12", "min_kw": 10.01, "max_kw": 12,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 10-12 kW range"
+    },
+    {
+      "capacity_band": ">12-16", "min_kw": 12.01, "max_kw": 16,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 12-16 kW range"
+    },
+    {
+      "capacity_band": ">16-20", "min_kw": 16.01, "max_kw": 20,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 16-20 kW range"
+    },
+    {
+      "capacity_band": "20+", "min_kw": 20.01, "max_kw": 999,
+      "installation_type": "Monoblock", "package_scope": "unit_only",
+      "low": 0, "typical": 0, "high": 0,
+      "_todo": "Research local B-tier monoblock prices for 20+ kW range"
+    }
+  ],
+  "sub_4kw_rule": {
+    "note": "Units below 4kW use the 4-6 band with a discount",
+    "min_adj": -0.10,
+    "max_adj": -0.05
+  },
+  "brand_tiers": {
+    "_note": "Tier multipliers applied to base capacity prices. B-tier is baseline (0%). Adjust percentages based on local market price stratification.",
+    "S":  { "min_adj": 0.28, "max_adj": 0.40 },
+    "A+": { "min_adj": 0.20, "max_adj": 0.28 },
+    "A":  { "min_adj": 0.12, "max_adj": 0.20 },
+    "B+": { "min_adj": 0.05, "max_adj": 0.12 },
+    "B":  { "min_adj": 0.00, "max_adj": 0.05 },
+    "C":  { "min_adj": -0.15, "max_adj": -0.08 },
+    "D":  { "min_adj": -0.25, "max_adj": -0.15 }
+  },
+  "refrigerant_adjustments": {
+    "_note": "Likely similar across EU markets due to F-Gas regulation. Adjust for non-EU markets.",
+    "R290":  { "min_adj": 0.00, "max_adj": 0.08 },
+    "R32":   { "min_adj": 0.00, "max_adj": 0.00 },
+    "R410A": { "min_adj": -0.05, "max_adj": 0.00 },
+    "_default": { "min_adj": -0.05, "max_adj": 0.00 }
+  },
+  "installation_type_adjustments": {
+    "Monoblock": { "min_adj": 0.00, "max_adj": 0.00 },
+    "Split":     { "min_adj": -0.05, "max_adj": 0.05 }
+  },
+  "performance_adjustments": {
+    "_note": "Reusable as-is; SCOP/noise premiums are physics-based. Thresholds computed from dataset population.",
+    "scop_top_20pct":         { "min_adj": 0.03, "max_adj": 0.06 },
+    "low_noise_top_20pct":    { "min_adj": 0.02, "max_adj": 0.04 },
+    "high_flow_temp_70_75C":  { "min_adj": 0.03, "max_adj": 0.07 }
+  },
+  "package_scope_confidence": {
+    "_note": "Reusable as-is; scope uncertainty is universal.",
+    "unit_only":        0,
+    "with_hydromodule": -0.05,
+    "all_in_one":       -0.10,
+    "unknown":          -0.15
+  }
+}
