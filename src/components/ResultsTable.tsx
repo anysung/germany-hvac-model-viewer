@@ -251,7 +251,8 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const isSelected = selectedModels.some(m => m.model === item.model && m.manufacturer === item.manufacturer);
               const rowBg = isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50';
 
-              const modelTxt = item.model.length > 35 ? item.model.slice(0, 35) + '…' : item.model;
+              const modelStr = item.model || '';
+              const modelTxt = modelStr.length > 35 ? modelStr.slice(0, 35) + '…' : modelStr;
 
               // Format fields
               const capacity = fmtKw(item.power_35C_kw);
@@ -317,9 +318,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
 
                   {/* Refrigerant */}
                   <td className={`${TD_BASE} whitespace-nowrap`}>
-                    {item.refrigerant.includes('R290')
+                    {(item.refrigerant || '').includes('R290')
                       ? <span className="text-green-600 font-bold text-[11px]">🌿 {item.refrigerant}</span>
-                      : <span className="text-gray-600">{item.refrigerant}</span>}
+                      : <span className="text-gray-600">{item.refrigerant || '—'}</span>}
                   </td>
 
                   {/* COP */}

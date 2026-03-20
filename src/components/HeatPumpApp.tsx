@@ -107,7 +107,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
 
       // Refrigerant filter — contains match
       if (selectedRefrigerant) {
-        filtered = filtered.filter((item: HeatPump) => item.refrigerant.includes(selectedRefrigerant));
+        filtered = filtered.filter((item: HeatPump) => (item.refrigerant || '').includes(selectedRefrigerant));
       }
 
       // Text search — model or manufacturer
