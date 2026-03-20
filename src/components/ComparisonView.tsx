@@ -32,7 +32,7 @@ const fmt = {
 
 export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, onBack }) => {
   const fields: { label: string; getValue: (m: HeatPump) => string; highlight?: string }[] = [
-    { label: labels.colManufacturer, getValue: m => m.manufacturer },
+    { label: labels.colManufacturer, getValue: m => m.manufacturer_short || m.manufacturer },
     { label: labels.colInstallType || 'Install Type', getValue: m => m.installation_type || '—' },
     { label: labels.colCapacity, getValue: m => fmt.kw(m.power_35C_kw) },
     { label: labels.colRefrigerant, getValue: m => m.refrigerant || '—' },
@@ -73,7 +73,7 @@ export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, 
           {models.map((m, i) => (
             <div key={i} className="pb-2 border-b-2 border-blue-500 text-center">
               <div className="text-lg font-bold text-gray-900 break-words">{m.model}</div>
-              <div className="text-sm text-gray-500">{m.manufacturer}</div>
+              <div className="text-sm text-gray-500">{m.manufacturer_short || m.manufacturer}</div>
             </div>
           ))}
 

@@ -115,7 +115,8 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
         const lowerQ = searchQuery.toLowerCase();
         filtered = filtered.filter((item: HeatPump) =>
           item.model.toLowerCase().includes(lowerQ) ||
-          item.manufacturer.toLowerCase().includes(lowerQ)
+          item.manufacturer.toLowerCase().includes(lowerQ) ||
+          (item.manufacturer_short || '').toLowerCase().includes(lowerQ)
         );
       }
 

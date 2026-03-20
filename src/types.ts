@@ -2,6 +2,7 @@
 export interface HeatPump {
   bafa_id: string;
   manufacturer: string;
+  manufacturer_short?: string;
   model: string;
   type: string;                        // "Luft / Wasser"
   refrigerant: string;

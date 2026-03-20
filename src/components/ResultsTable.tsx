@@ -289,7 +289,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
 
                   {/* Manufacturer — sticky */}
                   <td className={`px-2 py-1 text-[13px] font-semibold text-gray-900 text-center whitespace-nowrap sticky left-0 z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)] ${stickyBg}`}>
-                    {item.manufacturer}
+                    {item.manufacturer_short || item.manufacturer}
                   </td>
 
                   {/* Type — sticky */}
