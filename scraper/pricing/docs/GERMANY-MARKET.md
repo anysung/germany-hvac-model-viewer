@@ -269,12 +269,15 @@ Online prices in Germany are lower-bound signals. The engine's calibration blend
 
 | Output | Items | Description |
 |--------|-------|-------------|
-| bafa-priced.json | 6,514 | Full dataset: 5,350 priced + 1,164 N/A |
-| bafa-residential.json | 4,387 | App-facing residential dataset |
+| product-residential.json | 4,387 | Final residential dataset (all fields flattened, app-ready) |
+| product-commercial.json | 2,127 | Final commercial dataset (554 light_commercial + 1,573 commercial_project) |
+| product-model-standard.json | — | Canonical field standard (70 fields documented) |
 | pricing-summary.json | 1 | Distribution statistics |
 | review-flags.json | 1,573 | Items needing human review |
 | calibration-report.json | 1 | Calibration details and comparison |
 | sampling-coverage.json | 1 | Sample distribution report |
+
+> **Note:** The full pipeline (pricing → merge → enrichment → consolidation) is documented in `PRODUCT-DATA-FILES.md`.
 
 ### Residential Dataset Quality (Production)
 
