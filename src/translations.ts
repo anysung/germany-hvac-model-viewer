@@ -86,23 +86,57 @@ export const translations = {
     colModel: "Model",
     colCapacity: "Capacity",
     colRefrigerant: "Refrigerant",
+    colRefrigerantAmt: "Refrig. Amt",
     colDim: "Dimensions",
     colNoise: "Noise",
     colWeight: "Weight",
     colPrice: "Price",
-    colInstallType: "Install Type",
-    colSGReady: "SG Ready",
+    colInstallType: "Type",
+    colGridReady: "Grid Ready",
+    colNumCompressors: "Compressors",
+    colMarketSegment: "Segment",
+    colPowerControl: "Drive",
     loading: "Loading...",
     noResults: "No results found.",
-    
+
+    // Product Search sub-tabs
+    tabResidential: "Residential",
+    tabCommercial: "Commercial",
+
+    // Commercial filters
+    filterMarketSegment: "Market Segment",
+
     // Tabs & Comparison
     tabComparison: "Comparison",
     selectedModels: "Selected",
     startComparison: "Compare",
     backToSelection: "Back",
     clearSelection: "Clear",
-    compareErrorMax: "Max 3 models allowed.",
-    compareErrorMin: "Select at least 2 models."
+    compareErrorMax: "Max 4 models allowed.",
+    compareErrorMin: "Select at least 2 models.",
+
+    // Data Sheet
+    tabDataSheet: "Data Sheet",
+    dataSheetSelected: "Selected for Data Sheet",
+    dataSheetPreview: "Preview",
+    dataSheetSelectPrompt: "Select a model from the list below to generate a data sheet.",
+    dataSheetQuotaExhausted: "Monthly print limit reached. Contact administrator for additional quota.",
+    dataSheetPrint: "Print",
+    dataSheetClose: "Close",
+    dataSheetPrinting: "Printing...",
+    dataSheetQuotaLabel: "Prints",
+    dataSheetQuotaMonth: "this month",
+
+    // Admin Quota
+    adminQuotaTitle: "Print Quota Management",
+    adminQuotaSearch: "Search user for quota...",
+    adminQuotaDefault: "Default Monthly",
+    adminQuotaExtra: "Extra Quota",
+    adminQuotaTotal: "Total Limit",
+    adminQuotaUsed: "Used",
+    adminQuotaRemaining: "Remaining",
+    adminQuotaSave: "Save",
+    adminQuotaSaved: "Saved!",
   },
   de: {
     // General / Auth
@@ -188,22 +222,56 @@ export const translations = {
     colModel: "Modell",
     colCapacity: "Leistung",
     colRefrigerant: "Kältemittel",
+    colRefrigerantAmt: "Kältem. Menge",
     colDim: "Maße",
     colNoise: "Lärm",
     colWeight: "Gewicht",
     colPrice: "Preis",
-    colInstallType: "Bauart",
-    colSGReady: "SG Ready",
+    colInstallType: "Typ",
+    colGridReady: "Grid Ready",
+    colNumCompressors: "Verdichter",
+    colMarketSegment: "Segment",
+    colPowerControl: "Antrieb",
     loading: "Laden...",
     noResults: "Keine Ergebnisse.",
-    
+
+    // Product Search sub-tabs
+    tabResidential: "Wohngebäude",
+    tabCommercial: "Gewerbe",
+
+    // Commercial filters
+    filterMarketSegment: "Marktsegment",
+
     // Tabs & Comparison
     tabComparison: "Vergleich",
     selectedModels: "Ausgewählt",
     startComparison: "Vergleichen",
     backToSelection: "Zurück",
     clearSelection: "Löschen",
-    compareErrorMax: "Max 3",
-    compareErrorMin: "Min 2"
+    compareErrorMax: "Max 4",
+    compareErrorMin: "Min 2",
+
+    // Data Sheet
+    tabDataSheet: "Datenblatt",
+    dataSheetSelected: "Für Datenblatt ausgewählt",
+    dataSheetPreview: "Vorschau",
+    dataSheetSelectPrompt: "Wählen Sie ein Modell aus der Liste, um ein Datenblatt zu erstellen.",
+    dataSheetQuotaExhausted: "Monatliches Drucklimit erreicht. Kontaktieren Sie den Administrator.",
+    dataSheetPrint: "Drucken",
+    dataSheetClose: "Schließen",
+    dataSheetPrinting: "Wird gedruckt...",
+    dataSheetQuotaLabel: "Drucke",
+    dataSheetQuotaMonth: "diesen Monat",
+
+    // Admin Quota
+    adminQuotaTitle: "Druckkontingent-Verwaltung",
+    adminQuotaSearch: "Benutzer für Kontingent suchen...",
+    adminQuotaDefault: "Standard monatlich",
+    adminQuotaExtra: "Zusatzkontingent",
+    adminQuotaTotal: "Gesamtlimit",
+    adminQuotaUsed: "Verwendet",
+    adminQuotaRemaining: "Verbleibend",
+    adminQuotaSave: "Speichern",
+    adminQuotaSaved: "Gespeichert!",
   }
 };

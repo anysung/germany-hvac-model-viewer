@@ -6,14 +6,15 @@
  * SCROLL BAR    : Horizontal progress bar + arrow buttons at table top-right
  *
  * Column order: Manufacturer | Type | Model | Capacity | Refrigerant |
- *               COP | SCOP | Noise | Weight | Dimensions | Price |
- *               Install Type | SG Ready
+ *               Refrig. Amt (residential only) | COP | SCOP | Noise |
+ *               Weight | Dimensions | Price | [Commercial cols] | Grid Ready
  *
- * MODEL TRUNCATION : max 35 chars, full name on hover (title attribute)
+ * MODEL TRUNCATION : max MODEL_MAX_CHARS (25) chars, full name on hover (title attribute)
  */
 
 import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { HeatPump } from '../types';
+import { getDisplayName, getUnitTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
 
 interface ResultsTableProps {
   data: HeatPump[];
@@ -22,7 +23,13 @@ interface ResultsTableProps {
   isSelectionMode?: boolean;
   selectedModels?: HeatPump[];
   onToggleSelection?: (model: HeatPump) => void;
+  segment?: 'residential' | 'commercial';
 }
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+/** Max visible characters for model name before truncation (spaces count). */
+const MODEL_MAX_CHARS = 25;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -50,6 +57,12 @@ function fmtWeight(v: number | null): string {
   return `${v} kg`;
 }
 
+/** Format refrigerant amount in kg */
+function fmtRefrigerantAmt(v: number | null): string {
+  if (v == null) return '—';
+  return `${v} kg`;
+}
+
 /** Format dimensions from mm fields */
 function fmtDimensions(w: number | null, h: number | null, d: number | null): string {
   if (w == null && h == null && d == null) return '—';
@@ -59,27 +72,10 @@ function fmtDimensions(w: number | null, h: number | null, d: number | null): st
   return `${wStr} × ${hStr} × ${dStr} mm`;
 }
 
-/** Format price range */
+/** Format price using centralized ±15% display range from displayHelpers */
 function fmtPrice(low: number | null, typical: number | null, high: number | null): [string, string | null] {
-  if (typical == null && low == null && high == null) return ['—', null];
-  if (typical != null) {
-    const main = `€${typical.toLocaleString('de-DE')}`;
-    if (low != null && high != null) {
-      return [main, `€${low.toLocaleString('de-DE')} – €${high.toLocaleString('de-DE')}`];
-    }
-    return [main, null];
-  }
-  if (low != null && high != null) {
-    return [`€${low.toLocaleString('de-DE')} – €${high.toLocaleString('de-DE')}`, null];
-  }
-  return ['—', null];
-}
-
-/** Format SG Ready */
-function fmtSGReady(ready: boolean, type: string | null): string {
-  if (!ready) return '—';
-  if (type) return type.replace(/_/g, ' ');
-  return 'Yes';
+  const dp = getDisplayPrice(low, typical, high);
+  return [dp.main, dp.range];
 }
 
 /** Two-line cell component */
@@ -92,12 +88,37 @@ const TwoLine: React.FC<{ l1: React.ReactNode; l2?: string | null; l1Cls?: strin
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
+/** Format market segment for display */
+function fmtSegment(raw: string | null): string {
+  if (!raw) return '—';
+  if (raw === 'light_commercial') return 'Light';
+  if (raw === 'commercial_project') return 'Project & Commercial';
+  if (raw === 'residential_core') return 'Residential';
+  return raw.replace(/_/g, ' ');
+}
+
+/** Format power control for display */
+function fmtPowerControl(raw: string | null): string {
+  if (!raw) return '—';
+  const map: Record<string, string> = {
+    DREHZAHLREGELUNG: 'Inverter',
+    LEISTUNGSSTUFEN: 'Staged',
+    DIGITAL_SCROLL: 'Digital Scroll',
+    INVERTER: 'Inverter',
+    KEINE: '—',
+    SONSTIGE: 'Other',
+  };
+  return map[raw] || raw;
+}
+
 export const ResultsTable: React.FC<ResultsTableProps> = ({
   data, isLoading, labels,
   isSelectionMode = false,
   selectedModels = [],
   onToggleSelection,
+  segment = 'residential',
 }) => {
+  const isCommercial = segment === 'commercial';
   const scrollRef = useRef<HTMLDivElement>(null);
   const mfrThRef  = useRef<HTMLTableCellElement>(null);
   const typeThRef = useRef<HTMLTableCellElement>(null);
@@ -228,20 +249,30 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                 {labels.colInstallType || 'Type'}
               </th>
               {/* Model — sticky top + left */}
-              <th style={{ left: modelLeft }}
+              <th style={{ left: modelLeft, maxWidth: '200px' }}
                 className={`${TH_BASE} text-gray-500 text-left pl-3 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.05)]`}>
                 {labels.colModel}
               </th>
               {/* Scrollable columns */}
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colCapacity}</th>
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colRefrigerant}</th>
+              {!isCommercial && (
+                <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colRefrigerantAmt || 'Refrig. Amt'}</th>
+              )}
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>COP</th>
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>SCOP</th>
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>{labels.colNoise}</th>
               <th className={`${TH_BASE} text-purple-600 bg-purple-50 sticky top-0 z-30`}>{labels.colWeight || 'Weight'}</th>
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colDim}</th>
               <th className={`${TH_BASE} text-green-700 bg-green-50 sticky top-0 z-30`}>{labels.colPrice}</th>
-              <th className={`${TH_BASE} text-teal-600 bg-teal-50 sticky top-0 z-30`}>{labels.colSGReady || 'SG Ready'}</th>
+              {isCommercial && (
+                <>
+                  <th className={`${TH_BASE} text-orange-600 bg-orange-50 sticky top-0 z-30`}>{labels.colMarketSegment || 'Segment'}</th>
+                  <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colPowerControl || 'Drive'}</th>
+                  <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colNumCompressors || 'Compr.'}</th>
+                </>
+              )}
+              <th className={`${TH_BASE} text-teal-600 bg-teal-50 sticky top-0 z-30 px-1`}>{labels.colGridReady || 'Grid Ready'}</th>
             </tr>
           </thead>
 
@@ -252,7 +283,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const rowBg = isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50';
 
               const modelStr = item.model || '';
-              const modelTxt = modelStr.length > 35 ? modelStr.slice(0, 35) + '…' : modelStr;
+              const modelTxt = modelStr.length > MODEL_MAX_CHARS ? modelStr.slice(0, MODEL_MAX_CHARS) + '…' : modelStr;
 
               // Format fields
               const capacity = fmtKw(item.power_35C_kw);
@@ -265,15 +296,17 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const weight = fmtWeight(item.weight_kg);
               const dims = fmtDimensions(item.width_mm, item.height_mm, item.depth_mm);
               const [price1, price2] = fmtPrice(item.equipment_price_low_eur, item.equipment_price_typical_eur, item.equipment_price_high_eur);
-              const sgReady = fmtSGReady(item.grid_ready, item.grid_ready_type);
+              const gridReady = fmtGridReady(item.grid_ready, item.grid_ready_type);
 
-              // Type badge — Monoblock vs Split
-              const typeLabel = item.installation_type || '—';
-              const typeBadgeCls = typeLabel === 'Monoblock'
+              // Type badge — IDU / ODU / IDU + ODU
+              const typeLabel = getUnitTypeDisplay(item);
+              const typeBadgeCls = typeLabel === 'ODU'
                 ? 'bg-orange-100 text-orange-800'
-                : typeLabel === 'Split'
+                : typeLabel === 'IDU'
                   ? 'bg-purple-100 text-purple-800'
-                  : 'bg-gray-100 text-gray-600';
+                  : typeLabel === 'IDU + ODU'
+                    ? 'bg-indigo-100 text-indigo-800'
+                    : 'bg-gray-100 text-gray-600';
 
               const stickyBg = 'bg-white';
 
@@ -289,7 +322,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
 
                   {/* Manufacturer — sticky */}
                   <td className={`px-2 py-1 text-[13px] font-semibold text-gray-900 text-center whitespace-nowrap sticky left-0 z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)] ${stickyBg}`}>
-                    {item.manufacturer_short || item.manufacturer}
+                    {getDisplayName(item)}
                   </td>
 
                   {/* Type — sticky */}
@@ -301,9 +334,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                   </td>
 
                   {/* Model — sticky */}
-                  <td style={{ left: modelLeft }}
+                  <td style={{ left: modelLeft, maxWidth: '200px' }}
                     className={`pl-3 pr-2 py-1 text-left align-middle sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.03)] ${stickyBg}`}>
-                    <div className="text-[13px] text-blue-600 font-semibold whitespace-nowrap" title={item.model}>
+                    <div className="text-[13px] text-blue-600 font-semibold whitespace-nowrap overflow-hidden text-ellipsis" title={item.model}>
                       {modelTxt}
                     </div>
                   </td>
@@ -322,6 +355,13 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                       ? <span className="text-green-600 font-bold text-[11px]">🌿 {item.refrigerant}</span>
                       : <span className="text-gray-600">{item.refrigerant || '—'}</span>}
                   </td>
+
+                  {/* Refrigerant Amount — residential only */}
+                  {!isCommercial && (
+                    <td className={`${TD_BASE} whitespace-nowrap`}>
+                      <span className="text-[12px] text-gray-600">{fmtRefrigerantAmt(item.refrigerant_amount_kg)}</span>
+                    </td>
+                  )}
 
                   {/* COP */}
                   <td className={`${TD_BASE} bg-blue-50/30`}>
@@ -353,10 +393,34 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                     <TwoLine l1={price1} l2={price2} l1Cls="font-bold text-green-700 whitespace-nowrap" />
                   </td>
 
-                  {/* SG Ready */}
-                  <td className={`${TD_BASE} bg-teal-50/30`}>
-                    <span className={`text-[12px] font-medium ${item.grid_ready ? 'text-teal-700' : 'text-gray-400'}`}>
-                      {sgReady}
+                  {/* Commercial-only columns */}
+                  {isCommercial && (
+                    <>
+                      {/* Market Segment */}
+                      <td className={`${TD_BASE} bg-orange-50/30`}>
+                        <span className={`px-1.5 py-0.5 inline-flex text-[11px] leading-4 font-bold rounded-full ${
+                          item.market_segment === 'commercial_project'
+                            ? 'bg-orange-100 text-orange-800'
+                            : 'bg-amber-100 text-amber-800'
+                        }`}>
+                          {fmtSegment(item.market_segment)}
+                        </span>
+                      </td>
+                      {/* Power Control */}
+                      <td className={TD_BASE}>
+                        <span className="text-[12px] text-gray-600">{fmtPowerControl((item as any).power_control)}</span>
+                      </td>
+                      {/* Compressors */}
+                      <td className={TD_BASE}>
+                        <span className="text-[12px] text-gray-600">{(item as any).num_compressors ?? '—'}</span>
+                      </td>
+                    </>
+                  )}
+
+                  {/* Grid Ready */}
+                  <td className={`${TD_BASE} bg-teal-50/30 px-1`}>
+                    <span className={`text-[11px] font-medium whitespace-nowrap ${item.grid_ready ? 'text-teal-700' : 'text-gray-400'}`}>
+                      {gridReady}
                     </span>
                   </td>
                 </tr>

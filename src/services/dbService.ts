@@ -9,20 +9,28 @@ const POLICY_REF = `countries/${COUNTRY_CODE}/policies`;
 const BAFA_REF = `countries/${COUNTRY_CODE}/bafa`;
 
 /**
- * Load products from the new enriched residential dataset (static JSON).
- * Replaces the old Firestore-based product loading.
+ * Load products from a static JSON dataset.
+ * Accepts a path so both residential and commercial datasets use the same loader.
  */
-export const getProducts = async (): Promise<HeatPump[]> => {
+const loadProductsFromJson = async (path: string): Promise<HeatPump[]> => {
   try {
-    const resp = await fetch('/data/products.json');
+    const resp = await fetch(path);
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
     return (data.items || []) as HeatPump[];
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error(`Error fetching products from ${path}:`, error);
     return [];
   }
 };
+
+/** Load residential products (static JSON). */
+export const getProducts = (): Promise<HeatPump[]> =>
+  loadProductsFromJson('/data/products.json');
+
+/** Load commercial products (static JSON). */
+export const getCommercialProducts = (): Promise<HeatPump[]> =>
+  loadProductsFromJson('/data/products-commercial.json');
 
 export const getNews = async (): Promise<NewsItem[]> => {
   try {

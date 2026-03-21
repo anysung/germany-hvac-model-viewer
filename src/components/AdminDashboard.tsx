@@ -5,6 +5,7 @@ import {
   reactivateUser, deleteUser, changeAdminPassword
 } from '../services/authService';
 import { getMetadata, DbMetadata } from '../services/dbService';
+import { getAdminQuotaInfo, setExtraPrintQuota, DEFAULT_MONTHLY_QUOTA } from '../services/quotaService';
 import { User, ActivityLog, Language, AppMode } from '../types';
 import { translations } from '../translations';
 
@@ -66,6 +67,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   const [metaLoading, setMetaLoading] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Quota management state
+  const [quotaSearch, setQuotaSearch] = useState('');
+  const [quotaUser, setQuotaUser] = useState<User | null>(null);
+  const [quotaInfo, setQuotaInfo] = useState<{ used: number; defaultLimit: number; extraQuota: number; totalLimit: number; remaining: number; month: string } | null>(null);
+  const [quotaExtraInput, setQuotaExtraInput] = useState('');
+  const [quotaSaved, setQuotaSaved] = useState(false);
 
   const t = translations[language];
 
@@ -535,6 +543,112 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 </div>
                 <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg">{t.updatePassword}</button>
               </form>
+            </div>
+
+            {/* ── Print Quota Management ─────────────────────────── */}
+            <div className="bg-white max-w-lg p-6 rounded-lg shadow border border-gray-200 mt-6">
+              <h3 className="text-lg font-bold mb-4">{(t as any).adminQuotaTitle || 'Print Quota Management'}</h3>
+
+              {/* User search */}
+              <div className="mb-4">
+                <input
+                  type="text"
+                  placeholder={(t as any).adminQuotaSearch || 'Search user for quota...'}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-blue-500 outline-none text-sm"
+                  value={quotaSearch}
+                  onChange={e => setQuotaSearch(e.target.value)}
+                />
+                {quotaSearch.length >= 2 && !quotaUser && (
+                  <div className="mt-1 border rounded-lg max-h-40 overflow-y-auto bg-white shadow-sm">
+                    {users
+                      .filter(u => {
+                        const q = quotaSearch.toLowerCase();
+                        return u.email.toLowerCase().includes(q) || u.firstName.toLowerCase().includes(q) || u.lastName.toLowerCase().includes(q);
+                      })
+                      .slice(0, 8)
+                      .map(u => (
+                        <button
+                          key={u.id}
+                          className="w-full text-left px-3 py-2 text-sm hover:bg-blue-50 border-b border-gray-100"
+                          onClick={async () => {
+                            setQuotaUser(u);
+                            setQuotaSearch(u.email);
+                            setQuotaSaved(false);
+                            const info = await getAdminQuotaInfo(u.id);
+                            setQuotaInfo(info);
+                            setQuotaExtraInput(String(info.extraQuota));
+                          }}
+                        >
+                          <span className="font-medium">{u.firstName} {u.lastName}</span>
+                          <span className="text-gray-400 ml-2">{u.email}</span>
+                        </button>
+                      ))
+                    }
+                  </div>
+                )}
+              </div>
+
+              {/* Quota info display */}
+              {quotaUser && quotaInfo && (
+                <div className="space-y-3">
+                  <div className="bg-gray-50 rounded-lg p-3 text-sm space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">{(t as any).adminQuotaDefault || 'Default Monthly'}</span>
+                      <span className="font-bold">{quotaInfo.defaultLimit}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">{(t as any).adminQuotaExtra || 'Extra Quota'}</span>
+                      <span className="font-bold text-blue-600">{quotaInfo.extraQuota}</span>
+                    </div>
+                    <div className="flex justify-between border-t border-gray-200 pt-1">
+                      <span className="text-gray-500 font-medium">{(t as any).adminQuotaTotal || 'Total Limit'}</span>
+                      <span className="font-bold">{quotaInfo.totalLimit}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">{(t as any).adminQuotaUsed || 'Used'} ({quotaInfo.month})</span>
+                      <span className="font-bold">{quotaInfo.used}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">{(t as any).adminQuotaRemaining || 'Remaining'}</span>
+                      <span className={`font-bold ${quotaInfo.remaining > 0 ? 'text-green-600' : 'text-red-600'}`}>{quotaInfo.remaining}</span>
+                    </div>
+                  </div>
+
+                  {/* Extra quota input */}
+                  <div className="flex items-center gap-3">
+                    <label className="text-sm text-gray-600 whitespace-nowrap">{(t as any).adminQuotaExtra || 'Extra Quota'}:</label>
+                    <input
+                      type="number"
+                      min="0"
+                      className="flex-grow px-3 py-1.5 border rounded-lg text-sm focus:ring-blue-500 outline-none"
+                      value={quotaExtraInput}
+                      onChange={e => { setQuotaExtraInput(e.target.value); setQuotaSaved(false); }}
+                    />
+                    <button
+                      className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg"
+                      onClick={async () => {
+                        if (!quotaUser) return;
+                        const extra = Math.max(0, parseInt(quotaExtraInput) || 0);
+                        await setExtraPrintQuota(quotaUser.id, extra);
+                        const info = await getAdminQuotaInfo(quotaUser.id);
+                        setQuotaInfo(info);
+                        setQuotaSaved(true);
+                        setTimeout(() => setQuotaSaved(false), 2000);
+                      }}
+                    >
+                      {quotaSaved ? ((t as any).adminQuotaSaved || 'Saved!') : ((t as any).adminQuotaSave || 'Save')}
+                    </button>
+                  </div>
+
+                  {/* Clear selection */}
+                  <button
+                    className="text-xs text-gray-400 hover:text-gray-600"
+                    onClick={() => { setQuotaUser(null); setQuotaInfo(null); setQuotaSearch(''); setQuotaExtraInput(''); }}
+                  >
+                    Clear selection
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

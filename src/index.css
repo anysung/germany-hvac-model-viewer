@@ -14,3 +14,21 @@
   background: #cbd5e1;
   border-radius: 4px;
 }
+
+/* ── Print Styles for Data Sheet ──────────────────────────── */
+@media print {
+  /* Hide all app chrome */
+  body > #root > * { display: none !important; }
+  /* Show only the data sheet modal */
+  .fixed.z-50 { display: flex !important; position: static !important; }
+  .print\:hidden { display: none !important; }
+  .datasheet-template {
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+  }
+  @page {
+    size: A4;
+    margin: 15mm 12mm;
+  }
+}

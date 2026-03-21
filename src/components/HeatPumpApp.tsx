@@ -1,14 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHeatPumps } from '../services/geminiService';
 import { logActivity } from '../services/authService';
-import { HeatPump, Manufacturer, CapacityRange, InstallationType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
+import { HeatPump, UnitType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
+import { matchesUnitTypeFilter } from '../utils/displayHelpers';
+import { residentialConfig, commercialConfig, SearchConfig } from '../config/searchConfig';
 import { FilterBadge } from './FilterBadge';
+import { SegmentSwitcher } from './SegmentSwitcher';
 import { ResultsTable } from './ResultsTable';
 import { NewsView } from './NewsView';
 import { PolicyView } from './PolicyView';
 import { BAFAView } from './BAFAView';
-import { ComparisonView } from './ComparisonView'; // New Import
+import { ComparisonView } from './ComparisonView';
+import { DataSheetPreview } from './DataSheetPreview';
 import { translations } from '../translations';
+
+/** Maximum number of models that can be compared side-by-side. */
+const MAX_COMPARISON = 4;
 
 interface HeatPumpAppProps {
   user: User;
@@ -20,49 +27,77 @@ interface HeatPumpAppProps {
   appMode: AppMode;
 }
 
-// --- Helper Functions for Capacity Range Filtering ---
-
-const getNumericBounds = (rangeLabel: string): { min: number, max: number } | null => {
-  const numbers = rangeLabel.match(/(\d+(\.\d+)?)/g)?.map(Number);
-  if (numbers && numbers.length >= 2) {
-    return { min: numbers[0], max: numbers[1] };
-  }
-  return null;
-};
-
-type Tab = 'SEARCH' | 'COMPARISON' | 'NEWS' | 'POLICY' | 'BAFA';
+type Tab = 'SEARCH' | 'COMPARISON' | 'DATASHEET' | 'NEWS' | 'POLICY' | 'BAFA';
+type SearchSegment = 'residential' | 'commercial';
 
 export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdminAccess, dbData, lastUpdated, language, appMode }) => {
   // Navigation State
   const [activeTab, setActiveTab] = useState<Tab>('SEARCH');
+  const [searchSegment, setSearchSegment] = useState<SearchSegment>('residential');
 
   // Search Data State
   const [data, setData] = useState<HeatPump[]>(dbData?.products || []);
   const [status, setStatus] = useState<FetchState>('idle');
-  
+
   // Comparison State
   const [selectedComparisonModels, setSelectedComparisonModels] = useState<HeatPump[]>([]);
   const [isComparing, setIsComparing] = useState(false);
+
+  // Data Sheet State
+  const [dataSheetModel, setDataSheetModel] = useState<HeatPump | null>(null);
+  const [isDataSheetPreview, setIsDataSheetPreview] = useState(false);
 
   // Filters
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedRange, setSelectedRange] = useState<string | null>(null);
   const [selectedUnitType, setSelectedUnitType] = useState<string | null>(null);
   const [selectedRefrigerant, setSelectedRefrigerant] = useState<string | null>(null);
+  const [extraFilters, setExtraFilters] = useState<Record<string, string | null>>({});
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [localSearchInput, setLocalSearchInput] = useState('');
 
   const t = translations[language];
 
+  // Active search config based on segment
+  const searchConfig: SearchConfig = searchSegment === 'commercial' ? commercialConfig : residentialConfig;
+
+  // Source dataset for current segment
+  const getSourceProducts = useCallback((): HeatPump[] => {
+    if (!dbData) return [];
+    return searchSegment === 'commercial'
+      ? (dbData.commercialProducts || [])
+      : (dbData.products || []);
+  }, [dbData, searchSegment]);
+
+  // Clear filters when switching segments
+  const switchSegment = (seg: SearchSegment) => {
+    if (seg === searchSegment) return;
+    setSearchSegment(seg);
+    setSelectedBrand(null);
+    setSelectedRange(null);
+    setSelectedUnitType(null);
+    setSelectedRefrigerant(null);
+    setExtraFilters({});
+    setSearchQuery('');
+    setLocalSearchInput('');
+    setSelectedComparisonModels([]);
+    setIsComparing(false);
+    setDataSheetModel(null);
+    setIsDataSheetPreview(false);
+  };
+
   // Update data when DB loads or changes
   useEffect(() => {
-    if (dbData?.products && appMode === 'DATABASE') {
-      setData(dbData.products);
-      setStatus('success');
+    if (appMode === 'DATABASE') {
+      const src = getSourceProducts();
+      if (src.length > 0) {
+        setData(src);
+        setStatus('success');
+      }
     }
-  }, [dbData, appMode]);
+  }, [dbData, appMode, getSourceProducts]);
 
-  // Live Search Logic
+  // Live Search Logic (residential only — commercial has no live API mode)
   const executeLiveSearch = useCallback(async () => {
     setStatus('loading');
     try {
@@ -76,20 +111,21 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
     }
   }, [selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, user.id, language]);
 
-  // Database Filtering Logic
+  // Database Filtering Logic — works for both segments via config
   const executeDbSearch = useCallback(() => {
-    if (dbData?.products) {
-      let filtered = [...dbData.products];
+    const source = getSourceProducts();
+    if (source.length > 0) {
+      let filtered = [...source];
 
-      // Brand filter — substring match (e.g. "Viessmann" matches "Viessmann Climate Solutions GmbH & Co.KG")
+      // Brand filter — substring match
       if (selectedBrand) {
         const brandLower = selectedBrand.toLowerCase();
         filtered = filtered.filter((item: HeatPump) => item.manufacturer.toLowerCase().includes(brandLower));
       }
 
-      // Capacity range filter — numeric comparison against power_35C_kw
+      // Capacity range filter — uses config's parser
       if (selectedRange) {
-        const bounds = getNumericBounds(selectedRange);
+        const bounds = searchConfig.parseCapacity(selectedRange);
         if (bounds) {
           filtered = filtered.filter((item: HeatPump) => {
             const val = item.power_35C_kw;
@@ -99,15 +135,30 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
         }
       }
 
-      // Installation type filter (replaces old IDU/ODU unit type filter)
+      // Unit type filter — IDU / ODU
       if (selectedUnitType) {
-        const installType = selectedUnitType === InstallationType.Monoblock ? 'Monoblock' : 'Split';
-        filtered = filtered.filter((item: HeatPump) => item.installation_type === installType);
+        filtered = filtered.filter((item: HeatPump) => matchesUnitTypeFilter(item, selectedUnitType));
       }
 
       // Refrigerant filter — contains match
       if (selectedRefrigerant) {
         filtered = filtered.filter((item: HeatPump) => (item.refrigerant || '').includes(selectedRefrigerant));
+      }
+
+      // Inline filter (e.g. Market Segment in Row 2 for commercial)
+      if (searchConfig.inlineFilter) {
+        const value = extraFilters[searchConfig.inlineFilter.key];
+        if (value) {
+          filtered = filtered.filter((item: HeatPump) => searchConfig.inlineFilter!.match(item, value));
+        }
+      }
+
+      // Extra filters (Row 3+)
+      for (const filterDef of searchConfig.extraFilters) {
+        const value = extraFilters[filterDef.key];
+        if (value) {
+          filtered = filtered.filter((item: HeatPump) => filterDef.match(item, value));
+        }
       }
 
       // Text search — model or manufacturer
@@ -121,7 +172,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
       }
 
       if (searchQuery || selectedBrand || selectedRange || selectedRefrigerant) {
-         logActivity(user.id, 'FILTER_DB', `Brand: ${selectedBrand}, Range: ${selectedRange}, Refrigerant: ${selectedRefrigerant}, Q: ${searchQuery}`);
+         logActivity(user.id, 'FILTER_DB', `Seg: ${searchSegment}, Brand: ${selectedBrand}, Range: ${selectedRange}, Ref: ${selectedRefrigerant}, Q: ${searchQuery}`);
       }
 
       setData(filtered);
@@ -129,19 +180,18 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
     } else {
       setData([]);
     }
-  }, [dbData, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, user.id]);
+  }, [getSourceProducts, searchConfig, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, extraFilters, searchQuery, user.id, searchSegment]);
 
   // Trigger Search
   useEffect(() => {
-    // Search triggers for both SEARCH and COMPARISON tabs (to populate list)
     if (activeTab === 'SEARCH' || activeTab === 'COMPARISON') {
-      if (appMode === 'LIVE_API') {
+      if (appMode === 'LIVE_API' && searchSegment === 'residential') {
         if (selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery) executeLiveSearch();
       } else {
         executeDbSearch();
       }
     }
-  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, activeTab]);
+  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, extraFilters, searchQuery, activeTab, searchSegment]);
 
   const onSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,12 +201,10 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
   // Toggle Selection for Comparison
   const toggleComparisonSelection = (model: HeatPump) => {
     if (selectedComparisonModels.some(m => m.model === model.model)) {
-      // Remove
       setSelectedComparisonModels(prev => prev.filter(m => m.model !== model.model));
     } else {
-      // Add
-      if (selectedComparisonModels.length >= 3) {
-        alert(t.compareErrorMax || "Maximum 3 models can be compared.");
+      if (selectedComparisonModels.length >= MAX_COMPARISON) {
+        alert(t.compareErrorMax || `Maximum ${MAX_COMPARISON} models can be compared.`);
         return;
       }
       setSelectedComparisonModels(prev => [...prev, model]);
@@ -169,16 +217,50 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
       return;
     }
     setIsComparing(true);
-    logActivity(user.id, 'COMPARE_START', `Comparing ${selectedComparisonModels.length} items`);
+    logActivity(user.id, 'COMPARE_START', `Comparing ${selectedComparisonModels.length} items (${searchSegment})`);
   };
+
+  // Data Sheet: select exactly 1 model (replaces previous selection)
+  const selectDataSheetModel = (model: HeatPump) => {
+    setDataSheetModel(prev =>
+      prev && prev.model === model.model && prev.manufacturer === model.manufacturer ? null : model
+    );
+  };
+
+  const openDataSheetPreview = () => {
+    if (!dataSheetModel) return;
+    setIsDataSheetPreview(true);
+    logActivity(user.id, 'DATASHEET_PREVIEW', `Preview: ${dataSheetModel.model} (${searchSegment})`);
+  };
+
+  const clearAllFilters = () => {
+    setSelectedBrand(null);
+    setSelectedRange(null);
+    setSelectedUnitType(null);
+    setSelectedRefrigerant(null);
+    setExtraFilters({});
+    setSearchQuery('');
+    setLocalSearchInput('');
+  };
+
+  const hasActiveFilters = !!(selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery || Object.values(extraFilters).some(Boolean));
 
   const tabs: {id: Tab, label: string, icon: string}[] = [
     { id: 'SEARCH', label: t.searchPlaceholder?.includes('suche') ? 'Produktsuche' : 'Product Search', icon: '🔍' },
     { id: 'COMPARISON', label: t.tabComparison, icon: '⚖️' },
+    { id: 'DATASHEET', label: (t as any).tabDataSheet || 'Data Sheet', icon: '📄' },
     { id: 'NEWS', label: t.searchPlaceholder?.includes('suche') ? 'Marktnachrichten' : 'Market News', icon: '📰' },
     { id: 'POLICY', label: t.searchPlaceholder?.includes('suche') ? 'Vorschriften' : 'Regulations', icon: '📜' },
     { id: 'BAFA', label: 'BAFA / KfW', icon: '💶' },
   ];
+
+  // Determine grid proportions for the filter row
+  // When Unit Type is hidden and replaced by an inline filter (or nothing), adjust proportions
+  const filterGridCols = searchConfig.showUnitType
+    ? '5fr 4fr 2.5fr'                       // Residential: Capacity | Unit Type | Refrigerant
+    : searchConfig.inlineFilter
+      ? '5fr 3fr 3.5fr'                     // Commercial: Capacity | Market Segment | Refrigerant
+      : '5fr 3.5fr';                        // Fallback: Capacity | Refrigerant (no middle panel)
 
   return (
     <div className="flex flex-col h-full font-sans bg-gray-50">
@@ -196,7 +278,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                   dbData ? (
                     <div className="flex flex-col">
                       <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 w-fit">
-                        ⚡ {t.dbMode} 
+                        ⚡ {t.dbMode}
                       </span>
                       <span className="text-[10px] text-gray-400 mt-0.5">
                         Updated: {lastUpdated ? new Date(lastUpdated).toLocaleDateString() : 'Unknown'}
@@ -214,7 +296,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                 )}
               </div>
             </div>
-            
+
             <div className="flex items-center gap-3 w-full md:w-auto">
               <form onSubmit={onSearchSubmit} className="flex-grow md:w-80 relative">
                 <input
@@ -228,7 +310,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </form>
-              
+
               <div className="flex items-center gap-2 border-l pl-3 ml-1">
                  <div className="text-right hidden sm:block">
                     <div className="text-xs font-bold text-gray-700">{user.firstName} {user.lastName}</div>
@@ -256,7 +338,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
               {tabs.map(tab => (
                 <button
                   key={tab.id}
-                  onClick={() => { setActiveTab(tab.id); setIsComparing(false); }}
+                  onClick={() => { setActiveTab(tab.id); setIsComparing(false); setIsDataSheetPreview(false); }}
                   className={`
                     whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 transition-colors duration-200
                     ${activeTab === tab.id
@@ -274,16 +356,26 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
 
         <div className="max-w-[96%] mx-auto px-4 sm:px-6 lg:px-8 py-2">
 
-          {/* SHARED FILTERS (Visible on SEARCH and COMPARISON when not comparing) */}
-          {(activeTab === 'SEARCH' || (activeTab === 'COMPARISON' && !isComparing)) && (
+          {/* SHARED FILTERS (Visible on SEARCH, COMPARISON when not comparing, DATASHEET when not previewing) */}
+          {(activeTab === 'SEARCH' || (activeTab === 'COMPARISON' && !isComparing) || (activeTab === 'DATASHEET' && !isDataSheetPreview)) && (
             <>
+              {/* ── Residential / Commercial Segment Switcher (shared across SEARCH, COMPARISON, DATASHEET) ── */}
+              <SegmentSwitcher
+                segment={searchSegment}
+                onSwitch={switchSegment}
+                residentialLabel={t.tabResidential || 'Residential'}
+                commercialLabel={t.tabCommercial || 'Commercial'}
+                productCount={data.length}
+                countLabel={searchSegment === 'commercial' ? 'commercial products' : 'residential products'}
+              />
+
               {/* Selected Models Area (Comparison Tab Only) */}
               {activeTab === 'COMPARISON' && (
                 <div className="mb-2 bg-indigo-50 border border-indigo-100 rounded-xl p-3 shadow-sm animate-fade-in">
                   <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex-grow">
                       <h3 className="text-sm font-bold text-indigo-900 mb-2 flex items-center gap-2">
-                        <span>⚖️</span> {t.selectedModels} ({selectedComparisonModels.length}/3)
+                        <span>⚖️</span> {t.selectedModels} ({selectedComparisonModels.length}/{MAX_COMPARISON})
                       </h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedComparisonModels.length === 0 && <span className="text-sm text-gray-400 italic">Select models from the list below to compare.</span>}
@@ -296,14 +388,14 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                       </div>
                     </div>
                     <div className="flex-shrink-0 flex gap-2">
-                      <button 
-                        onClick={() => setSelectedComparisonModels([])} 
+                      <button
+                        onClick={() => setSelectedComparisonModels([])}
                         className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
                         disabled={selectedComparisonModels.length === 0}
                       >
                         {t.clearSelection}
                       </button>
-                      <button 
+                      <button
                         onClick={startComparison}
                         disabled={selectedComparisonModels.length < 2}
                         className={`px-6 py-2 rounded-lg font-bold text-sm shadow-md transition-transform ${selectedComparisonModels.length >= 2 ? 'bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-105' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
@@ -315,37 +407,100 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                 </div>
               )}
 
-              {/* Filters */}
+              {/* Selected Model Area (Data Sheet Tab Only) */}
+              {activeTab === 'DATASHEET' && (
+                <div className="mb-2 bg-emerald-50 border border-emerald-100 rounded-xl p-3 shadow-sm animate-fade-in">
+                  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="flex-grow">
+                      <h3 className="text-sm font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                        <span>📄</span> {(t as any).dataSheetSelected || 'Selected for Data Sheet'} ({dataSheetModel ? '1' : '0'}/1)
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
+                        {!dataSheetModel && <span className="text-sm text-gray-400 italic">{(t as any).dataSheetSelectPrompt || 'Select a model from the list below to generate a data sheet.'}</span>}
+                        {dataSheetModel && (
+                          <div className="bg-white border border-emerald-200 text-emerald-800 px-3 py-1.5 rounded-lg text-sm shadow-sm flex items-center gap-2">
+                            <span className="font-semibold">{dataSheetModel.model}</span>
+                            <button onClick={() => setDataSheetModel(null)} className="text-emerald-400 hover:text-red-500">×</button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0 flex gap-2">
+                      <button
+                        onClick={() => setDataSheetModel(null)}
+                        className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+                        disabled={!dataSheetModel}
+                      >
+                        {t.clearSelection}
+                      </button>
+                      <button
+                        onClick={openDataSheetPreview}
+                        disabled={!dataSheetModel}
+                        className={`px-6 py-2 rounded-lg font-bold text-sm shadow-md transition-transform ${dataSheetModel ? 'bg-emerald-600 text-white hover:bg-emerald-700 hover:scale-105' : 'bg-gray-300 text-gray-500 cursor-not-allowed'}`}
+                      >
+                        {(t as any).dataSheetPreview || 'Preview'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* ── Config-Driven Filters ──────────────────────────────── */}
               <section className="mb-2 space-y-1.5">
+                {/* Row 1 — Manufacturer */}
                 <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
                   <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterManufacturer}</h3>
                   <div className="flex flex-wrap gap-1.5">
-                    {(Object.values(Manufacturer) as string[]).map((brand) => (
+                    {searchConfig.manufacturers.map((brand) => (
                       <FilterBadge key={brand} label={brand} isActive={selectedBrand === brand} onClick={() => setSelectedBrand(selectedBrand === brand ? null : brand)} />
                     ))}
                   </div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '5fr 4fr 2.5fr', gap: '6px' }}>
+
+                {/* Row 2 — Capacity | Unit Type | Refrigerant */}
+                <div style={{ display: 'grid', gridTemplateColumns: filterGridCols, gap: '6px' }}>
                   <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
                     <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterCapacity}</h3>
                     <div className="flex flex-wrap gap-1.5">
-                      {(Object.values(CapacityRange) as string[]).map((range) => (
+                      {searchConfig.capacityRanges.map((range) => (
                         <FilterBadge key={range} label={range} isActive={selectedRange === range} onClick={() => setSelectedRange(selectedRange === range ? null : range)} />
                       ))}
                     </div>
                   </div>
-                  <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
-                    <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterUnitType}</h3>
-                    <div className="flex flex-wrap gap-1.5">
-                      {(Object.values(InstallationType) as string[]).map((type) => (
-                        <FilterBadge key={type} label={type} isActive={selectedUnitType === type} onClick={() => setSelectedUnitType(selectedUnitType === type ? null : type)} />
-                      ))}
+                  {/* Middle panel: Unit Type (residential) or Inline Filter (commercial) */}
+                  {searchConfig.showUnitType ? (
+                    <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                      <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterUnitType}</h3>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(Object.values(UnitType) as string[]).map((type) => (
+                          <FilterBadge key={type} label={type} isActive={selectedUnitType === type} onClick={() => setSelectedUnitType(selectedUnitType === type ? null : type)} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : searchConfig.inlineFilter ? (
+                    <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                      <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                        {(t as any)[searchConfig.inlineFilter.labelKey] || searchConfig.inlineFilter.labelKey}
+                      </h3>
+                      <div className="flex flex-wrap gap-1.5">
+                        {searchConfig.inlineFilter.options.map((opt) => (
+                          <FilterBadge
+                            key={opt}
+                            label={opt}
+                            isActive={extraFilters[searchConfig.inlineFilter!.key] === opt}
+                            onClick={() => setExtraFilters(prev => ({
+                              ...prev,
+                              [searchConfig.inlineFilter!.key]: prev[searchConfig.inlineFilter!.key] === opt ? null : opt,
+                            }))}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
                   <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
                     <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">REFRIGERANT TYPE</h3>
                     <div className="flex flex-wrap gap-1.5">
-                      {['R290', 'R32', 'R410A'].map((ref) => (
+                      {searchConfig.refrigerants.map((ref) => (
                         <FilterBadge
                           key={ref}
                           label={ref === 'R290' ? '🌿 R290' : ref}
@@ -356,37 +511,67 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                     </div>
                   </div>
                 </div>
+
+                {/* Row 3 — Extra Filters (e.g. Market Segment for commercial) */}
+                {searchConfig.extraFilters.length > 0 && (
+                  <div style={{ display: 'grid', gridTemplateColumns: `repeat(${searchConfig.extraFilters.length}, 1fr)`, gap: '6px' }}>
+                    {searchConfig.extraFilters.map((filterDef) => (
+                      <div key={filterDef.key} className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
+                        <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">
+                          {(t as any)[filterDef.labelKey] || filterDef.labelKey}
+                        </h3>
+                        <div className="flex flex-wrap gap-1.5">
+                          {filterDef.options.map((opt) => (
+                            <FilterBadge
+                              key={opt}
+                              label={opt}
+                              isActive={extraFilters[filterDef.key] === opt}
+                              onClick={() => setExtraFilters(prev => ({
+                                ...prev,
+                                [filterDef.key]: prev[filterDef.key] === opt ? null : opt,
+                              }))}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </section>
 
               {/* Active Filters Display */}
-              {(selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery) && (
+              {hasActiveFilters && (
                 <div className="mb-2 flex flex-wrap items-center gap-2 text-sm text-gray-600">
                   <span className="font-semibold text-gray-700">{t.activeFilters}:</span>
                   {searchQuery && <span className="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded border border-yellow-200">"{searchQuery}"</span>}
                   {selectedBrand && <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-200">{selectedBrand}</span>}
                   {selectedRefrigerant && <span className="bg-green-100 text-green-800 px-2 py-0.5 rounded border border-green-200">{selectedRefrigerant === 'R290' ? '🌿 R290' : selectedRefrigerant}</span>}
-                  <button onClick={() => { setSelectedBrand(null); setSelectedRange(null); setSelectedUnitType(null); setSelectedRefrigerant(null); setSearchQuery(''); setLocalSearchInput(''); }} className="ml-auto px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded border border-red-700 shadow-sm transition-colors">{t.clearAll}</button>
+                  {Object.entries(extraFilters).map(([key, val]) => val && (
+                    <span key={key} className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded border border-orange-200">{val}</span>
+                  ))}
+                  <button onClick={clearAllFilters} className="ml-auto px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded border border-red-700 shadow-sm transition-colors">{t.clearAll}</button>
                 </div>
               )}
 
               {/* Results Table (with Selection if in Comparison Tab) */}
-              <ResultsTable 
-                data={data} 
-                isLoading={status === 'loading'} 
-                labels={t} 
-                isSelectionMode={activeTab === 'COMPARISON'}
-                selectedModels={selectedComparisonModels}
-                onToggleSelection={toggleComparisonSelection}
+              <ResultsTable
+                data={data}
+                isLoading={status === 'loading'}
+                labels={t}
+                isSelectionMode={activeTab === 'COMPARISON' || activeTab === 'DATASHEET'}
+                selectedModels={activeTab === 'DATASHEET' ? (dataSheetModel ? [dataSheetModel] : []) : selectedComparisonModels}
+                onToggleSelection={activeTab === 'DATASHEET' ? selectDataSheetModel : toggleComparisonSelection}
+                segment={searchSegment}
               />
             </>
           )}
 
           {/* Comparison View (Only visible when isComparing is true) */}
           {activeTab === 'COMPARISON' && isComparing && (
-            <ComparisonView 
-              models={selectedComparisonModels} 
-              labels={t} 
-              onBack={() => setIsComparing(false)} 
+            <ComparisonView
+              models={selectedComparisonModels}
+              labels={t}
+              onBack={() => setIsComparing(false)}
             />
           )}
 
@@ -395,7 +580,19 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
           {activeTab === 'BAFA' && <BAFAView items={dbData?.bafaListLinks} />}
         </div>
       </main>
-      
+
+      {/* Data Sheet Preview Modal (rendered outside main for z-index) */}
+      {isDataSheetPreview && dataSheetModel && (
+        <DataSheetPreview
+          item={dataSheetModel}
+          segment={searchSegment}
+          lang={language}
+          userId={user.id}
+          onClose={() => setIsDataSheetPreview(false)}
+          labels={t}
+        />
+      )}
+
       <footer className="bg-gray-50 border-t border-gray-200 py-6 px-4 text-center">
         <p className="text-[10px] text-gray-400 leading-relaxed max-w-4xl mx-auto">{t.legalDisclaimer}</p>
         <p className="text-[10px] text-gray-400 mt-2">© {new Date().getFullYear()} SYS Corporation. All Rights Reserved.</p>

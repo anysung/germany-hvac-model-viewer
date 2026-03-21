@@ -5,7 +5,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { HeatPumpDatabase, HeatPump, User, AppMode, Language } from './types';
 import { translations } from './translations';
 // Use Firestore Service
-import { getProducts, getNews, getPolicies, getBAFA } from './services/dbService';
+import { getProducts, getCommercialProducts, getNews, getPolicies, getBAFA } from './services/dbService';
 
 type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'APP' | 'ADMIN_GATE' | 'ADMIN_LOGIN' | 'ADMIN_DASHBOARD';
 
@@ -52,8 +52,9 @@ const App: React.FC = () => {
     // 2. Load Data from Firestore
     const loadData = async () => {
       try {
-        const [products, news, policies, bafa] = await Promise.all([
+        const [products, commercialProducts, news, policies, bafa] = await Promise.all([
             getProducts(),
+            getCommercialProducts(),
             getNews(),
             getPolicies(),
             getBAFA()
@@ -64,6 +65,7 @@ const App: React.FC = () => {
             version: "Firestore-Live",
             appMode: 'DATABASE',
             products: products,
+            commercialProducts: commercialProducts,
             newsFeed: news,
             policySummary: policies,
             bafaListLinks: bafa

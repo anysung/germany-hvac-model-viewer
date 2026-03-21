@@ -6,7 +6,9 @@ export interface HeatPump {
   model: string;
   type: string;                        // "Luft / Wasser"
   refrigerant: string;
+  refrigerant_amount_kg: number | null;
   refrigerant_2: string | null;
+  refrigerant_2_amount_kg: number | null;
   installation_type: string | null;    // "Monoblock" or "Split"
 
   // Performance (numeric)
@@ -38,6 +40,7 @@ export interface HeatPump {
   market_segment: string | null;
   capacity_band: string | null;
   refrigerant_group: string | null;
+  package_scope: string | null;
 }
 
 export type AppMode = 'DATABASE' | 'LIVE_API';
@@ -72,6 +75,7 @@ export interface HeatPumpDatabase {
   version: string;
   appMode: AppMode;
   products: HeatPump[];
+  commercialProducts?: HeatPump[];
   // New Arrays
   newsFeed?: NewsItem[];
   policySummary?: PolicyItem[];
@@ -97,9 +101,10 @@ export enum CapacityRange {
   Range_13_17 = '13 kW ~ 17 kW',
 }
 
-export enum InstallationType {
-  Monoblock = 'Monoblock',
-  Split = 'Split',
+/** UI filter values for unit type. Maps to raw installation_type via displayHelpers. */
+export enum UnitType {
+  ODU = 'ODU',
+  IDU = 'IDU',
 }
 
 export type FetchState = 'idle' | 'loading' | 'success' | 'error';

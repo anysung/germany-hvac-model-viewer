@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { HeatPump } from '../types';
+import { getDisplayName, getUnitTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
 
 interface ComparisonViewProps {
   models: HeatPump[];
@@ -19,21 +20,16 @@ const fmt = {
     return `${w ?? '?'} × ${h ?? '?'} × ${d ?? '?'} mm`;
   },
   price: (m: HeatPump) => {
-    if (m.equipment_price_typical_eur) return `€${m.equipment_price_typical_eur.toLocaleString('de-DE')}`;
-    if (m.equipment_price_low_eur && m.equipment_price_high_eur) return `€${m.equipment_price_low_eur.toLocaleString('de-DE')} – €${m.equipment_price_high_eur.toLocaleString('de-DE')}`;
-    return '—';
+    const dp = getDisplayPrice(m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur);
+    return dp.range ? `${dp.main} (${dp.range})` : dp.main;
   },
-  sgReady: (m: HeatPump) => {
-    if (!m.grid_ready) return '—';
-    if (m.grid_ready_type) return m.grid_ready_type.replace(/_/g, ' ');
-    return 'Yes';
-  },
+  gridReady: (m: HeatPump) => fmtGridReady(m.grid_ready, m.grid_ready_type),
 };
 
 export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, onBack }) => {
   const fields: { label: string; getValue: (m: HeatPump) => string; highlight?: string }[] = [
-    { label: labels.colManufacturer, getValue: m => m.manufacturer_short || m.manufacturer },
-    { label: labels.colInstallType || 'Install Type', getValue: m => m.installation_type || '—' },
+    { label: labels.colManufacturer, getValue: m => getDisplayName(m) },
+    { label: labels.colInstallType || 'Type', getValue: m => getUnitTypeDisplay(m) },
     { label: labels.colCapacity, getValue: m => fmt.kw(m.power_35C_kw) },
     { label: labels.colRefrigerant, getValue: m => m.refrigerant || '—' },
     { label: 'COP (A7/W35)', getValue: m => fmt.cop(m.cop_A7W35), highlight: 'blue' },
@@ -43,10 +39,11 @@ export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, 
     { label: labels.colWeight || 'Weight', getValue: m => fmt.kg(m.weight_kg) },
     { label: labels.colDim, getValue: m => fmt.dims(m.width_mm, m.height_mm, m.depth_mm) },
     { label: labels.colPrice, getValue: m => fmt.price(m), highlight: 'green' },
-    { label: labels.colSGReady || 'SG Ready', getValue: m => fmt.sgReady(m) },
+    { label: labels.colGridReady || 'Grid Ready', getValue: m => fmt.gridReady(m) },
   ];
 
-  const gridCols = models.length === 2 ? 'grid-cols-3' : 'grid-cols-4';
+  // 1 label column + N model columns
+  const gridCols = models.length <= 2 ? 'grid-cols-3' : models.length === 3 ? 'grid-cols-4' : 'grid-cols-5';
 
   return (
     <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden flex flex-col h-full">
@@ -72,8 +69,8 @@ export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, 
           </div>
           {models.map((m, i) => (
             <div key={i} className="pb-2 border-b-2 border-blue-500 text-center">
-              <div className="text-lg font-bold text-gray-900 break-words">{m.model}</div>
-              <div className="text-sm text-gray-500">{m.manufacturer_short || m.manufacturer}</div>
+              <div className={`${models.length >= 4 ? 'text-base' : 'text-lg'} font-bold text-gray-900 break-words`}>{m.model}</div>
+              <div className="text-sm text-gray-500">{getDisplayName(m)}</div>
             </div>
           ))}
 

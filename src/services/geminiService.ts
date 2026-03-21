@@ -38,7 +38,9 @@ function mapToHeatPump(raw: any): HeatPump {
     model: raw.model || '',
     type: 'Luft / Wasser',
     refrigerant: raw.refrigerant || '',
+    refrigerant_amount_kg: null,
     refrigerant_2: null,
+    refrigerant_2_amount_kg: null,
     installation_type: raw.installation_type || null,
     power_35C_kw: raw.power_35C_kw ?? null,
     power_55C_kw: null,
@@ -62,6 +64,7 @@ function mapToHeatPump(raw: any): HeatPump {
     market_segment: null,
     capacity_band: null,
     refrigerant_group: null,
+    package_scope: null,
   };
 }
 
