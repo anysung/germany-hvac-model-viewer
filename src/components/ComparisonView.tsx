@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { HeatPump } from '../types';
-import { getDisplayName, getUnitTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
+import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
 
 interface ComparisonViewProps {
   models: HeatPump[];
@@ -20,7 +20,10 @@ const fmt = {
     return `${w ?? '?'} × ${h ?? '?'} × ${d ?? '?'} mm`;
   },
   price: (m: HeatPump) => {
-    const dp = getDisplayPrice(m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur);
+    const dp = getDisplayPrice(
+      m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur,
+      m.equipment_price_display_eur, m.equipment_price_display_low_eur, m.equipment_price_display_high_eur,
+    );
     return dp.range ? `${dp.main} (${dp.range})` : dp.main;
   },
   gridReady: (m: HeatPump) => fmtGridReady(m.grid_ready, m.grid_ready_type),
@@ -29,7 +32,7 @@ const fmt = {
 export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, onBack }) => {
   const fields: { label: string; getValue: (m: HeatPump) => string; highlight?: string }[] = [
     { label: labels.colManufacturer, getValue: m => getDisplayName(m) },
-    { label: labels.colInstallType || 'Type', getValue: m => getUnitTypeDisplay(m) },
+    { label: labels.colInstallType || 'Installation Type', getValue: m => getInstallationTypeDisplay(m) },
     { label: labels.colCapacity, getValue: m => fmt.kw(m.power_35C_kw) },
     { label: labels.colRefrigerant, getValue: m => m.refrigerant || '—' },
     { label: 'COP (A7/W35)', getValue: m => fmt.cop(m.cop_A7W35), highlight: 'blue' },

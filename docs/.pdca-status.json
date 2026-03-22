@@ -1,9 +1,151 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-03-04T23:07:49.393Z",
-  "activeFeatures": [],
-  "primaryFeature": null,
-  "features": {},
+  "lastUpdated": "2026-03-22T01:45:32.693Z",
+  "activeFeatures": [
+    "scraper",
+    "templates",
+    "germany-heatpump-model-viewer-main",
+    "dbService.ts",
+    "geminiService.ts",
+    "config",
+    "quotaService.ts",
+    "adminService.ts",
+    "admin",
+    "authService.ts"
+  ],
+  "primaryFeature": "scraper",
+  "features": {
+    "scraper": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-19T11:40:25.390Z",
+        "lastUpdated": "2026-03-19T11:40:25.390Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/scraper/bafa-explore.js"
+    },
+    "templates": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-20T00:13:39.462Z",
+        "lastUpdated": "2026-03-20T00:13:39.462Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/scraper/pricing/docs/templates/market-keywords-template.js"
+    },
+    "germany-heatpump-model-viewer-main": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-20T02:40:42.867Z",
+        "lastUpdated": "2026-03-22T01:43:13.000Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/types.ts"
+    },
+    "dbService.ts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-20T02:40:59.710Z",
+        "lastUpdated": "2026-03-20T22:50:46.257Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/services/dbService.ts"
+    },
+    "geminiService.ts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-20T02:45:59.941Z",
+        "lastUpdated": "2026-03-21T18:15:38.426Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/services/geminiService.ts"
+    },
+    "config": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-20T22:51:25.508Z",
+        "lastUpdated": "2026-03-22T01:45:04.497Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/config/adminConfig.ts"
+    },
+    "quotaService.ts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-21T00:06:17.174Z",
+        "lastUpdated": "2026-03-22T01:44:58.166Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/services/quotaService.ts"
+    },
+    "adminService.ts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-22T01:28:11.029Z",
+        "lastUpdated": "2026-03-22T01:44:43.316Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/services/adminService.ts"
+    },
+    "admin": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-22T01:29:00.246Z",
+        "lastUpdated": "2026-03-22T01:44:27.017Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/components/admin/CompliancePage.tsx"
+    },
+    "authService.ts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-22T01:45:17.786Z",
+        "lastUpdated": "2026-03-22T01:45:32.693Z"
+      },
+      "lastFile": "/Users/christophersung/germany-heatpump-model-viewer-main/src/services/authService.ts"
+    }
+  },
   "pipeline": {
     "currentPhase": 1,
     "level": "Dynamic",
@@ -12,7 +154,1088 @@
   "session": {
     "startedAt": "2026-03-04T23:07:49.393Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-03-04T23:07:49.393Z"
+    "lastActivity": "2026-03-22T01:45:32.693Z"
   },
-  "history": []
+  "history": [
+    {
+      "timestamp": "2026-03-19T11:40:25.390Z",
+      "feature": "scraper",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T00:13:39.462Z",
+      "feature": "templates",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:40:42.867Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:40:59.710Z",
+      "feature": "dbService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:41:21.405Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:41:25.984Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:42:52.424Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:43:33.645Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:43:39.856Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:43:49.592Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:44:07.533Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:44:15.720Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:44:51.375Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:45:59.941Z",
+      "feature": "geminiService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:46:41.616Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:46:48.941Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:46:55.117Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T02:47:10.580Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T03:02:34.658Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T03:02:42.404Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T03:02:48.508Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T19:54:32.303Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T19:55:03.038Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T19:55:09.308Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T19:55:14.920Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T19:55:21.341Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:15:53.810Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:16:10.767Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:16:17.036Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:16:36.457Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:16:41.138Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:16:53.190Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:17:04.054Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:17:14.419Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:17:26.238Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:17:50.422Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:18:05.700Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:18:16.298Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:18:37.657Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:18:54.866Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:00.712Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:05.831Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:17.520Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:29.533Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:40.301Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:19:55.413Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:20:11.714Z",
+      "feature": "geminiService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:34:00.608Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:50:46.257Z",
+      "feature": "dbService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:51:25.508Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:51:44.689Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:52:12.470Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:52:23.554Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:52:46.354Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:52:59.536Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:54:59.334Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:55:53.211Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:56:03.399Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:56:13.016Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T22:56:31.422Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:06:27.658Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:07:08.924Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:07:28.091Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:09:35.475Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:09:39.530Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:20:24.719Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:20:35.503Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:20:40.348Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:20:47.391Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:20:55.043Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:29:34.640Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:29:49.494Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:31:18.588Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:31:38.943Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:31:50.789Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:31:58.363Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:32:12.343Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:32:24.112Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:32:37.123Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:33:05.779Z",
+      "feature": "geminiService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:38:36.279Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:38:42.908Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:38:47.994Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:38:53.501Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:39:03.655Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:39:09.184Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-20T23:39:16.457Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:06:17.174Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:07:18.846Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:07:56.309Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:08:24.407Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:08:58.923Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:09:20.986Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:12.980Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:18.152Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:29.582Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:35.251Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:48.732Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:10:56.037Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:11:07.542Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:11:14.496Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:11:53.518Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:12:01.352Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:12:10.788Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:13:05.503Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:13:13.189Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:13:43.037Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:26:12.488Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:26:18.835Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:26:34.221Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:29:13.640Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:43:02.262Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:43:14.815Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:43:26.104Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:43:37.139Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T00:43:44.514Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:14:23.257Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:14:42.855Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:15:02.509Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:15:11.948Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:15:18.587Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:15:38.426Z",
+      "feature": "geminiService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:28:40.780Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:28:45.463Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:28:59.776Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:29:04.579Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:29:15.317Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:29:37.861Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:29:50.526Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:29:59.277Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:04.831Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:09.716Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:15.282Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:23.424Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:30.931Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:36.428Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:41.684Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:50.745Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:30:55.893Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:03.903Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:09.494Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:14.932Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:32.521Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:41.178Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:51.192Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T18:31:56.650Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T20:07:05.145Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T20:07:12.523Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-21T22:49:59.882Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:26:59.697Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:27:11.992Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:27:19.718Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:27:27.572Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:27:32.550Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:28:11.029Z",
+      "feature": "adminService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:29:00.246Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:29:35.306Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:30:49.917Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:31:19.492Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:31:45.476Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:32:33.268Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:33:02.568Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:33:39.503Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:34:18.568Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:34:50.781Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:35:32.050Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:35:56.836Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:36:27.492Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:43:07.441Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:43:13.000Z",
+      "feature": "germany-heatpump-model-viewer-main",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:43:21.422Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:43:37.247Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:43:54.501Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:44:27.017Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:44:43.316Z",
+      "feature": "adminService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:44:58.166Z",
+      "feature": "quotaService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:45:04.497Z",
+      "feature": "config",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:45:17.786Z",
+      "feature": "authService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:45:25.854Z",
+      "feature": "authService.ts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-22T01:45:32.693Z",
+      "feature": "authService.ts",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
 }

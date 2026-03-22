@@ -31,10 +31,14 @@ export interface HeatPump {
   grid_ready: boolean;
   grid_ready_type: string | null;
 
-  // Pricing
+  // Pricing (raw engine output — internal, not for direct display)
   equipment_price_low_eur: number | null;
   equipment_price_typical_eur: number | null;
   equipment_price_high_eur: number | null;
+  // Pricing (user-facing display: ±15% band around reference, rounded to €50)
+  equipment_price_display_eur: number | null;
+  equipment_price_display_low_eur: number | null;
+  equipment_price_display_high_eur: number | null;
   price_confidence: string | null;
   brand_tier: string | null;
   market_segment: string | null;
@@ -101,10 +105,10 @@ export enum CapacityRange {
   Range_13_17 = '13 kW ~ 17 kW',
 }
 
-/** UI filter values for unit type. Maps to raw installation_type via displayHelpers. */
-export enum UnitType {
-  ODU = 'ODU',
-  IDU = 'IDU',
+/** UI filter values for installation type. */
+export enum InstallationType {
+  Monoblock = 'Monoblock',
+  Split = 'Split',
 }
 
 export type FetchState = 'idle' | 'loading' | 'success' | 'error';
@@ -123,11 +127,23 @@ export interface User {
   jobRole: JobRole;
   companyName?: string;
   companyCity?: string;
+  country?: string;
   referralSource?: string;
   isActive: boolean;
-  status?: 'pending' | 'active' | 'suspended' | 'rejected';
+  status?: 'pending' | 'active' | 'suspended' | 'rejected' | 'deletion_requested' | 'deleted' | 'archived';
   registeredAt: string;
-  role?: 'owner' | 'user';
+  lastActiveAt?: string;
+  role?: 'user' | 'owner' | 'admin' | 'support' | 'ops';
+  // Plan & entitlement fields
+  plan?: 'standard' | 'premium';
+  billingChannel?: 'apple' | 'google' | 'direct' | 'admin_grant' | 'trial';
+  extraPrintQuota?: number;
+  industryInsightOverride?: boolean;
+  // Compliance
+  deletionRequestedAt?: string;
+  deletionNote?: string;
+  // Internal notes
+  adminNotes?: string;
 }
 
 export interface ActivityLog {
@@ -138,4 +154,13 @@ export interface ActivityLog {
   action: string;
   details: string;
   timestamp: string;
+  // Enhanced audit fields (optional, new logs will include these)
+  actorRole?: string;
+  targetType?: string;
+  targetId?: string;
+  source?: 'admin_ui' | 'system' | 'webhook' | 'scheduler';
+  result?: 'success' | 'failure';
+  beforeValue?: string;
+  afterValue?: string;
+  correlationId?: string;
 }

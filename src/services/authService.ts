@@ -85,6 +85,7 @@ export const registerUser = async (userData: any): Promise<void> => {
     status: 'pending',
     registeredAt: new Date().toISOString(),
     role: 'user',
+    plan: 'standard',
   };
 
   await setDoc(doc(db, 'users', uid), newUser);
@@ -113,6 +114,7 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
         isActive: true, status: 'active',
         registeredAt: new Date().toISOString(),
         role: email === OWNER_EMAIL ? 'owner' : 'user',
+        plan: 'standard',
       };
       await setDoc(userDocRef, fallbackUser);
       await logActivity(fallbackUser.id, 'LOGIN', 'User logged in (profile created)', email, `${fallbackUser.firstName} ${fallbackUser.lastName}`);
@@ -177,6 +179,7 @@ export const onUserChange = (callback: (user: User | null) => void) => {
             isActive: true, status: 'active',
             registeredAt: new Date().toISOString(),
             role: firebaseUser.email === OWNER_EMAIL ? 'owner' : 'user',
+            plan: 'standard',
           };
           callback(fallback);
         }

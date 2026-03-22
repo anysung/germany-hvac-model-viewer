@@ -23,12 +23,12 @@ export interface SearchConfig {
   manufacturers: string[];
   capacityRanges: string[];
   refrigerants: string[];
-  /** Whether to show the IDU/ODU Unit Type filter in Row 2 */
-  showUnitType: boolean;
+  /** Whether to show the Installation Type (Monoblock/Split) filter in Row 2 */
+  showInstallType: boolean;
   /**
    * Inline filter placed in Row 2 alongside Capacity and Refrigerant.
-   * Used when showUnitType is false to fill the slot (e.g. Market Segment).
-   * null means the slot is empty (Unit Type is shown instead).
+   * Used when showInstallType is false to fill the slot (e.g. Market Segment).
+   * null means the slot is empty (Installation Type is shown instead).
    */
   inlineFilter: FilterDef | null;
   /** Extra filter rows beyond Row 2 (shown in their own Row 3) */
@@ -82,7 +82,7 @@ export const residentialConfig: SearchConfig = {
     '13 kW ~ 17 kW',
   ],
   refrigerants: ['R290', 'R32', 'R410A'],
-  showUnitType: true,
+  showInstallType: true,
   inlineFilter: null,
   extraFilters: [],
   parseCapacity: parseRangeLabel,
@@ -140,11 +140,11 @@ export const commercialConfig: SearchConfig = {
    */
   refrigerants: ['R32', 'R454B', 'R290', 'R410A', 'R513A'],
   /**
-   * Unit Type (IDU/ODU) is hidden for Commercial — 2,126 of 2,127 products
+   * Installation Type is hidden for Commercial — 2,126 of 2,127 products
    * are Monoblock, so the filter provides no useful discrimination.
    * Market Segment takes its place in the filter row.
    */
-  showUnitType: false,
+  showInstallType: false,
   inlineFilter: marketSegmentFilter,
   extraFilters: [],
   parseCapacity: parseRangeLabel,

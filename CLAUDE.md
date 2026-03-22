@@ -11,14 +11,14 @@ These rules are **confirmed and locked**. Apply them to all future changes unles
 - Label: `text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1`
 - Badges: horizontal wrap `flex flex-wrap gap-1.5`
 
-### Row 2 — Capacity | Unit Type | Refrigerant Type
+### Row 2 — Capacity | Installation Type | Refrigerant Type
 - 3-column grid with **unequal widths**: `gridTemplateColumns: '5fr 4fr 2.5fr'` (inline style, not Tailwind grid)
 - All three panels use the same panel style as Row 1
 - **Capacity** (5fr): 4 badges — `4 kW ~ 7 kW`, `8 kW ~ 10 kW`, `11 kW ~ 12 kW`, `13 kW ~ 17 kW` — must all fit in **one row**
-- **Unit Type** (4fr): 2 badges — `Indoor Unit (IDU)`, `Outdoor Unit (ODU)` — must all fit in **one row**
+- **Installation Type** (4fr): 2 badges — `Monoblock`, `Split` — must all fit in **one row**
 - **Refrigerant Type** (2.5fr): 3 badges — `🌿 R290`, `R32`, `R410A` — must all fit in **one row**
 - Refrigerant filter logic: **contains** (`item.refrigerant.includes(value)`), not exact match
-- Unit Type filter logic: **contains** (`item.unitType.includes('IDU' or 'ODU')`)
+- Installation Type filter logic: matches `item.installation_type` directly (exact match)
 
 ### Section spacing
 - `mb-2 space-y-1.5` between rows — keep compact, no excess vertical padding
@@ -36,7 +36,7 @@ These rules are **confirmed and locked**. Apply them to all future changes unles
 | # | Column | Sticky | Notes |
 |---|--------|--------|-------|
 | 1 | Manufacturer | ✅ Left-sticky | Center aligned (header + content) |
-| 2 | Type | ✅ Left-sticky | IDU = purple badge, ODU = orange badge |
+| 2 | Installation Type | ✅ Left-sticky | Monoblock = orange badge, Split = purple badge |
 | 3 | Model | ✅ Left-sticky | Max 35 chars, truncate with `…`, full on hover |
 | 4 | Capacity | — | 2-line split at `' ('` or `';'` |
 | 5 | Refrigerant | — | R290 (contains) → `🌿` green; others gray |
@@ -140,7 +140,8 @@ URL format: `https://images.unsplash.com/photo-{ID}?auto=format&fit=crop&q=80&w=
 - **Do not change sticky column behavior** (Manufacturer, Type, Model always sticky)
 - **Do not make sticky backgrounds transparent** — always solid white
 - **Do not widen/narrow Others column** from `min-w-[400px] max-w-[400px]` without explicit instruction
-- **Refrigerant and Unit Type filters** always use `.includes()` contains logic, never exact match
+- **Refrigerant filter** always uses `.includes()` contains logic, never exact match
+- **Installation Type filter** matches `installation_type` directly; "Set" products match both Monoblock and Split
 - **Filter grid proportions** (`5fr 4fr 2.5fr`) must keep all badges in single row — verify before changing
 - Build command: `export PATH="/Users/christophersung/.nvm/versions/node/v20.19.6/bin:$PATH" && npm run build`
 - Deploy command: `firebase deploy --only hosting`

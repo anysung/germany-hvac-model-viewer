@@ -14,41 +14,27 @@ export function getDisplayName(item: HeatPump): string {
   return item.manufacturer_short || item.manufacturer;
 }
 
-// ─── Unit Type (IDU / ODU) ───────────────────────────────────────────────────
+// ─── Installation Type ──────────────────────────────────────────────────────
 
 /**
- * Mapping rules (raw → display):
- *   installation_type "Monoblock"                      → "ODU"
- *   installation_type "Split"                           → "IDU"
- *   package_scope "with_hydromodule" (or other set)     → "IDU + ODU"
+ * Display the installation type directly from the raw data field.
+ *   installation_type "Monoblock" → "Monoblock"
+ *   installation_type "Split"     → "Split"
  *
- * Set detection takes priority over installation_type.
+ * package_scope (unit_only / with_hydromodule) is orthogonal and not shown here;
+ * it describes packaging, not installation type.
  */
-export function getUnitTypeDisplay(item: HeatPump): string {
-  // Set products contain both indoor and outdoor units
-  if (item.package_scope && item.package_scope !== 'unit_only') {
-    return 'IDU + ODU';
-  }
-  if (item.installation_type === 'Split') return 'IDU';
-  if (item.installation_type === 'Monoblock') return 'ODU';
+export function getInstallationTypeDisplay(item: HeatPump): string {
+  if (item.installation_type) return item.installation_type;
   return '—';
 }
 
-/** Map a UI filter value (IDU / ODU) back to raw installation_type for filtering. */
-export function unitTypeFilterToInstallationType(filterValue: string): string | null {
-  if (filterValue === 'ODU') return 'Monoblock';
-  if (filterValue === 'IDU') return 'Split';
-  return null;
-}
-
 /**
- * Check whether a product matches a unit-type filter value.
- * IDU + ODU (set) products match both IDU and ODU filters.
+ * Check whether a product matches an installation-type filter value.
+ * Matches directly against the raw installation_type field.
  */
-export function matchesUnitTypeFilter(item: HeatPump, filterValue: string): boolean {
-  const display = getUnitTypeDisplay(item);
-  if (display === 'IDU + ODU') return true; // sets match either filter
-  return display === filterValue;
+export function matchesInstallationTypeFilter(item: HeatPump, filterValue: string): boolean {
+  return item.installation_type === filterValue;
 }
 
 // ─── Price Display (±15% confidence band) ───────────────────────────────────
@@ -85,19 +71,33 @@ function fmtEur(v: number): string {
 }
 
 /**
- * Generate the user-facing price display from raw product price fields.
+ * Generate the user-facing price display from product price fields.
  *
- * Priority:
- * 1. If `typical` exists → headline = typical, range = typical ±15%
- * 2. If only low+high exist → headline = midpoint, range = midpoint ±15%
+ * Priority (Phase 2 — canonical display fields from dataset):
+ * 1. If pre-computed `display` fields exist → use them directly (no recomputation)
+ * 2. Fallback: recompute ±15% band from raw typical (or midpoint of low+high)
  * 3. Otherwise → "—"
  */
 export function getDisplayPrice(
   low: number | null,
   typical: number | null,
   high: number | null,
+  displayRef?: number | null,
+  displayLow?: number | null,
+  displayHigh?: number | null,
 ): DisplayPrice {
-  // Determine the reference price
+  // Prefer canonical display fields from the dataset pipeline
+  if (displayRef != null) {
+    return {
+      main: fmtEur(displayRef),
+      range: displayLow != null && displayHigh != null
+        ? `${fmtEur(displayLow)} – ${fmtEur(displayHigh)}`
+        : null,
+      typical: displayRef,
+    };
+  }
+
+  // Fallback: recompute from raw fields (legacy path)
   let ref: number | null = typical;
   if (ref == null && low != null && high != null) {
     ref = Math.round((low + high) / 2);
@@ -107,12 +107,12 @@ export function getDisplayPrice(
     return { main: '—', range: null, typical: null };
   }
 
-  const displayLow = roundTo50(ref * 0.85);
-  const displayHigh = roundTo50(ref * 1.15);
+  const computedLow = roundTo50(ref * 0.85);
+  const computedHigh = roundTo50(ref * 1.15);
 
   return {
     main: fmtEur(ref),
-    range: `${fmtEur(displayLow)} – ${fmtEur(displayHigh)}`,
+    range: `${fmtEur(computedLow)} – ${fmtEur(computedHigh)}`,
     typical: ref,
   };
 }

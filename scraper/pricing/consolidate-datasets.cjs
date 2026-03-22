@@ -63,8 +63,10 @@ const STANDARD_FIELDS = [
   'heat_meter', 'defrost_tested', 'defrost_type', 'temp_diff',
   'website',
 
-  // ── Pricing ──
+  // ── Pricing (raw engine output) ──
   'equipment_price_low_eur', 'equipment_price_typical_eur', 'equipment_price_high_eur',
+  // ── Pricing (user-facing display: ±15% band around reference price, rounded to €50) ──
+  'equipment_price_display_eur', 'equipment_price_display_low_eur', 'equipment_price_display_high_eur',
   'price_basis', 'price_confidence', 'brand_tier',
   'market_segment', 'residential_visibility_default', 'segment_confidence',
   'package_scope', 'package_scope_confidence',   // <-- was missing in v1
@@ -121,6 +123,22 @@ function flattenItem(src) {
   // Add manufacturer_short from mapping
   const norm = src.manufacturer_normalized;
   out.manufacturer_short = shortNames[norm] || src.manufacturer_short || src.manufacturer;
+
+  // ── Compute user-facing display price fields (±15% band around reference) ──
+  // Reference = typical price; fallback = midpoint of low+high
+  let ref = out.equipment_price_typical_eur;
+  if (ref == null && out.equipment_price_low_eur != null && out.equipment_price_high_eur != null) {
+    ref = Math.round((out.equipment_price_low_eur + out.equipment_price_high_eur) / 2);
+  }
+  if (ref != null) {
+    out.equipment_price_display_eur      = ref;
+    out.equipment_price_display_low_eur  = Math.round((ref * 0.85) / 50) * 50;
+    out.equipment_price_display_high_eur = Math.round((ref * 1.15) / 50) * 50;
+  } else {
+    out.equipment_price_display_eur      = null;
+    out.equipment_price_display_low_eur  = null;
+    out.equipment_price_display_high_eur = null;
+  }
 
   return out;
 }

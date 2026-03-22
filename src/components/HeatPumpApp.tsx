@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchHeatPumps } from '../services/geminiService';
 import { logActivity } from '../services/authService';
-import { HeatPump, UnitType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
-import { matchesUnitTypeFilter } from '../utils/displayHelpers';
+import { HeatPump, InstallationType, FetchState, User, Language, AppMode, HeatPumpDatabase } from '../types';
+import { matchesInstallationTypeFilter } from '../utils/displayHelpers';
 import { residentialConfig, commercialConfig, SearchConfig } from '../config/searchConfig';
 import { FilterBadge } from './FilterBadge';
 import { SegmentSwitcher } from './SegmentSwitcher';
@@ -50,7 +50,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
   // Filters
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
   const [selectedRange, setSelectedRange] = useState<string | null>(null);
-  const [selectedUnitType, setSelectedUnitType] = useState<string | null>(null);
+  const [selectedInstallType, setSelectedInstallType] = useState<string | null>(null);
   const [selectedRefrigerant, setSelectedRefrigerant] = useState<string | null>(null);
   const [extraFilters, setExtraFilters] = useState<Record<string, string | null>>({});
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -75,7 +75,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
     setSearchSegment(seg);
     setSelectedBrand(null);
     setSelectedRange(null);
-    setSelectedUnitType(null);
+    setSelectedInstallType(null);
     setSelectedRefrigerant(null);
     setExtraFilters({});
     setSearchQuery('');
@@ -102,14 +102,14 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
     setStatus('loading');
     try {
       logActivity(user.id, 'SEARCH_API', `Query: ${searchQuery}, Brand: ${selectedBrand}, Lang: ${language}`);
-      const results = await fetchHeatPumps(selectedBrand, selectedRange, selectedUnitType, searchQuery, language);
+      const results = await fetchHeatPumps(selectedBrand, selectedRange, selectedInstallType, searchQuery, language);
       setData(results);
       setStatus('success');
     } catch (error) {
       console.error(error);
       setStatus('error');
     }
-  }, [selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, searchQuery, user.id, language]);
+  }, [selectedBrand, selectedRange, selectedInstallType, selectedRefrigerant, searchQuery, user.id, language]);
 
   // Database Filtering Logic — works for both segments via config
   const executeDbSearch = useCallback(() => {
@@ -135,9 +135,9 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
         }
       }
 
-      // Unit type filter — IDU / ODU
-      if (selectedUnitType) {
-        filtered = filtered.filter((item: HeatPump) => matchesUnitTypeFilter(item, selectedUnitType));
+      // Installation type filter — Monoblock / Split
+      if (selectedInstallType) {
+        filtered = filtered.filter((item: HeatPump) => matchesInstallationTypeFilter(item, selectedInstallType));
       }
 
       // Refrigerant filter — contains match
@@ -180,18 +180,18 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
     } else {
       setData([]);
     }
-  }, [getSourceProducts, searchConfig, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, extraFilters, searchQuery, user.id, searchSegment]);
+  }, [getSourceProducts, searchConfig, selectedBrand, selectedRange, selectedInstallType, selectedRefrigerant, extraFilters, searchQuery, user.id, searchSegment]);
 
   // Trigger Search
   useEffect(() => {
     if (activeTab === 'SEARCH' || activeTab === 'COMPARISON') {
       if (appMode === 'LIVE_API' && searchSegment === 'residential') {
-        if (selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery) executeLiveSearch();
+        if (selectedBrand || selectedRange || selectedInstallType || selectedRefrigerant || searchQuery) executeLiveSearch();
       } else {
         executeDbSearch();
       }
     }
-  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedUnitType, selectedRefrigerant, extraFilters, searchQuery, activeTab, searchSegment]);
+  }, [appMode, executeLiveSearch, executeDbSearch, selectedBrand, selectedRange, selectedInstallType, selectedRefrigerant, extraFilters, searchQuery, activeTab, searchSegment]);
 
   const onSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -236,14 +236,14 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
   const clearAllFilters = () => {
     setSelectedBrand(null);
     setSelectedRange(null);
-    setSelectedUnitType(null);
+    setSelectedInstallType(null);
     setSelectedRefrigerant(null);
     setExtraFilters({});
     setSearchQuery('');
     setLocalSearchInput('');
   };
 
-  const hasActiveFilters = !!(selectedBrand || selectedRange || selectedUnitType || selectedRefrigerant || searchQuery || Object.values(extraFilters).some(Boolean));
+  const hasActiveFilters = !!(selectedBrand || selectedRange || selectedInstallType || selectedRefrigerant || searchQuery || Object.values(extraFilters).some(Boolean));
 
   const tabs: {id: Tab, label: string, icon: string}[] = [
     { id: 'SEARCH', label: t.searchPlaceholder?.includes('suche') ? 'Produktsuche' : 'Product Search', icon: '🔍' },
@@ -255,9 +255,9 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
   ];
 
   // Determine grid proportions for the filter row
-  // When Unit Type is hidden and replaced by an inline filter (or nothing), adjust proportions
-  const filterGridCols = searchConfig.showUnitType
-    ? '5fr 4fr 2.5fr'                       // Residential: Capacity | Unit Type | Refrigerant
+  // When Installation Type is hidden and replaced by an inline filter (or nothing), adjust proportions
+  const filterGridCols = searchConfig.showInstallType
+    ? '5fr 4fr 2.5fr'                       // Residential: Capacity | Installation Type | Refrigerant
     : searchConfig.inlineFilter
       ? '5fr 3fr 3.5fr'                     // Commercial: Capacity | Market Segment | Refrigerant
       : '5fr 3.5fr';                        // Fallback: Capacity | Refrigerant (no middle panel)
@@ -457,7 +457,7 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                   </div>
                 </div>
 
-                {/* Row 2 — Capacity | Unit Type | Refrigerant */}
+                {/* Row 2 — Capacity | Installation Type | Refrigerant */}
                 <div style={{ display: 'grid', gridTemplateColumns: filterGridCols, gap: '6px' }}>
                   <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
                     <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterCapacity}</h3>
@@ -467,13 +467,13 @@ export const HeatPumpApp: React.FC<HeatPumpAppProps> = ({ user, onLogout, onAdmi
                       ))}
                     </div>
                   </div>
-                  {/* Middle panel: Unit Type (residential) or Inline Filter (commercial) */}
-                  {searchConfig.showUnitType ? (
+                  {/* Middle panel: Installation Type (residential) or Inline Filter (commercial) */}
+                  {searchConfig.showInstallType ? (
                     <div className="bg-white px-3 py-2 rounded-lg shadow-sm border border-gray-200">
-                      <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterUnitType}</h3>
+                      <h3 className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{t.filterInstallType}</h3>
                       <div className="flex flex-wrap gap-1.5">
-                        {(Object.values(UnitType) as string[]).map((type) => (
-                          <FilterBadge key={type} label={type} isActive={selectedUnitType === type} onClick={() => setSelectedUnitType(selectedUnitType === type ? null : type)} />
+                        {(Object.values(InstallationType) as string[]).map((type) => (
+                          <FilterBadge key={type} label={type} isActive={selectedInstallType === type} onClick={() => setSelectedInstallType(selectedInstallType === type ? null : type)} />
                         ))}
                       </div>
                     </div>

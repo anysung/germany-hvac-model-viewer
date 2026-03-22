@@ -14,7 +14,7 @@
 
 import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { HeatPump } from '../types';
-import { getDisplayName, getUnitTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
+import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
 
 interface ResultsTableProps {
   data: HeatPump[];
@@ -72,9 +72,12 @@ function fmtDimensions(w: number | null, h: number | null, d: number | null): st
   return `${wStr} × ${hStr} × ${dStr} mm`;
 }
 
-/** Format price using centralized ±15% display range from displayHelpers */
-function fmtPrice(low: number | null, typical: number | null, high: number | null): [string, string | null] {
-  const dp = getDisplayPrice(low, typical, high);
+/** Format price using canonical display fields from dataset, with fallback to raw fields */
+function fmtPrice(m: HeatPump): [string, string | null] {
+  const dp = getDisplayPrice(
+    m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur,
+    m.equipment_price_display_eur, m.equipment_price_display_low_eur, m.equipment_price_display_high_eur,
+  );
   return [dp.main, dp.range];
 }
 
@@ -295,18 +298,16 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const noise2 = item.noise_indoor_dB ? `Indoor: ${fmtDb(item.noise_indoor_dB)}` : null;
               const weight = fmtWeight(item.weight_kg);
               const dims = fmtDimensions(item.width_mm, item.height_mm, item.depth_mm);
-              const [price1, price2] = fmtPrice(item.equipment_price_low_eur, item.equipment_price_typical_eur, item.equipment_price_high_eur);
+              const [price1, price2] = fmtPrice(item);
               const gridReady = fmtGridReady(item.grid_ready, item.grid_ready_type);
 
-              // Type badge — IDU / ODU / IDU + ODU
-              const typeLabel = getUnitTypeDisplay(item);
-              const typeBadgeCls = typeLabel === 'ODU'
+              // Installation type badge — Monoblock / Split
+              const typeLabel = getInstallationTypeDisplay(item);
+              const typeBadgeCls = typeLabel === 'Monoblock'
                 ? 'bg-orange-100 text-orange-800'
-                : typeLabel === 'IDU'
+                : typeLabel === 'Split'
                   ? 'bg-purple-100 text-purple-800'
-                  : typeLabel === 'IDU + ODU'
-                    ? 'bg-indigo-100 text-indigo-800'
-                    : 'bg-gray-100 text-gray-600';
+                  : 'bg-gray-100 text-gray-600';
 
               const stickyBg = 'bg-white';
 

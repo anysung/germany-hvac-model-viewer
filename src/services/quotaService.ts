@@ -5,15 +5,13 @@
  * Document ID: `{userId}_{YYYY-MM}` (e.g. "abc123_2026-03")
  *
  * Quota is consumed on Print click (not Preview).
- * Default monthly limit: 10 prints.
+ * Base monthly limit is plan-based: Standard=20, Premium=100.
  * Admins can grant extra quota per user via `extraPrintQuota` on the user doc.
  */
 
 import { doc, getDoc, setDoc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '../firebase';
-
-/** Default monthly print allowance */
-export const DEFAULT_MONTHLY_QUOTA = 10;
+import { getBaseQuotaForPlan, PlanCode } from '../config/adminConfig';
 
 /** Firestore document shape for monthly quota tracking */
 export interface PrintQuotaDoc {
@@ -49,18 +47,21 @@ export async function getQuotaStatus(userId: string): Promise<{
 }> {
   const month = currentMonthKey();
 
-  // Read extra quota from user doc
+  // Read plan and extra quota from user doc
   let extraQuota = 0;
+  let userPlan: PlanCode = 'standard';
   try {
     const userDoc = await getDoc(doc(db, 'users', userId));
     if (userDoc.exists()) {
-      extraQuota = userDoc.data().extraPrintQuota || 0;
+      const data = userDoc.data();
+      extraQuota = data.extraPrintQuota || 0;
+      userPlan = (data.plan as PlanCode) || 'standard';
     }
   } catch {
     // If user doc read fails, proceed with default
   }
 
-  const totalLimit = DEFAULT_MONTHLY_QUOTA + extraQuota;
+  const totalLimit = getBaseQuotaForPlan(userPlan) + extraQuota;
 
   // Read monthly usage
   let used = 0;
@@ -136,18 +137,23 @@ export async function getAdminQuotaInfo(userId: string): Promise<{
   totalLimit: number;
   remaining: number;
   month: string;
+  plan: PlanCode;
 }> {
   const month = currentMonthKey();
 
   let extraQuota = 0;
+  let userPlan: PlanCode = 'standard';
   try {
     const userDoc = await getDoc(doc(db, 'users', userId));
     if (userDoc.exists()) {
-      extraQuota = userDoc.data().extraPrintQuota || 0;
+      const data = userDoc.data();
+      extraQuota = data.extraPrintQuota || 0;
+      userPlan = (data.plan as PlanCode) || 'standard';
     }
   } catch { /* proceed with 0 */ }
 
-  const totalLimit = DEFAULT_MONTHLY_QUOTA + extraQuota;
+  const baseLimit = getBaseQuotaForPlan(userPlan);
+  const totalLimit = baseLimit + extraQuota;
 
   let used = 0;
   try {
@@ -159,10 +165,11 @@ export async function getAdminQuotaInfo(userId: string): Promise<{
 
   return {
     used,
-    defaultLimit: DEFAULT_MONTHLY_QUOTA,
+    defaultLimit: baseLimit,
     extraQuota,
     totalLimit,
     remaining: Math.max(0, totalLimit - used),
     month,
+    plan: userPlan,
   };
 }
