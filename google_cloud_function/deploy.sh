@@ -20,6 +20,10 @@ GEMINI_API_KEY="${GEMINI_API_KEY:-YOUR_GEMINI_API_KEY}"
 SECRET_KEY="${SECRET_KEY:-YOUR_SECRET_KEY}"
 BUDGET_LIMIT_USD="${BUDGET_LIMIT_USD:-14}"
 
+# Auto-update toggle: set to "true" to allow Cloud Scheduler triggers.
+# Default "false" = scheduler calls are rejected; manual API-key calls still work.
+AUTO_UPDATE_ENABLED="${AUTO_UPDATE_ENABLED:-false}"
+
 # Cloud Scheduler: run at 03:00 on the 1st of every month (Europe/Berlin)
 SCHEDULER_JOB="monthly-heatpump-update"
 SCHEDULE="0 3 1 * *"
@@ -40,7 +44,7 @@ gcloud functions deploy "${FUNCTION_NAME}" \
   --allow-unauthenticated \
   --memory=512MB \
   --timeout=540s \
-  --set-env-vars="GEMINI_API_KEY=${GEMINI_API_KEY},SECRET_KEY=${SECRET_KEY},BUDGET_LIMIT_USD=${BUDGET_LIMIT_USD}"
+  --set-env-vars="GEMINI_API_KEY=${GEMINI_API_KEY},SECRET_KEY=${SECRET_KEY},BUDGET_LIMIT_USD=${BUDGET_LIMIT_USD},AUTO_UPDATE_ENABLED=${AUTO_UPDATE_ENABLED}"
 
 echo "=== Cloud Function deployed ==="
 
@@ -86,13 +90,19 @@ fi
 
 echo ""
 echo "==================================================================="
-echo "DONE! Monthly auto-update is scheduled."
+if [ "${AUTO_UPDATE_ENABLED}" = "true" ]; then
+  echo "DONE! Monthly auto-update is ENABLED."
+  echo "Schedule:     ${SCHEDULE} (${TIMEZONE})"
+  echo "              = 3:00 AM on the 1st of every month"
+else
+  echo "DONE! Auto-update is DISABLED (scheduler calls will be rejected)."
+  echo "The Cloud Scheduler job still exists but the function will skip its calls."
+  echo "Set AUTO_UPDATE_ENABLED=true and redeploy to re-enable."
+fi
 echo ""
-echo "Schedule:     ${SCHEDULE} (${TIMEZONE})"
-echo "              = 3:00 AM on the 1st of every month"
 echo "Function URL: ${FUNCTION_URL}"
 echo ""
-echo "To trigger manually (for testing):"
+echo "To trigger manually (always works regardless of AUTO_UPDATE_ENABLED):"
 echo "  curl -X POST '${FUNCTION_URL}' -H 'X-Api-Key: ${SECRET_KEY}'"
 echo ""
 echo "To view logs:"

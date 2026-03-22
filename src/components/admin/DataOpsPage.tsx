@@ -20,11 +20,9 @@ export const DataOpsPage: React.FC<DataOpsPageProps> = ({ language, appMode, set
     getMetadata().then(m => { setMetadata(m); setLoading(false); });
   }, []);
 
-  const getNextScheduledUpdate = () => {
-    const now = new Date();
-    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1, 2, 0, 0));
-    return next.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) + ' 03:00 (Europe/Berlin)';
-  };
+  // Auto-update is disabled — scheduler calls are rejected at the Cloud Function level.
+  // Manual runs via API key still work.
+  const autoUpdateEnabled = false;
 
   if (loading) {
     return <div className="flex items-center justify-center h-64 text-gray-400 animate-pulse">Loading...</div>;
@@ -46,8 +44,13 @@ export const DataOpsPage: React.FC<DataOpsPageProps> = ({ language, appMode, set
           value={metadata?.lastUpdated ? new Date(metadata.lastUpdated).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : 'Never'}
           color="purple" icon="🕐"
         />
-        <StatCard label={language === 'de' ? 'Nächste Aktualisierung' : 'Next Update'} value={getNextScheduledUpdate().split(' 03:00')[0]} color="orange" icon="📅"
-          subtitle="03:00 Europe/Berlin" />
+        <StatCard
+          label={language === 'de' ? 'Automatische Updates' : 'Auto Updates'}
+          value={autoUpdateEnabled ? (language === 'de' ? 'Aktiv' : 'Active') : (language === 'de' ? 'Gestoppt' : 'Stopped')}
+          color={autoUpdateEnabled ? 'green' : 'red'}
+          icon={autoUpdateEnabled ? '✅' : '⏸️'}
+          subtitle={autoUpdateEnabled ? '1st of month, 03:00' : (language === 'de' ? 'Nur manuell' : 'Manual only')}
+        />
       </div>
 
       {/* Pipeline List */}
@@ -58,7 +61,7 @@ export const DataOpsPage: React.FC<DataOpsPageProps> = ({ language, appMode, set
             icon: '📦',
             status: 'success' as const,
             desc: 'BAFA → Manufacturer → Retailer',
-            schedule: '1st of month, 03:00',
+            schedule: autoUpdateEnabled ? '1st of month, 03:00' : (language === 'de' ? 'Gestoppt (nur manuell)' : 'Stopped (manual only)'),
             lastRun: metadata?.lastUpdated || null,
             stats: metadata?.lastUpdateStats ? `+${metadata.lastUpdateStats.productsAdded} added, ~${metadata.lastUpdateStats.productsUpdated} updated` : null,
             cost: metadata?.lastUpdateStats?.budget ? `$${metadata.lastUpdateStats.budget.costUsd.toFixed(2)}` : null,
@@ -68,7 +71,7 @@ export const DataOpsPage: React.FC<DataOpsPageProps> = ({ language, appMode, set
             icon: '📰',
             status: 'success' as const,
             desc: 'Market news aggregation',
-            schedule: '1st of month, 03:00',
+            schedule: autoUpdateEnabled ? '1st of month, 03:00' : (language === 'de' ? 'Gestoppt (nur manuell)' : 'Stopped (manual only)'),
             lastRun: metadata?.lastUpdated || null,
             stats: `${metadata?.newsCount || 0} items`,
             cost: null,

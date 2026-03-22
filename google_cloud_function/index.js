@@ -478,13 +478,24 @@ async function runAutoUpdate(budget) {
 // -------------------------------------------------------------------
 // Cloud Function: autoUpdateDatabase
 // Triggered by: Cloud Scheduler (monthly) or authenticated HTTP call
+//
+// AUTO_UPDATE_ENABLED env var (default: "false"):
+//   "false" → scheduler-triggered calls are rejected; manual API-key calls still work
+//   "true"  → both scheduler and manual calls are accepted
 // -------------------------------------------------------------------
 functions.http('autoUpdateDatabase', async (req, res) => {
   const SECRET_KEY = process.env.SECRET_KEY;
+  const autoUpdateEnabled = (process.env.AUTO_UPDATE_ENABLED || 'false').toLowerCase() === 'true';
 
   // Allow Cloud Scheduler requests (identified by header) OR valid API key
   const isScheduler = req.headers['x-cloudscheduler'] === 'true';
   const providedKey = req.headers['x-api-key'];
+
+  // Block scheduler-triggered calls when auto-update is disabled
+  if (isScheduler && !autoUpdateEnabled) {
+    console.log('Auto-update is disabled (AUTO_UPDATE_ENABLED=false). Scheduler call rejected.');
+    return res.status(200).json({ status: 'skipped', reason: 'Auto-update is disabled. Set AUTO_UPDATE_ENABLED=true to re-enable.' });
+  }
 
   if (!isScheduler && (!SECRET_KEY || providedKey !== SECRET_KEY)) {
     console.warn(`Unauthorized access attempt from ${req.ip}`);
