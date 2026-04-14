@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
-import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, deleteUser } from '../../services/authService';
+import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
 import { changeUserPlan, grantBonusQuota, requestDeletion, updateAdminNotes, getEffectiveEntitlements } from '../../services/adminService';
 import { getAdminQuotaInfo } from '../../services/quotaService';
 import { User, Language } from '../../types';
@@ -90,6 +90,7 @@ export const MembersPage: React.FC<MembersPageProps> = ({ language }) => {
       case 'approve': await approveUser(user.id); break;
       case 'reject': if (confirm(`Reject ${user.email}?`)) await rejectUser(user.id); else return; break;
       case 'suspend': if (confirm(`Suspend ${user.email}?`)) await suspendUser(user.id); else return; break;
+      case 'disable': if (confirm(`Disable ${user.email}? They will be blocked from logging in.`)) await disableUser(user.id); else return; break;
       case 'reactivate': await reactivateUser(user.id); break;
       case 'delete': if (confirm(`Permanently delete ${user.email}? This cannot be undone.`)) await deleteUser(user.id); else return; break;
       case 'request_deletion': if (confirm(`Request deletion for ${user.email}?`)) await requestDeletion(user.id, 'Admin initiated'); else return; break;
@@ -135,6 +136,7 @@ export const MembersPage: React.FC<MembersPageProps> = ({ language }) => {
           <option value="active">{language === 'de' ? 'Aktiv' : 'Active'}</option>
           <option value="suspended">{language === 'de' ? 'Gesperrt' : 'Suspended'}</option>
           <option value="rejected">{language === 'de' ? 'Abgelehnt' : 'Rejected'}</option>
+          <option value="disabled">{language === 'de' ? 'Deaktiviert' : 'Disabled'}</option>
           <option value="deletion_requested">{language === 'de' ? 'Löschung angefragt' : 'Deletion Requested'}</option>
         </select>
         <select value={planFilter} onChange={e => setPlanFilter(e.target.value)}
@@ -198,9 +200,12 @@ export const MembersPage: React.FC<MembersPageProps> = ({ language }) => {
                           </>
                         )}
                         {userStatus === 'active' && (
-                          <button onClick={() => handleAction('suspend', u)} className="text-xs px-3 py-1 rounded border border-orange-300 text-orange-600 hover:bg-orange-50">Suspend</button>
+                          <>
+                            <button onClick={() => handleAction('suspend', u)} className="text-xs px-3 py-1 rounded border border-orange-300 text-orange-600 hover:bg-orange-50">Suspend</button>
+                            <button onClick={() => handleAction('disable', u)} className="text-xs px-3 py-1 rounded border border-red-300 text-red-600 hover:bg-red-50">Disable</button>
+                          </>
                         )}
-                        {(userStatus === 'suspended' || userStatus === 'rejected') && (
+                        {(userStatus === 'suspended' || userStatus === 'rejected' || userStatus === 'disabled') && (
                           <button onClick={() => handleAction('reactivate', u)} className="text-xs px-3 py-1 rounded border border-teal-300 text-teal-600 hover:bg-teal-50">Reactivate</button>
                         )}
                       </td>
@@ -252,9 +257,12 @@ export const MembersPage: React.FC<MembersPageProps> = ({ language }) => {
                     <div className="text-xs font-bold text-gray-500 uppercase">Actions</div>
                     <div className="flex flex-wrap gap-2">
                       {(selectedUser.status === 'active') && (
-                        <button onClick={() => handleAction('suspend', selectedUser)} className="text-xs px-3 py-1.5 rounded border border-orange-300 text-orange-600 hover:bg-orange-50">Suspend</button>
+                        <>
+                          <button onClick={() => handleAction('suspend', selectedUser)} className="text-xs px-3 py-1.5 rounded border border-orange-300 text-orange-600 hover:bg-orange-50">Suspend</button>
+                          <button onClick={() => handleAction('disable', selectedUser)} className="text-xs px-3 py-1.5 rounded border border-red-300 text-red-600 hover:bg-red-50">Disable</button>
+                        </>
                       )}
-                      {(selectedUser.status === 'suspended' || selectedUser.status === 'rejected') && (
+                      {(selectedUser.status === 'suspended' || selectedUser.status === 'rejected' || selectedUser.status === 'disabled') && (
                         <button onClick={() => handleAction('reactivate', selectedUser)} className="text-xs px-3 py-1.5 rounded border border-teal-300 text-teal-600 hover:bg-teal-50">Reactivate</button>
                       )}
                       {selectedUser.status !== 'deletion_requested' && selectedUser.status !== 'deleted' && (

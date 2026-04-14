@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────────────────
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Fetch the current authenticated user's Firestore profile.
+    // Firestore caches the result within a single rule evaluation.
+    function me() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    // A user is approved if:
+    //   - status == 'active'  (normal approved user), OR
+    //   - status field is absent AND isActive == true  (legacy users created before status field)
+    // Any other status (pending, suspended, rejected, disabled, ...) is NOT approved.
+    function isApproved() {
+      return isSignedIn() &&
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             (me().status == 'active' ||
+              (!('status' in me()) && me().isActive == true));
+    }
+
+    // Admin roles: owner, admin, support, ops
+    function isAdmin() {
+      return isSignedIn() &&
+             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+             me().get('role', 'user') in ['owner', 'admin', 'support', 'ops'];
+    }
+
+    // ── Users collection ──────────────────────────────────────────────────
+    // - Any authenticated user may read their own doc (needed to check their own status at login).
+    // - Admins may read all user docs and write any user doc.
+    // - Regular users cannot update their own doc (status/plan changes are admin-only).
+    match /users/{userId} {
+      allow get: if isSignedIn() && request.auth.uid == userId;
+      allow read, write: if isAdmin();
+    }
+
+    // ── Activity logs ─────────────────────────────────────────────────────
+    // Any authenticated user can append a log entry; only admins can read them.
+    match /activityLogs/{logId} {
+      allow create: if isSignedIn();
+      allow read: if isAdmin();
+    }
+
+    // ── Print quotas ──────────────────────────────────────────────────────
+    // Approved users may read/write their own monthly quota doc (ID: {uid}_{YYYY-MM}).
+    // Admins may access all quota docs.
+    match /printQuotas/{quotaId} {
+      allow read, write: if isApproved() &&
+                           quotaId.matches(request.auth.uid + '_[0-9]{4}-[0-9]{2}');
+      allow read, write: if isAdmin();
+    }
+
+    // ── Country data (news, policies, BAFA, metadata) ─────────────────────
+    // Approved users and admins can read. Writes go through the Cloud Function
+    // (Firebase Admin SDK), which bypasses these rules — but admin users
+    // can also write from the UI if needed.
+    match /countries/{countryCode} {
+      allow read: if isApproved() || isAdmin();
+      match /{subcollection}/{docId} {
+        allow read: if isApproved() || isAdmin();
+        allow write: if isAdmin();
+      }
+    }
+  }
+}

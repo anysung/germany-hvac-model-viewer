@@ -53,13 +53,14 @@ export function hasIndustryInsightAccess(plan: PlanCode): boolean {
 
 // ── User Status Lifecycle ─────────────────────────────────────────────
 
-export type UserStatus = 'pending' | 'active' | 'rejected' | 'suspended' | 'deletion_requested' | 'deleted' | 'archived';
+export type UserStatus = 'pending' | 'active' | 'rejected' | 'suspended' | 'disabled' | 'deletion_requested' | 'deleted' | 'archived';
 
 export const USER_STATUS_OPTIONS: { value: UserStatus; label: string; labelDe: string; color: string }[] = [
   { value: 'pending',            label: 'Pending',            labelDe: 'Ausstehend',        color: 'yellow' },
   { value: 'active',             label: 'Active',             labelDe: 'Aktiv',             color: 'green' },
   { value: 'rejected',           label: 'Rejected',           labelDe: 'Abgelehnt',         color: 'red' },
   { value: 'suspended',          label: 'Suspended',          labelDe: 'Gesperrt',          color: 'orange' },
+  { value: 'disabled',           label: 'Disabled',           labelDe: 'Deaktiviert',       color: 'red' },
   { value: 'deletion_requested', label: 'Deletion Requested', labelDe: 'Löschung angefragt', color: 'red' },
   { value: 'deleted',            label: 'Deleted',            labelDe: 'Gelöscht',          color: 'gray' },
   { value: 'archived',           label: 'Archived',           labelDe: 'Archiviert',        color: 'slate' },

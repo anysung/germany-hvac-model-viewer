@@ -130,7 +130,7 @@ export interface User {
   country?: string;
   referralSource?: string;
   isActive: boolean;
-  status?: 'pending' | 'active' | 'suspended' | 'rejected' | 'deletion_requested' | 'deleted' | 'archived';
+  status?: 'pending' | 'active' | 'suspended' | 'rejected' | 'disabled' | 'deletion_requested' | 'deleted' | 'archived';
   registeredAt: string;
   lastActiveAt?: string;
   role?: 'user' | 'owner' | 'admin' | 'support' | 'ops';

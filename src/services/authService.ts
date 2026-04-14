@@ -105,23 +105,29 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
     const userDoc = await getDoc(userDocRef);
 
     if (!userDoc.exists()) {
-      // Owner fallback
+      // Only the owner gets an auto-created profile — all other Firebase Auth users without
+      // a Firestore doc are rejected. This closes the bypass where any Firebase Auth account
+      // without a Firestore record would previously be auto-admitted as 'active'.
+      if (email !== OWNER_EMAIL) {
+        await signOut(auth);
+        throw new Error('No account found for this email. Please register to request access, or contact the administrator.');
+      }
       const fallbackUser: User = {
         id: uid, email,
-        firstName: email === OWNER_EMAIL ? 'Christopher' : 'User',
-        lastName: email === OWNER_EMAIL ? 'Sung' : '',
+        firstName: 'Christopher',
+        lastName: 'Sung',
         companyType: 'Private Individual', jobRole: 'General Public',
         isActive: true, status: 'active',
         registeredAt: new Date().toISOString(),
-        role: email === OWNER_EMAIL ? 'owner' : 'user',
+        role: 'owner',
         plan: 'standard',
       };
       await setDoc(userDocRef, fallbackUser);
-      await logActivity(fallbackUser.id, 'LOGIN', 'User logged in (profile created)', email, `${fallbackUser.firstName} ${fallbackUser.lastName}`);
+      await logActivity(fallbackUser.id, 'LOGIN', 'Owner logged in (profile created)', email, 'Christopher Sung');
       return fallbackUser;
     }
 
-    const userData = {
+    let userData = {
       ...userDoc.data() as User,
       role: email === OWNER_EMAIL ? 'owner' as const : (userDoc.data() as User).role || 'user' as const,
     };
@@ -138,9 +144,22 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
       await signOut(auth);
       throw new Error('Your registration was not approved. Please contact the administrator.');
     }
+    if (userData.status === 'disabled') {
+      await signOut(auth);
+      throw new Error('Your account has been disabled. Please contact the administrator.');
+    }
     if (!userData.isActive) {
       await signOut(auth);
       throw new Error('Account is deactivated.');
+    }
+
+    // Legacy migration: users created before the status field was introduced have isActive:true
+    // but no status field. Set status:'active' so Firestore security rules can check it.
+    if (!userData.status && userData.isActive) {
+      try {
+        await updateDoc(userDocRef, { status: 'active' });
+        userData = { ...userData, status: 'active' };
+      } catch { /* non-blocking — will retry on next login */ }
     }
 
     await logActivity(userData.id, 'LOGIN', 'User logged in', email, `${userData.firstName} ${userData.lastName}`);
@@ -170,15 +189,22 @@ export const onUserChange = (callback: (user: User | null) => void) => {
           };
           callback(enriched);
         } else {
+          // Only the owner gets an auto-created profile. All other Firebase Auth users without
+          // a Firestore doc are treated as unauthorized — sign them out to force re-registration.
+          if (firebaseUser.email !== OWNER_EMAIL) {
+            await signOut(auth);
+            callback(null);
+            return;
+          }
           const fallback: User = {
             id: firebaseUser.uid,
             email: firebaseUser.email || '',
-            firstName: firebaseUser.email === OWNER_EMAIL ? 'Christopher' : 'User',
-            lastName: firebaseUser.email === OWNER_EMAIL ? 'Sung' : '',
+            firstName: 'Christopher',
+            lastName: 'Sung',
             companyType: 'Private Individual', jobRole: 'General Public',
             isActive: true, status: 'active',
             registeredAt: new Date().toISOString(),
-            role: firebaseUser.email === OWNER_EMAIL ? 'owner' : 'user',
+            role: 'owner',
             plan: 'standard',
           };
           callback(fallback);
@@ -217,6 +243,11 @@ export const rejectUser = async (userId: string, adminName = 'Admin') => {
 export const suspendUser = async (userId: string, adminName = 'Admin') => {
   await updateDoc(doc(db, 'users', userId), { status: 'suspended', isActive: false });
   await logActivity('ADMIN', 'SUSPEND_USER', `User suspended: ${userId}`, '', adminName);
+};
+
+export const disableUser = async (userId: string, adminName = 'Admin') => {
+  await updateDoc(doc(db, 'users', userId), { status: 'disabled', isActive: false });
+  await logActivity('ADMIN', 'DISABLE_USER', `User disabled: ${userId}`, '', adminName);
 };
 
 export const reactivateUser = async (userId: string, adminName = 'Admin') => {

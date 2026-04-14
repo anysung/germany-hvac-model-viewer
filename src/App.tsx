@@ -30,19 +30,30 @@ const App: React.FC = () => {
     const unsubscribe = onUserChange((user) => {
       setCurrentUser(user);
       if (user) {
-        const isAuthView = currentView === 'LANDING' || currentView === 'LOGIN' || currentView === 'SIGNUP';
-        if (isAuthView) {
-          // Block pending/suspended users even if Firebase session exists
-          if (user.status === 'pending') {
-            setCurrentView('PENDING_APPROVAL');
-          } else if (user.status === 'suspended' || user.status === 'rejected') {
-            logoutUser();
-          } else {
+        // Enforce approval status in ALL views — including while the user is already in the app.
+        // This ensures real-time enforcement if an admin suspends/rejects a live session.
+        if (user.status === 'pending') {
+          setCurrentView('PENDING_APPROVAL');
+        } else if (
+          user.status === 'suspended' ||
+          user.status === 'rejected' ||
+          user.status === 'disabled'
+        ) {
+          logoutUser();
+        } else {
+          // User is approved — only redirect to APP when coming from pre-app views.
+          // If already in APP or ADMIN_DASHBOARD, leave them where they are.
+          const needsRouting =
+            currentView === 'LANDING' ||
+            currentView === 'LOGIN' ||
+            currentView === 'SIGNUP' ||
+            currentView === 'PENDING_APPROVAL';
+          if (needsRouting) {
             setCurrentView('APP');
           }
         }
       } else {
-        if (currentView === 'APP') {
+        if (currentView === 'APP' || currentView === 'PENDING_APPROVAL') {
           setCurrentView('LANDING');
         }
       }
