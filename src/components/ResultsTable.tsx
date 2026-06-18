@@ -312,7 +312,7 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const stickyBg = 'bg-white';
 
               return (
-                <tr key={`${item.bafa_id}-${index}`} className={`hover:bg-blue-50/60 transition-colors ${rowBg}`}>
+                <tr key={`${item.source_id ?? item.bafa_id ?? index}-${index}`} className={`hover:bg-blue-50/60 transition-colors ${rowBg}`}>
                   {isSelectionMode && (
                     <td className={`${TD_BASE} sticky left-0 z-20 ${stickyBg} border-r border-gray-100`}>
                       <input type="checkbox" checked={isSelected}

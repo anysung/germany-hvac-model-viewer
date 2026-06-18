@@ -1,12 +1,13 @@
 import { collection, getDocs, getDoc, doc, query, limit, orderBy } from 'firebase/firestore';
 import { db } from '../firebase';
 import { HeatPump, NewsItem, PolicyItem, BAFAItem } from '../types';
+import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 
-// Collection References
-const COUNTRY_CODE = 'DE';
-const NEWS_REF = `countries/${COUNTRY_CODE}/news`;
-const POLICY_REF = `countries/${COUNTRY_CODE}/policies`;
-const BAFA_REF = `countries/${COUNTRY_CODE}/bafa`;
+// Firestore collection paths — derived from the active country profile so that
+// all country-specific routing is driven by ACTIVE_COUNTRY, not hardcoded strings.
+const NEWS_REF   = `${ACTIVE_COUNTRY.firestoreRoot}/news`;
+const POLICY_REF = `${ACTIVE_COUNTRY.firestoreRoot}/policies`;
+const BAFA_REF   = `${ACTIVE_COUNTRY.firestoreRoot}/bafa`;
 
 /**
  * Load products from a static JSON dataset.
@@ -24,13 +25,13 @@ const loadProductsFromJson = async (path: string): Promise<HeatPump[]> => {
   }
 };
 
-/** Load residential products (static JSON). */
+/** Load residential products (static JSON, path from active country profile). */
 export const getProducts = (): Promise<HeatPump[]> =>
-  loadProductsFromJson('/data/products.json');
+  loadProductsFromJson(ACTIVE_COUNTRY.datasetPaths.products);
 
-/** Load commercial products (static JSON). */
+/** Load commercial products (static JSON, path from active country profile). */
 export const getCommercialProducts = (): Promise<HeatPump[]> =>
-  loadProductsFromJson('/data/products-commercial.json');
+  loadProductsFromJson(ACTIVE_COUNTRY.datasetPaths.commercialProducts);
 
 export const getNews = async (): Promise<NewsItem[]> => {
   try {
@@ -87,7 +88,7 @@ export interface DbMetadata {
 
 export const getMetadata = async (): Promise<DbMetadata> => {
   try {
-    const snap = await getDoc(doc(db, 'countries', COUNTRY_CODE));
+    const snap = await getDoc(doc(db, 'countries', ACTIVE_COUNTRY.code));
     if (snap.exists()) return snap.data() as DbMetadata;
     return { lastUpdated: null, productCount: 0, newsCount: 0 };
   } catch (error) {

@@ -1,6 +1,27 @@
 
 export interface HeatPump {
   bafa_id: string;
+
+  // ── Source-neutral identity fields ──────────────────────────────────────────
+  // These fields allow the same HeatPump shape to represent products from any
+  // primary registry without repurposing bafa_id as a universal identifier.
+  //
+  // source_id:   Stable display-level product identifier. Set by the ingestion
+  //              pipeline to the primary registry's key for this market
+  //              (bafa_id for DE, mcs_number for GB). Use this as the React
+  //              row key and the data-sheet primary field instead of bafa_id.
+  // country:     ISO 3166-1 alpha-2 code for the market this record belongs to.
+  // primary_source: SourceId string ('BAFA' | 'OFGEM_PEL') identifying which
+  //              registry produced this record.
+  // mcs_number:  UK MCS Certification Number from the Ofgem PEL (GB only).
+  // eprel_registration_number: EPREL EU registration number, set after EPREL
+  //              enrichment matching is complete.
+  source_id?: string;
+  country?: string;
+  primary_source?: string;
+  mcs_number?: string;
+  eprel_registration_number?: string;
+
   manufacturer: string;
   manufacturer_short?: string;
   model: string;
