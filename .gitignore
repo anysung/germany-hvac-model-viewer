@@ -49,3 +49,4 @@ data_sources/bafa/raw/20*/
 data_sources/bafa/parsed/20*/
 data_sources/bafa/diffs/20*/
 data_sources/bafa/listing_history.json
+data_sources/bafa/master_seed/20*/

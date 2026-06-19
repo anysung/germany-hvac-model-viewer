@@ -80,7 +80,7 @@
     "Presence in the BAFA registry (or in a snapshot of it) does NOT confirm current BEG subsidy application eligibility. Verify current eligibility and application requirements directly at www.bafa.de.",
     "Snapshot data reflects the state of the BAFA registry at the time of extraction only."
   ],
-  "next_recommended_step": "Fetch next snapshot: node scripts/bafa/fetch-bafa-raw.mjs --snapshot <next-YYYY-MM> --fetch",
+  "next_recommended_step": "Master seed ready at master_seed/2026-06/. Review schema before app integration.",
   "known_diffs": [
     {
       "diff_key": "2026-03-to-2026-06",
@@ -92,6 +92,20 @@
       "missing_from_latest": 276,
       "changed_specs": 786,
       "still_listed": 6238
+    }
+  ],
+  "known_master_seeds": [
+    {
+      "out_label": "2026-06",
+      "reference_baseline_snapshot": "2026-03",
+      "latest_snapshot": "2026-06",
+      "generated_at": "2026-06-19T06:47:54.412Z",
+      "total_products": 7163,
+      "bafa_list_yes": 6887,
+      "bafa_list_no": 276,
+      "output_file": "master_seed/2026-06/bafa-master-seed.json",
+      "build_script": "scripts/bafa/build-master-seed.mjs",
+      "validation_overall": "PASS"
     }
   ]
 }
