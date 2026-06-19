@@ -42,3 +42,10 @@ data_sources/eprel_raw/raw/test/official-api/
 # Keep: manifest.json, fetch-log.md
 data_sources/ofgem_pel/raw/20*/
 data_sources/ofgem_pel/parsed/20*/
+
+# BAFA raw snapshots, parsed output, and diffs (rebuilt by scripts/bafa/; monthly refresh)
+# Keep: manifest.json, fetch-log.md
+data_sources/bafa/raw/20*/
+data_sources/bafa/parsed/20*/
+data_sources/bafa/diffs/20*/
+data_sources/bafa/listing_history.json

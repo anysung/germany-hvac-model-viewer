@@ -1,0 +1,88 @@
+{
+  "source_name": "BAFA Wärmepumpen Database — Luft/Wasser",
+  "source_url": "https://elan1.bafa.bund.de/zvi-ui/wep/waermepumpen",
+  "api_endpoint": "https://elan1.bafa.bund.de/zvi-api/wep/waermepumpen",
+  "publisher": "Bundesamt für Wirtschaft und Ausfuhrkontrolle (BAFA), Germany",
+  "country": "DE",
+  "primary_source": "BAFA",
+  "fetch_mode": "active_snapshot",
+  "fetch_mode_note": "BAFA API requires active-funding date filters (foerderungAb/foerderungBis). Unfiltered fetches return HTTP 400. Each snapshot represents products listed as actively funded at the time of extraction. Absence from a later snapshot is a 'delisted_candidate' — not a confirmed delisting.",
+  "fetch_filter": "foerderungAb=le=\"<today>\";foerderungBis=ge=\"<today>\";einzelabnahme==false;pumpentyp==LUFT_WASSER",
+  "filter_note": "foerderungAb and foerderungBis are filter-only parameters — they do NOT appear in API response items.",
+  "fetch_script": "scripts/bafa/fetch-bafa-raw.mjs",
+  "parse_script": "scripts/bafa/parse-bafa-raw.mjs",
+  "diff_script": "scripts/bafa/diff-snapshots.mjs",
+  "scope_investigation_date": "2026-06-19",
+  "scope_investigation": {
+    "active_filter_mode_total": 6887,
+    "active_filter_mode_date": "2026-06-19",
+    "unfiltered_mode_result": "HTTP 400 — Eine Suche mit diesen Filterkriterien ist nicht möglich",
+    "conclusion": "Active-snapshot mode is the only viable fetch mode. Full historical coverage is not available via API."
+  },
+  "snapshot_retention_policy": "raw/YYYY-MM/ and parsed/YYYY-MM/ are gitignored (large files, rebuilt by scripts). manifest.json and fetch-log.md are committed. diffs/YYYY-MM/ are gitignored. listing_history.json is gitignored (derived, rebuilt by diff-snapshots.mjs).",
+  "known_snapshots": [
+    {
+      "snapshot_id": "2026-06",
+      "fetched_at": "2026-06-19T05:17:14.627Z",
+      "record_count": 6887,
+      "total_available": 6887,
+      "format": "raw_api",
+      "test_mode": false,
+      "complete": true,
+      "fetch_script": "scripts/bafa/fetch-bafa-raw.mjs v2.0",
+      "parse_complete": true,
+      "diff_available": true,
+      "parsed_at": "2026-06-19T05:33:03.940Z",
+      "parsed_record_count": 6887,
+      "parse_validation": {
+        "record_count": "PASS",
+        "hash_complete": "PASS",
+        "malformed": "PASS",
+        "duplicates": "PASS"
+      },
+      "last_diff_from": "2026-03"
+    },
+    {
+      "snapshot_id": "2026-03",
+      "fetched_at": "2026-03-19T12:07:14.787Z",
+      "record_count": 6514,
+      "format": "pre-phase2-cleaned",
+      "format_note": "Cleaned via bafa-scraper.cjs cleanItem() before Phase 2. English field names. Raw API format not available for this snapshot.",
+      "source": "Migrated from scraper/bafa-luft-wasser.json (original March 2026 extraction)",
+      "fetch_script_version": "bafa-scraper.cjs (pre-Phase-2)",
+      "parse_complete": true,
+      "diff_available": false,
+      "parsed_at": "2026-06-19T05:33:03.656Z",
+      "parsed_record_count": 6514,
+      "parse_validation": {
+        "record_count": "PASS",
+        "hash_complete": "PASS",
+        "malformed": "PASS",
+        "duplicates": "PASS"
+      }
+    }
+  ],
+  "listing_history_path": "data_sources/bafa/listing_history.json",
+  "listing_history_note": "Rebuilt by diff-snapshots.mjs after each new snapshot is parsed. Gitignored. Requires at least one parsed snapshot to initialize.",
+  "legal_notes": [
+    "BAFA Wärmepumpenregister is a public administrative registry published by the German Federal Office for Economic Affairs and Export Control.",
+    "The API at elan1.bafa.bund.de is publicly accessible without authentication.",
+    "Products in the registry were approved for inclusion in the BEG (Bundesförderung für effiziente Gebäude) subsidy programme at time of listing.",
+    "Presence in the BAFA registry (or in a snapshot of it) does NOT confirm current BEG subsidy application eligibility. Verify current eligibility and application requirements directly at www.bafa.de.",
+    "Snapshot data reflects the state of the BAFA registry at the time of extraction only."
+  ],
+  "next_recommended_step": "Fetch next snapshot: node scripts/bafa/fetch-bafa-raw.mjs --snapshot <next-YYYY-MM> --fetch",
+  "known_diffs": [
+    {
+      "diff_key": "2026-03-to-2026-06",
+      "from_snapshot": "2026-03",
+      "to_snapshot": "2026-06",
+      "generated_at": "2026-06-19T05:33:06.408Z",
+      "output_file": "diffs/2026-06/diff-from-2026-03-to-2026-06.json",
+      "newly_listed": 649,
+      "missing_from_latest": 276,
+      "changed_specs": 786,
+      "still_listed": 6238
+    }
+  ]
+}
