@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { HeatPump } from '../types';
-import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
+import { getDisplayName, getInstallationTypeDisplay, fmtGridReady } from '../utils/displayHelpers';
 
 interface ComparisonViewProps {
   models: HeatPump[];
@@ -19,13 +19,6 @@ const fmt = {
     if (w == null && h == null && d == null) return '—';
     return `${w ?? '?'} × ${h ?? '?'} × ${d ?? '?'} mm`;
   },
-  price: (m: HeatPump) => {
-    const dp = getDisplayPrice(
-      m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur,
-      m.equipment_price_display_eur, m.equipment_price_display_low_eur, m.equipment_price_display_high_eur,
-    );
-    return dp.range ? `${dp.main} (${dp.range})` : dp.main;
-  },
   gridReady: (m: HeatPump) => fmtGridReady(m.grid_ready, m.grid_ready_type),
 };
 
@@ -41,7 +34,6 @@ export const ComparisonView: React.FC<ComparisonViewProps> = ({ models, labels, 
     { label: labels.colNoise, getValue: m => fmt.db(m.noise_outdoor_dB), highlight: 'blue' },
     { label: labels.colWeight || 'Weight', getValue: m => fmt.kg(m.weight_kg) },
     { label: labels.colDim, getValue: m => fmt.dims(m.width_mm, m.height_mm, m.depth_mm) },
-    { label: labels.colPrice, getValue: m => fmt.price(m), highlight: 'green' },
     { label: labels.colGridReady || 'Grid Ready', getValue: m => fmt.gridReady(m) },
   ];
 

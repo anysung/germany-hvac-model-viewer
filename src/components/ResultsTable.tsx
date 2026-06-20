@@ -14,7 +14,7 @@
 
 import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
 import { HeatPump } from '../types';
-import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, getDisplayPrice } from '../utils/displayHelpers';
+import { getDisplayName, getInstallationTypeDisplay, fmtGridReady } from '../utils/displayHelpers';
 
 interface ResultsTableProps {
   data: HeatPump[];
@@ -70,15 +70,6 @@ function fmtDimensions(w: number | null, h: number | null, d: number | null): st
   const hStr = h != null ? `${h}` : '?';
   const dStr = d != null ? `${d}` : '?';
   return `${wStr} × ${hStr} × ${dStr} mm`;
-}
-
-/** Format price using canonical display fields from dataset, with fallback to raw fields */
-function fmtPrice(m: HeatPump): [string, string | null] {
-  const dp = getDisplayPrice(
-    m.equipment_price_low_eur, m.equipment_price_typical_eur, m.equipment_price_high_eur,
-    m.equipment_price_display_eur, m.equipment_price_display_low_eur, m.equipment_price_display_high_eur,
-  );
-  return [dp.main, dp.range];
 }
 
 /** Two-line cell component */
@@ -267,7 +258,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               <th className={`${TH_BASE} text-blue-600 bg-blue-50 sticky top-0 z-30`}>{labels.colNoise}</th>
               <th className={`${TH_BASE} text-purple-600 bg-purple-50 sticky top-0 z-30`}>{labels.colWeight || 'Weight'}</th>
               <th className={`${TH_BASE} text-gray-500 sticky top-0 z-30`}>{labels.colDim}</th>
-              <th className={`${TH_BASE} text-green-700 bg-green-50 sticky top-0 z-30`}>{labels.colPrice}</th>
               {isCommercial && (
                 <>
                   <th className={`${TH_BASE} text-orange-600 bg-orange-50 sticky top-0 z-30`}>{labels.colMarketSegment || 'Segment'}</th>
@@ -298,7 +288,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const noise2 = item.noise_indoor_dB ? `Indoor: ${fmtDb(item.noise_indoor_dB)}` : null;
               const weight = fmtWeight(item.weight_kg);
               const dims = fmtDimensions(item.width_mm, item.height_mm, item.depth_mm);
-              const [price1, price2] = fmtPrice(item);
               const gridReady = fmtGridReady(item.grid_ready, item.grid_ready_type);
 
               // Installation type badge — Monoblock / Split
@@ -387,11 +376,6 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                   {/* Dimensions (moved right of Weight) */}
                   <td className={TD_BASE}>
                     <span className="text-gray-600 whitespace-nowrap text-[12px]">{dims}</span>
-                  </td>
-
-                  {/* Price */}
-                  <td className={`${TD_BASE} bg-green-50/30`}>
-                    <TwoLine l1={price1} l2={price2} l1Cls="font-bold text-green-700 whitespace-nowrap" />
                   </td>
 
                   {/* Commercial-only columns */}

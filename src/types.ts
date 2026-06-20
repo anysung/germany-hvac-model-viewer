@@ -76,20 +76,7 @@ export interface HeatPump {
   grid_ready: boolean;
   grid_ready_type: string | null;
 
-  // Pricing (raw engine output — internal, not for direct display)
-  equipment_price_low_eur: number | null;
-  equipment_price_typical_eur: number | null;
-  equipment_price_high_eur: number | null;
-  // Pricing (user-facing display: ±15% band around reference, rounded to €50)
-  equipment_price_display_eur: number | null;
-  equipment_price_display_low_eur: number | null;
-  equipment_price_display_high_eur: number | null;
-  price_confidence: string | null;
-  brand_tier: string | null;
   market_segment: string | null;
-  capacity_band: string | null;
-  refrigerant_group: string | null;
-  package_scope: string | null;
 }
 
 export type AppMode = 'DATABASE' | 'LIVE_API';

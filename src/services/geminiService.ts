@@ -24,7 +24,6 @@ const responseSchema: Schema = {
       scop: { type: Type.NUMBER, description: "Seasonal COP." },
       noise_outdoor_dB: { type: Type.NUMBER, description: "Sound power level in dB(A)." },
       weight_kg: { type: Type.NUMBER, description: "Weight in kg." },
-      equipment_price_typical_eur: { type: Type.NUMBER, description: "Approximate equipment price in EUR." },
     },
     required: ["manufacturer", "model", "refrigerant"],
   },
@@ -56,18 +55,7 @@ function mapToHeatPump(raw: any): HeatPump {
     weight_kg: raw.weight_kg ?? null,
     grid_ready: false,
     grid_ready_type: null,
-    equipment_price_low_eur: null,
-    equipment_price_typical_eur: raw.equipment_price_typical_eur ?? null,
-    equipment_price_high_eur: null,
-    equipment_price_display_eur: null,
-    equipment_price_display_low_eur: null,
-    equipment_price_display_high_eur: null,
-    price_confidence: null,
-    brand_tier: null,
     market_segment: null,
-    capacity_band: null,
-    refrigerant_group: null,
-    package_scope: null,
   };
 }
 
@@ -102,7 +90,7 @@ export const fetchHeatPumps = async (
 
     prompt += `
       For each product, include: manufacturer, model, refrigerant, installation_type (Monoblock or Split),
-      power_35C_kw, cop_A7W35, scop, noise_outdoor_dB, weight_kg, equipment_price_typical_eur.
+      power_35C_kw, cop_A7W35, scop, noise_outdoor_dB, weight_kg.
       ${langInstruction}
       The result must be strictly in JSON array format. Find up to 20 representative models.
     `;

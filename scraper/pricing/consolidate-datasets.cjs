@@ -83,15 +83,8 @@ const STANDARD_FIELDS = [
   'heat_meter', 'defrost_tested', 'defrost_type', 'temp_diff',
   'website',
 
-  // ── Pricing (raw engine output) ──
-  'equipment_price_low_eur', 'equipment_price_typical_eur', 'equipment_price_high_eur',
-  // ── Pricing (user-facing display: ±15% band around reference price, rounded to €50) ──
-  'equipment_price_display_eur', 'equipment_price_display_low_eur', 'equipment_price_display_high_eur',
-  'price_basis', 'price_confidence', 'brand_tier',
-  'market_segment', 'residential_visibility_default', 'segment_confidence',
-  'package_scope', 'package_scope_confidence',   // <-- was missing in v1
-  'capacity_band', 'refrigerant_group', 'installation_type',
-  'review_flags',                                 // <-- was missing in v1 (renamed from _review_flags)
+  // ── Segmentation (kept for commercial/residential split) ──
+  'market_segment', 'installation_type',
 
   // ── Physical Specs ──
   'width_mm', 'height_mm', 'depth_mm', 'weight_kg',
@@ -162,22 +155,6 @@ function flattenItem(src) {
   // Add manufacturer_short from mapping
   const norm = src.manufacturer_normalized;
   out.manufacturer_short = shortNames[norm] || src.manufacturer_short || src.manufacturer;
-
-  // ── Compute user-facing display price fields (±15% band around reference) ──
-  // Reference = typical price; fallback = midpoint of low+high
-  let ref = out.equipment_price_typical_eur;
-  if (ref == null && out.equipment_price_low_eur != null && out.equipment_price_high_eur != null) {
-    ref = Math.round((out.equipment_price_low_eur + out.equipment_price_high_eur) / 2);
-  }
-  if (ref != null) {
-    out.equipment_price_display_eur      = ref;
-    out.equipment_price_display_low_eur  = Math.round((ref * 0.85) / 50) * 50;
-    out.equipment_price_display_high_eur = Math.round((ref * 1.15) / 50) * 50;
-  } else {
-    out.equipment_price_display_eur      = null;
-    out.equipment_price_display_low_eur  = null;
-    out.equipment_price_display_high_eur = null;
-  }
 
   // ── Source provenance injection (Phase 1) ──
   // The loop above sets these to null when absent from enrichedFull items
@@ -345,17 +322,7 @@ check('All items have manufacturer', allFlat.every(i => i.manufacturer));
 check('All items have manufacturer_normalized', allFlat.every(i => i.manufacturer_normalized));
 check('All items have manufacturer_short', allFlat.every(i => i.manufacturer_short));
 
-// 8. Safety-check fields present (the 4 that were missing in v1)
-check('package_scope_confidence present', residential[0].package_scope_confidence !== undefined);
-check('review_flags present', Array.isArray(residential[0].review_flags));
-check('physical_specs_last_checked_at present', residential[0].physical_specs_last_checked_at !== undefined);
-check('physical_specs_quarantine_reason present', 'physical_specs_quarantine_reason' in residential[0]);
-
-// 9. Pricing fields populated for residential
-const resPriced = residential.filter(i => i.equipment_price_typical_eur !== null).length;
-check(`Residential pricing coverage > 0 (${resPriced})`, resPriced > 0);
-
-// 10. Physical specs internal metadata preserved even when display nulled
+// 8. Physical specs internal metadata preserved even when display nulled
 const quarantinedRes = residential.filter(i => i.physical_specs_quarantined);
 if (quarantinedRes.length > 0) {
   const sample = quarantinedRes[0];
@@ -365,30 +332,26 @@ if (quarantinedRes.length > 0) {
   check('Quarantined item: quarantine_reason preserved', sample.physical_specs_quarantine_reason !== undefined);
 }
 
-// 11. Cross-check: all source fields accounted for
+// 9. Cross-check: BAFA source fields preserved
 const srcItem = enrichedFull.items[0];
 const srcTopLevel = Object.keys(srcItem).filter(k => !['_enrichment', '_pricing', '_physical_specs'].includes(k));
-const srcPricing = Object.keys(srcItem._pricing || {});
 const srcPhysSpecs = Object.keys(srcItem._physical_specs || {});
-const srcEnrichment = Object.keys(srcItem._enrichment || {});
 
-// Check all source top-level fields are in output
+// Check all source top-level BAFA fields are in output (pricing fields were intentionally removed)
 const flatItem = allFlat[0];
-const missingTop = srcTopLevel.filter(f => !(f in flatItem) && f !== 'manufacturer_short');
-check(`All source top-level fields mapped (missing: ${missingTop.join(',') || 'none'})`, missingTop.length === 0);
-
-// Check all _pricing fields are in output (accounting for _review_flags -> review_flags rename)
-const missingPricing = srcPricing.filter(f => {
-  if (f === '_review_flags') return !('review_flags' in flatItem);
-  return !(f in flatItem);
-});
-check(`All _pricing fields mapped (missing: ${missingPricing.join(',') || 'none'})`, missingPricing.length === 0);
+const INTENTIONALLY_EXCLUDED = new Set([
+  'manufacturer_short',
+  // Pricing engine fields — intentionally removed
+  'market_segment', // included via _pricing; present in output as segmentation field
+]);
+const missingTop = srcTopLevel.filter(f => !(f in flatItem) && !INTENTIONALLY_EXCLUDED.has(f));
+check(`All source top-level BAFA fields mapped (missing: ${missingTop.join(',') || 'none'})`, missingTop.length === 0);
 
 // Check all _physical_specs fields are in output
 const missingPhys = srcPhysSpecs.filter(f => !(f in flatItem));
 check(`All _physical_specs fields mapped (missing: ${missingPhys.join(',') || 'none'})`, missingPhys.length === 0);
 
-// _enrichment was intentionally dropped (all nulls verified)
+// _enrichment and _pricing price fields intentionally dropped
 const enrichmentHasData = enrichedFull.items.some(i => {
   const e = i._enrichment;
   return e && Object.values(e).some(v => v !== null);
