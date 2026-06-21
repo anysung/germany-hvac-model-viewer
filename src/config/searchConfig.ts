@@ -77,9 +77,9 @@ export const residentialConfig: SearchConfig = {
   ],
   capacityRanges: [
     '4 kW ~ 7 kW',
-    '8 kW ~ 10 kW',
-    '11 kW ~ 12 kW',
-    '13 kW ~ 17 kW',
+    '8 kW ~ 11 kW',
+    '12 kW ~ 14 kW',
+    '15 kW ~ 20.99 kW',
   ],
   refrigerants: ['R290', 'R32', 'R410A'],
   showInstallType: true,
@@ -116,22 +116,19 @@ export const commercialConfig: SearchConfig = {
     'Mitsubishi', 'Clivet', 'Trane', 'Aermec', 'FläktGroup',
   ],
   /**
-   * Capacity buckets — data-driven from 2,127 commercial products:
-   *   ≤ 40 kW   : 530 products  (small commercial / light commercial)
-   *   41 – 80 kW: 299 products  (medium)
-   *   81 – 150 kW: 339 products (large)
-   *   151 – 300 kW: 419 products (major systems)
-   *   301+ kW   : 508 products  (industrial scale, up to ~1018 kW)
+   * Capacity buckets aligned to capacity-based segmentation policy (v2.0):
+   *   21 – 45 kW : Light Commercial boundary (21 kW = residential cutoff + 1)
+   *   46 – 80 kW : Medium commercial
+   *   81 – 150 kW: Large commercial
+   *   150+ kW    : Industrial / project scale
    *
-   * These are much wider than Residential (4–17 kW) because commercial
-   * products span 4 kW to 1000+ kW.
+   * Commercial dataset starts at 21 kW (≤20.99 kW goes to residential).
    */
   capacityRanges: [
-    '≤ 40 kW',
-    '41 – 80 kW',
+    '21 – 45 kW',
+    '46 – 80 kW',
     '81 – 150 kW',
-    '151 – 300 kW',
-    '301+ kW',
+    '150+ kW',
   ],
   /**
    * Refrigerants — by commercial prevalence:
@@ -140,7 +137,7 @@ export const commercialConfig: SearchConfig = {
    */
   refrigerants: ['R32', 'R454B', 'R290', 'R410A', 'R513A'],
   /**
-   * Installation Type is hidden for Commercial — 2,126 of 2,127 products
+   * Installation Type is hidden for Commercial — nearly all commercial products
    * are Monoblock, so the filter provides no useful discrimination.
    * Market Segment takes its place in the filter row.
    */

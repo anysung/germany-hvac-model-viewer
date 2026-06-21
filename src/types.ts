@@ -132,9 +132,9 @@ export enum Manufacturer {
 
 export enum CapacityRange {
   Range_4_7 = '4 kW ~ 7 kW',
-  Range_8_10 = '8 kW ~ 10 kW',
-  Range_11_12 = '11 kW ~ 12 kW',
-  Range_13_17 = '13 kW ~ 17 kW',
+  Range_8_11 = '8 kW ~ 11 kW',
+  Range_12_14 = '12 kW ~ 14 kW',
+  Range_15_20 = '15 kW ~ 20.99 kW',
 }
 
 /** UI filter values for installation type. */
