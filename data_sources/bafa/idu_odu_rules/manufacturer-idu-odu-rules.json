@@ -1,8 +1,8 @@
 {
-  "version": "2.1.0",
+  "version": "2.2.0",
   "generated_at": "2026-06-23",
   "source_snapshot": "2026-06",
-  "description": "Manufacturer-specific rules for identifying Indoor Unit (IDU) and Outdoor Unit (ODU) components in BAFA heat pump product registrations. Rules are evaluated in priority order within each manufacturer; first matching rule wins. Confidence scores reflect external manufacturer validation performed 2026-06-21; v2.1.0 fixes applied 2026-06-23: VAI-002 role reversal, SAM-001/SAM-002 split, WLF-001 disabled, source_type corrections.",
+  "description": "Manufacturer-specific rules for identifying Indoor Unit (IDU) and Outdoor Unit (ODU) components in BAFA heat pump product registrations. Rules are evaluated in priority order within each manufacturer; first matching rule wins. Confidence scores reflect external manufacturer validation performed 2026-06-21; v2.2.0 schema migration 2026-06-23: VAI-002 role reversal, SAM-001/SAM-002 split, WLF-001 disabled, source_type corrections.",
   "schema_notes": [
     "classification values: confirmed_set | confirmed_not_set | standalone_odu | variant_label | requires_research | unclassified",
     "confidence_score: 0.00–1.00. Internal threshold: 0.90 (high confidence). Display threshold: 0.95.",
@@ -431,8 +431,8 @@
           },
           "classification": "confirmed_set",
           "confidence_score": 0.97,
-          "extraction_method": "plus_separator",
-          "idu_label": "AE-DN/RNW/CNW buffer or DHW tank (indoor-side; will be reclassified as tank_model in schema migration)",
+          "extraction_method": "plus_separator_tank",
+          "idu_label": null,
           "odu_label": "AE-BX/CX/DX/HCT monoblock outdoor unit",
           "bafa_count_approx": 51,
           "evidence": [
@@ -453,7 +453,10 @@
               "MIM-E03"
             ]
           },
-          "notes": "Excludes MIM-E03 products — those are handled by SAM-002. idu_model currently holds tank code; will migrate to tank_model in next schema update."
+          "notes": "Excludes MIM-E03 products — those are handled by SAM-002. idu_model currently holds tank code; will migrate to tank_model in next schema update. extraction_method updated to plus_separator_tank in v2.2.0 — second element now goes to tank_model, idu_model stays null.",
+          "tank_label": "AE-DN/RNW/CNW buffer or DHW tank",
+          "outdoor_unit_type": "monoblock_outdoor_main",
+          "system_architecture": "monoblock_with_tank"
         },
         {
           "rule_id": "SAM-002",
