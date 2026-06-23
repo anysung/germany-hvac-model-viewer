@@ -1,8 +1,8 @@
 {
-  "version": "2.2.0",
+  "version": "2.3.0",
   "generated_at": "2026-06-23",
   "source_snapshot": "2026-06",
-  "description": "Manufacturer-specific rules for identifying Indoor Unit (IDU) and Outdoor Unit (ODU) components in BAFA heat pump product registrations. Rules are evaluated in priority order within each manufacturer; first matching rule wins. Confidence scores reflect external manufacturer validation performed 2026-06-21; v2.2.0 schema migration 2026-06-23: VAI-002 role reversal, SAM-001/SAM-002 split, WLF-001 disabled, source_type corrections.",
+  "description": "Manufacturer-specific rules for identifying Indoor Unit (IDU) and Outdoor Unit (ODU) components in BAFA heat pump product registrations. Rules are evaluated in priority order within each manufacturer; first matching rule wins. Confidence scores reflect external manufacturer validation performed 2026-06-21; v2.2.0 schema migration 2026-06-23: VAI-002 role reversal, SAM-001/SAM-002 split, WLF-001 disabled, source_type corrections. v2.3.0 2026-06-23: WLF manufacturer_contains case-bug fixed (Wolf→WOLF), WLF-002 added (20 monoblock), WLF-002→WLF-003 (15 slash), VIE-003 added (85 AWO monoblock).",
   "schema_notes": [
     "classification values: confirmed_set | confirmed_not_set | standalone_odu | variant_label | requires_research | unclassified",
     "confidence_score: 0.00–1.00. Internal threshold: 0.90 (high confidence). Display threshold: 0.95.",
@@ -60,8 +60,43 @@
           "validated": true
         },
         {
+          "rule_id": "VIE-003",
+          "label": "Viessmann — Vitocal AWO outdoor monoblock main unit",
+          "manufacturer_contains": "Viessmann",
+          "model_match": {
+            "type": "contains_any",
+            "patterns": [
+              "AWO"
+            ]
+          },
+          "model_exclude": {
+            "type": "contains_all",
+            "patterns": [
+              "IDU",
+              "ODU"
+            ]
+          },
+          "classification": "confirmed_not_set",
+          "confidence_score": 0.92,
+          "extraction_method": "none",
+          "bafa_count_approx": 85,
+          "confidence_cap_applied": "self_describing: AWO = Außen-Wärmepumpe Outdoor, unambiguously outdoor-installed monoblock",
+          "evidence": [
+            {
+              "source_type": "self_describing",
+              "title": "BAFA model name contains AWO/AWOT/HAWO — Außen-Wärmepumpe Outdoor designation",
+              "url": null,
+              "accessed_at": "2026-06-23",
+              "what_it_proves": "Viessmann Vitocal 150-A/151-A/200-A/222-A/250-A/250-AH/252-A series use 'AWO' (Außen-Wärmepumpe Outdoor) or 'HAWO' (Hochtemperatur-AWO) in the type designation, indicating an outdoor-installed air-to-water heat pump with no separate indoor unit. AWO = monoblock outdoor main by manufacturer naming convention. Captures both slash-variant (AWO-E-AC/AWO-E-AC-AF) and single-entry (AWO 201.A09) model formats. Confidence 0.92: designation is manufacturer-convention self-describing; no standalone Viessmann PDF mapping document consulted."
+            }
+          ],
+          "example_model": "Vitocal 150-A Typ AWO-E-AC/AWO-E-AC-AF 151.A13",
+          "validated": true,
+          "notes": "Rule placed before VIE-002 to capture AWO-containing slash products that would otherwise be variant_label. Covers Vitocal 150-A/151-A (AF-suffix slash variants) and Vitocal 200-A/222-A/250-A/250-AH/252-A (no slash). AWB/AWBT/HAWB products excluded — require further research to confirm outdoor-only vs split-set classification."
+        },
+        {
           "rule_id": "VIE-002",
-          "label": "Viessmann — slash variant codes (not ODU/IDU)",
+          "label": "Viessmann — slash variant codes (not ODU/IDU, not AWO)",
           "manufacturer_contains": "Viessmann",
           "model_match": {
             "type": "contains_any",
@@ -79,8 +114,9 @@
           "classification": "variant_label",
           "confidence_score": 0.85,
           "extraction_method": "none",
-          "bafa_count_approx": 39,
+          "bafa_count_approx": 14,
           "confidence_cap_applied": "BAFA-only pattern: capped at 0.85",
+          "notes": "After VIE-003 captures AWO slash products, VIE-002 receives remaining non-AWO slash products (AWB/AWBT series, 14 products).",
           "evidence": [
             {
               "source_type": "bafa_pattern_analysis",
@@ -1275,14 +1311,14 @@
     {
       "manufacturer_id": "WLF",
       "manufacturer_name": "Wolf",
-      "bafa_manufacturer_contains": "Wolf",
+      "bafa_manufacturer_contains": "WOLF",
       "validated_at": "2026-06-21",
       "validation_status": "self_describing",
       "rules": [
         {
           "rule_id": "WLF-001",
-          "label": "Wolf — CHC/CHT-MONOBLOCK explicit",
-          "manufacturer_contains": "Wolf",
+          "label": "Wolf — CHC/CHT-MONOBLOCK explicit (inactive; superseded by WLF-002)",
+          "manufacturer_contains": "WOLF",
           "model_match": {
             "type": "regex",
             "pattern": "CHC-MONOBLOCK|CHT-MONOBLOCK"
@@ -1290,7 +1326,7 @@
           "classification": "confirmed_not_set",
           "confidence_score": 0.98,
           "extraction_method": "none",
-          "bafa_count_approx": 6,
+          "bafa_count_approx": 20,
           "evidence": [
             {
               "source_type": "self_describing",
@@ -1300,16 +1336,44 @@
               "what_it_proves": "Wolf CHC-MONOBLOCK and CHT-MONOBLOCK series have the word 'MONOBLOCK' literally in the BAFA model name. No ambiguity."
             }
           ],
-          "example_model": "CHC-MONOBLOCK",
+          "example_model": "CHC-MONOBLOCK 07/200",
           "validated": true,
           "active": false,
-          "status": "inactive_zero_bafa_hits",
-          "notes": "Pattern CHC-MONOBLOCK|CHT-MONOBLOCK does not match any Wolf BAFA model names in 2026-06 snapshot. Wolf CHC/CHT models use different naming in BAFA registrations. Disabled pending pattern fix. WLF-002 remains active."
+          "status": "inactive_superseded",
+          "notes": "Root cause of prior zero-hit diagnosis was manufacturer_contains case mismatch ('Wolf' vs actual 'WOLF GmbH'). Pattern CHC-MONOBLOCK|CHT-MONOBLOCK is correct and would match 20 BAFA products. Kept inactive; WLF-002 (contains_any MONOBLOCK) is the active replacement with a simpler pattern."
         },
         {
           "rule_id": "WLF-002",
-          "label": "Wolf — CHA-nn/nn capacity range slash (not ODU/IDU)",
-          "manufacturer_contains": "Wolf",
+          "label": "Wolf — CHC/CHT-MONOBLOCK self-describing outdoor monoblock",
+          "manufacturer_contains": "WOLF",
+          "model_match": {
+            "type": "contains_any",
+            "patterns": [
+              "MONOBLOCK"
+            ]
+          },
+          "classification": "confirmed_not_set",
+          "confidence_score": 0.95,
+          "extraction_method": "none",
+          "bafa_count_approx": 20,
+          "confidence_cap_applied": "self_describing: MONOBLOCK literal present in BAFA name",
+          "evidence": [
+            {
+              "source_type": "self_describing",
+              "title": "BAFA registration name contains literal 'MONOBLOCK' keyword",
+              "url": null,
+              "accessed_at": "2026-06-23",
+              "what_it_proves": "Wolf CHC-MONOBLOCK and CHT-MONOBLOCK series have the word 'MONOBLOCK' literally in the BAFA model name. No indoor unit. Classification is self-certifying."
+            }
+          ],
+          "example_model": "CHC-MONOBLOCK 07/200",
+          "validated": true,
+          "notes": "manufacturer_contains uses 'WOLF' (all caps) to match actual BAFA field 'WOLF GmbH'. Simpler than WLF-001 regex; covers all 20 CHC/CHT-MONOBLOCK products via contains_any."
+        },
+        {
+          "rule_id": "WLF-003",
+          "label": "Wolf — CHA/FHA capacity range slash (not ODU/IDU, not MONOBLOCK)",
+          "manufacturer_contains": "WOLF",
           "model_match": {
             "type": "contains_any",
             "patterns": [
@@ -1317,24 +1381,28 @@
             ]
           },
           "model_exclude": {
-            "type": "regex",
-            "pattern": "CHC-MONOBLOCK|CHT-MONOBLOCK"
+            "type": "contains_any",
+            "patterns": [
+              "MONOBLOCK"
+            ]
           },
           "classification": "variant_label",
           "confidence_score": 0.88,
           "extraction_method": "none",
-          "bafa_count_approx": 9,
+          "bafa_count_approx": 15,
+          "confidence_cap_applied": "BAFA-only pattern: capped at 0.88",
           "evidence": [
             {
               "source_type": "bafa_pattern_analysis",
-              "title": "BAFA master seed pattern analysis — Wolf CHA capacity range slash",
+              "title": "BAFA master seed pattern analysis — Wolf CHA/FHA capacity range slash",
               "url": null,
               "accessed_at": "2026-06-21",
-              "what_it_proves": "Wolf CHA product codes use '/' to indicate capacity range steps (e.g. CHA-16/20-400V = 16 kW or 20 kW capacity). Both segments share the same CHA prefix, confirming this is a capacity variant, not ODU/IDU separation. Pattern is self-evident from model code structure."
+              "what_it_proves": "Wolf CHA and FHA product codes use '/' to indicate capacity range steps (e.g. CHA-16/20-400V = 16 kW or 20 kW capacity, FHA-08/10 = 8 kW or 10 kW). Both segments share the same prefix, confirming this is a capacity variant, not ODU/IDU separation. Pattern is self-evident from model code structure."
             }
           ],
-          "example_model": "CHA-16/20-400V-M2",
-          "validated": true
+          "example_model": "CHA-16/20-400V-M2 CC-300-S50-e9-C2",
+          "validated": true,
+          "notes": "Renamed from WLF-002; manufacturer_contains corrected from 'Wolf' to 'WOLF' to match actual BAFA field. model_exclude updated to contains_any MONOBLOCK (simpler than prior CHC-MONOBLOCK|CHT-MONOBLOCK regex). bafa_count_approx updated 9→15 (prior count was wrong due to manufacturer case mismatch giving 0 actual hits)."
         }
       ]
     },

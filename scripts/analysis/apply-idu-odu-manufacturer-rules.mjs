@@ -469,6 +469,8 @@ const mimInCb  = mapping.filter(e => e.control_box_model && e.control_box_model.
 const confirmedSets = mapping.filter(e => e.classification === 'confirmed_set');
 const oldStrictBoth = mapping.filter(e => e.classification === 'confirmed_set' && e.outdoor_unit_model && e.idu_model).length;
 
+const outdoorSideIdentifiableCount = mapping.filter(e => e.outdoor_unit_type && e.outdoor_unit_type !== 'unknown').length;
+
 const summary = {
   snapshot: SNAPSHOT,
   generated_at: new Date().toISOString().slice(0, 10),
@@ -513,7 +515,8 @@ const summary = {
   coverage_comparison: {
     old_strict_both_idu_odu_extracted: oldStrictBoth,
     new_practical_outdoor_unit_model_populated: ouPopulated,
-    note: 'New practical coverage includes standalone_odu and confirmed_not_set products where the BAFA product model IS the outdoor unit.',
+    outdoor_side_identifiable_count: outdoorSideIdentifiableCount,
+    note: 'new_practical = standalone_odu and confirmed_not_set products where the BAFA model IS the outdoor unit. outdoor_side_identifiable = all products where outdoor role is known (includes confirmed_set where ODU model extracted, plus all outdoor-only products). monoblock_app_fallback_candidates (not rule-based, internal-only): ~2,400 additional products identifiable by cross-referencing app installation_type=Monoblock; confidence 0.88, below public display threshold.',
   },
 
   set_product_detail: {
@@ -602,6 +605,8 @@ console.log('');
 console.log('── Coverage comparison ──────────────────────────────────────────────');
 console.log(`  Old strict (both IDU+ODU extracted):         ${oldStrictBoth}`);
 console.log(`  New practical (outdoor_unit_model populated): ${ouPopulated}`);
+console.log(`  Outdoor side identifiable (type known):      ${outdoorSideIdentifiableCount}`);
+console.log(`  Monoblock app-fallback candidates (internal): ~2,400  [conf 0.88, not rule-based]`);
 console.log('');
 console.log('── Confidence band breakdown ────────────────────────────────────────');
 Object.entries(stats.by_confidence_band).sort((a,b) => b[1]-a[1]).forEach(([k,v]) => {
