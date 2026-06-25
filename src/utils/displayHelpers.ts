@@ -66,6 +66,85 @@ export function buildComponentLines(item: HeatPump): ComponentLines {
   };
 }
 
+// ─── Dynamic Truncation ──────────────────────────────────────────────────────
+
+/**
+ * Calculate the Nth percentile of string lengths in an array.
+ * Returns 40 as a safe fallback for empty arrays.
+ */
+export function getPercentileLength(values: string[], percentile: number): number {
+  if (values.length === 0) return 40;
+  const lengths = values.map(v => (v || '').length).sort((a, b) => a - b);
+  const idx = Math.max(0, Math.min(lengths.length - 1, Math.floor((lengths.length - 1) * percentile)));
+  return lengths[idx];
+}
+
+/**
+ * Truncate a string to at most `limit` characters, appending '...' if cut.
+ * Identical contract to truncateChars but intended for a data-driven limit.
+ */
+export function truncateByDynamicLimit(value: string, limit: number): string {
+  if (!value || value.length <= limit) return value;
+  return value.slice(0, limit) + '...';
+}
+
+// ─── Model Card Component Data ───────────────────────────────────────────────
+
+export interface ModelCardComponentData {
+  /** ODU display value (full — apply truncateChars for visual clipping). */
+  oduValue: string | null;
+  /** First indoor-side component label (e.g. 'IDU', 'Cont. Unit', 'Tank'). */
+  indoorLabel: string | null;
+  /** First indoor-side component value (full). */
+  indoorValue: string | null;
+  /** All indoor components joined as 'Label : Value · ...' for tooltip title. */
+  allIndoorTitle: string | null;
+  /** True when any component data is available for display. */
+  hasComponents: boolean;
+}
+
+/**
+ * Extract component display data for the model card bottom row.
+ *
+ * ODU: outdoor_side_display_model (pipeline-computed) first, then outdoor_unit_model.
+ * ODU is shown even when it equals the product's own BAFA model name (monoblock case).
+ *
+ * Indoor: first available in priority order:
+ *   IDU > Cont. Unit > Tank > Tower > Hyd. Unit > Indoor Eq.
+ *
+ * allIndoorTitle: all non-null indoor components joined for the tooltip.
+ */
+export function buildModelCardComponentData(item: HeatPump): ModelCardComponentData {
+  const oduValue = item.outdoor_side_display_model ?? item.outdoor_unit_model ?? null;
+
+  const indoorCandidates: Array<[string, string | null | undefined]> = [
+    ['IDU', item.idu_model],
+    ['Cont. Unit', item.control_box_model],
+    ['Tank', item.tank_model],
+    ['Tower', item.tower_model],
+    ['Hyd. Unit', item.hydraulic_module_model],
+    ['Indoor Eq.', item.indoor_side_equipment_model],
+  ];
+
+  const first = indoorCandidates.find(([, v]) => v);
+  const indoorLabel = first ? first[0] : null;
+  const indoorValue = first ? (first[1] as string) : null;
+
+  const allIndoorTitle =
+    indoorCandidates
+      .filter(([, v]) => v)
+      .map(([l, v]) => `${l} : ${v}`)
+      .join(' · ') || null;
+
+  return {
+    oduValue,
+    indoorLabel,
+    indoorValue,
+    allIndoorTitle,
+    hasComponents: !!(oduValue || indoorValue),
+  };
+}
+
 // ─── Manufacturer Display ────────────────────────────────────────────────────
 
 /** Return the shortest usable manufacturer name for display. */

@@ -12,9 +12,9 @@
  * MODEL TRUNCATION : max MODEL_MAX_CHARS (25) chars, full name on hover (title attribute)
  */
 
-import React, { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback, useLayoutEffect, useMemo } from 'react';
 import { HeatPump } from '../types';
-import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, truncateChars, truncateWords, buildComponentLines } from '../utils/displayHelpers';
+import { getDisplayName, getInstallationTypeDisplay, fmtGridReady, truncateChars, truncateWords, getPercentileLength, truncateByDynamicLimit, buildModelCardComponentData } from '../utils/displayHelpers';
 
 interface ResultsTableProps {
   data: HeatPump[];
@@ -27,9 +27,6 @@ interface ResultsTableProps {
 }
 
 // ─── Constants ───────────────────────────────────────────────────────────────
-
-/** Max visible characters for model name before truncation (spaces count). */
-const MODEL_MAX_CHARS = 20;
 
 /** Max words for manufacturer display name before truncation. */
 const MFR_MAX_WORDS = 3;
@@ -82,6 +79,7 @@ const TwoLine: React.FC<{ l1: React.ReactNode; l2?: string | null; l1Cls?: strin
     {l2 && <div className="text-[11px] text-gray-400 mt-0.5">{l2}</div>}
   </div>
 );
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -152,6 +150,13 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
       setTypeLeft(mfr.offsetWidth);
       setModelLeft(mfr.offsetWidth + type.offsetWidth);
     }
+  }, [data]);
+
+  // 97th-percentile model name character limit — computed once per data set.
+  // Names at or below this limit are shown in full; above it are truncated with '...'.
+  const modelCharLimit = useMemo(() => {
+    if (!data.length) return 40;
+    return getPercentileLength(data.map(d => d.model || ''), 0.97);
   }, [data]);
 
   const scroll = (dir: 'left' | 'right') => {
@@ -234,9 +239,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               {isSelectionMode && (
                 <th className={`${TH_BASE} w-8 sticky top-0 left-0 z-40`}>{labels.colSelect || ''}</th>
               )}
-              {/* Manufacturer — sticky top + left, constrained width */}
+              {/* Manufacturer — sticky top + left, compact width */}
               <th ref={mfrThRef}
-                style={{ width: '130px', maxWidth: '130px', minWidth: '110px' }}
+                style={{ width: '130px', maxWidth: '150px', minWidth: '110px' }}
                 className={`${TH_BASE} text-center text-gray-600 sticky top-0 left-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.08)] overflow-hidden`}>
                 {labels.colManufacturer}
               </th>
@@ -246,9 +251,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                 className={`${TH_BASE} text-gray-500 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)]`}>
                 {labels.colInstallType || 'Type'}
               </th>
-              {/* Model — sticky top + left, wider to fit model name + component box */}
-              <th style={{ left: modelLeft, maxWidth: '270px', minWidth: '0' }}
-                className={`${TH_BASE} text-gray-500 text-left pl-3 sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.05)] overflow-hidden`}>
+              {/* Model — sticky top + left, card layout */}
+              <th style={{ left: modelLeft, width: '380px', minWidth: '380px' }}
+                className={`${TH_BASE} text-gray-500 text-center sticky top-0 z-40 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.05)]`}>
                 {labels.colModel}
               </th>
               {/* Scrollable columns */}
@@ -280,10 +285,10 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
               const rowBg = isSelected ? 'bg-blue-50' : index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50';
 
               const modelStr = item.model || '';
-              const modelTxt = truncateChars(modelStr, MODEL_MAX_CHARS);
+              const modelTxt = truncateByDynamicLimit(modelStr, modelCharLimit);
               const displayName = getDisplayName(item);
               const displayNameTxt = truncateWords(displayName, MFR_MAX_WORDS);
-              const components = buildComponentLines(item);
+              const modelCard = buildModelCardComponentData(item);
 
               // Format fields
               const capacity = fmtKw(item.power_35C_kw);
@@ -317,9 +322,9 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                     </td>
                   )}
 
-                  {/* Manufacturer — sticky, width-constrained */}
+                  {/* Manufacturer — sticky, compact width */}
                   <td title={displayName}
-                    style={{ width: '130px', maxWidth: '130px', minWidth: '110px' }}
+                    style={{ width: '130px', maxWidth: '150px', minWidth: '110px' }}
                     className={`px-2 py-1 text-[13px] font-semibold text-gray-900 text-center whitespace-nowrap overflow-hidden text-ellipsis sticky left-0 z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.06)] ${stickyBg}`}>
                     {displayNameTxt}
                   </td>
@@ -332,31 +337,48 @@ export const ResultsTable: React.FC<ResultsTableProps> = ({
                     </span>
                   </td>
 
-                  {/* Model — sticky, flex: model-name | component-box */}
-                  <td style={{ left: modelLeft, maxWidth: '270px', minWidth: '0' }}
-                    className={`pl-3 pr-2 py-1 text-left align-middle sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.03)] overflow-hidden ${stickyBg}`}>
-                    <div className="flex items-start gap-1.5 min-w-0">
-                      {/* model-main */}
-                      <div className="flex-shrink-0 min-w-0" style={{ maxWidth: '130px' }}>
-                        <div className="text-[13px] text-blue-600 font-semibold whitespace-nowrap overflow-hidden text-ellipsis" title={item.model}>
-                          {modelTxt}
-                        </div>
+                  {/* Model — sticky, 3-row card: MODEL header / BAFA name / component row */}
+                  <td style={{ left: modelLeft, width: '380px', minWidth: '380px' }}
+                    className={`py-1 px-2 align-middle sticky z-20 shadow-[2px_0_4px_-2px_rgba(0,0,0,0.03)] ${stickyBg}`}>
+                    <div className="border border-gray-200 rounded overflow-hidden bg-white">
+                      {/* Row 1: MODEL header */}
+                      <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest text-center py-0.5 bg-gray-50 border-b border-gray-100 leading-none">
+                        MODEL
                       </div>
-                      {/* component-box */}
-                      {(components.oduLine || components.innerLine) && (
-                        <div className="flex-1 min-w-0 border-l border-gray-200 pl-1.5">
-                          {components.oduLine && (
-                            <div className="text-[10px] text-gray-600 whitespace-nowrap overflow-hidden text-ellipsis leading-tight" title={components.oduFull ?? undefined}>
-                              <span className="font-semibold text-gray-400">ODU</span>
-                              <span className="text-gray-400"> : </span>
-                              <span>{truncateChars(components.oduFull ?? '', 16)}</span>
-                            </div>
-                          )}
-                          {components.innerLine && (
-                            <div className="text-[10px] text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis leading-tight" title={components.innerLine}>
-                              {components.innerLine}
-                            </div>
-                          )}
+                      {/* Row 2: BAFA registered model name */}
+                      <div
+                        className="text-[12px] text-blue-600 font-semibold text-center whitespace-nowrap overflow-hidden text-ellipsis px-2 py-0.5 leading-snug"
+                        title={item.model}
+                      >
+                        {modelTxt}
+                      </div>
+                      {/* Row 3: Component row — ODU left, first indoor right */}
+                      {modelCard.hasComponents && (
+                        <div className="border-t border-gray-100 flex divide-x divide-gray-100">
+                          <div
+                            className="flex-1 min-w-0 px-1.5 py-0.5 overflow-hidden whitespace-nowrap"
+                            title={modelCard.oduValue ?? undefined}
+                          >
+                            {modelCard.oduValue ? (
+                              <span className="text-[9px] text-gray-600 overflow-hidden text-ellipsis block">
+                                <span className="font-bold text-orange-500">ODU</span>
+                                <span className="text-gray-400"> : </span>
+                                {truncateChars(modelCard.oduValue, 18)}
+                              </span>
+                            ) : null}
+                          </div>
+                          <div
+                            className="flex-1 min-w-0 px-1.5 py-0.5 overflow-hidden whitespace-nowrap"
+                            title={modelCard.allIndoorTitle ?? undefined}
+                          >
+                            {modelCard.indoorLabel && modelCard.indoorValue ? (
+                              <span className="text-[9px] text-gray-600 overflow-hidden text-ellipsis block">
+                                <span className="font-bold text-blue-400">{modelCard.indoorLabel}</span>
+                                <span className="text-gray-400"> : </span>
+                                {truncateChars(modelCard.indoorValue, 18)}
+                              </span>
+                            ) : null}
+                          </div>
                         </div>
                       )}
                     </div>
