@@ -79,7 +79,7 @@ export const residentialConfig: SearchConfig = {
     '4 kW ~ 7 kW',
     '8 kW ~ 11 kW',
     '12 kW ~ 14 kW',
-    '15 kW ~ 20.99 kW',
+    '15 kW ~ 20 kW',
   ],
   refrigerants: ['R290', 'R32', 'R410A'],
   showInstallType: true,
@@ -94,7 +94,7 @@ export const residentialConfig: SearchConfig = {
       '4 kW ~ 7 kW':      { min: 4,  max: 7.999 },
       '8 kW ~ 11 kW':     { min: 8,  max: 11.999 },
       '12 kW ~ 14 kW':    { min: 12, max: 14.999 },
-      '15 kW ~ 20.99 kW': { min: 15, max: 20.99 },
+      '15 kW ~ 20 kW':    { min: 15, max: 20.99 },
     };
     return BOUNDS[label] ?? parseRangeLabel(label);
   },
