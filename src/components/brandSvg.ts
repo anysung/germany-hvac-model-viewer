@@ -85,13 +85,17 @@ export function flagInner(opts: { country: CountryCode; onLight?: boolean; anima
   }
 
   // Other markets: a flat flag face clipped by the wavy cloth shape.
+  // GB follows the DE convention (2026-07-27): the Union Jack's horizontal bar
+  // and diagonals RIDE THE CLOTH WAVE (same ±6 offsets, same phase as CLOTH) —
+  // straight internal lines read as a flat printed rectangle, not waving cloth.
+  // The vertical bar stays straight (a vertical line on swaying cloth does).
   const face =
     country === 'GB'
       ? `<rect x="0" y="0" width="96" height="66" fill="#012169"/>` +
-        `<path d="M0 0 L96 66 M96 0 L0 66" stroke="#fff" stroke-width="13"/>` +
-        `<path d="M0 0 L96 66 M96 0 L0 66" stroke="#C8102E" stroke-width="5"/>` +
-        `<path d="M48 0 V66 M0 33 H96" stroke="#fff" stroke-width="20"/>` +
-        `<path d="M48 0 V66 M0 33 H96" stroke="#C8102E" stroke-width="11"/>`
+        `<path d="M0 0 C16 5 32 28 48 33 C64 38 80 61 96 66 M0 66 C16 49 32 50 48 33 C64 16 80 17 96 0" stroke="#fff" stroke-width="13" fill="none"/>` +
+        `<path d="M0 0 C16 5 32 28 48 33 C64 38 80 61 96 66 M0 66 C16 49 32 50 48 33 C64 16 80 17 96 0" stroke="#C8102E" stroke-width="5" fill="none"/>` +
+        `<path d="M48 0 V66 M0 33 C16 27 32 39 48 33 C64 27 80 39 96 33" stroke="#fff" stroke-width="20" fill="none"/>` +
+        `<path d="M48 0 V66 M0 33 C16 27 32 39 48 33 C64 27 80 39 96 33" stroke="#C8102E" stroke-width="11" fill="none"/>`
       : country === 'FR'
         ? `<rect x="0" y="0" width="32" height="66" fill="#000091"/>` +
           `<rect x="32" y="0" width="32" height="66" fill="#ffffff"/>` +
