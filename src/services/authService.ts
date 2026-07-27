@@ -23,12 +23,13 @@ import {
   query,
   orderBy,
   limit,
+  Timestamp,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { User, ActivityLog, UserSubscription } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey } from './subscriptionService';
-import { SUB_PLANS } from '../config/subscriptionPlans';
+import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
 import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
 import { compact } from '../utils/profile';
 import { TRIAL_FLOW_ENABLED, finalizeSignupFn } from './billingFnService';
@@ -684,7 +685,18 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 export const approveUser = async (userId: string, adminName = 'Admin') => {
-  await updateDoc(doc(db, 'users', userId), { status: 'active', isActive: true });
+  const patch: Record<string, any> = { status: 'active', isActive: true };
+  // Trial flow: a manual admin approval must not mint an un-gated (forever
+  // free) account — it opens the same 7-day window finalizeSignup would.
+  // Backstop path only: the emailRegistry one-trial bookkeeping stays with
+  // the server function (2026-07-27 audit item 1). Legacy mode is untouched.
+  if (TRIAL_FLOW_ENABLED) {
+    const ends = Timestamp.fromMillis(Date.now() + TRIAL_DAYS * 86_400_000);
+    patch.trialStartedAt = Timestamp.now();
+    patch.trialEndsAt = ends;
+    patch.accessUntilTs = ends;
+  }
+  await updateDoc(doc(db, 'users', userId), patch);
   await logActivity('ADMIN', 'APPROVE_USER', `User approved: ${userId}`, '', adminName);
 };
 

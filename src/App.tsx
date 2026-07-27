@@ -214,7 +214,12 @@ const App: React.FC = () => {
         } else if (
           user.status === 'suspended' ||
           user.status === 'rejected' ||
-          user.status === 'disabled'
+          user.status === 'disabled' ||
+          // Deleted (or mid-deletion) accounts must never keep a live app
+          // session — e.g. after a deleteAccount where only the final Auth
+          // removal failed (2026-07-27 audit item 5).
+          user.status === 'deleted' ||
+          user.status === 'deletion_requested'
         ) {
           logoutUser();
         } else {
