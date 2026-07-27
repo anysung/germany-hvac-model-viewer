@@ -80,7 +80,7 @@ async function redeemFreeGrantIfAny(user: User): Promise<User | null> {
 // The one-email-one-country policy lives in a Firebase-free module so it is
 // unit-testable; re-export the pieces the app already imports from here.
 export { isAdminRole, crossCountryBlock } from './accountCountry';
-import { crossCountryBlock as _crossCountryBlock, WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE } from './accountCountry';
+import { isAdminRole, crossCountryBlock as _crossCountryBlock, WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE } from './accountCountry';
 export { WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE };
 
 // --- Activity Logging (Firestore) ---
@@ -592,6 +592,36 @@ const finishProviderSignIn = async (
 
   await logActivity(userData.id, 'LOGIN', `User logged in via ${providerLabel}`, email, `${userData.firstName} ${userData.lastName}`);
   return 'active';
+};
+
+/**
+ * Operations-console Google sign-in (heatpumpdb-hub). STRICTLY for existing
+ * ADMIN accounts: there is deliberately no registration path here — a Google
+ * identity without an admin profile is signed straight back out. The owner
+ * email passes even before its profile doc exists (onUserChange bootstraps it).
+ * No redirect fallback: the console is a desktop tool — a blocked popup gets a
+ * clear message instead of a cross-page redirect flow.
+ */
+export const adminGoogleSignIn = async (): Promise<void> => {
+  let cred;
+  try {
+    cred = await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch (err: any) {
+    if (err?.code === 'auth/popup-blocked' || err?.code === 'auth/operation-not-supported-in-this-environment') {
+      throw new Error('admin-popup-blocked');
+    }
+    throw err;
+  }
+  const email = cred.user.email || '';
+  if (email === OWNER_EMAIL) return;   // owner: onUserChange bootstraps/loads the profile
+  const snap = await getDoc(doc(db, 'users', cred.user.uid));
+  const role = snap.exists() ? (snap.data() as User).role : undefined;
+  const status = snap.exists() ? (snap.data() as User).status : undefined;
+  if (!snap.exists() || !isAdminRole(role) || status !== 'active') {
+    await signOut(auth);
+    throw new Error('admin-account-required');
+  }
+  await logActivity(cred.user.uid, 'LOGIN', 'Admin console login via Google', email, '');
 };
 
 export const logoutUser = async (userEmail = '', userName = '') => {

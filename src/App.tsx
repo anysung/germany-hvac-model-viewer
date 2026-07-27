@@ -4,6 +4,7 @@ import {
   loginWithProvider, completeRedirectSignIn, isAdminRole,
   WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE, VERIFY_EMAIL_SENTINEL,
   tryFinalizeSignup, resendVerificationEmail, refetchSessionUser,
+  adminGoogleSignIn,
 } from './services/authService';
 import { TRIAL_FLOW_ENABLED } from './services/billingFnService';
 import { accessExpired } from './config/entitlement';
@@ -32,7 +33,7 @@ import { PublicPricingPage } from './pricing/PublicPricingPage';
 import { SignupForm, SignupFormValues } from './components/auth/SignupForm';
 import { previewUserPatch } from './hpiq/devPreview';
 import { AdminLogin } from './components/admin/AdminLogin';
-import { AdminLang, loadAdminLang, saveAdminLang } from './components/admin/adminI18n';
+import { AdminLang, ADMIN_I18N, loadAdminLang, saveAdminLang } from './components/admin/adminI18n';
 
 // Unified operations console build (own hosting site, all markets, admin-only).
 const IS_ADMIN_BUILD = PUBLIC_ENV.APP_MODE === 'admin';
@@ -638,6 +639,22 @@ const App: React.FC = () => {
           email={loginEmail} setEmail={setLoginEmail}
           password={loginPass} setPassword={setLoginPass}
           onSubmit={handleLogin} isLoading={isLoading}
+          onGoogle={async () => {
+            setIsLoading(true);
+            try {
+              // Existing admin accounts only — success routes via onUserChange.
+              await adminGoogleSignIn();
+            } catch (err: any) {
+              const L = ADMIN_I18N[adminLang].login;
+              const msg = String(err?.message ?? '');
+              if (err?.code === 'auth/popup-closed-by-user' || err?.code === 'auth/cancelled-popup-request') return;
+              if (msg === 'admin-account-required') alert(L.adminOnly);
+              else if (msg === 'admin-popup-blocked') alert(L.popupBlocked);
+              else alert(msg);
+            } finally {
+              setIsLoading(false);
+            }
+          }}
           lang={adminLang} setLang={setAdminLang}
         />
       );
