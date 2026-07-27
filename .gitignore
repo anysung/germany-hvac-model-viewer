@@ -99,3 +99,4 @@ feasibility_tests/**/*.xlsx
 feasibility_tests/**/evidence-*/
 __pycache__/
 .venv/
+google_cloud_function_billing/canary-records.json

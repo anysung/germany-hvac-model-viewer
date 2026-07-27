@@ -236,15 +236,13 @@ rmSync(tmp, { recursive: true, force: true });
 if (failed) process.exit(1);
 
 if (!DRY) {
-  // ── Stable-release manifest + serving self-check ─────────────────────────
-  writeFileSync(join(ROOT, 'data_manifests/stable-release.json'), JSON.stringify({
-    runId: RUN_ID,
-    publishedAt: new Date().toISOString(),
-    preUpdateSnapshot: `snapshots/${RUN_ID}/`,
-    objects: uploadedObjects,
-  }, null, 2) + '\n');
-  console.log('✓ data_manifests/stable-release.json written — commit it with the gate approval.');
-
+  // ── Serving self-check FIRST, stable manifest only on success ────────────
+  // Order matters twice over (2026-07-28 review, finding #3): writing the
+  // manifest before verifying would (a) let a FAILED release masquerade as
+  // "stable" for the next run's baseline, and (b) make the verifier compare
+  // the new release against ITSELF instead of the previous stable counts.
+  // While this runs, data_manifests/stable-release.json still describes the
+  // PREVIOUS verified release — exactly the baseline the checks need.
   console.log('\nVerifying the SERVED datasets (scripts/verify-serving.mjs)…');
   try {
     execFileSync(process.execPath, [join(ROOT, 'scripts/verify-serving.mjs')], { stdio: 'inherit' });
@@ -254,9 +252,19 @@ if (!DRY) {
       execFileSync('gcloud', ['storage', 'cp', '-r', `${BUCKET}/snapshots/${RUN_ID}/datasets/*`, `${BUCKET}/datasets/`],
         { stdio: ['ignore', 'ignore', 'inherit'] });
       console.error('✓ Snapshot restored — production serves the pre-update state again.');
+      console.error('  stable-release.json was NOT touched: it still describes the running stable set.');
     } catch {
       console.error('✗ AUTOMATIC RESTORE FAILED — follow the manual runbook: docs/DATASET_ROLLBACK_AND_PANIC.md');
     }
     process.exit(1);
   }
+
+  // Verification passed → promote this run to the stable release.
+  writeFileSync(join(ROOT, 'data_manifests/stable-release.json'), JSON.stringify({
+    runId: RUN_ID,
+    publishedAt: new Date().toISOString(),
+    preUpdateSnapshot: `snapshots/${RUN_ID}/`,
+    objects: uploadedObjects,
+  }, null, 2) + '\n');
+  console.log('✓ Verified — data_manifests/stable-release.json promoted to this run. Commit it with the gate approval.');
 }

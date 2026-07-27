@@ -386,6 +386,13 @@ async function deleteAccount(req, res) {
 // restored objects serve exactly as they did.
 // ---------------------------------------------------------------------------
 
+const { DATASETS, expectedObjectPaths, checkDataset, simulateMarket } = require('./datasetChecks');
+// Canary ids — deploy.sh copies scripts/canary/canary-records.json here. If
+// the copy is somehow absent the checks run in degraded mode (canary skipped)
+// and every response/audit carries degraded:true so the operator knows.
+let CANARIES = null;
+try { CANARIES = require('./canary-records.json'); } catch { /* degraded */ }
+
 /** Owner check: custom claim first, verified owner email as recovery path. */
 async function verifyOwner(req) {
   const caller = await verifyCaller(req);
@@ -407,9 +414,36 @@ async function listLiveObjects() {
 }
 
 async function listSnapshots() {
-  // Snapshot ids are the top-level "directories" under snapshots/.
+  // Snapshot ids are the top-level "directories" under snapshots/. The
+  // emergency UI gets only the NEWEST few — a panic moment is no time to
+  // scroll history (older sets remain reachable via the manual runbook).
   const [, , resp] = await gcs.bucket(DATASET_BUCKET).getFiles({ prefix: 'snapshots/', delimiter: '/', autoPaginate: false });
-  return ((resp && resp.prefixes) || []).map(p => p.replace(/^snapshots\//, '').replace(/\/$/, '')).sort().reverse();
+  return ((resp && resp.prefixes) || [])
+    .map(p => p.replace(/^snapshots\//, '').replace(/\/$/, ''))
+    .sort().reverse().slice(0, 5);
+}
+
+/**
+ * Full-set validation of a path→dataset map (10 objects): the SAME checks the
+ * post-publish self-check runs (datasetChecks.js), including the per-market
+ * functional simulation. Returns [{path, items}]; throws on first failure.
+ */
+function validateFullSet(byPath, degraded) {
+  const verified = [];
+  const perMarket = {};
+  for (const [cc, files] of Object.entries(DATASETS)) {
+    perMarket[cc] = {};
+    for (const [segment, file] of Object.entries(files)) {
+      const path = `datasets/${cc}/${file}`;
+      const data = byPath.get(path);
+      const canaryId = degraded ? null : CANARIES?.[cc]?.[segment]?.bafa_id;
+      const { items } = checkDataset(data, { cc, segment, canaryId });
+      perMarket[cc][segment] = items;
+      verified.push({ path, items: items.length });
+    }
+    simulateMarket(cc, perMarket[cc].residential, perMarket[cc].commercial);
+  }
+  return verified;
 }
 
 async function rollbackStatus(req, res) {
@@ -424,6 +458,7 @@ async function rollbackStatus(req, res) {
     ok: true,
     live,
     snapshots,
+    degraded: !CANARIES,
     lock: lockSnap.exists ? lockSnap.data() : null,
   });
 }
@@ -435,62 +470,92 @@ async function panicRollback(req, res) {
   if (confirm !== 'ROLLBACK') return sendErr(res, 400, 'confirmation-required');
   if (!/^[A-Za-z0-9_-]+$/.test(String(snapshotId || ''))) return sendErr(res, 400, 'bad-snapshot-id');
 
-  // Single-flight lock (5 min TTL) — double clicks and concurrent operators
-  // must not interleave two restores.
+  // Single-flight lock: 15 min TTL + a job id, so only THIS job can release
+  // it and an expired-but-still-running first job is visible in the audit
+  // trail rather than silently overlapped (2026-07-28 review, finding #5).
+  const jobId = crypto.randomUUID();
   const lockRef = db.collection('opsAuditLog').doc('_panicLock');
   const acquired = await db.runTransaction(async tx => {
     const snap = await tx.get(lockRef);
     const now = Date.now();
     const cur = snap.exists ? snap.data() : null;
     if (cur && cur.expiresAtMs > now) return false;
-    tx.set(lockRef, { by: owner.uid, snapshotId, startedAt: nowIso(), expiresAtMs: now + 5 * 60_000 });
+    tx.set(lockRef, { jobId, by: owner.uid, snapshotId, startedAt: nowIso(), expiresAtMs: now + 15 * 60_000 });
     return true;
   });
   if (!acquired) return sendErr(res, 409, 'rollback-in-progress');
-
-  const audit = {
-    action: 'panic-rollback',
-    snapshotId,
-    by: owner.uid,
-    byEmail: owner.email || '',
-    startedAt: nowIso(),
+  const releaseLock = async () => {
+    // Release only OUR lock — never a successor's.
+    await db.runTransaction(async tx => {
+      const snap = await tx.get(lockRef);
+      if (snap.exists && snap.data().jobId === jobId) tx.delete(lockRef);
+    }).catch(() => {});
   };
+
+  const degraded = !CANARIES;
+  const audit = {
+    action: 'panic-rollback', jobId, snapshotId, degraded,
+    by: owner.uid, byEmail: owner.email || '', startedAt: nowIso(),
+  };
+  const fail = async (httpCode, error) => {
+    Object.assign(audit, { ok: false, error, finishedAt: nowIso() });
+    await db.collection('opsAuditLog').add(audit).catch(() => {});
+    await releaseLock();
+    return sendErr(res, httpCode, error);
+  };
+
   try {
     const bucket = gcs.bucket(DATASET_BUCKET);
-    const prefix = `snapshots/${snapshotId}/datasets/`;
-    const [files] = await bucket.getFiles({ prefix });
-    if (files.length === 0) throw new Error('snapshot-empty-or-missing');
+    const prefix = `snapshots/${snapshotId}/`;
 
-    // Restore the WHOLE set: snapshots/<id>/datasets/CC/file → datasets/CC/file.
-    const restored = [];
-    for (const f of files) {
-      const dest = f.name.slice(`snapshots/${snapshotId}/`.length);
-      if (!dest.startsWith('datasets/')) continue;
-      await f.copy(bucket.file(dest));
-      restored.push(dest);
+    // ── Phase 1: prove the snapshot is a COMPLETE, VALID set BEFORE touching
+    // live (2026-07-28 review, finding #1). The expected set is exactly the
+    // 10 canonical object paths — a missing file, an extra file, or a file
+    // that fails ANY of the shared checks aborts with nothing restored.
+    const expected = expectedObjectPaths();
+    const [files] = await bucket.getFiles({ prefix: `${prefix}datasets/` });
+    const found = new Map(files.map(f => [f.name.slice(prefix.length), f]));
+    const missing = expected.filter(p => !found.has(p));
+    const extra = [...found.keys()].filter(p => !expected.includes(p));
+    if (missing.length) return await fail(400, `snapshot-incomplete: missing ${missing.join(', ')}`);
+    if (extra.length) return await fail(400, `snapshot-unexpected-objects: ${extra.join(', ')}`);
+
+    const byPath = new Map();
+    for (const p of expected) {
+      const [buf] = await found.get(p).download();   // download() gunzips per contentEncoding
+      byPath.set(p, JSON.parse(buf.toString('utf8')));
     }
-    if (restored.length === 0) throw new Error('nothing-restored');
+    try {
+      validateFullSet(byPath, degraded);
+    } catch (e) {
+      return await fail(400, `snapshot-validation-failed: ${e.message}`);
+    }
 
-    // Post-restore verification: every restored object parses and has items.
-    const verified = [];
-    for (const path of restored) {
-      const [buf] = await bucket.file(path).download();   // download() gunzips per contentEncoding
-      const data = JSON.parse(buf.toString('utf8'));
-      if (!Array.isArray(data.items) || data.items.length < 100) {
-        throw new Error(`post-restore check failed: ${path}`);
-      }
-      verified.push({ path, items: data.items.length });
+    // ── Phase 2: restore the whole set (only reached with a proven snapshot).
+    for (const p of expected) {
+      await found.get(p).copy(bucket.file(p));
+    }
+
+    // ── Phase 3: post-restore verification of the LIVE objects — the same
+    // full check set again, on what is actually being served now.
+    const liveByPath = new Map();
+    for (const p of expected) {
+      const [buf] = await bucket.file(p).download();
+      liveByPath.set(p, JSON.parse(buf.toString('utf8')));
+    }
+    let verified;
+    try {
+      verified = validateFullSet(liveByPath, degraded);
+    } catch (e) {
+      return await fail(500, `post-restore-verification-failed: ${e.message}`);
     }
 
     Object.assign(audit, { ok: true, finishedAt: nowIso(), restored: verified });
     await db.collection('opsAuditLog').add(audit);
-    await lockRef.delete().catch(() => {});
-    return res.status(200).json({ ok: true, restored: verified });
+    await releaseLock();
+    return res.status(200).json({ ok: true, degraded, restored: verified });
   } catch (e) {
-    Object.assign(audit, { ok: false, error: String(e && e.message || e), finishedAt: nowIso() });
-    await db.collection('opsAuditLog').add(audit).catch(() => {});
-    await lockRef.delete().catch(() => {});
-    return res.status(200).json({ ok: false, error: audit.error });
+    return await fail(500, String(e && e.message || e));
   }
 }
 

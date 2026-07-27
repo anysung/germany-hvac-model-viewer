@@ -36,8 +36,11 @@ async function call<T>(path: string, body: Record<string, unknown> = {}): Promis
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`ops-${res.status}`);
-  return res.json() as Promise<T>;
+  // Failures carry proper HTTP codes (400 invalid snapshot / 409 in-progress /
+  // 500 restore failure) WITH a JSON body — surface the server's error text.
+  const payload = await res.json().catch(() => null);
+  if (!res.ok) return (payload ?? { ok: false, error: `ops-${res.status}` }) as T;
+  return payload as T;
 }
 
 export const fetchRollbackStatus = (): Promise<RollbackStatus> => call('rollbackStatus');

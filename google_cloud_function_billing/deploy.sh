@@ -33,6 +33,11 @@ ALLOWED_ORIGINS="${ALLOWED_ORIGINS:-}"
 
 echo "Deploying ${FUNCTION_NAME} to ${PROJECT_ID} (${REGION})..."
 
+# Canary ids for the Panic Button's dataset validation — single source stays
+# scripts/canary/canary-records.json; this copy ships with the function only
+# (gitignored). Missing copy = checks run degraded (canary skipped, flagged).
+cp ../scripts/canary/canary-records.json ./canary-records.json
+
 gcloud functions deploy "${FUNCTION_NAME}" \
   --project="${PROJECT_ID}" \
   --region="${REGION}" \
@@ -41,8 +46,8 @@ gcloud functions deploy "${FUNCTION_NAME}" \
   --allow-unauthenticated \
   --entry-point=accountBilling \
   --source=. \
-  --memory=256MB \
-  --timeout=60s \
+  --memory=512MB \
+  --timeout=300s \
   --set-env-vars "PADDLE_WEBHOOK_SECRET=${PADDLE_WEBHOOK_SECRET},ALLOWED_ORIGINS=${ALLOWED_ORIGINS}"
 
 echo ""

@@ -32,8 +32,11 @@ model executing this work follows THIS scope.
    Metadata (contentType/encoding/cacheControl) rides along with the copy.
 2. **Stable manifest** — `data_manifests/stable-release.json` (committed)
    records the current stable set: runId, publish time, per-object md5 +
-   item counts, and the pre-update snapshot prefix. Written after a
-   successful upload + serving verification.
+   item counts, and the pre-update snapshot prefix. **Promoted ONLY after
+   the serving verification passes** (2026-07-28 review #3): while a new
+   release is being verified, the manifest still describes the previous
+   stable set — which is exactly the ±20% count baseline the verifier needs.
+   A failed release never becomes "stable".
 3. **Self-check** — `scripts/verify-serving.mjs` validates the SERVED bytes
    (not the local files): download, gunzip if needed, JSON parse, `_meta` +
    `items`, counts vs manifest tolerance, required fields, duplicate-id scan,
@@ -45,14 +48,29 @@ model executing this work follows THIS scope.
    Failed objects get 2 re-checks (infra errors only) → persistent failure
    restores the run's snapshot in full and exits non-zero.
 4. **Panic Button** — admin console (ops build) card backed by the
-   accountBilling function:
+   accountBilling function. ONE check module for everything:
+   `google_cloud_function_billing/datasetChecks.js` is used verbatim by the
+   post-publish self-check (verify-serving), the automatic fallback, and the
+   Panic pre/post-restore validation — "verified" means the same thing at
+   all three points (2026-07-28 review #2).
    - `POST /rollbackStatus` (owner token): live object listing (md5, updated,
-     size), available snapshots, stable manifest echo.
-   - `POST /panicRollback { snapshotId, confirm: "ROLLBACK" }` (owner token):
-     Firestore lock (single flight) → copy the ENTIRE snapshot set to live →
-     re-verify basic integrity → audit log (`opsAuditLog`) → result.
-   - UI requires typing `ROLLBACK`, shows which snapshot (date + counts) the
-     restore targets, and displays the post-restore verification result.
+     size), the 5 newest snapshots (older sets stay reachable via the manual
+     runbook — a panic moment is no time to scroll history), lock state.
+   - `POST /panicRollback { snapshotId, confirm: "ROLLBACK" }` (owner token),
+     three phases (2026-07-28 review #1):
+     1. PROVE the snapshot is a complete valid set BEFORE touching live —
+        exactly the 10 canonical paths (no missing, no extras) and every
+        file passes the full shared checks incl. per-market simulation;
+        any failure → HTTP 400, nothing restored.
+     2. Copy the entire set to live.
+     3. Re-run the full shared checks against the LIVE objects; failure →
+        HTTP 500 (the operator then restores a different snapshot).
+     Lock: Firestore single-flight, 15 min TTL + job id (only the owning job
+     releases it). Failures return real HTTP codes (400/409/500) with a JSON
+     body. Audit: `opsAuditLog` (including a `degraded` flag when the canary
+     id file was unavailable and that check was skipped).
+   - UI requires typing `ROLLBACK`, shows which snapshot the restore targets,
+     and displays the post-restore verification result.
    - Auth: Firebase ID token + owner (custom claim / verified owner email).
      App Check deliberately NOT required (monitoring-only policy).
 5. **Client cache** — dbService revalidation now parses + sanity-checks a
