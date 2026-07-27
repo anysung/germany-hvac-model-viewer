@@ -634,7 +634,14 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{ position: 'relative', background: '#fff', borderRadius: 18, width: 'min(1560px, 96vw)', maxHeight: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 24px 64px rgba(0,0,0,.28)' }}
+            style={{
+              position: 'relative', background: '#fff', borderRadius: 18,
+              // Width FOLLOWS the number of compared models (label rail + ~380px
+              // per product) instead of stretching to a fixed size — 2 or 3
+              // models stay compact enough to actually compare side by side.
+              width: `min(${190 + 56 + compareCount * 380}px, 96vw)`,
+              maxHeight: '92vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 24px 64px rgba(0,0,0,.28)',
+            }}
           >
             <Watermark />
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', borderBottom: '1px solid #e0e0e0', flex: 'none' }}>
@@ -665,13 +672,13 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                   { label: L[7], value: c => c.sourceId, dim: true },
                 ];
                 return (
-                  <div style={{ display: 'grid', gridTemplateColumns: `190px repeat(${compareCount}, minmax(0, 1fr))`, border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden', fontSize: 14.5 }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: `190px repeat(${compareCount}, minmax(0, 1fr))`, border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden', fontSize: 15.5 }}>
                     {/* header row — product identity */}
                     <div style={{ background: '#f5f5f7', borderBottom: '2px solid #e0e0e0' }} />
                     {compareItems.map(c => (
-                      <div key={`h-${c.id}`} style={{ background: '#f5f5f7', borderBottom: '2px solid #e0e0e0', borderLeft: '1px solid #e0e0e0', padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 5, minWidth: 0 }}>
-                        <span style={{ fontWeight: 650, fontSize: 15.5, lineHeight: 1.3, overflowWrap: 'anywhere' }}>{c.model}</span>
-                        <span style={{ fontSize: 12, color: '#7a7a7a', overflowWrap: 'anywhere' }}>
+                      <div key={`h-${c.id}`} style={{ background: '#f5f5f7', borderBottom: '2px solid #e0e0e0', borderLeft: '1px solid #e0e0e0', padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 6, minWidth: 0 }}>
+                        <span style={{ fontWeight: 650, fontSize: 17, lineHeight: 1.32, overflowWrap: 'anywhere' }}>{c.model}</span>
+                        <span style={{ fontSize: 12.5, color: '#7a7a7a', overflowWrap: 'anywhere' }}>
                           {c.mfr} · <span onClick={() => app.toggleCompare(c.id)} style={{ color: '#0066cc', cursor: 'pointer', whiteSpace: 'nowrap' }}>{t.products.remove}</span>
                         </span>
                       </div>
@@ -686,22 +693,22 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                       const bg = ri % 2 ? '#fafafa' : '#fff';
                       return (
                         <React.Fragment key={row.label}>
-                          <div style={{ padding: '13px 20px', background: bg, borderTop: '1px solid #ececec', fontSize: 12.5, color: '#7a7a7a', display: 'flex', alignItems: 'center' }}>{row.label}</div>
+                          <div style={{ padding: '16px 20px', background: bg, borderTop: '1px solid #ececec', fontSize: 13, color: '#7a7a7a', display: 'flex', alignItems: 'center' }}>{row.label}</div>
                           {compareItems.map(c => {
                             const isBest = best != null && row.metric!(c) === best;
                             return (
                               <div
                                 key={`${row.label}-${c.id}`}
                                 style={{
-                                  padding: '13px 20px', background: bg, borderTop: '1px solid #ececec', borderLeft: '1px solid #ececec',
-                                  minWidth: 0, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', gap: 8,
+                                  padding: '16px 22px', background: bg, borderTop: '1px solid #ececec', borderLeft: '1px solid #ececec',
+                                  minWidth: 0, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', gap: 9,
                                   ...(row.strong ? { fontWeight: 600 } : {}),
-                                  ...(row.dim ? { fontSize: 12.5, color: '#7a7a7a' } : {}),
+                                  ...(row.dim ? { fontSize: 13, color: '#7a7a7a' } : {}),
                                   ...(isBest ? { color: '#0a7a43', fontWeight: 650 } : {}),
                                 }}
                               >
                                 {row.value(c)}
-                                {isBest && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.05em', background: '#e7f6ee', color: '#0a7a43', borderRadius: 999, padding: '2px 8px' }}>{t.products.bestBadge}</span>}
+                                {isBest && <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '.05em', background: '#e7f6ee', color: '#0a7a43', borderRadius: 999, padding: '2.5px 9px' }}>{t.products.bestBadge}</span>}
                               </div>
                             );
                           })}
