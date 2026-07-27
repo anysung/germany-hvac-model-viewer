@@ -4,6 +4,8 @@ import { sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../../firebase';
 import { requestDeletion } from '../../services/adminService';
 import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
+import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn } from '../../services/billingFnService';
+import { accessInfo } from '../../config/entitlement';
 import {
   getMyOrg, seatsUsed, getMyChangeRequest, scheduleChange, cancelChange, leaveTeam,
 } from '../../services/subscriptionService';
@@ -206,7 +208,13 @@ const PlanPicker: React.FC<{
 };
 
 /** The whole subscription area: member view / active-subscription view / plan picker. */
-const SubscriptionSection: React.FC<{ app: HpApp; org: Organization | null; onBilling: () => void }> = ({ app, org, onBilling }) => {
+const SubscriptionSection: React.FC<{
+  app: HpApp;
+  org: Organization | null;
+  onBilling: () => void;
+  /** Trial flow: a trialing team was just created server-side. */
+  onOrgCreated?: (orgId: string) => void;
+}> = ({ app, org, onBilling, onOrgCreated }) => {
   const t = tr(app.lang);
   const s = t.sub;
   const { user } = app;
@@ -328,6 +336,16 @@ const SubscriptionSection: React.FC<{ app: HpApp; org: Organization | null; onBi
   }
 
   // ── No subscription yet: the two-step picker ──
+  const inOwnTrial = accessInfo(user).state === 'trial';
+  const startTeamTrial = (plan: 'team_3' | 'team_5') => {
+    if (isPreview) { app.notify(t.account.previewOnly); return; }
+    createTeamOrgFn(plan)
+      .then(r => {
+        if (r.ok && r.orgId) { app.notify(t.trial.teamStartCreated); onOrgCreated?.(r.orgId); }
+        else app.notify(t.trial.teamStartFailed);
+      })
+      .catch(() => app.notify(t.trial.teamStartFailed));
+  };
   return (
     <div style={{ border: '1px solid #e0e0e0', borderRadius: 18, padding: '26px 28px', display: 'flex', flexDirection: 'column', gap: 14 }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -335,6 +353,27 @@ const SubscriptionSection: React.FC<{ app: HpApp; org: Organization | null; onBi
         <span style={{ fontSize: 13.5, color: '#7a7a7a' }}>{s.pickSub}</span>
       </div>
       <PlanPicker app={app} mode="checkout" />
+      {/* Team during the free trial: create the org now (no payment), invite
+          members right away — everyone runs on the admin's trial end date. */}
+      {TRIAL_FLOW_ENABLED && inOwnTrial && !org && (
+        <div data-testid="team-trial-card" style={{ borderTop: '1px solid #f0f0f0', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <span style={{ fontSize: 13.5, fontWeight: 600 }}>{t.trial.teamStartTitle}</span>
+          <span style={{ fontSize: 12.5, color: '#7a7a7a', lineHeight: 1.55, maxWidth: 640 }}>{t.trial.teamStartBody}</span>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            {(['team_3', 'team_5'] as const).map(p => (
+              <span
+                key={p}
+                className="hp-press"
+                onClick={() => startTeamTrial(p)}
+                style={{ border: '1px solid #d2d2d7', borderRadius: 999, padding: '9px 20px', fontSize: 13, cursor: 'pointer' }}
+                data-testid={`team-trial-${p}`}
+              >
+                {t.trial.teamStartBtn(s.planNames[p], SUB_PLANS[p].seatLimit)}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -397,10 +436,20 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
     }
     if (!window.confirm(t.account.delConfirm)) return;
     try {
-      // A member leaves the team first, so the seat is freed rather than left
-      // pointing at a deleted account. Billing is never touched here.
-      if (isMember && org) await leaveTeam(org, user).catch(() => {});
-      await requestDeletion(user.id, 'Self-service request from Account page', displayName);
+      if (TRIAL_FLOW_ENABLED) {
+        // Server-side deletion: one Firestore transaction (registry retention,
+        // seat release, PII removal) + Auth account removal, all idempotent.
+        const r = await deleteAccountFn();
+        if (!r.ok) {
+          app.notify(r.error === 'team-has-members' ? t.account.delOwnerBlocked : t.account.delFailed);
+          return;
+        }
+      } else {
+        // Legacy flow: a member leaves the team first, so the seat is freed
+        // rather than left pointing at a deleted account.
+        if (isMember && org) await leaveTeam(org, user).catch(() => {});
+        await requestDeletion(user.id, 'Self-service request from Account page', displayName);
+      }
       app.notify(t.account.delDone);
       setTimeout(app.onLogout, 1800);
     } catch {
@@ -436,7 +485,16 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
   return shell(
     <>
       {/* 1. Subscription & billing (a member sees their company's plan, read-only) */}
-      <SubscriptionSection app={app} org={org} onBilling={openBillingPortal} />
+      <SubscriptionSection
+        app={app}
+        org={org}
+        onBilling={openBillingPortal}
+        onOrgCreated={(orgId) => {
+          // Server set orgId/orgRole on the profile; mirror locally and load the org.
+          app.patchUser({ orgId, orgRole: 'team_admin' });
+          getMyOrg({ ...user, orgId, orgRole: 'team_admin' }).then(setOrg).catch(() => {});
+        }}
+      />
 
       {/* 2. Cards — two independent columns on desktop, a single stack on mobile.
           Card ORDER is set per card so both layouts are correct from ONE DOM tree:

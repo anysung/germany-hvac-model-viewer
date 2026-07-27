@@ -258,9 +258,27 @@ cleaning parsed/raw folders never drops products (regression 2026-07-12).
   `tests/products-segmentation.e2e.mjs` (fails if BAFA appears on GB/FR pages).
 - Refrigerant filtering always uses `.includes()` contains logic (values like
   `R290(estimated)` must match), never exact match.
-- Auth flow is approval-gated: registration (email or Google/Apple social) creates a
-  `pending` profile; only admin approval activates it. Social sign-in must never bypass
-  this gate.
+- **Auth flow (2026-07-27 program): 7-day in-app free trial, no payment method.**
+  Two modes, switched by `VITE_BILLING_FN_URL` (src/config/env.ts):
+  - **Trial flow** (URL set): registration creates a `pending` profile; the
+    server function `finalizeSignup` (google_cloud_function_billing/) activates
+    it after **email verification against the Firebase Auth SERVER record**
+    (social = provider-verified) + required consents, and grants ONE 7-day
+    trial per email service-wide (`emailRegistry`, kept 1 year after deletion,
+    Firestore TTL). Day 8 without payment → server rules close access
+    (`accessUntilTs` on user/org; storage.rules + firestore.rules
+    `isEntitled()`). Paddle prices carry NO trial — checkout charges
+    immediately; only the billing webhook / admin / grant redemption ever
+    extend the window. **Fail-open principle (binding): refunds, past_due,
+    chargebacks, webhook/API errors NEVER auto-block; access ends only on
+    natural expiry or confirmed final cancellation.** See
+    docs/TRIAL_SUBSCRIPTION_GATE.md (launch checklist before reopening
+    registration).
+  - **Legacy flow** (URL unset — current production): pending profile + manual
+    admin approval, as before.
+  Social sign-in must never bypass the consent gate in either mode. Team trial
+  is anchored to the team ADMIN alone (trialing org may exist BEFORE payment;
+  members inherit the admin's window; no extension by member joins).
 - Build: `export PATH="/Users/christophersung/.nvm/versions/node/v20.19.6/bin:$PATH" && npm run build:de` (DE, `dist/`)
   or `npm run build:uk` (GB, `VITE_COUNTRY_CODE=GB` → `dist-uk/`).
 - Deploy: multi-site hosting — **always use a named target**, never bare

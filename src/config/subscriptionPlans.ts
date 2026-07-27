@@ -1,12 +1,17 @@
 /**
  * subscriptionPlans.ts — the HeatPump DB subscription program (single source of truth).
  *
- * Program (decided 2026-07-12):
+ * Program (decided 2026-07-12; trial model revised 2026-07-27):
  *   Professional (1 user) / Team 3 (admin + 2) / Team 5 (admin + 4)
  *   Terms: monthly / 6 months (~7% off) / annual (~17% off, "12 for the price of 10")
- *   Every new subscription starts with a 7-day free trial (payment method up front,
- *   first charge on day 8). Team trials are ONE per organization, anchored to the
- *   moment the team admin subscribed — member join dates never extend it.
+ *
+ *   FREE TRIAL = the IN-APP signup trial: 7 days of full access with NO
+ *   payment method, granted server-side (finalizeSignup) at the account's
+ *   first activation — ONE per email across the whole service, ever
+ *   (emailRegistry). Paddle prices carry NO trial: checkout charges
+ *   immediately. Team trials are ONE per organization, anchored to the team
+ *   ADMIN's own signup trial — member join dates never extend it, and on day
+ *   8 without payment the whole team is gated (accessUntilTs).
  *
  * Operating principles (enforced in UI + admin, not Paddle proration):
  *   - Plan and term are FIXED during a paid period. No mid-term upgrades,
@@ -20,7 +25,8 @@
  *   - Cancelling stops the next renewal only; access runs to period end.
  *
  * Prices are VAT-exclusive; Paddle computes VAT at checkout per country.
- * Paddle catalogue: 3 products × 3 recurring prices, each with a 7-day trial.
+ * Paddle catalogue: 3 products × 3 recurring prices, NO trial on any price
+ * (immediate charge — the free period lives in the app, not in Paddle).
  * The price ids live in paddlePrices.ts, keyed by currency (EUR today); a market
  * whose currency has no catalogue stays in "coming soon" mode.
  */

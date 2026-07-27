@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
+  sendEmailVerification,
   GoogleAuthProvider,
   OAuthProvider,
   type User as FirebaseUser,
@@ -28,10 +29,15 @@ import { User, ActivityLog, UserSubscription } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey } from './subscriptionService';
 import { SUB_PLANS } from '../config/subscriptionPlans';
-import { TERMS_VERSION, PRIVACY_VERSION } from '../config/legal';
+import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
 import { compact } from '../utils/profile';
+import { TRIAL_FLOW_ENABLED, finalizeSignupFn } from './billingFnService';
 
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
+
+/** loginUser sentinel: account exists but the verification mail is still
+ *  unconfirmed — App routes to the VERIFY_EMAIL screen (session kept). */
+export const VERIFY_EMAIL_SENTINEL = 'verify-email-required';
 
 /**
  * Free-access grants (admin promotions): if an admin registered this email in
@@ -55,6 +61,10 @@ async function redeemFreeGrantIfAny(user: User): Promise<User | null> {
     await updateDoc(doc(db, 'users', user.id), {
       status: 'active', isActive: true,
       subscription: sub, billingChannel: 'admin_grant',
+      // Open the rules-facing window to the grant end. Rules validate this
+      // equals the grant's own endsAtTs (older grants without the field simply
+      // omit it — those accounts stay un-gated, which is the fail-open default).
+      ...(grant.endsAtTs ? { accessUntilTs: grant.endsAtTs } : {}),
     });
     await updateDoc(doc(db, 'freeAccessGrants', emailKey(user.email)), {
       redeemedByUid: user.id, redeemedAt: new Date().toISOString(),
@@ -115,17 +125,76 @@ export interface SignupData {
   marketingConsent?: boolean;
 }
 
-/** The consent record stamped on every new profile — minimal, no history log. */
+/** The consent record stamped on every new profile — minimal, no history log.
+ *  finalizeSignup re-stamps the authoritative (server-time) copy on activation. */
 const consentFields = () => ({
   termsAcceptedAt: new Date().toISOString(),
   termsVersion: TERMS_VERSION,
   privacyVersion: PRIVACY_VERSION,
+  dataUseConsentAt: new Date().toISOString(),
+  dataUseConsentVersion: DATA_USE_VERSION,
 });
 
-// --- Registration (status: pending, auto sign-out) ---
-// Returns the activated user when a free-access grant applied (no approval
-// wait, stays signed in), or null for the normal pending flow.
-export const registerUser = async (data: SignupData): Promise<User | null> => {
+/**
+ * Refetch this session's profile after a server-side change (finalizeSignup
+ * flips status/trial fields with the Admin SDK — the client copy is stale).
+ */
+export const refetchSessionUser = async (): Promise<User | null> => {
+  const fbUser = auth.currentUser;
+  if (!fbUser) return null;
+  const snap = await getDoc(doc(db, 'users', fbUser.uid));
+  if (!snap.exists()) return null;
+  const data = snap.data() as User;
+  return { ...data, role: fbUser.email === OWNER_EMAIL ? 'owner' : data.role || 'user' };
+};
+
+/**
+ * Trial flow: ask the billing function to activate this account. The SERVER
+ * decides against the Firebase Auth record (email verified?), the consent
+ * payload and the emailRegistry history. Returns the refreshed profile on
+ * activation, or the blocking reason.
+ */
+export const tryFinalizeSignup = async (): Promise<
+  { state: 'active'; user: User; trial: boolean } | { state: 'unverified' } | { state: 'error'; message: string }
+> => {
+  try {
+    // Sync the local Auth record first so the "check again" button reflects a
+    // verification that happened in another tab (display only — the function
+    // decides from the server record either way).
+    await auth.currentUser?.reload().catch(() => {});
+    const result = await finalizeSignupFn();
+    if (result.ok) {
+      const user = await refetchSessionUser();
+      if (user) return { state: 'active', user, trial: !!result.trial };
+      return { state: 'error', message: 'profile-missing' };
+    }
+    if (result.error === 'email-not-verified') return { state: 'unverified' };
+    return { state: 'error', message: result.error || 'unknown' };
+  } catch (e: any) {
+    return { state: 'error', message: String(e?.message ?? e) };
+  }
+};
+
+/** Re-send the verification mail for the signed-in, not-yet-verified account. */
+export const resendVerificationEmail = async (): Promise<void> => {
+  const fbUser = auth.currentUser;
+  if (!fbUser) throw new Error('unauthenticated');
+  await sendEmailVerification(fbUser);
+};
+
+export type RegisterResult =
+  /** Free-access grant (or social/trial finalize) — signed in, ready to go. */
+  | { state: 'active'; user: User }
+  /** Trial flow: signed in, waiting for the verification link. */
+  | { state: 'verify-email' }
+  /** Legacy flow: profile pending admin approval, signed out. */
+  | { state: 'pending' };
+
+// --- Registration ---
+// Trial flow (VITE_BILLING_FN_URL set): create the pending profile, send the
+// verification mail and STAY SIGNED IN — the VERIFY_EMAIL screen finishes via
+// tryFinalizeSignup(). Legacy flow: pending profile + sign-out (admin approval).
+export const registerUser = async (data: SignupData): Promise<RegisterResult> => {
   let userCredential;
   try {
     userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
@@ -166,12 +235,24 @@ export const registerUser = async (data: SignupData): Promise<User | null> => {
 
   // Free-access grant (admin promotion): activate immediately, stay signed in.
   const redeemed = await redeemFreeGrantIfAny(newUser);
-  if (redeemed) return redeemed;
+  if (redeemed) {
+    // Record the email history + server consent stamp (no trial is granted on
+    // an already-active account — the grant is the entitlement).
+    if (TRIAL_FLOW_ENABLED) finalizeSignupFn().catch(() => {});
+    return { state: 'active', user: redeemed };
+  }
 
-  // Sign out immediately — must wait for admin approval
+  if (TRIAL_FLOW_ENABLED) {
+    // New flow: verification mail, session kept open for the verify screen.
+    await sendEmailVerification(userCredential.user).catch(e => console.error('verification mail failed', e));
+    await logActivity(uid, 'REGISTER_PENDING', `Registration awaiting email verification: ${data.email}`, data.email, `${data.firstName} ${data.lastName}`);
+    return { state: 'verify-email' };
+  }
+
+  // Legacy flow: sign out immediately — must wait for admin approval.
   await signOut(auth);
   await logActivity(uid, 'REGISTER_PENDING', `Registration pending: ${data.email}`, data.email, `${data.firstName} ${data.lastName}`);
-  return null;
+  return { state: 'pending' };
 };
 
 /**
@@ -214,6 +295,10 @@ export const registerInvitedMember = async (
   await setDoc(doc(db, 'users', uid), member);
   // Join the org the invitation names — not "whichever org invited this email".
   await joinOrg(orgId, member);
+  // Trial flow: record the email history (a former member signing up solo
+  // later gets NO fresh trial) + server-stamp the consents. Non-blocking —
+  // the seat access itself comes from the org, not from this call.
+  if (TRIAL_FLOW_ENABLED) finalizeSignupFn().catch(() => {});
   await logActivity(uid, 'REGISTER_PENDING', `Team member joined org ${orgId}`, data.email, `${data.firstName} ${data.lastName}`);
   return member;
 };
@@ -272,6 +357,17 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
       const redeemed = await redeemFreeGrantIfAny(userData);
       if (redeemed) {
         userData = { ...userData, ...redeemed };
+      } else if (TRIAL_FLOW_ENABLED) {
+        // Verification-based flow: the server activates once the Auth record
+        // says the mail was verified (covers "verified in another tab").
+        const fin = await tryFinalizeSignup();
+        if (fin.state === 'active') {
+          userData = { ...userData, ...fin.user };
+        } else {
+          // Keep the session — the VERIFY_EMAIL screen needs it to re-check
+          // and to re-send the mail. App routes there via this sentinel.
+          throw new Error(VERIFY_EMAIL_SENTINEL);
+        }
       } else {
         await signOut(auth);
         throw new Error('Your registration is pending admin approval. You will be notified once approved.');
@@ -417,7 +513,22 @@ const finishProviderSignIn = async (
     await setDoc(userDocRef, newUser);
     // Free-access grant (admin promotion): activate immediately, stay signed in.
     const redeemedNew = await redeemFreeGrantIfAny(newUser);
-    if (redeemedNew) return 'active';
+    if (redeemedNew) {
+      if (TRIAL_FLOW_ENABLED) finalizeSignupFn().catch(() => {});
+      return 'active';
+    }
+    if (TRIAL_FLOW_ENABLED) {
+      // Social identities are provider-verified: the consent gate above ran,
+      // so the server can activate (and grant the one free trial) right away.
+      const fin = await tryFinalizeSignup();
+      if (fin.state === 'active') {
+        await logActivity(uid, 'LOGIN', `Social registration activated (${providerLabel}): ${email}`, email, display);
+        return 'active';
+      }
+      // Server refused (registry closed account etc.) — treat as not signed up.
+      await signOut(auth);
+      throw new Error(fin.state === 'error' ? fin.message : 'activation-failed');
+    }
     await signOut(auth);
     await logActivity(uid, 'REGISTER_PENDING', `Social registration pending (${providerLabel}): ${email}`, email, display);
     return 'pending-created';
@@ -433,6 +544,15 @@ const finishProviderSignIn = async (
     const redeemed = await redeemFreeGrantIfAny(userData);
     if (redeemed) {
       userData = { ...userData, ...redeemed };
+    } else if (TRIAL_FLOW_ENABLED) {
+      // A pending profile reached via social sign-in: the provider verified
+      // the email, so the server can activate it now.
+      const fin = await tryFinalizeSignup();
+      if (fin.state === 'active') {
+        userData = { ...userData, ...fin.user };
+      } else {
+        throw new Error(VERIFY_EMAIL_SENTINEL);
+      }
     } else {
       await signOut(auth);
       throw new Error('Your registration is pending admin approval. You will be notified once approved.');

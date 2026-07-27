@@ -10,7 +10,7 @@ import {
   listGrants, createGrant, revokeGrant, listChangeRequests,
   adminAssignSubscription,
 } from '../../services/subscriptionService';
-import { doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { User, FreeAccessGrant, SubscriptionChangeRequest } from '../../types';
 import {
@@ -24,19 +24,31 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
   const [users, setUsers] = useState<User[]>([]);
   const [grants, setGrants] = useState<FreeAccessGrant[]>([]);
   const [changes, setChanges] = useState<SubscriptionChangeRequest[]>([]);
+  // Paddle adjustments (refunds / chargebacks) parked for review — informational
+  // by design: they never gate anyone automatically (owner principle 2026-07-27).
+  const [reviews, setReviews] = useState<any[]>([]);
   const [msg, setMsg] = useState('');
 
   const load = async () => {
-    const [u, g, c] = await Promise.all([
+    const [u, g, c, r] = await Promise.all([
       getUsers(),
       listGrants().catch(() => []),
       listChangeRequests().catch(() => []),
+      getDocs(query(collection(db, 'paddleAdjustments'), where('needsAdminReview', '==', true)))
+        .then(s => s.docs.map(d => ({ id: d.id, ...d.data() })))
+        .catch(() => []),
     ]);
     setUsers(u);
     setGrants(g);
     setChanges(c);
+    setReviews(r);
   };
   useEffect(() => { load(); }, []);
+
+  const markReviewed = async (id: string) => {
+    await updateDoc(doc(db, 'paddleAdjustments', id), { needsAdminReview: false, reviewedAt: new Date().toISOString() });
+    setReviews(rs => rs.filter(x => x.id !== id));
+  };
 
   const flash = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
 
@@ -69,6 +81,32 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
         <StatCard label={A.blPastDue} value={count('past_due')} color="orange" icon="⚠️" />
         <StatCard label={A.blGrants} value={grants.filter(g => !g.revokedAt && new Date(g.endsAt) > new Date()).length} color="purple" icon="🎁" />
       </div>
+
+      {/* Billing review — refund/chargeback adjustments (audit-only, never auto-gating) */}
+      <SectionCard title={A.brTitle} icon="🧾" className="mb-6">
+        <p className="text-xs text-gray-500 mb-3">{A.brText}</p>
+        {reviews.length === 0 ? (
+          <div className="text-sm text-gray-400">{A.brNone}</div>
+        ) : (
+          <table className="min-w-full text-sm">
+            <tbody className="divide-y divide-gray-100">
+              {reviews.map(r => (
+                <tr key={r.id}>
+                  <td className="py-2 pr-4 font-medium text-gray-800 whitespace-nowrap">{r.action || r.kind || '—'}</td>
+                  <td className="py-2 pr-4 whitespace-nowrap">{r.status || ''} {r.type ? `· ${r.type}` : ''}</td>
+                  <td className="py-2 pr-4 text-gray-500 whitespace-nowrap">{r.subscriptionId || r.transactionId || ''}</td>
+                  <td className="py-2 pr-4 text-gray-400 whitespace-nowrap">{(r.occurredAt || '').slice(0, 19).replace('T', ' ')}</td>
+                  <td className="py-2 text-right">
+                    <button onClick={() => markReviewed(r.id)} className="text-xs text-blue-600 hover:underline whitespace-nowrap">
+                      {A.brMarkReviewed}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </SectionCard>
 
       {/* Free access grants (promotions) */}
       <SectionCard title={A.grTitle} icon="🎁" className="mb-6">

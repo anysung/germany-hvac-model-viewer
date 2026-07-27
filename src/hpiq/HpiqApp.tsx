@@ -14,6 +14,7 @@ import { UI_LANGUAGES, SOURCE_ID_ABBR, IS_GB, IS_PL, IS_IT } from './market';
 import { LOCAL_LISTING_FILTER, LOCAL_LISTING_FILTER_DEFAULT_ON } from './listing';
 import { splitBySegment } from '../config/segmentation';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
+import { accessInfo } from '../config/entitlement';
 import { buildDataSheetPdf, pdfFileName } from './pdf/dataSheetPdf';
 import { preloadBrandArtwork } from './pdf/brandArtwork';
 import { preloadPdfFonts } from './pdf/pdfFonts';
@@ -262,6 +263,22 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     document.body,
   );
 
+  // Trial countdown (days 5/6/7 = D-3..D-1): a slim nudge under the nav on
+  // every app entry, linking to the Account subscription section. Pure UX —
+  // the server rules close the window on day 8 regardless.
+  const access = accessInfo(user);
+  const trialBanner = access.state === 'trial' && access.daysLeft <= 3 ? (
+    <div data-testid="trial-banner" style={{ background: '#0a6847', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, padding: '9px 20px', fontSize: 13.5, flex: 'none' }}>
+      <span>{t.trial.banner(access.daysLeft)}</span>
+      <button
+        onClick={() => setPage('account')}
+        style={{ background: '#fff', color: '#0a6847', border: 'none', borderRadius: 999, padding: '5px 15px', fontWeight: 600, cursor: 'pointer', fontSize: 12.5 }}
+      >
+        {t.trial.bannerCta}
+      </button>
+    </div>
+  ) : null;
+
   // A failed dataset download must be visible: banner + retry, both shells.
   // (2026-07-18 PL incident: an access-layer failure looked like an empty
   // catalogue — "0 z 0" — and was undiagnosable from the UI.)
@@ -284,8 +301,8 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     return (
       <>
         {printPortal}
-        {dataBanner && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}</div>
+        {(dataBanner || trialBanner) && (
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}{trialBanner}</div>
         )}
         <MobileApp app={app} viewport={viewport} />
         {notice && (
@@ -373,6 +390,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
       </div>
 
       {dataBanner}
+      {trialBanner}
 
       {/* ============ Pages ============ */}
       {page === 'find' && <FindPage app={app} />}

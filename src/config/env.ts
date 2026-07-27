@@ -45,6 +45,17 @@ export const PUBLIC_ENV = {
    */
   PADDLE_CLIENT_TOKEN: (import.meta.env.VITE_PADDLE_CLIENT_TOKEN as string | undefined) ?? '',
 
+  /**
+   * Account/billing Cloud Function base URL (google_cloud_function_billing/,
+   * endpoints /finalizeSignup /createTeamOrg /deleteAccount /paddleWebhook).
+   * THIS IS THE TRIAL-FLOW SWITCH: unset → the app keeps the legacy
+   * pending/admin-approval signup flow and the client-side deletion request;
+   * set → email-verification signup, server-granted 7-day trial and
+   * server-side account deletion. Do not set it in production builds before
+   * the function is deployed and verified.
+   */
+  BILLING_FN_URL: ((import.meta.env.VITE_BILLING_FN_URL as string | undefined) ?? '').replace(/\/+$/, ''),
+
   // Paddle price ids are NOT env vars — they live in config/paddlePrices.ts,
   // keyed by currency so every EUR market shares one catalogue.
 } as const;

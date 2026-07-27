@@ -24,10 +24,39 @@ service firebase.storage {
              (me().status == 'active' ||
               (!('status' in me()) && me().isActive == true));
     }
-    function isAdmin() {
+    // Owner global exception — mirror of firestore.rules ownerToken():
+    // server-set custom claim first, verified owner email as recovery path.
+    function ownerToken() {
       return request.auth != null &&
-             firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
-             me().get('role', 'user') in ['owner', 'admin', 'support', 'ops'];
+             (request.auth.token.get('owner', false) == true ||
+              (request.auth.token.email == 'sungyongsoo1976@gmail.com' &&
+               request.auth.token.email_verified == true));
+    }
+    function isAdmin() {
+      return ownerToken() ||
+             (request.auth != null &&
+              firestore.exists(/databases/(default)/documents/users/$(request.auth.uid)) &&
+              me().get('role', 'user') in ['owner', 'admin', 'support', 'ops']);
+    }
+
+    // ── Access window (trial / subscription gate) — mirror of firestore.rules ──
+    // accessUntilTs is server-written (finalizeSignup / billing webhook / admin).
+    // No field on the account AND no team window → not gated (legacy accounts;
+    // fail-open: a missing field never locks out a legitimate user).
+    function windowOpen(data) {
+      return !('accessUntilTs' in data) || request.time < data.accessUntilTs;
+    }
+    function myOrg() {
+      return firestore.get(/databases/(default)/documents/organizations/$(me().orgId)).data;
+    }
+    function orgWindowOpen() {
+      return me().get('orgId', '') != '' &&
+             firestore.exists(/databases/(default)/documents/organizations/$(me().orgId)) &&
+             windowOpen(myOrg());
+    }
+    function isEntitled() {
+      return isAdmin() ||
+             (isApproved() && (windowOpen(me()) || orgWindowOpen()));
     }
 
     // The user's registered market (authService stamps country = ACTIVE_COUNTRY.code
@@ -43,7 +72,7 @@ service firebase.storage {
       // falls through to allowed, so a metadata gap can never deny a legitimate
       // approved user (new signups always carry country).
       allow read: if isAdmin() ||
-                     (isApproved() && (myCountry() == '' || myCountry() == country));
+                     (isEntitled() && (myCountry() == '' || myCountry() == country));
       allow write: if false;  // uploads go through gcloud (pipeline), never clients
     }
 

@@ -131,6 +131,7 @@ const EN = {
         h: 'Data retention',
         p: [
           'Account and company data are kept while your account exists. After deletion we retain only what we must for legal, accounting or evidence purposes; billing records are retained by Paddle for statutory periods.',
+          'To prevent repeated free-trial use and misuse of the service, we keep a minimal record of the email address used to register for up to one year after account deletion (legitimate interest, Art. 6(1)(f) GDPR). It is used only to check free-trial eligibility and is deleted automatically after that period.',
         ],
       },
       {
@@ -324,7 +325,7 @@ const DE = {
       },
       {
         h: 'Speicherdauer',
-        p: ['Konto- und Unternehmensdaten werden für die Dauer des Kontos gespeichert. Nach Löschung bewahren wir nur auf, was aus rechtlichen, buchhalterischen oder Nachweisgründen erforderlich ist; Abrechnungsunterlagen werden von Paddle für die gesetzlichen Fristen aufbewahrt.'],
+        p: ['Konto- und Unternehmensdaten werden für die Dauer des Kontos gespeichert. Nach Löschung bewahren wir nur auf, was aus rechtlichen, buchhalterischen oder Nachweisgründen erforderlich ist; Abrechnungsunterlagen werden von Paddle für die gesetzlichen Fristen aufbewahrt.', 'Zur Verhinderung wiederholter kostenloser Testphasen und missbräuchlicher Nutzung speichern wir nach Kontolöschung für bis zu ein Jahr einen minimalen Eintrag der bei der Registrierung verwendeten E-Mail-Adresse (berechtigtes Interesse, Art. 6 Abs. 1 lit. f DSGVO). Er dient ausschließlich der Prüfung der Testphasen-Berechtigung und wird danach automatisch gelöscht.'],
       },
       {
         h: 'Kontolöschung',
@@ -511,7 +512,7 @@ const FR = {
       },
       {
         h: 'Durée de conservation',
-        p: ["Les données de compte et d'entreprise sont conservées pendant la durée de vie du compte. Après suppression, nous ne conservons que ce qui est requis à des fins légales, comptables ou probatoires ; les documents de facturation sont conservés par Paddle pendant les durées légales."],
+        p: ["Les données de compte et d'entreprise sont conservées pendant la durée de vie du compte. Après suppression, nous ne conservons que ce qui est requis à des fins légales, comptables ou probatoires ; les documents de facturation sont conservés par Paddle pendant les durées légales.", "Afin de prévenir l'utilisation répétée de l'essai gratuit et les usages abusifs du service, nous conservons un enregistrement minimal de l'adresse e-mail utilisée à l'inscription pendant un an au maximum après la suppression du compte (intérêt légitime, art. 6-1-f RGPD). Il sert uniquement à vérifier l'éligibilité à l'essai gratuit et est supprimé automatiquement à l'issue de cette période."],
       },
       {
         h: 'Suppression du compte',
@@ -707,6 +708,7 @@ const PL = {
         h: 'Okres przechowywania danych',
         p: [
           'Dane konta i dane firmowe są przechowywane przez czas istnienia konta. Po usunięciu konta zachowujemy tylko to, czego wymagają cele prawne, księgowe lub dowodowe; dokumentacja rozliczeniowa jest przechowywana przez Paddle przez okresy ustawowe.',
+          'Aby zapobiegać wielokrotnemu korzystaniu z bezpłatnego okresu próbnego i nadużyciom serwisu, po usunięciu konta przechowujemy przez maksymalnie rok minimalny zapis adresu e-mail użytego przy rejestracji (prawnie uzasadniony interes, art. 6 ust. 1 lit. f RODO). Służy on wyłącznie do weryfikacji uprawnienia do okresu próbnego i po tym okresie jest usuwany automatycznie.',
         ],
       },
       {
@@ -909,6 +911,7 @@ const IT = {
         h: 'Conservazione dei dati',
         p: [
           'I dati dell’account e i dati aziendali sono conservati per la durata dell’account. Dopo la cancellazione conserviamo solo quanto richiesto per finalità legali, contabili o probatorie; la documentazione di fatturazione è conservata da Paddle per i periodi previsti dalla legge.',
+          'Per prevenire l’uso ripetuto della prova gratuita e gli abusi del servizio, dopo la cancellazione dell’account conserviamo per un massimo di un anno una registrazione minima dell’indirizzo e-mail usato in fase di registrazione (legittimo interesse, art. 6, par. 1, lett. f del GDPR). Serve esclusivamente a verificare l’idoneità alla prova gratuita e viene eliminata automaticamente al termine di tale periodo.',
         ],
       },
       {

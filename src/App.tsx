@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { loginUser, registerUser, registerInvitedMember, logoutUser, onUserChange, loginWithProvider, completeRedirectSignIn, isAdminRole, WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE } from './services/authService';
+import {
+  loginUser, registerUser, registerInvitedMember, logoutUser, onUserChange,
+  loginWithProvider, completeRedirectSignIn, isAdminRole,
+  WRONG_COUNTRY_PREFIX, EMAIL_ELSEWHERE, VERIFY_EMAIL_SENTINEL,
+  tryFinalizeSignup, resendVerificationEmail, refetchSessionUser,
+} from './services/authService';
+import { TRIAL_FLOW_ENABLED } from './services/billingFnService';
+import { accessExpired } from './config/entitlement';
+import { getMyOrg } from './services/subscriptionService';
+import { Organization } from './types';
+import {
+  SUB_PLANS, SUB_PLAN_CODES, SUB_PLAN_NAMES, BILLING_TERMS, TERM_NAMES,
+  formatEur, perMonth, checkoutConfigured, BillingTerm, SubPlanCode,
+} from './config/subscriptionPlans';
+import { openCheckout } from './services/paddleService';
 import { HpiqApp } from './hpiq/HpiqApp';
 import { AdminDashboard } from './components/AdminDashboard';
 import {
@@ -25,7 +39,7 @@ const IS_ADMIN_BUILD = PUBLIC_ENV.APP_MODE === 'admin';
 // Use Firestore Service
 import { getProducts, getCommercialProducts, getNews, getPolicies, getBAFA } from './services/dbService';
 
-type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'APP' | 'ADMIN_DASHBOARD' | 'COUNTRY_MISMATCH';
+type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'VERIFY_EMAIL' | 'APP' | 'ADMIN_DASHBOARD' | 'COUNTRY_MISMATCH';
 
 /** Landing-page link to the public pricing page. Typed as a full Record so a new
  *  UI language cannot silently fall back to English (the IT edition did — 03f92c0). */
@@ -35,6 +49,107 @@ const VIEW_PRICING: Record<Language, string> = {
   fr: 'Voir les offres et tarifs',
   pl: 'Zobacz plany i cennik',
   it: 'Scopri piani e prezzi',
+};
+
+/**
+ * Day-8 gate: the trial (or subscription) window is closed — the server rules
+ * already refuse product/news/dataset reads, so the app is replaced by this
+ * subscribe screen. Payment is the only way forward (immediate charge — no
+ * Paddle trial); the webhook re-opens the window and "I've paid" refreshes.
+ */
+const SubscribeGate: React.FC<{
+  t: any;
+  language: Language;
+  setLanguage: (l: Language) => void;
+  user: User;
+  isMemberOfTeam: boolean;
+  onRefreshed: (u: User) => void;
+  onLogout: () => void;
+}> = ({ t, language, setLanguage, user, isMemberOfTeam, onRefreshed, onLogout }) => {
+  const [term, setTerm] = useState<BillingTerm>('monthly');
+  const [busy, setBusy] = useState(false);
+  const hadTrial = !!user.trialEndsAt;
+
+  const subscribe = async (plan: SubPlanCode) => {
+    try { await openCheckout(user, plan, term); }
+    catch { alert(t.subReqComingSoon); }
+  };
+
+  const refresh = async () => {
+    setBusy(true);
+    try {
+      const fresh = await refetchSessionUser();
+      if (fresh) onRefreshed(fresh);
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <AuthShell t={t} language={language} setLanguage={setLanguage}>
+      <GlassCard className="w-full max-w-3xl p-8 hp-fade-up">
+        <div data-testid="subscribe-gate">
+          <h2 className="text-2xl font-bold text-white mb-2">{t.subReqTitle}</h2>
+          <p className="text-white/70 mb-1">{hadTrial ? t.subReqBodyTrialEnded : t.subReqBodyNoTrial}</p>
+          {isMemberOfTeam && (
+            <p className="text-amber-300/90 text-sm mb-2" data-testid="subscribe-gate-team">{t.subReqTeamNote}</p>
+          )}
+          <p className="text-white/45 text-sm mb-6">{t.subReqAfterPay}</p>
+
+          {/* Billing term */}
+          <div className="flex gap-2 mb-5">
+            {BILLING_TERMS.map(bt => (
+              <button
+                key={bt}
+                onClick={() => setTerm(bt)}
+                className={`px-4 py-2 rounded-full text-sm border transition-colors ${
+                  term === bt
+                    ? 'bg-emerald-400/20 border-emerald-400/60 text-emerald-200 font-semibold'
+                    : 'border-white/15 text-white/60 hover:bg-white/5'
+                }`}
+              >
+                {TERM_NAMES[bt]}
+              </button>
+            ))}
+          </div>
+
+          {/* Plans */}
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            {SUB_PLAN_CODES.map(code => {
+              const plan = SUB_PLANS[code];
+              const configured = checkoutConfigured(code, term);
+              return (
+                <div key={code} className="rounded-2xl border border-white/12 bg-white/5 p-5 flex flex-col gap-2">
+                  <p className="text-white font-semibold">{SUB_PLAN_NAMES[code]}</p>
+                  <p className="text-2xl font-bold text-white">{formatEur(plan.prices[term])}</p>
+                  <p className="text-white/45 text-xs">
+                    {t.subReqPerMonth.replace('{v}', formatEur(Math.round(perMonth(code, term) * 100) / 100))}
+                    {' · '}{t.subReqVatNote}
+                  </p>
+                  <button
+                    onClick={() => subscribe(code)}
+                    disabled={!configured}
+                    className={`${primaryBtn} mt-auto ${configured ? '' : 'opacity-40 cursor-not-allowed'}`}
+                    data-testid={`subscribe-${code}`}
+                  >
+                    {configured ? t.subReqSubscribe : t.subReqComingSoon}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button onClick={refresh} disabled={busy} className={ghostBtn} data-testid="subscribe-refresh">
+              {busy ? t.loading : t.subReqRefresh}
+            </button>
+            <button onClick={onLogout} className="text-white/45 hover:text-white text-sm transition-colors ml-auto">
+              {t.subReqSignOut}
+            </button>
+          </div>
+        </div>
+        <LegalFooter language={language} dark />
+      </GlassCard>
+    </AuthShell>
+  );
 };
 
 const App: React.FC = () => {
@@ -69,6 +184,20 @@ const App: React.FC = () => {
   const requestTermsConsent = () =>
     new Promise<void>((resolve, reject) => setTermsPrompt({ resolve, reject }));
 
+  // The signed-in user's team, for the entitlement check (a member's access
+  // window is the org's). Loaded lazily; while null the check can only be
+  // MORE permissive (fail-open), never lock anyone out.
+  const [myOrg, setMyOrg] = useState<Organization | null>(null);
+  useEffect(() => {
+    let alive = true;
+    if (currentUser?.orgId) {
+      getMyOrg(currentUser).then(o => { if (alive) setMyOrg(o); }).catch(() => {});
+    } else {
+      setMyOrg(null);
+    }
+    return () => { alive = false; };
+  }, [currentUser?.id, currentUser?.orgId]);
+
   const t = translations[language];
 
   useEffect(() => {
@@ -79,7 +208,9 @@ const App: React.FC = () => {
         // Enforce approval status in ALL views — including while the user is already in the app.
         // This ensures real-time enforcement if an admin suspends/rejects a live session.
         if (user.status === 'pending') {
-          setCurrentView('PENDING_APPROVAL');
+          // Trial flow keeps the session open while the verification mail is
+          // outstanding; legacy flow waits for admin approval (signed out).
+          setCurrentView(TRIAL_FLOW_ENABLED ? 'VERIFY_EMAIL' : 'PENDING_APPROVAL');
         } else if (
           user.status === 'suspended' ||
           user.status === 'rejected' ||
@@ -93,7 +224,8 @@ const App: React.FC = () => {
             currentView === 'LANDING' ||
             currentView === 'LOGIN' ||
             currentView === 'SIGNUP' ||
-            currentView === 'PENDING_APPROVAL';
+            currentView === 'PENDING_APPROVAL' ||
+            currentView === 'VERIFY_EMAIL';
           if (needsRouting) {
             if (IS_ADMIN_BUILD) {
               if (isAdminRole(user.role)) {
@@ -183,6 +315,12 @@ const App: React.FC = () => {
       await loginUser(loginEmail, loginPass);
       setLoginEmail(''); setLoginPass('');
     } catch (err: any) {
+      if (String(err?.message) === VERIFY_EMAIL_SENTINEL) {
+        // Account exists but the verification link is still unclicked —
+        // session is kept; the verify screen can re-check and re-send.
+        setCurrentView('VERIFY_EMAIL');
+        return;
+      }
       if (!routeAuthError(err)) alert(err.message);
     } finally {
       setIsLoading(false);
@@ -190,14 +328,21 @@ const App: React.FC = () => {
   };
 
   const handleSignup = async (values: SignupFormValues) => {
+    // Final-step consent popup (account terms + data-use notice) — the same
+    // gate every first-time social sign-in passes. Declining aborts signup.
+    try { await requestTermsConsent(); }
+    catch { alert(t.termsDeclined); return; }
+
     setIsLoading(true);
     try {
       const { consent, ...data } = values;   // consent is recorded as termsAcceptedAt/version
-      const activated = await registerUser(data);
-      if (activated) {
+      const result = await registerUser(data);
+      if (result.state === 'active') {
         // Free-access grant applied — the account is live, go straight in.
-        setCurrentUser(activated);
+        setCurrentUser(result.user);
         setCurrentView('APP');
+      } else if (result.state === 'verify-email') {
+        setCurrentView('VERIFY_EMAIL');
       } else {
         setCurrentView('PENDING_APPROVAL');
       }
@@ -205,6 +350,33 @@ const App: React.FC = () => {
       if (!routeAuthError(err)) alert(err.message);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  /** VERIFY_EMAIL screen: user says they clicked the link — ask the server. */
+  const handleVerifyCheck = async () => {
+    setIsLoading(true);
+    try {
+      const fin = await tryFinalizeSignup();
+      if (fin.state === 'active') {
+        setCurrentUser(fin.user);
+        setCurrentView('APP');
+      } else if (fin.state === 'unverified') {
+        alert((t as any).verifyNotYet);
+      } else {
+        alert((t as any).verifyFailed);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleVerifyResend = async () => {
+    try {
+      await resendVerificationEmail();
+      alert((t as any).verifyResent);
+    } catch {
+      alert((t as any).verifyFailed);
     }
   };
 
@@ -566,6 +738,40 @@ const App: React.FC = () => {
       </AuthShell>
     );
   }
+  if (currentView === 'VERIFY_EMAIL') {
+    // Trial flow: the account exists (pending) and a verification mail is out.
+    // The session is kept so "check again" / "resend" work; activation itself
+    // happens server-side (finalizeSignup checks the Auth record).
+    const pendingEmail = currentUser?.email || auth.currentUser?.email || '';
+    return (
+      <AuthShell t={t} language={language} setLanguage={setLanguage}>
+        <GlassCard className="w-full max-w-md p-10 text-center hp-fade-up">
+          <div data-testid="verify-email">
+            <div className="text-6xl mb-6">📧</div>
+            <h2 className="text-2xl font-bold text-white mb-3">{(t as any).verifyTitle}</h2>
+            <p className="text-white/70 mb-2">
+              {(t as any).verifyBodyPre}
+              {pendingEmail && <span className="font-semibold text-emerald-300"> {pendingEmail}</span>}
+            </p>
+            <p className="text-white/50 text-sm mb-8">{(t as any).verifyBody}</p>
+            <button onClick={handleVerifyCheck} disabled={isLoading} className={primaryBtn} data-testid="verify-check">
+              {isLoading ? t.loading : (t as any).verifyCheckBtn}
+            </button>
+            <button onClick={handleVerifyResend} className={`${ghostBtn} mt-3`} data-testid="verify-resend">
+              {(t as any).verifyResendBtn}
+            </button>
+            <button
+              onClick={() => { logoutUser(); setCurrentView('LANDING'); }}
+              className="mt-6 text-white/40 hover:text-white text-sm transition-colors block mx-auto"
+            >
+              ← {t.back}
+            </button>
+          </div>
+        </GlassCard>
+      </AuthShell>
+    );
+  }
+
   if (currentView === 'PENDING_APPROVAL') {
     return (
       <AuthShell t={t} language={language} setLanguage={setLanguage}>
@@ -641,6 +847,22 @@ const App: React.FC = () => {
     );
   }
   if (currentView === 'APP' && currentUser) {
+    // Day-8 gate (data-driven: only accounts the server stamped with a window
+    // can ever expire; admins and legacy accounts never see this). The server
+    // rules already deny data reads — this screen is the honest UI for it.
+    if (accessExpired(currentUser, myOrg)) {
+      return (
+        <SubscribeGate
+          t={t}
+          language={language}
+          setLanguage={setLanguage}
+          user={currentUser}
+          isMemberOfTeam={currentUser.orgRole === 'member'}
+          onRefreshed={setCurrentUser}
+          onLogout={handleLogout}
+        />
+      );
+    }
     // HeatPump DB shell owns its own language toggle (DE|EN in the global nav) —
     // no floating switcher overlay here.
     return (

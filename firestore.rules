@@ -25,6 +25,41 @@ service cloud.firestore {
               (!('status' in me()) && me().isActive == true));
     }
 
+    // ── Owner (global exception) ──────────────────────────────────────────
+    // Primary: the server-set custom claim (Admin SDK only — unforgeable).
+    // Fallback: the Auth-verified owner email (emergency recovery path; the
+    // email must be VERIFIED so a hypothetical recreated unverified account
+    // can never inherit it). Kept deliberately — owner decision 2026-07-27.
+    function ownerToken() {
+      return isSignedIn() &&
+             (request.auth.token.get('owner', false) == true ||
+              (request.auth.token.email == 'sungyongsoo1976@gmail.com' &&
+               request.auth.token.email_verified == true));
+    }
+
+    // ── Access window (trial / subscription gate) ─────────────────────────
+    // Server-written accessUntilTs (finalizeSignup / billing webhook / admin)
+    // is the ONE gating field. An account (or its team) WITHOUT the field is
+    // not window-gated — legacy accounts, and the fail-open principle: a
+    // missing field can never lock out a legitimate user.
+    function windowOpen(data) {
+      return !('accessUntilTs' in data) || request.time < data.accessUntilTs;
+    }
+    function myOrg() {
+      return get(/databases/$(database)/documents/organizations/$(me().orgId)).data;
+    }
+    function orgWindowOpen() {
+      return me().get('orgId', '') != '' &&
+             exists(/databases/$(database)/documents/organizations/$(me().orgId)) &&
+             windowOpen(myOrg());
+    }
+    // Entitled = admin/owner (never gated), or approved with an open window
+    // (own trial/subscription, or the team's — whichever is open suffices).
+    function isEntitled() {
+      return isAdmin() || ownerToken() ||
+             (isApproved() && (windowOpen(me()) || orgWindowOpen()));
+    }
+
     // members[] and memberUids[] describe the same seats: the maps are what the
     // app renders, the uid list is what these rules can actually inspect. Any
     // write that leaves them out of step is rejected, so no code path — client,
@@ -44,11 +79,14 @@ service cloud.firestore {
                get(/databases/$(database)/documents/organizations/$(orgId)).data.invitedEmails;
     }
 
-    // Admin roles: owner, admin, support, ops
+    // Admin roles: owner, admin, support, ops. The owner token (custom claim /
+    // verified owner email) always qualifies, even before the profile doc has
+    // the role backfilled — the owner is never locked out by their own data.
     function isAdmin() {
-      return isSignedIn() &&
-             exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-             me().get('role', 'user') in ['owner', 'admin', 'support', 'ops'];
+      return ownerToken() ||
+             (isSignedIn() &&
+              exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+              me().get('role', 'user') in ['owner', 'admin', 'support', 'ops']);
     }
 
     // ── Users collection ──────────────────────────────────────────────────
@@ -80,13 +118,13 @@ service cloud.firestore {
          request.resource.data.isActive == true &&
          request.resource.data.get('role', 'user') == 'user' &&
          !('subscription' in request.resource.data)) ||
-        // Owner bootstrap profile (matched by the authenticated email).
-        request.auth.token.email == 'sungyongsoo1976@gmail.com'
+        // Owner bootstrap profile (owner claim / verified owner email).
+        ownerToken()
       );
 
       allow update: if isSignedIn() && request.auth.uid == userId && (
         // Owner may maintain their own profile (e.g. role backfill for rules).
-        request.auth.token.email == 'sungyongsoo1976@gmail.com' ||
+        ownerToken() ||
         (
           request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['status', 'isActive', 'deletionRequestedAt', 'deletionNote', 'lastActiveAt']) &&
@@ -109,7 +147,7 @@ service cloud.firestore {
         (
           grantRedemptionValid() &&
           request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['status', 'isActive', 'subscription', 'billingChannel']) &&
+            .hasOnly(['status', 'isActive', 'subscription', 'billingChannel', 'accessUntilTs']) &&
           request.resource.data.status == 'active'
         ) ||
         // Team invite acceptance (join) and leaving a team. Membership itself is
@@ -148,7 +186,12 @@ service cloud.firestore {
              !('revokedAt' in grantData()) &&
              request.resource.data.subscription.provider == 'free_grant' &&
              request.resource.data.subscription.planCode == grantData().planCode &&
-             request.resource.data.subscription.currentPeriodEndsAt == grantData().endsAt;
+             request.resource.data.subscription.currentPeriodEndsAt == grantData().endsAt &&
+             // The access window may only be opened to the grant's own end
+             // Timestamp (endsAtTs, admin-written) — never a free value.
+             (!('accessUntilTs' in request.resource.data) ||
+              ('endsAtTs' in grantData() &&
+               request.resource.data.accessUntilTs == grantData().endsAtTs));
     }
 
     // Free-use registrations (email as doc id, lowercase). Admin writes;
@@ -238,14 +281,39 @@ service cloud.firestore {
     // (printQuotas collection removed 2026-07-12 — data-sheet printing is
     //  unlimited for all members; tiering runs on the subscription program.)
 
+    // ── Email registration history (repeat-trial prevention) ──────────────
+    // Doc id = trim+lowercase email. Written ONLY by the billing Cloud
+    // Functions (Admin SDK bypasses rules); admins may read for support.
+    // Regular users can neither read nor write — signup decisions about this
+    // data are made server-side in finalizeSignup. Entries carry
+    // retentionUntil (deletion + 1 year) and are removed by the Firestore
+    // TTL policy on that field.
+    match /emailRegistry/{email} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // paddleWebhookEvents / paddleAdjustments are Admin-SDK-only (webhook
+    // idempotency + audit); admins may inspect them from the console.
+    match /paddleWebhookEvents/{eventId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+    match /paddleAdjustments/{adjustmentId} {
+      // Created by the webhook (Admin SDK); admins may mark items reviewed.
+      allow read, update: if isAdmin();
+      allow create, delete: if false;
+    }
+
     // ── Country data (news, policies, BAFA, metadata) ─────────────────────
-    // Approved users and admins can read. Writes go through the Cloud Function
-    // (Firebase Admin SDK), which bypasses these rules — but admin users
-    // can also write from the UI if needed.
+    // Entitled users (open trial/subscription window — see isEntitled) and
+    // admins can read. Writes go through the Cloud Function (Firebase Admin
+    // SDK), which bypasses these rules — but admin users can also write from
+    // the UI if needed.
     match /countries/{countryCode} {
-      allow read: if isApproved() || isAdmin();
+      allow read: if isEntitled();
       match /{subcollection}/{docId} {
-        allow read: if isApproved() || isAdmin();
+        allow read: if isEntitled();
         allow write: if isAdmin();
       }
     }

@@ -54,10 +54,11 @@ function loadPaddle(): Promise<any> {
 }
 
 /**
- * Open the Paddle overlay checkout for a plan/term (7-day trial is configured
- * on the Paddle price itself). customData lets the billing webhook attach the
- * subscription to the Firebase account and pick the right plan regardless of
- * the email used at checkout.
+ * Open the Paddle overlay checkout for a plan/term. The free period is the
+ * IN-APP signup trial (no payment method) — Paddle prices carry NO trial, so
+ * checkout charges immediately (program change 2026-07-27). customData lets
+ * the billing webhook attach the subscription to the Firebase account (and
+ * the team org) regardless of the email used at checkout.
  */
 export async function openCheckout(user: User, plan: SubPlanCode, term: BillingTerm): Promise<void> {
   if (!checkoutConfigured(plan, term)) throw new Error('paddle-not-configured');
@@ -65,7 +66,10 @@ export async function openCheckout(user: User, plan: SubPlanCode, term: BillingT
   paddle.Checkout.open({
     items: [{ priceId: paddlePriceId(plan, term), quantity: 1 }],
     customer: user.email ? { email: user.email } : undefined,
-    customData: { userId: user.id, planCode: plan, billingTerm: term, country: user.country ?? '' },
+    customData: {
+      userId: user.id, planCode: plan, billingTerm: term,
+      country: user.country ?? '', orgId: user.orgId ?? '',
+    },
     settings: { displayMode: 'overlay', theme: 'dark' },
   });
 }

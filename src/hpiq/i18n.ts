@@ -42,6 +42,22 @@ const EN = {
     copyright: (y: number) => `© ${y} ${BRAND_TM} · All rights reserved.`,
   },
 
+  /** Free-trial countdown nudge (shown on days 5–7; access closes on day 8). */
+  trial: {
+    banner: (d: number) =>
+      d <= 1
+        ? 'Your free trial ends today. Subscribe to keep full access.'
+        : `Your free trial ends in ${d} days. Subscribe to keep full access.`,
+    bannerCta: 'View plans',
+    // Team-during-trial: the org is created BEFORE payment; every member
+    // shares the team admin's trial end date (one date for everyone).
+    teamStartTitle: 'Starting a team?',
+    teamStartBody: 'You can set up your team during the free trial and invite members right away — everyone shares your trial end date, and one payment at the end covers the whole team.',
+    teamStartBtn: (plan: string, seats: number) => `Start ${plan} (${seats} seats) now`,
+    teamStartCreated: 'Team created — you can now invite members from Team management.',
+    teamStartFailed: 'Could not create the team. Please try again.',
+  },
+
   /** Compact-device (phone/tablet) shell strings. */
   m: {
     mdsTitle: 'Data sheet',
@@ -583,7 +599,7 @@ const EN = {
     trialBadge: '7-day free trial',
     teamTrialBadge: '7-day team trial',
     startTrial: 'Start 7-day free trial ›',
-    trialNote: 'Start with a 7-day free trial. Cancel before the trial ends and you will not be charged. Your payment method is registered at sign-up; the first charge is on day 8.',
+    trialNote: 'Every new account starts with a 7-day free trial — full access, no payment details needed. After the trial, subscribing is charged immediately; cancelling stops the next renewal and access runs to the end of the paid period.',
     cancelNote: 'You can cancel at any time. Cancellation stops the next renewal — your access continues until the end of the current paid period.',
     fixedTermNote: 'Plan, seats and billing period are fixed during a paid period. Upgrades and downgrades take effect at the next renewal; team member replacement is always possible.',
     vatNote: 'All prices exclude VAT. VAT is calculated at checkout by Paddle.com (our merchant of record) based on your country and business details.',
@@ -673,6 +689,19 @@ const DE: HpStrings = {
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Alle Rechte vorbehalten.`,
     edition: 'Deutschland-Ausgabe',
     note: 'Produktdaten dienen der Information — prüfen Sie BAFA-, KfW- und EPREL-Quellen vor vertraglicher Nutzung.',
+  },
+
+  trial: {
+    banner: (d: number) =>
+      d <= 1
+        ? 'Ihre kostenlose Testphase endet heute. Abonnieren Sie, um den vollen Zugriff zu behalten.'
+        : `Ihre kostenlose Testphase endet in ${d} Tagen. Abonnieren Sie, um den vollen Zugriff zu behalten.`,
+    bannerCta: 'Tarife ansehen',
+    teamStartTitle: 'Ein Team aufbauen?',
+    teamStartBody: 'Sie können Ihr Team bereits während der Testphase einrichten und sofort Mitglieder einladen — alle teilen Ihr Testphasen-Enddatum, und eine Zahlung am Ende deckt das gesamte Team ab.',
+    teamStartBtn: (plan: string, seats: number) => `${plan} (${seats} Plätze) jetzt starten`,
+    teamStartCreated: 'Team erstellt — Sie können jetzt über die Teamverwaltung Mitglieder einladen.',
+    teamStartFailed: 'Das Team konnte nicht erstellt werden. Bitte versuchen Sie es erneut.',
   },
 
   find: {
@@ -1184,7 +1213,7 @@ const DE: HpStrings = {
     trialBadge: '7 Tage kostenlos testen',
     teamTrialBadge: '7 Tage Team-Testphase',
     startTrial: '7 Tage kostenlos testen ›',
-    trialNote: 'Starten Sie mit 7 Tagen kostenloser Testphase. Bei Kündigung vor Ablauf der Testphase wird nichts berechnet. Die Zahlungsmethode wird bei der Anmeldung hinterlegt; die erste Abbuchung erfolgt an Tag 8.',
+    trialNote: 'Jedes neue Konto startet mit einer 7-tägigen kostenlosen Testphase — voller Zugriff, keine Zahlungsdaten erforderlich. Nach der Testphase wird das Abonnement sofort berechnet; bei Kündigung endet nur die nächste Verlängerung, der Zugang läuft bis zum Ende des bezahlten Zeitraums.',
     cancelNote: 'Sie können jederzeit kündigen. Die Kündigung stoppt die nächste Verlängerung — Ihr Zugang bleibt bis zum Ende des bezahlten Zeitraums bestehen.',
     fixedTermNote: 'Tarif, Plätze und Abrechnungszeitraum sind während eines bezahlten Zeitraums fest. Upgrades und Downgrades gelten ab der nächsten Verlängerung; der Austausch von Teammitgliedern ist jederzeit möglich.',
     vatNote: 'Alle Preise zzgl. MwSt. Die MwSt. wird beim Checkout von Paddle.com (unserem Merchant of Record) anhand Ihres Landes und Ihrer Unternehmensdaten berechnet.',
@@ -1639,6 +1668,19 @@ const FR_FR: HpStrings = {
     edition: 'Édition France',
     note: 'Données produits à titre informatif — vérifiez France Rénov’, l’ANAH et les sources fabricants avant tout usage contractuel.',
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Tous droits réservés.`,
+  },
+
+  trial: {
+    banner: (d: number) =>
+      d <= 1
+        ? 'Votre essai gratuit se termine aujourd’hui. Abonnez-vous pour conserver l’accès complet.'
+        : `Votre essai gratuit se termine dans ${d} jours. Abonnez-vous pour conserver l’accès complet.`,
+    bannerCta: 'Voir les offres',
+    teamStartTitle: 'Créer une équipe ?',
+    teamStartBody: 'Vous pouvez créer votre équipe pendant l’essai gratuit et inviter des membres immédiatement — tous partagent votre date de fin d’essai, et un seul paiement à la fin couvre toute l’équipe.',
+    teamStartBtn: (plan: string, seats: number) => `Démarrer ${plan} (${seats} sièges) maintenant`,
+    teamStartCreated: 'Équipe créée — vous pouvez inviter des membres depuis la gestion d’équipe.',
+    teamStartFailed: 'Impossible de créer l’équipe. Veuillez réessayer.',
   },
 
   find: {
@@ -2151,7 +2193,7 @@ const FR_FR: HpStrings = {
     trialBadge: '7 jours d’essai gratuit',
     teamTrialBadge: '7 jours d’essai équipe',
     startTrial: 'Commencer 7 jours d’essai gratuit ›',
-    trialNote: 'Commencez par 7 jours d’essai gratuit. Annulez avant la fin de l’essai et rien ne vous sera facturé. Le moyen de paiement est enregistré à l’inscription ; le premier débit a lieu le 8e jour.',
+    trialNote: 'Chaque nouveau compte commence par 7 jours d’essai gratuit — accès complet, sans coordonnées de paiement. Après l’essai, l’abonnement est débité immédiatement ; en cas d’annulation, l’accès reste actif jusqu’à la fin de la période payée.',
     cancelNote: 'Vous pouvez annuler à tout moment. L’annulation arrête le prochain renouvellement — votre accès reste actif jusqu’à la fin de la période payée.',
     fixedTermNote: 'Offre, sièges et période de facturation sont fixes pendant une période payée. Les changements d’offre prennent effet au prochain renouvellement ; le remplacement des membres de l’équipe est possible à tout moment.',
     vatNote: 'Tous les prix s’entendent hors TVA. La TVA est calculée au paiement par Paddle.com (notre revendeur officiel) selon votre pays et vos informations professionnelles.',
@@ -2436,6 +2478,19 @@ const PL_PL: HpStrings = {
     edition: 'Edycja polska',
     note: 'Dane produktów mają charakter informacyjny — przed użyciem w celach umownych zweryfikuj źródła programu Czyste Powietrze, listy ZUM i producentów.',
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Wszelkie prawa zastrzeżone.`,
+  },
+
+  trial: {
+    banner: (d: number) =>
+      d <= 1
+        ? 'Twój bezpłatny okres próbny kończy się dzisiaj. Wykup subskrypcję, aby zachować pełny dostęp.'
+        : `Twój bezpłatny okres próbny kończy się za ${d} dni. Wykup subskrypcję, aby zachować pełny dostęp.`,
+    bannerCta: 'Zobacz plany',
+    teamStartTitle: 'Tworzysz zespół?',
+    teamStartBody: 'Zespół możesz założyć już w okresie próbnym i od razu zapraszać członków — wszyscy dzielą Twoją datę końca okresu próbnego, a jedna płatność na końcu obejmuje cały zespół.',
+    teamStartBtn: (plan: string, seats: number) => `Uruchom ${plan} (${seats} miejsc) teraz`,
+    teamStartCreated: 'Zespół utworzony — członków zaprosisz w zarządzaniu zespołem.',
+    teamStartFailed: 'Nie udało się utworzyć zespołu. Spróbuj ponownie.',
   },
 
   find: {
@@ -2949,7 +3004,7 @@ const PL_PL: HpStrings = {
     trialBadge: '7 dni bezpłatnie',
     teamTrialBadge: '7-dniowy okres próbny zespołu',
     startTrial: 'Rozpocznij 7 dni bezpłatnie ›',
-    trialNote: 'Zacznij od 7-dniowego bezpłatnego okresu próbnego. Anuluj przed jego końcem, a nie zostanie pobrana żadna opłata. Metoda płatności jest rejestrowana przy zapisie; pierwsza opłata następuje 8. dnia.',
+    trialNote: 'Każde nowe konto zaczyna od 7-dniowego bezpłatnego okresu próbnego — pełny dostęp, bez podawania danych płatniczych. Po okresie próbnym subskrypcja jest opłacana od razu; po anulowaniu dostęp trwa do końca opłaconego okresu.',
     cancelNote: 'Możesz anulować w każdej chwili. Anulowanie zatrzymuje kolejne odnowienie — dostęp trwa do końca opłaconego okresu.',
     fixedTermNote: 'Plan, miejsca i okres rozliczeniowy są stałe w trakcie opłaconego okresu. Zmiany planu wchodzą w życie przy następnym odnowieniu; wymiana członków zespołu jest możliwa zawsze.',
     vatNote: 'Wszystkie ceny nie zawierają VAT. VAT jest naliczany przy płatności przez Paddle.com (naszego sprzedawcę rejestrowego) na podstawie kraju i danych firmy.',
@@ -3239,6 +3294,19 @@ const IT_IT: HpStrings = {
     edition: 'Edizione Italia',
     note: 'I dati dei prodotti hanno carattere informativo — prima dell’uso contrattuale verificare le fonti GSE (Conto Termico), Agenzia delle Entrate e dei produttori.',
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Tutti i diritti riservati.`,
+  },
+
+  trial: {
+    banner: (d: number) =>
+      d <= 1
+        ? 'La tua prova gratuita termina oggi. Abbonati per mantenere l’accesso completo.'
+        : `La tua prova gratuita termina tra ${d} giorni. Abbonati per mantenere l’accesso completo.`,
+    bannerCta: 'Vedi i piani',
+    teamStartTitle: 'Vuoi creare un team?',
+    teamStartBody: 'Puoi configurare il tuo team già durante la prova gratuita e invitare subito i membri — tutti condividono la tua data di fine prova, e un unico pagamento finale copre l’intero team.',
+    teamStartBtn: (plan: string, seats: number) => `Avvia ${plan} (${seats} posti) ora`,
+    teamStartCreated: 'Team creato — ora puoi invitare i membri dalla gestione del team.',
+    teamStartFailed: 'Impossibile creare il team. Riprova.',
   },
 
   find: {
@@ -3759,7 +3827,7 @@ const IT_IT: HpStrings = {
     trialBadge: '7 giorni di prova gratuita',
     teamTrialBadge: 'Prova di team di 7 giorni',
     startTrial: 'Inizia 7 giorni di prova gratuita ›',
-    trialNote: 'Inizia con 7 giorni di prova gratuita. Annulla prima della fine della prova e non ti verrà addebitato nulla. Il metodo di pagamento è registrato all’iscrizione; il primo addebito avviene l’8° giorno.',
+    trialNote: 'Ogni nuovo account inizia con 7 giorni di prova gratuita — accesso completo, senza dati di pagamento. Dopo la prova, l’abbonamento viene addebitato subito; in caso di annullamento l’accesso resta attivo fino alla fine del periodo pagato.',
     cancelNote: 'Puoi annullare in qualsiasi momento. L’annullamento ferma il rinnovo successivo — l’accesso continua fino alla fine del periodo pagato.',
     fixedTermNote: 'Piano, posti e periodo di fatturazione sono fissi durante un periodo pagato. Upgrade e downgrade hanno effetto al rinnovo successivo; la sostituzione dei membri del team è sempre possibile.',
     vatNote: 'Tutti i prezzi sono IVA esclusa. L’IVA è calcolata al pagamento da Paddle.com (il nostro merchant of record) in base al paese e ai dati aziendali.',

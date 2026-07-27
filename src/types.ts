@@ -292,6 +292,19 @@ export type CompanyType = string;
 /** @deprecated Job role is no longer collected. Legacy documents may still carry it. */
 export type JobRole = string;
 
+/**
+ * A Firestore Timestamp as the client sees it after a server (Admin SDK) write:
+ * a Timestamp object ({ toMillis() } / { seconds }), or an ISO string from
+ * legacy/manual writes. Convert with tsToMillis() (config/entitlement.ts) —
+ * never compare these values directly.
+ */
+export type FirestoreTimestampLike =
+  | { toMillis: () => number }
+  | { seconds: number; nanoseconds?: number }
+  | string
+  | number
+  | null;
+
 export interface User {
   id: string;
   email: string;
@@ -319,6 +332,20 @@ export interface User {
   /** Versions consented to (config/legal.ts). Minimal consent record — no history log. */
   termsVersion?: string;
   privacyVersion?: string;
+  /** Data-use consent (anti-extraction notice) at signup — server-stamped by finalizeSignup. */
+  dataUseConsentAt?: string;
+  dataUseConsentVersion?: string;
+  // ── Trial / access window (server-written ONLY: finalizeSignup / webhook / admin) ──
+  /** Firestore Timestamp (or ISO string) — set once, at the account's first activation. */
+  trialStartedAt?: FirestoreTimestampLike;
+  trialEndsAt?: FirestoreTimestampLike;
+  /**
+   * The single rules-facing access window: security rules allow product/data
+   * reads while request.time < accessUntilTs. Absent = no window enforced
+   * (legacy accounts). Covers trial AND paid periods uniformly; extended by the
+   * billing webhook on every successful payment. Never written by client code.
+   */
+  accessUntilTs?: FirestoreTimestampLike;
   /** Optional, opt-in, never bundled with the required Terms acceptance. */
   marketingConsent?: boolean;
   lastActiveAt?: string;
@@ -382,9 +409,14 @@ export interface Organization {
   planCode: 'team_3' | 'team_5';
   seatLimit: number;
   subscriptionStatus: 'trialing' | 'active' | 'past_due' | 'canceled' | 'expired';
-  /** Team trial is anchored to the admin's checkout — one date for everyone. */
-  trialEndsAt?: string | null;
+  /** Team trial is anchored to the ADMIN's own signup trial — one date for everyone. */
+  trialEndsAt?: FirestoreTimestampLike;
   currentPeriodEndsAt?: string | null;
+  /**
+   * Rules-facing team access window (mirror of the admin's). Members are
+   * entitled while request.time < org.accessUntilTs. Server-written only.
+   */
+  accessUntilTs?: FirestoreTimestampLike;
   /** Occupied seats (includes the owner). Length must stay <= seatLimit. */
   members: { uid: string; email: string; name?: string }[];
   /**
@@ -430,6 +462,13 @@ export interface FreeAccessGrant {
   planCode: 'professional' | 'team_3' | 'team_5';
   startsAt: string;
   endsAt: string;
+  /**
+   * endsAt as a Firestore Timestamp, written by the admin at grant creation.
+   * Rules cannot parse ISO strings, so redemption copies THIS value into the
+   * user's accessUntilTs (rules verify the equality) — that is how a grant
+   * opens the trial/subscription access window.
+   */
+  endsAtTs?: FirestoreTimestampLike;
   note?: string;
   grantedBy: string;
   createdAt: string;

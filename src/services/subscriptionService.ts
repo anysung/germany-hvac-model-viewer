@@ -16,7 +16,7 @@
  */
 import {
   collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, deleteField,
-  query, where, arrayUnion, arrayRemove,
+  query, where, arrayUnion, arrayRemove, Timestamp,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import {
@@ -215,6 +215,9 @@ export async function adminAssignSubscription(
   const update: Record<string, any> = {
     subscription: sub,
     billingChannel: opts.provider === 'free_grant' ? 'admin_grant' : 'paddle',
+    // Open the rules-facing access window to the period end (admin writes are
+    // the ops backstop when the webhook is late — the gate must follow).
+    accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
   };
 
   if (isTeamPlan(plan) && (plan === 'team_3' || plan === 'team_5')) {
@@ -227,6 +230,7 @@ export async function adminAssignSubscription(
         seatLimit: SUB_PLANS[plan].seatLimit,
         subscriptionStatus: sub.status,
         currentPeriodEndsAt: periodEnd,
+        accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
         // Backfill for organizations created before memberUids existed — the
         // security rules read that list, so a missing one would break join/leave.
         ...(existing.memberUids ? {} : membersPatch(existing.members)),
@@ -243,6 +247,7 @@ export async function adminAssignSubscription(
         subscriptionStatus: sub.status,
         trialEndsAt: sub.trialEndsAt ?? null,
         currentPeriodEndsAt: periodEnd,
+        accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
         ...membersPatch([{ uid: target.id, email: emailKey(target.email), name: [target.firstName, target.lastName].filter(Boolean).join(' ') }]),
         invitedEmails: [],
         invitedAt: {},
@@ -263,13 +268,15 @@ export async function adminAssignSubscription(
   await updateDoc(doc(db, 'users', target.id), update);
 }
 
-/** Admin: end a subscription immediately (refund handling stays in Paddle). */
+/** Admin: end a subscription immediately (refund handling stays in Paddle).
+ *  An EXPLICIT owner/admin stop is the one sanctioned way to close the access
+ *  window early — payment-system ambiguity never does this automatically. */
 export async function adminClearSubscription(target: User): Promise<void> {
-  const update: Record<string, any> = {};
+  const update: Record<string, any> = { accessUntilTs: Timestamp.now() };
   if (target.subscription) update['subscription.status'] = 'expired';
   await updateDoc(doc(db, 'users', target.id), update);
   if (target.orgId && target.orgRole === 'team_admin') {
-    await updateDoc(doc(db, ORGS, target.orgId), { subscriptionStatus: 'expired' });
+    await updateDoc(doc(db, ORGS, target.orgId), { subscriptionStatus: 'expired', accessUntilTs: Timestamp.now() });
   }
 }
 
@@ -296,8 +303,11 @@ export async function createGrant(
   existingUser: User | null,
 ): Promise<void> {
   const key = emailKey(email);
+  // endsAtTs mirrors endsAt as a Timestamp: rules cannot parse ISO strings, so
+  // self-redemption copies THIS value into accessUntilTs (rules check equality).
+  const endsAtTs = Timestamp.fromDate(new Date(endsAt));
   const grant: FreeAccessGrant = {
-    email: key, planCode: plan, startsAt, endsAt,
+    email: key, planCode: plan, startsAt, endsAt, endsAtTs,
     note: note || '', grantedBy, createdAt: nowIso(),
     ...(existingUser ? { redeemedByUid: existingUser.id, redeemedAt: nowIso() } : {}),
   };
@@ -313,6 +323,7 @@ export async function createGrant(
     await updateDoc(doc(db, 'users', existingUser.id), {
       status: 'active', isActive: true,
       subscription: sub, billingChannel: 'admin_grant',
+      accessUntilTs: endsAtTs,
     });
   }
 }
@@ -322,9 +333,12 @@ export async function revokeGrant(email: string): Promise<void> {
   const snap = await getDoc(doc(db, GRANTS, key));
   if (!snap.exists()) return;
   const grant = snap.data() as FreeAccessGrant;
-  await updateDoc(doc(db, GRANTS, key), { revokedAt: nowIso(), endsAt: nowIso() });
+  await updateDoc(doc(db, GRANTS, key), { revokedAt: nowIso(), endsAt: nowIso(), endsAtTs: Timestamp.now() });
   if (grant.redeemedByUid) {
-    await updateDoc(doc(db, 'users', grant.redeemedByUid), { 'subscription.status': 'expired' });
+    // Explicit admin revocation — the sanctioned early close of the window.
+    await updateDoc(doc(db, 'users', grant.redeemedByUid), {
+      'subscription.status': 'expired', accessUntilTs: Timestamp.now(),
+    });
   }
 }
 
