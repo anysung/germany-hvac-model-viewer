@@ -693,7 +693,8 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                       const bg = ri % 2 ? '#fafafa' : '#fff';
                       return (
                         <React.Fragment key={row.label}>
-                          <div style={{ padding: '16px 20px', background: bg, borderTop: '1px solid #ececec', fontSize: 13, color: '#7a7a7a', display: 'flex', alignItems: 'center' }}>{row.label}</div>
+                          {/* spec label — one size up + bold; values centre-align (model names stay left) */}
+                          <div style={{ padding: '16px 20px', background: bg, borderTop: '1px solid #ececec', fontSize: 14, fontWeight: 650, color: '#555', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.label}</div>
                           {compareItems.map(c => {
                             const isBest = best != null && row.metric!(c) === best;
                             return (
@@ -701,7 +702,7 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                                 key={`${row.label}-${c.id}`}
                                 style={{
                                   padding: '16px 22px', background: bg, borderTop: '1px solid #ececec', borderLeft: '1px solid #ececec',
-                                  minWidth: 0, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', gap: 9,
+                                  minWidth: 0, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 9,
                                   ...(row.strong ? { fontWeight: 600 } : {}),
                                   ...(row.dim ? { fontSize: 13, color: '#7a7a7a' } : {}),
                                   ...(isBest ? { color: '#0a7a43', fontWeight: 650 } : {}),
