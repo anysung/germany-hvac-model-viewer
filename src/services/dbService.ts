@@ -1,8 +1,9 @@
 import { collection, getDocs, getDoc, doc, query, limit } from 'firebase/firestore';
-import { ref, getBlob } from 'firebase/storage';
+import { ref, getBlob, getMetadata as getStorageMetadata, type StorageReference } from 'firebase/storage';
 import { db, datasetStorage } from '../firebase';
 import { HeatPump, NewsItem, PolicyItem, BAFAItem } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
+import { cacheGet, cachePut } from './datasetCache';
 
 // Firestore collection paths — derived from the active country profile so that
 // all country-specific routing is driven by ACTIVE_COUNTRY, not hardcoded strings.
@@ -37,6 +38,24 @@ const isHoneytokenRecord = (p: HeatPump): boolean =>
 // Errors propagate to the caller (App.tsx loadData): a failed dataset download
 // must surface as a visible error + retry, never as a silently empty catalogue
 // (the 2026-07-18 PL incident hid an access-layer failure behind "0 products").
+
+/**
+ * Background revalidation for a cached dataset: one cheap metadata call (md5)
+ * decides whether to refresh the cache for the NEXT visit. Data is never
+ * swapped mid-session, and every failure here is silent — the session already
+ * rendered from cache, so nothing user-visible can go wrong.
+ */
+const revalidateDataset = (storageRef: StorageReference, key: string, cachedMd5: string): void => {
+  getStorageMetadata(storageRef)
+    .then(async meta => {
+      const md5 = meta.md5Hash ?? '';
+      if (md5 && md5 === cachedMd5) return;   // cache is current — nothing to do
+      const blob = await getBlob(storageRef);
+      await cachePut({ key, text: await blob.text(), md5, cachedAt: Date.now() });
+    })
+    .catch(() => { /* offline / transient — retry next visit */ });
+};
+
 const loadProductsFromJson = async (path: string): Promise<HeatPump[]> => {
   let data: any;
   if (import.meta.env.DEV) {
@@ -45,8 +64,32 @@ const loadProductsFromJson = async (path: string): Promise<HeatPump[]> => {
     data = await resp.json();
   } else {
     const file = path.split('/').pop()!;
-    const blob = await getBlob(ref(datasetStorage, `datasets/${ACTIVE_COUNTRY.code}/${file}`));
-    data = JSON.parse(await blob.text());
+    const key = `datasets/${ACTIVE_COUNTRY.code}/${file}`;
+    const storageRef = ref(datasetStorage, key);
+
+    // Cache-first with background revalidation (stale-while-revalidate).
+    // Any cache problem — missing, unreadable, corrupt JSON — falls through
+    // to the plain network path below, exactly as before the cache existed.
+    const cached = await cacheGet(key);
+    if (cached) {
+      try {
+        data = JSON.parse(cached.text);
+        revalidateDataset(storageRef, key, cached.md5);
+      } catch {
+        data = null;   // corrupt cache record → network below overwrites it
+      }
+    }
+
+    if (!data) {
+      const blob = await getBlob(storageRef);
+      const text = await blob.text();
+      data = JSON.parse(text);
+      // Store for next visit (best effort, off the critical path). The md5 is
+      // fetched separately; '' means "unknown" and forces a refresh next time.
+      getStorageMetadata(storageRef)
+        .then(meta => cachePut({ key, text, md5: meta.md5Hash ?? '', cachedAt: Date.now() }))
+        .catch(() => cachePut({ key, text, md5: '', cachedAt: Date.now() }));
+    }
   }
   return ((data.items || []) as HeatPump[]).filter(p => !isHoneytokenRecord(p));
 };

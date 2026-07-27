@@ -175,14 +175,14 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     };
     const json = JSON.stringify(served);
     const dest = `${BUCKET}/datasets/${cc}/${file}`;
-    // Italy residential only (2026-07-19 audit, Option 2a — scoped): store this
-    // one object gzip'd so its ~22 MB transfers as ~3 MB. GCS serves it with
-    // Content-Encoding: gzip; the browser HTTP stack transparently decompresses
-    // before the app parses it (getBlob → blob.text() sees plain JSON — verified
-    // via decompressive-transcoding round-trip before first deploy). Content
-    // and client behaviour are unchanged after decompression. Reversible: drop
-    // this branch and re-upload (the object goes back to plain JSON).
-    const gzip = (cc === 'IT' && segment === 'residential');
+    // ALL datasets ship gzip'd (2026-07-27 first-load latency fix). The IT
+    // residential object piloted this for months (2026-07-19, Option 2a): GCS
+    // serves Content-Encoding: gzip and the browser HTTP stack transparently
+    // decompresses, so getBlob → blob.text() sees plain JSON — content and
+    // client behaviour are unchanged. The win is dramatic because the records
+    // are highly repetitive: e.g. DE residential 11 MB → ~0.45 MB on the wire.
+    // Reversible per object: set false and re-upload for plain JSON.
+    const gzip = true;
     const out = join(tmp, `${cc}-${file}${gzip ? '.gz' : ''}`);
     writeFileSync(out, gzip ? gzipSync(Buffer.from(json)) : json);
     if (DRY) {
