@@ -19,6 +19,7 @@
 import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { gzipSync } from 'node:zlib';
+import { createHash } from 'node:crypto';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -145,8 +146,30 @@ if (!DRY && !GATE_PASSED) {
   }
 }
 
+/**
+ * PRE-PUBLISH SNAPSHOT (docs/DATASET_ROLLBACK_AND_PANIC.md, 2026-07-27).
+ * The complete live set is copied server-side to snapshots/<runId>/ BEFORE the
+ * first overwrite. That snapshot is the run's rollback point: it is
+ * self-consistent by construction (it IS what was serving), so a mid-run
+ * failure or a bad publish is always recoverable as a full set — never as
+ * per-object generations, which could mix update epochs.
+ */
+const RUN_ID = 'snap-' + new Date().toISOString().replace(/[-:]/g, '').replace('T', '-').slice(0, 15);
+if (!DRY) {
+  console.log(`Snapshotting the live set → ${BUCKET}/snapshots/${RUN_ID}/ …`);
+  try {
+    execFileSync('gcloud', ['storage', 'cp', '-r', `${BUCKET}/datasets`, `${BUCKET}/snapshots/${RUN_ID}/`],
+      { stdio: ['ignore', 'ignore', 'inherit'] });
+  } catch {
+    console.error('✗ Snapshot failed — ABORTING before any upload. Production is unchanged.');
+    process.exit(1);
+  }
+}
+
 const tmp = mkdtempSync(join(tmpdir(), 'hpdb-datasets-'));
 let failed = false;
+/** Per-object record for data_manifests/stable-release.json. */
+const uploadedObjects = [];
 
 for (const [cc, files] of Object.entries(DATASETS)) {
   for (const [segment, file] of Object.entries(files)) {
@@ -184,7 +207,8 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     // Reversible per object: set false and re-upload for plain JSON.
     const gzip = true;
     const out = join(tmp, `${cc}-${file}${gzip ? '.gz' : ''}`);
-    writeFileSync(out, gzip ? gzipSync(Buffer.from(json)) : json);
+    const body = gzip ? gzipSync(Buffer.from(json)) : Buffer.from(json);
+    writeFileSync(out, body);
     if (DRY) {
       console.log(`[dry-run] would upload ${served.items.length} items → ${dest}${gzip ? ' (gzip)' : ''}`);
       continue;
@@ -197,8 +221,42 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     if (gzip) args.push('--content-encoding=gzip');
     execFileSync('gcloud', args, { stdio: ['ignore', 'ignore', 'inherit'] });
     console.log(`✓ ${dest}  (${served.items.length} items incl. canary${gzip ? ', gzip' : ''})`);
+    uploadedObjects.push({
+      path: `datasets/${cc}/${file}`,
+      country: cc,
+      segment,
+      items: served.items.length,
+      // GCS md5Hash is the md5 of the STORED bytes (the gzip body), base64.
+      md5: createHash('md5').update(body).digest('base64'),
+    });
   }
 }
 
 rmSync(tmp, { recursive: true, force: true });
 if (failed) process.exit(1);
+
+if (!DRY) {
+  // ── Stable-release manifest + serving self-check ─────────────────────────
+  writeFileSync(join(ROOT, 'data_manifests/stable-release.json'), JSON.stringify({
+    runId: RUN_ID,
+    publishedAt: new Date().toISOString(),
+    preUpdateSnapshot: `snapshots/${RUN_ID}/`,
+    objects: uploadedObjects,
+  }, null, 2) + '\n');
+  console.log('✓ data_manifests/stable-release.json written — commit it with the gate approval.');
+
+  console.log('\nVerifying the SERVED datasets (scripts/verify-serving.mjs)…');
+  try {
+    execFileSync(process.execPath, [join(ROOT, 'scripts/verify-serving.mjs')], { stdio: 'inherit' });
+  } catch {
+    console.error(`\n✗ Serving verification FAILED — restoring pre-update snapshot ${RUN_ID} in full…`);
+    try {
+      execFileSync('gcloud', ['storage', 'cp', '-r', `${BUCKET}/snapshots/${RUN_ID}/datasets/*`, `${BUCKET}/datasets/`],
+        { stdio: ['ignore', 'ignore', 'inherit'] });
+      console.error('✓ Snapshot restored — production serves the pre-update state again.');
+    } catch {
+      console.error('✗ AUTOMATIC RESTORE FAILED — follow the manual runbook: docs/DATASET_ROLLBACK_AND_PANIC.md');
+    }
+    process.exit(1);
+  }
+}

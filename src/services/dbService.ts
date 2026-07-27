@@ -51,9 +51,15 @@ const revalidateDataset = (storageRef: StorageReference, key: string, cachedMd5:
       const md5 = meta.md5Hash ?? '';
       if (md5 && md5 === cachedMd5) return;   // cache is current — nothing to do
       const blob = await getBlob(storageRef);
-      await cachePut({ key, text: await blob.text(), md5, cachedAt: Date.now() });
+      const text = await blob.text();
+      // Validate BEFORE caching: a bad published file must never poison the
+      // cache (it would otherwise replace known-good data on the next visit).
+      // The current session is unaffected either way — it rendered from cache.
+      const fresh = JSON.parse(text);         // throws → catch below, cache kept
+      if (!Array.isArray(fresh?.items) || fresh.items.length < 100) return;
+      await cachePut({ key, text, md5, cachedAt: Date.now() });
     })
-    .catch(() => { /* offline / transient — retry next visit */ });
+    .catch(() => { /* offline / transient / invalid download — keep the cache */ });
 };
 
 const loadProductsFromJson = async (path: string): Promise<HeatPump[]> => {

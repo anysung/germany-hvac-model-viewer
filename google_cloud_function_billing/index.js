@@ -31,6 +31,9 @@ const crypto = require('crypto');
 admin.initializeApp();
 const db = admin.firestore();
 const { Timestamp, FieldValue } = admin.firestore;
+// firebase-admin bundles @google-cloud/storage — no extra dependency needed.
+const gcs = admin.storage();
+const DATASET_BUCKET = 'heatpumpdb-datasets';
 
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
 const TRIAL_DAYS = 7;
@@ -374,6 +377,124 @@ async function deleteAccount(req, res) {
 }
 
 // ---------------------------------------------------------------------------
+// Dataset ops: /rollbackStatus + /panicRollback
+// (docs/DATASET_ROLLBACK_AND_PANIC.md — owner-only manual override)
+//
+// The restore unit is ALWAYS a complete snapshot SET (snapshots/<runId>/…),
+// never per-object generations — sequential uploads mean per-object restores
+// could mix update epochs. Copying preserves contentType/contentEncoding, so
+// restored objects serve exactly as they did.
+// ---------------------------------------------------------------------------
+
+/** Owner check: custom claim first, verified owner email as recovery path. */
+async function verifyOwner(req) {
+  const caller = await verifyCaller(req);
+  if (!caller) return null;
+  if (caller.owner === true) return caller;
+  if (caller.email === OWNER_EMAIL && caller.email_verified === true) return caller;
+  return null;
+}
+
+async function listLiveObjects() {
+  const [files] = await gcs.bucket(DATASET_BUCKET).getFiles({ prefix: 'datasets/' });
+  return files.map(f => ({
+    path: f.name,
+    md5: f.metadata.md5Hash || '',
+    size: Number(f.metadata.size || 0),
+    updated: f.metadata.updated || '',
+    contentEncoding: f.metadata.contentEncoding || '',
+  }));
+}
+
+async function listSnapshots() {
+  // Snapshot ids are the top-level "directories" under snapshots/.
+  const [, , resp] = await gcs.bucket(DATASET_BUCKET).getFiles({ prefix: 'snapshots/', delimiter: '/', autoPaginate: false });
+  return ((resp && resp.prefixes) || []).map(p => p.replace(/^snapshots\//, '').replace(/\/$/, '')).sort().reverse();
+}
+
+async function rollbackStatus(req, res) {
+  const owner = await verifyOwner(req);
+  if (!owner) return sendErr(res, 403, 'owner-only');
+  const [live, snapshots, lockSnap] = await Promise.all([
+    listLiveObjects(),
+    listSnapshots(),
+    db.collection('opsAuditLog').doc('_panicLock').get(),
+  ]);
+  return res.status(200).json({
+    ok: true,
+    live,
+    snapshots,
+    lock: lockSnap.exists ? lockSnap.data() : null,
+  });
+}
+
+async function panicRollback(req, res) {
+  const owner = await verifyOwner(req);
+  if (!owner) return sendErr(res, 403, 'owner-only');
+  const { snapshotId, confirm } = req.body || {};
+  if (confirm !== 'ROLLBACK') return sendErr(res, 400, 'confirmation-required');
+  if (!/^[A-Za-z0-9_-]+$/.test(String(snapshotId || ''))) return sendErr(res, 400, 'bad-snapshot-id');
+
+  // Single-flight lock (5 min TTL) — double clicks and concurrent operators
+  // must not interleave two restores.
+  const lockRef = db.collection('opsAuditLog').doc('_panicLock');
+  const acquired = await db.runTransaction(async tx => {
+    const snap = await tx.get(lockRef);
+    const now = Date.now();
+    const cur = snap.exists ? snap.data() : null;
+    if (cur && cur.expiresAtMs > now) return false;
+    tx.set(lockRef, { by: owner.uid, snapshotId, startedAt: nowIso(), expiresAtMs: now + 5 * 60_000 });
+    return true;
+  });
+  if (!acquired) return sendErr(res, 409, 'rollback-in-progress');
+
+  const audit = {
+    action: 'panic-rollback',
+    snapshotId,
+    by: owner.uid,
+    byEmail: owner.email || '',
+    startedAt: nowIso(),
+  };
+  try {
+    const bucket = gcs.bucket(DATASET_BUCKET);
+    const prefix = `snapshots/${snapshotId}/datasets/`;
+    const [files] = await bucket.getFiles({ prefix });
+    if (files.length === 0) throw new Error('snapshot-empty-or-missing');
+
+    // Restore the WHOLE set: snapshots/<id>/datasets/CC/file → datasets/CC/file.
+    const restored = [];
+    for (const f of files) {
+      const dest = f.name.slice(`snapshots/${snapshotId}/`.length);
+      if (!dest.startsWith('datasets/')) continue;
+      await f.copy(bucket.file(dest));
+      restored.push(dest);
+    }
+    if (restored.length === 0) throw new Error('nothing-restored');
+
+    // Post-restore verification: every restored object parses and has items.
+    const verified = [];
+    for (const path of restored) {
+      const [buf] = await bucket.file(path).download();   // download() gunzips per contentEncoding
+      const data = JSON.parse(buf.toString('utf8'));
+      if (!Array.isArray(data.items) || data.items.length < 100) {
+        throw new Error(`post-restore check failed: ${path}`);
+      }
+      verified.push({ path, items: data.items.length });
+    }
+
+    Object.assign(audit, { ok: true, finishedAt: nowIso(), restored: verified });
+    await db.collection('opsAuditLog').add(audit);
+    await lockRef.delete().catch(() => {});
+    return res.status(200).json({ ok: true, restored: verified });
+  } catch (e) {
+    Object.assign(audit, { ok: false, error: String(e && e.message || e), finishedAt: nowIso() });
+    await db.collection('opsAuditLog').add(audit).catch(() => {});
+    await lockRef.delete().catch(() => {});
+    return res.status(200).json({ ok: false, error: audit.error });
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Paddle webhook
 // ---------------------------------------------------------------------------
 
@@ -598,6 +719,8 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/createTeamOrg')) return await createTeamOrg(req, res);
     if (path.endsWith('/deleteAccount')) return await deleteAccount(req, res);
     if (path.endsWith('/paddleWebhook')) return await paddleWebhook(req, res);
+    if (path.endsWith('/rollbackStatus')) return await rollbackStatus(req, res);
+    if (path.endsWith('/panicRollback')) return await panicRollback(req, res);
     return sendErr(res, 404, 'not-found');
   } catch (e) {
     console.error(`accountBilling ${path} error`, e);

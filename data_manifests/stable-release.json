@@ -1,0 +1,78 @@
+{
+  "runId": "snap-20260727-213500",
+  "publishedAt": "2026-07-27T21:35:10.413Z",
+  "preUpdateSnapshot": "snapshots/snap-20260727-213500/",
+  "note": "Initial baseline recorded from the verified live set (2026-07-27) — not an upload run.",
+  "objects": [
+    {
+      "path": "datasets/DE/products.json",
+      "country": "DE",
+      "segment": "residential",
+      "items": 5159,
+      "md5": "5QvHG3IzjS/UpOn8nv+KLg=="
+    },
+    {
+      "path": "datasets/DE/products-commercial.json",
+      "country": "DE",
+      "segment": "commercial",
+      "items": 1949,
+      "md5": "Sx7N4w3n7nrNQLD3DgClCQ=="
+    },
+    {
+      "path": "datasets/GB/products-gb.json",
+      "country": "GB",
+      "segment": "residential",
+      "items": 5159,
+      "md5": "77odrWm+h8ZeDBdBjBLtOQ=="
+    },
+    {
+      "path": "datasets/GB/products-commercial-gb.json",
+      "country": "GB",
+      "segment": "commercial",
+      "items": 1949,
+      "md5": "4dVAO5xQEcB9Zs1KpG8SQw=="
+    },
+    {
+      "path": "datasets/FR/products-fr.json",
+      "country": "FR",
+      "segment": "residential",
+      "items": 5159,
+      "md5": "6KPsjLErseHtbXVXtbuqIA=="
+    },
+    {
+      "path": "datasets/FR/products-commercial-fr.json",
+      "country": "FR",
+      "segment": "commercial",
+      "items": 1949,
+      "md5": "EVNCuAU/VOLadDKVg/S1Aw=="
+    },
+    {
+      "path": "datasets/PL/products-pl.json",
+      "country": "PL",
+      "segment": "residential",
+      "items": 7144,
+      "md5": "tQemSgoAkC0hjHKIPd6BMQ=="
+    },
+    {
+      "path": "datasets/PL/products-commercial-pl.json",
+      "country": "PL",
+      "segment": "commercial",
+      "items": 1986,
+      "md5": "iTqa3mrf7TcozaNiOAtcqA=="
+    },
+    {
+      "path": "datasets/IT/products-it.json",
+      "country": "IT",
+      "segment": "residential",
+      "items": 8500,
+      "md5": "GF8UWCE4dC4CJPDpyg3Cnw=="
+    },
+    {
+      "path": "datasets/IT/products-commercial-it.json",
+      "country": "IT",
+      "segment": "commercial",
+      "items": 2337,
+      "md5": "4RosNHyk7FWiSz9VZGKszg=="
+    }
+  ]
+}

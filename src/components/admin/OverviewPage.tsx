@@ -14,6 +14,7 @@ import { COUNTRY_PROFILES } from '../../config/countryProfiles';
 import { AdminPage } from '../../config/adminConfig';
 import { SectionCard, ActionBadge, PageHeader } from './shared';
 import { AdminLang, ADMIN_I18N } from './adminI18n';
+import { PanicCard } from './PanicCard';
 
 interface OverviewPageProps {
   al: AdminLang;
@@ -113,6 +114,9 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ al, productCount, la
       <PageHeader title={A.ovTitle} subtitle={A.ovSubtitle} />
 
       {/* Action needed */}
+      {/* Owner hard-fallback: full-set dataset restore (server enforces owner-only). */}
+      <PanicCard al={al} />
+
       <SectionCard title={A.ovAlerts} icon="🔔" className="mb-6">
         {alerts.length === 0 ? (
           <div className="text-sm text-gray-400">{A.ovNoAlerts}</div>
