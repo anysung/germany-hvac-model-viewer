@@ -32,6 +32,8 @@ export interface ProductFilters {
   capMin: number | null;
   capMax: number | null;
   sort: ProductSort;
+  /** Live text query over the search() haystack. Under 2 chars = off. */
+  text: string;
 }
 
 export interface ProductPage {
@@ -84,8 +86,17 @@ export class ProductStore {
       : null;
   }
 
+  /** The one substring haystack — shared by search() and the text filter. */
+  private static hay(v: HpVM): string {
+    return `${v.model} ${v.mfr} ${v.odu} ${v.raw.idu_model ?? ''} ${v.sourceId}`.toLowerCase();
+  }
+
   private applyFilters(filters: ProductFilters): HpVM[] {
     let list = this.all;
+    const needle = (filters.text ?? '').trim().toLowerCase();
+    if (needle.length >= 2) {
+      list = list.filter(v => ProductStore.hay(v).includes(needle));
+    }
     if (filters.refrigerant) {
       const r = filters.refrigerant;
       list = list.filter(v => v.ref.includes(r));
@@ -164,7 +175,7 @@ export class ProductStore {
     const items: HpVM[] = [];
     let total = 0;
     for (const v of this.all) {
-      if (`${v.model} ${v.mfr} ${v.odu} ${v.raw.idu_model ?? ''} ${v.sourceId}`.toLowerCase().includes(needle)) {
+      if (ProductStore.hay(v).includes(needle)) {
         total++;
         if (items.length < max) items.push(v);
       }

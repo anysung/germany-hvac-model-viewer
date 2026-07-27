@@ -31,12 +31,29 @@ const SK2 = ['66%', '75%', '45%', '60%', '55%', '50%', '70%'];
 export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   const t = tr(app.lang);
   const { store } = app;
-  const [mfrExpanded, setMfrExpanded] = useState(false);
+  // Manufacturer facet: the sidebar shows top-5 (or the current selection);
+  // "Show All" opens an inline searchable A–Z panel over the FULL list —
+  // the old view capped the list at a hard-coded 25 of 200+ manufacturers.
+  const [mfrPanelOpen, setMfrPanelOpen] = useState(false);
+  const [mfrSearch, setMfrSearch] = useState('');
   const [sort, setSort] = useState<ProductSort>('cop2');
   const [sortOpen, setSortOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const pendingScrollRef = useRef<string | null>(null);
+
+  // Compare tray responsiveness: below this measured width the chips collapse
+  // into a count badge + popover (minimal mode) — the tray NEVER wraps messily.
+  const trayRef = useRef<HTMLDivElement>(null);
+  const [trayW, setTrayW] = useState(Infinity);
+  const [trayPop, setTrayPop] = useState(false);
+  useEffect(() => {
+    const el = trayRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(es => setTrayW(es[0].contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // Capacity range — [lo, hi] in whole kW over the store's bounds; null = untouched (full range).
   const bounds = store?.kwBounds ?? null;
@@ -53,7 +70,9 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
     capMin: capNarrowed ? capLo : null,
     capMax: capNarrowed ? capHi : null,
     sort,
-  }), [app.refFilter, app.mfrFilter, app.bafaOnly, capNarrowed, capLo, capHi, sort]);
+    // Shared with the Find page (same app.query), AND-combined with the facets.
+    text: app.query,
+  }), [app.refFilter, app.mfrFilter, app.bafaOnly, capNarrowed, capLo, capHi, sort, app.query]);
 
 
   /**
@@ -117,6 +136,12 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   const compareItems = app.compare.map(id => store?.byId.get(id)).filter(Boolean) as HpVM[];
   const compareCount = compareItems.length;
   const canCompare = compareCount >= 2;
+  // Tray display rules: chip text is the first two words (CSS ellipsis caps the
+  // rest; hover shows the full name), 1–2 selections stay on one line, 3+ drop
+  // to a smaller two-column chip grid, and under 560px of tray width the chips
+  // collapse to a count badge + popover. The compare button NEVER reflows.
+  const trayMini = trayW < 560;
+  const chipName = (model: string) => model.split(' ').slice(0, 2).join(' ');
   const showModal = app.showCompare && canCompare;
 
   // Comparison opens as a modal — close on Escape.
@@ -129,11 +154,24 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   }, [showModal]);
 
   const appliedChips: { label: string; onRemove: () => void }[] = [];
+  if (app.query.trim().length >= 2) appliedChips.push({ label: `“${app.query.trim()}”`, onRemove: () => app.setQuery('') });
   if (app.refFilter) appliedChips.push({ label: app.refFilter, onRemove: () => app.setRefFilter(null) });
   app.mfrFilter.forEach(m => appliedChips.push({ label: m, onRemove: () => app.setMfrFilter(app.mfrFilter.filter(x => x !== m)) }));
   if (capNarrowed) appliedChips.push({ label: `${capLo}–${capHi} kW`, onRemove: () => setCapRange(null) });
 
-  const mfrList = (store?.mfrCounts ?? []).slice(0, mfrExpanded ? 25 : 5);
+  // Sidebar shows the SELECTION when one exists (readability after choosing),
+  // otherwise the top-5 by product count. The full A–Z list lives in the panel.
+  const mfrCounts = store?.mfrCounts ?? [];
+  const mfrCountByName = useMemo(() => new Map(mfrCounts.map(m => [m.name, m.count])), [mfrCounts]);
+  const mfrList = app.mfrFilter.length
+    ? app.mfrFilter.map(name => ({ name, count: mfrCountByName.get(name) ?? 0 }))
+    : mfrCounts.slice(0, 5);
+  const mfrAlpha = useMemo(() => {
+    const q = mfrSearch.trim().toLowerCase();
+    return [...mfrCounts]
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter(m => !q || m.name.toLowerCase().includes(q));
+  }, [mfrCounts, mfrSearch]);
 
   const fmtInt = (n: number) => n.toLocaleString(t.locale);
 
@@ -211,10 +249,34 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
           {/* filter rail */}
           <div style={{ flex: '0 0 248px', boxSizing: 'content-box', borderRight: '1px solid rgba(0,0,0,.08)', padding: '20px 20px 24px', display: 'flex', flexDirection: 'column', gap: 22, background: '#fff', overflowY: 'auto' }}>
+            {/* Model search — same engine as the Find page (shared app.query),
+                AND-combined with the facets; results render in the main list. */}
+            <div style={{ position: 'relative' }}>
+              <input
+                value={app.query}
+                onChange={e => app.setQuery(e.target.value)}
+                placeholder={t.find.placeholder}
+                data-testid="products-search"
+                style={{
+                  width: '100%', boxSizing: 'border-box', border: '1px solid #d2d2d7', borderRadius: 10,
+                  padding: '9px 30px 9px 12px', fontSize: 13, outline: 'none', background: '#fff',
+                }}
+              />
+              {app.query && (
+                <span
+                  onClick={() => app.setQuery('')}
+                  style={{ position: 'absolute', right: 10, top: '50%', transform: 'translateY(-50%)', color: '#7a7a7a', cursor: 'pointer', fontSize: 14, lineHeight: 1 }}
+                  data-testid="products-search-clear"
+                >
+                  ×
+                </span>
+              )}
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
                 <span style={sectionLabel}>{t.products.applied}</span>
-                <span onClick={() => { app.setRefFilter(null); app.setMfrFilter([]); setCapRange(null); }} style={{ fontSize: 12, color: '#0066cc', cursor: 'pointer' }}>{t.products.clearAll}</span>
+                <span onClick={() => { app.setQuery(''); app.setRefFilter(null); app.setMfrFilter([]); setCapRange(null); }} style={{ fontSize: 12, color: '#0066cc', cursor: 'pointer' }}>{t.products.clearAll}</span>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                 {appliedChips.map(chip => (
@@ -251,25 +313,66 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <span style={sectionLabel}>{t.products.manufacturer}</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13.5 }}>
-                {mfrList.map(m => {
-                  const on = app.mfrFilter.includes(m.name);
-                  return (
-                    <span
-                      key={m.name}
-                      data-testid="mfr-option"
-                      onClick={() => app.setMfrFilter(on ? app.mfrFilter.filter(x => x !== m.name) : [...app.mfrFilter, m.name])}
-                      style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
-                    >
-                      <CheckBox on={on} size={15} radius={4} />
-                      {m.name} <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
-                    </span>
-                  );
-                })}
-                {!mfrExpanded && (
-                  <span onClick={() => setMfrExpanded(true)} style={{ color: '#0066cc', fontSize: 12.5, cursor: 'pointer' }}>{t.products.showAll}</span>
-                )}
-              </div>
+              {mfrPanelOpen ? (
+                /* Full catalogue: searchable, A–Z, multi-select — every
+                   manufacturer, not a top-N cut. */
+                <div style={{ border: '1px solid #e0e0e0', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 8 }} data-testid="mfr-panel">
+                  <input
+                    value={mfrSearch}
+                    onChange={e => setMfrSearch(e.target.value)}
+                    placeholder={t.products.mfrSearchPh}
+                    autoFocus
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #d2d2d7', borderRadius: 8, padding: '7px 10px', fontSize: 12.5, outline: 'none' }}
+                    data-testid="mfr-panel-search"
+                  />
+                  <div style={{ maxHeight: 250, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13 }}>
+                    {mfrAlpha.map(m => {
+                      const on = app.mfrFilter.includes(m.name);
+                      return (
+                        <span
+                          key={m.name}
+                          data-testid="mfr-option"
+                          onClick={() => app.setMfrFilter(on ? app.mfrFilter.filter(x => x !== m.name) : [...app.mfrFilter, m.name])}
+                          style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
+                        >
+                          <CheckBox on={on} size={15} radius={4} />
+                          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
+                          <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <span
+                    className="hp-press"
+                    onClick={() => { setMfrPanelOpen(false); setMfrSearch(''); }}
+                    style={{ alignSelf: 'flex-end', background: '#0066cc', color: '#fff', borderRadius: 999, padding: '6px 16px', fontSize: 12.5, cursor: 'pointer' }}
+                    data-testid="mfr-panel-done"
+                  >
+                    {t.products.mfrDone}{app.mfrFilter.length ? ` · ${t.products.selectedCount(app.mfrFilter.length)}` : ''}
+                  </span>
+                </div>
+              ) : (
+                /* Collapsed: the current selection only (readability), or the
+                   top-5 by product count when nothing is selected yet. */
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13.5 }}>
+                  {mfrList.map(m => {
+                    const on = app.mfrFilter.includes(m.name);
+                    return (
+                      <span
+                        key={m.name}
+                        data-testid="mfr-option"
+                        onClick={() => app.setMfrFilter(on ? app.mfrFilter.filter(x => x !== m.name) : [...app.mfrFilter, m.name])}
+                        style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
+                      >
+                        <CheckBox on={on} size={15} radius={4} />
+                        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
+                        <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
+                      </span>
+                    );
+                  })}
+                  <span onClick={() => setMfrPanelOpen(true)} style={{ color: '#0066cc', fontSize: 12.5, cursor: 'pointer' }} data-testid="mfr-show-all">{t.products.showAll}</span>
+                </div>
+              )}
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -307,6 +410,79 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
           {/* table */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, borderRight: '1px solid rgba(0,0,0,.08)' }}>
+
+            {/* compare tray — docked ABOVE the list (2026-07-27 redesign) */}
+            <div ref={trayRef} style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 12, padding: '11px 20px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(245,245,247,.92)', ...frosted, flex: 'none' }}>
+              <span style={{ ...sectionLabel, flex: 'none' } as React.CSSProperties}>{t.products.compare}</span>
+
+              {trayMini ? (
+                compareCount > 0 && (
+                  <span
+                    className="hp-press"
+                    onClick={() => setTrayPop(v => !v)}
+                    style={{ border: '1px solid #d2d2d7', background: '#fff', borderRadius: 999, padding: '6px 14px', fontSize: 12.5, cursor: 'pointer', whiteSpace: 'nowrap', flex: 'none' }}
+                    data-testid="tray-mini-badge"
+                  >
+                    {t.products.selectedCount(compareCount)} ▾
+                  </span>
+                )
+              ) : (
+                <div
+                  style={compareCount >= 3
+                    ? { display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 220px))', gap: 6, minWidth: 0 }
+                    : { display: 'flex', gap: 8, minWidth: 0 }}
+                >
+                  {compareItems.map(c => (
+                    <span
+                      key={c.id}
+                      className="hp-cmp-chip"
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 7, background: '#fff',
+                        border: '1px solid #e0e0e0', borderRadius: 999, minWidth: 0, whiteSpace: 'nowrap',
+                        padding: compareCount >= 3 ? '4px 11px' : '6px 14px',
+                        fontSize: compareCount >= 3 ? 11.5 : 12.5,
+                      }}
+                    >
+                      <span style={{ minWidth: 0, maxWidth: 150, overflow: 'hidden', textOverflow: 'ellipsis' }}>{chipName(c.model)}</span>
+                      <span onClick={() => app.toggleCompare(c.id)} style={{ color: '#7a7a7a', cursor: 'pointer', flex: 'none' }}>×</span>
+                      {/* full name on hover — never truncated */}
+                      <span className="hp-cmp-tip">{c.mfr} · {c.model}</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <span style={{ fontSize: 12, color: '#7a7a7a', whiteSpace: 'nowrap', flex: 'none' }}>
+                {compareCount >= 4 ? t.products.trayFull : t.products.moreSlots(4 - compareCount)}
+              </span>
+              <span
+                className="hp-press"
+                onClick={() => {
+                  if (canCompare) app.setShowCompare(true);
+                  else app.notify(t.products.compareGuide(compareCount));
+                }}
+                style={{
+                  marginLeft: 'auto', flex: 'none', whiteSpace: 'nowrap',
+                  borderRadius: 999, padding: '9px 22px', fontSize: 13.5, cursor: 'pointer',
+                  ...(canCompare ? { background: '#0066cc', color: '#fff' } : { background: '#d2d2d7', color: '#fff' }),
+                }}
+              >
+                {t.products.compareBtn(compareCount)}
+              </span>
+
+              {/* minimal-mode popover: the selection list, with per-item remove */}
+              {trayMini && trayPop && compareCount > 0 && (
+                <div style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 20, zIndex: 70, background: '#fff', border: '1px solid #e0e0e0', borderRadius: 12, boxShadow: '0 12px 32px rgba(0,0,0,.16)', padding: 12, display: 'flex', flexDirection: 'column', gap: 8, minWidth: 240, maxWidth: 320 }} data-testid="tray-popover">
+                  {compareItems.map(c => (
+                    <span key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12.5 }}>
+                      <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={`${c.mfr} · ${c.model}`}>{c.model}</span>
+                      <span onClick={() => app.toggleCompare(c.id)} style={{ marginLeft: 'auto', color: '#0066cc', cursor: 'pointer', flex: 'none' }}>×</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: GRID, gap: '0 12px', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,.08)', fontSize: 10.5, fontWeight: 600, letterSpacing: '.05em', color: '#7a7a7a', flex: 'none' }}>
               <span /><span>{t.products.th.model}</span><span>{t.products.manufacturer}</span>
               <span style={sort === 'kwAsc' || sort === 'kwDesc' ? { color: '#1d1d1f' } : undefined}>{t.products.th.kw}{sort === 'kwDesc' ? ' ↓' : sort === 'kwAsc' ? ' ↑' : ''}</span>
@@ -367,31 +543,6 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
             </div>
 
-            {/* compare tray — docked, frosted */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '13px 20px', borderTop: '1px solid rgba(0,0,0,.08)', background: 'rgba(245,245,247,.92)', ...frosted, flex: 'none' }}>
-              <span style={sectionLabel}>{t.products.compare}</span>
-              {compareItems.map(t => (
-                <span key={t.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#fff', border: '1px solid #e0e0e0', borderRadius: 999, padding: '6px 14px', fontSize: 12.5 }}>
-                  {t.shortName} <span onClick={() => app.toggleCompare(t.id)} style={{ color: '#7a7a7a', cursor: 'pointer' }}>×</span>
-                </span>
-              ))}
-              <span style={{ fontSize: 12, color: '#7a7a7a' }}>
-                {compareCount >= 4 ? t.products.trayFull : t.products.moreSlots(4 - compareCount)}
-              </span>
-              <span
-                className="hp-press"
-                onClick={() => {
-                  if (canCompare) app.setShowCompare(true);
-                  else app.notify(t.products.compareGuide(compareCount));
-                }}
-                style={{
-                  marginLeft: 'auto', borderRadius: 999, padding: '9px 22px', fontSize: 13.5, cursor: 'pointer',
-                  ...(canCompare ? { background: '#0066cc', color: '#fff' } : { background: '#d2d2d7', color: '#fff' }),
-                }}
-              >
-                {t.products.compareBtn(compareCount)}
-              </span>
-            </div>
           </div>
 
           {/* inspector */}

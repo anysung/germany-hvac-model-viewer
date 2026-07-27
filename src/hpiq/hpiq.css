@@ -202,3 +202,23 @@
   .hpiq-pricing-term { flex-direction: column !important; gap: 2px !important; padding: 7px 6px !important; }
   .hpiq-pricing-badge { white-space: normal !important; }
 }
+
+/* Compare-tray chip tooltip (ProductsPage): the full "manufacturer · model"
+   appears on hover below the chip — chips themselves stay ellipsized. */
+.hp-cmp-chip { position: relative; }
+.hp-cmp-chip .hp-cmp-tip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 80;
+  background: #1d1d1f;
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+}
+.hp-cmp-chip:hover .hp-cmp-tip { display: block; }

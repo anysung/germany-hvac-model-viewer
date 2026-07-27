@@ -221,6 +221,7 @@ export const MobileProducts: React.FC<{ app: HpApp; viewport: Viewport; onOpen: 
     bafaListedOnly: app.bafaOnly,
     capMin: null, capMax: null,
     sort,
+    text: '',   // the mobile shell has its own search surface
   }), [app.refFilter, app.mfrFilter, app.bafaOnly, sort]);
 
   // Derived, never stored — a filter or sort change lands in the same render.
