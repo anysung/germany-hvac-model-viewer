@@ -634,10 +634,10 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{ position: 'relative', background: '#fff', borderRadius: 18, width: 'min(1040px, 100%)', maxHeight: '86vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 24px 64px rgba(0,0,0,.28)' }}
+            style={{ position: 'relative', background: '#fff', borderRadius: 18, width: 'min(1560px, 96vw)', maxHeight: '90vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxShadow: '0 24px 64px rgba(0,0,0,.28)' }}
           >
             <Watermark />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 24px', borderBottom: '1px solid #e0e0e0', flex: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 28px', borderBottom: '1px solid #e0e0e0', flex: 'none' }}>
               <span style={{ fontFamily: FD, fontSize: 21, fontWeight: 600, letterSpacing: '-0.28px' }}>{t.products.comparison}</span>
               <span style={{ fontSize: 12.5, color: '#7a7a7a' }}>{t.products.comparisonCount(compareCount)}</span>
               <span
@@ -648,33 +648,69 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                 {t.products.close}
               </span>
             </div>
-            <div style={{ overflow: 'auto', padding: '20px 24px' }}>
-              <div style={{ display: 'flex', gap: 0, background: '#fff', border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden' }}>
-                <div style={{ flex: '0 0 168px', display: 'flex', flexDirection: 'column', borderRight: '1px solid #f0f0f0', padding: '18px 0 14px 20px', fontSize: 12.5, color: '#7a7a7a' }}>
-                  <span style={{ height: 52 }} />
-                  {t.products.cmpRows.map(l => (
-                    <span key={l} style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{l}</span>
-                  ))}
-                </div>
-                {compareItems.map(c => (
-                  <div key={c.id} style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '18px 20px 14px', borderRight: '1px solid #f0f0f0', fontSize: 13.5, minWidth: 0 }}>
-                    <span style={{ height: 52, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                      <span style={{ fontWeight: 600, lineHeight: 1.25 }}>{c.model}</span>
-                      <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>
-                        {c.mfr} · <span onClick={() => app.toggleCompare(c.id)} style={{ color: '#0066cc', cursor: 'pointer' }}>{t.products.remove}</span>
-                      </span>
-                    </span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0', fontWeight: 600 }}>{c.kw} kW</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.cop7}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.cop2}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.scop}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.noise === '—' ? '—' : `${c.noise} dB(A)`}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.refKg === '—' ? c.ref : `${c.ref} · ${c.refKg} kg`}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0' }}>{c.label}</span>
-                    <span style={{ padding: '9px 0', borderTop: '1px solid #f0f0f0', fontSize: 12, color: '#7a7a7a' }}>{c.sourceId}</span>
+            <div style={{ overflow: 'auto', padding: '22px 28px 28px' }}>
+              {/* One CSS grid = every row's height syncs across all columns, so a
+                  three-line model name can never overlap the first data row. */}
+              {(() => {
+                const num = (s: string) => { const n = parseFloat(String(s).replace(',', '.')); return Number.isFinite(n) ? n : null; };
+                const L = t.products.cmpRows;
+                const rows: { label: string; value: (c: HpVM) => string; metric?: (c: HpVM) => number | null; dir?: 1 | -1; strong?: boolean; dim?: boolean }[] = [
+                  { label: L[0], value: c => `${c.kw} kW`, strong: true },
+                  { label: L[1], value: c => c.cop7, metric: c => num(c.cop7), dir: 1 },
+                  { label: L[2], value: c => c.cop2, metric: c => num(c.cop2), dir: 1 },
+                  { label: L[3], value: c => c.scop, metric: c => num(c.scop), dir: 1 },
+                  { label: L[4], value: c => (c.noise === '—' ? '—' : `${c.noise} dB(A)`), metric: c => num(c.noise), dir: -1 },
+                  { label: L[5], value: c => (c.refKg === '—' ? c.ref : `${c.ref} · ${c.refKg} kg`) },
+                  { label: L[6], value: c => c.label },
+                  { label: L[7], value: c => c.sourceId, dim: true },
+                ];
+                return (
+                  <div style={{ display: 'grid', gridTemplateColumns: `190px repeat(${compareCount}, minmax(0, 1fr))`, border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden', fontSize: 14.5 }}>
+                    {/* header row — product identity */}
+                    <div style={{ background: '#f5f5f7', borderBottom: '2px solid #e0e0e0' }} />
+                    {compareItems.map(c => (
+                      <div key={`h-${c.id}`} style={{ background: '#f5f5f7', borderBottom: '2px solid #e0e0e0', borderLeft: '1px solid #e0e0e0', padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 5, minWidth: 0 }}>
+                        <span style={{ fontWeight: 650, fontSize: 15.5, lineHeight: 1.3, overflowWrap: 'anywhere' }}>{c.model}</span>
+                        <span style={{ fontSize: 12, color: '#7a7a7a', overflowWrap: 'anywhere' }}>
+                          {c.mfr} · <span onClick={() => app.toggleCompare(c.id)} style={{ color: '#0066cc', cursor: 'pointer', whiteSpace: 'nowrap' }}>{t.products.remove}</span>
+                        </span>
+                      </div>
+                    ))}
+                    {/* metric rows — zebra striping; the best value per row is highlighted */}
+                    {rows.map((row, ri) => {
+                      const vals = row.metric ? compareItems.map(row.metric) : [];
+                      const usable = vals.filter((v): v is number => v != null);
+                      const best = row.metric && usable.length >= 2 && new Set(usable).size > 1
+                        ? (row.dir === -1 ? Math.min(...usable) : Math.max(...usable))
+                        : null;
+                      const bg = ri % 2 ? '#fafafa' : '#fff';
+                      return (
+                        <React.Fragment key={row.label}>
+                          <div style={{ padding: '13px 20px', background: bg, borderTop: '1px solid #ececec', fontSize: 12.5, color: '#7a7a7a', display: 'flex', alignItems: 'center' }}>{row.label}</div>
+                          {compareItems.map(c => {
+                            const isBest = best != null && row.metric!(c) === best;
+                            return (
+                              <div
+                                key={`${row.label}-${c.id}`}
+                                style={{
+                                  padding: '13px 20px', background: bg, borderTop: '1px solid #ececec', borderLeft: '1px solid #ececec',
+                                  minWidth: 0, overflowWrap: 'anywhere', display: 'flex', alignItems: 'center', gap: 8,
+                                  ...(row.strong ? { fontWeight: 600 } : {}),
+                                  ...(row.dim ? { fontSize: 12.5, color: '#7a7a7a' } : {}),
+                                  ...(isBest ? { color: '#0a7a43', fontWeight: 650 } : {}),
+                                }}
+                              >
+                                {row.value(c)}
+                                {isBest && <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: '.05em', background: '#e7f6ee', color: '#0a7a43', borderRadius: 999, padding: '2px 8px' }}>{t.products.bestBadge}</span>}
+                              </div>
+                            );
+                          })}
+                        </React.Fragment>
+                      );
+                    })}
                   </div>
-                ))}
-              </div>
+                );
+              })()}
             </div>
           </div>
         </div>
