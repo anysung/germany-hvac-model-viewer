@@ -6,6 +6,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { HpApp } from '../appState';
 import { HpVM } from '../model';
 import { FD, CheckBox, KwRangeSlider, pillPrimary, pillSecondary, sectionLabel } from '../ui';
+import { ManufacturerFacet } from '../MfrFacet';
 import { tr } from '../i18n';
 
 const GRID = '2.2fr 1fr 0.8fr 0.8fr 0.9fr';
@@ -16,7 +17,6 @@ export const LabelPage: React.FC<{ app: HpApp }> = ({ app }) => {
   const store = app.allStore;
   const [visible, setVisible] = useState(PAGE_SIZE);
   const [mfrFilter, setMfrFilter] = useState<string[]>([]);
-  const [mfrExpanded, setMfrExpanded] = useState(false);
   const [refFilter, setRefFilter] = useState<string | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -43,7 +43,6 @@ export const LabelPage: React.FC<{ app: HpApp }> = ({ app }) => {
   }, [store, app.classFilter, refFilter, mfrFilter, capNarrowed, capLo, capHi]);
   const rows = records.slice(0, visible);
 
-  const mfrList = (store?.mfrCounts ?? []).slice(0, mfrExpanded ? 25 : 5);
   const hasFilters = !!app.classFilter || !!refFilter || mfrFilter.length > 0 || capNarrowed;
   const clearAll = () => {
     app.setClassFilter(null);
@@ -109,27 +108,20 @@ export const LabelPage: React.FC<{ app: HpApp }> = ({ app }) => {
                 })}
               </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <span style={sectionLabel}>{t.label.manufacturer}</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13.5 }}>
-                {mfrList.map(m => {
-                  const on = mfrFilter.includes(m.name);
-                  return (
-                    <span
-                      key={m.name}
-                      onClick={() => setMfrFilter(on ? mfrFilter.filter(x => x !== m.name) : [...mfrFilter, m.name])}
-                      style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
-                    >
-                      <CheckBox on={on} size={15} radius={4} />
-                      {m.name} <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
-                    </span>
-                  );
-                })}
-                {!mfrExpanded && (
-                  <span onClick={() => setMfrExpanded(true)} style={{ color: '#0066cc', fontSize: 12.5, cursor: 'pointer' }}>{t.label.showAll}</span>
-                )}
-              </div>
-            </div>
+            {/* Same manufacturer facet as the Products page (shared component):
+                selection-or-top-5 collapsed view + searchable A–Z full panel. */}
+            <ManufacturerFacet
+              title={t.label.manufacturer}
+              counts={store?.mfrCounts ?? []}
+              selected={mfrFilter}
+              onChange={setMfrFilter}
+              labels={{
+                showAll: t.products.showAll,
+                searchPh: t.products.mfrSearchPh,
+                done: t.products.mfrDone,
+                selectedCount: t.products.selectedCount,
+              }}
+            />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <span style={sectionLabel}>{t.label.refrigerant}</span>

@@ -8,6 +8,7 @@ import { localListingStatus, localListingId, LOCAL_LISTING_SOURCE } from '../lis
 import { ListingChip } from '../ListingChip';
 import { SOURCE_ID_ABBR, REGISTRY_VERIFY_URL } from '../market';
 import { FD, CheckBox, ChevronDown, KwRangeSlider, Watermark, frosted, pillPrimary, pillSecondary, sectionLabel } from '../ui';
+import { ManufacturerFacet } from '../MfrFacet';
 
 // Every row is its OWN grid (rows stream in), so tracks must resolve
 // identically regardless of row content: bare `fr` means minmax(auto, fr) and
@@ -31,11 +32,6 @@ const SK2 = ['66%', '75%', '45%', '60%', '55%', '50%', '70%'];
 export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   const t = tr(app.lang);
   const { store } = app;
-  // Manufacturer facet: the sidebar shows top-5 (or the current selection);
-  // "Show All" opens an inline searchable A–Z panel over the FULL list —
-  // the old view capped the list at a hard-coded 25 of 200+ manufacturers.
-  const [mfrPanelOpen, setMfrPanelOpen] = useState(false);
-  const [mfrSearch, setMfrSearch] = useState('');
   const [sort, setSort] = useState<ProductSort>('cop2');
   const [sortOpen, setSortOpen] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -159,19 +155,6 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   app.mfrFilter.forEach(m => appliedChips.push({ label: m, onRemove: () => app.setMfrFilter(app.mfrFilter.filter(x => x !== m)) }));
   if (capNarrowed) appliedChips.push({ label: `${capLo}–${capHi} kW`, onRemove: () => setCapRange(null) });
 
-  // Sidebar shows the SELECTION when one exists (readability after choosing),
-  // otherwise the top-5 by product count. The full A–Z list lives in the panel.
-  const mfrCounts = store?.mfrCounts ?? [];
-  const mfrCountByName = useMemo(() => new Map(mfrCounts.map(m => [m.name, m.count])), [mfrCounts]);
-  const mfrList = app.mfrFilter.length
-    ? app.mfrFilter.map(name => ({ name, count: mfrCountByName.get(name) ?? 0 }))
-    : mfrCounts.slice(0, 5);
-  const mfrAlpha = useMemo(() => {
-    const q = mfrSearch.trim().toLowerCase();
-    return [...mfrCounts]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .filter(m => !q || m.name.toLowerCase().includes(q));
-  }, [mfrCounts, mfrSearch]);
 
   const fmtInt = (n: number) => n.toLocaleString(t.locale);
 
@@ -315,69 +298,18 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <span style={sectionLabel}>{t.products.manufacturer}</span>
-              {mfrPanelOpen ? (
-                /* Full catalogue: searchable, A–Z, multi-select — every
-                   manufacturer, not a top-N cut. */
-                <div style={{ border: '1px solid #e0e0e0', borderRadius: 12, padding: 10, display: 'flex', flexDirection: 'column', gap: 8 }} data-testid="mfr-panel">
-                  <input
-                    value={mfrSearch}
-                    onChange={e => setMfrSearch(e.target.value)}
-                    placeholder={t.products.mfrSearchPh}
-                    autoFocus
-                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #d2d2d7', borderRadius: 8, padding: '7px 10px', fontSize: 12.5, outline: 'none' }}
-                    data-testid="mfr-panel-search"
-                  />
-                  <div style={{ maxHeight: 250, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13 }}>
-                    {mfrAlpha.map(m => {
-                      const on = app.mfrFilter.includes(m.name);
-                      return (
-                        <span
-                          key={m.name}
-                          data-testid="mfr-option"
-                          onClick={() => app.setMfrFilter(on ? app.mfrFilter.filter(x => x !== m.name) : [...app.mfrFilter, m.name])}
-                          style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
-                        >
-                          <CheckBox on={on} size={15} radius={4} />
-                          <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
-                          <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
-                        </span>
-                      );
-                    })}
-                  </div>
-                  <span
-                    className="hp-press"
-                    onClick={() => { setMfrPanelOpen(false); setMfrSearch(''); }}
-                    style={{ alignSelf: 'flex-end', background: '#0066cc', color: '#fff', borderRadius: 999, padding: '6px 16px', fontSize: 12.5, cursor: 'pointer' }}
-                    data-testid="mfr-panel-done"
-                  >
-                    {t.products.mfrDone}{app.mfrFilter.length ? ` · ${t.products.selectedCount(app.mfrFilter.length)}` : ''}
-                  </span>
-                </div>
-              ) : (
-                /* Collapsed: the current selection only (readability), or the
-                   top-5 by product count when nothing is selected yet. */
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 7, fontSize: 13.5 }}>
-                  {mfrList.map(m => {
-                    const on = app.mfrFilter.includes(m.name);
-                    return (
-                      <span
-                        key={m.name}
-                        data-testid="mfr-option"
-                        onClick={() => app.setMfrFilter(on ? app.mfrFilter.filter(x => x !== m.name) : [...app.mfrFilter, m.name])}
-                        style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
-                      >
-                        <CheckBox on={on} size={15} radius={4} />
-                        <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name}</span>
-                        <span style={{ marginLeft: 'auto', color: '#7a7a7a', fontSize: 12 }}>{m.count}</span>
-                      </span>
-                    );
-                  })}
-                  <span onClick={() => setMfrPanelOpen(true)} style={{ color: '#0066cc', fontSize: 12.5, cursor: 'pointer' }} data-testid="mfr-show-all">{t.products.showAll}</span>
-                </div>
-              )}
-            </div>
+            <ManufacturerFacet
+              title={t.products.manufacturer}
+              counts={store?.mfrCounts ?? []}
+              selected={app.mfrFilter}
+              onChange={app.setMfrFilter}
+              labels={{
+                showAll: t.products.showAll,
+                searchPh: t.products.mfrSearchPh,
+                done: t.products.mfrDone,
+                selectedCount: t.products.selectedCount,
+              }}
+            />
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <span style={sectionLabel}>{t.products.capacity}</span>
