@@ -20,13 +20,24 @@
                                                      (needs built DE datasets)
 ```
 
-- **FR, GB and PL depend on the BUILT DE datasets** (each derives its
+- **FR, GB, PL and IT depend on the BUILT DE datasets** (each derives its
   catalogue from the canonical baseline). DE always runs first —
   the orchestrator computes this from `dependsOn`, never by hand.
 - The PL builder additionally appends spec-complete ZUM-native extension
   records (see CLAUDE.md §2 and `scripts/pl/build-app-products-pl.mjs`).
-- Matcher steps are **optional overlays**: if one fails, the run continues
-  and the builders emit unenriched (but valid) output.
+- **Matcher failure semantics (two-layer defense, clarified 2026-07-28):**
+  matcher steps are *optional* so a failed overlay never leaves the run
+  half-dead and undiagnosable — the builder emits a technically valid
+  dataset and says so loudly ("PEL overlay: none — every product will show
+  'verification required'"). That output is **not publishable**: the
+  dataset gate's `localMatchDropPct` (20 %) compares confirmed-listing
+  counts against the approved baseline and BLOCKS the release, so a
+  matcher/parser regression can never silently strip a market's listing
+  states from production. Confirmed mappings additionally persist in the
+  committed match-history files, and a previously confirmed product whose
+  match stops resolves to `review_required` — never to "not listed".
+  EPREL is different in kind: it is a link-only enrichment, so running
+  without a fresh crawl is genuinely fine (old links persist in the seed).
 - EPREL is a slow full crawl (~45k records); refresh monthly at most.
 
 ## 2. Safety rails (each has caught or prevents a real incident)
@@ -59,9 +70,17 @@ npm aliases: `npm run update:all` / `npm run update:all:deploy`.
 ## 4. Schedule recommendation (decided 2026-07-12)
 
 - **One sequential run, then deploy all sites together — do NOT stagger.**
-  GB/FR derive from DE: staggering deploys by hours only creates windows
-  where countries show inconsistent catalogues. Static hosting deploys are
-  atomic swaps; releasing four sites back-to-back takes under a minute.
+  GB/FR/PL/IT derive from DE: staggering deploys by hours only creates
+  windows where countries show inconsistent catalogues. Precision on
+  atomicity (2026-07-28): the DATASET release is effectively one unit (all
+  10 objects re-published together, snapshot-guarded); the HOSTING release
+  is a **sequential batch that can partially fail** — each site swap is
+  atomic, the batch is not. A partial hosting failure is not dangerous
+  (every site already reads the re-published bucket data); the orchestrator
+  aborts with the exact redeploy command to finish the batch. Hosting IS
+  rebuilt on data-only updates on purpose: the landing-page catalogue
+  counts (`__MARKET_STATS__`) are baked at build time from the dataset
+  files and would otherwise go stale.
 - **When**: monthly, **2nd of the month, 03:00–05:00 Europe/Berlin**, run
   manually (attended). Rationale: the news Cloud Scheduler fires on the 1st
   03:00; sources publish around month start; the 2nd gives BAFA/Ofgem a day
@@ -100,9 +119,34 @@ The admin console picks the new market up automatically from COUNTRY_PROFILES.
 - `data_sources/ofgem_pel/parsed/<YYYY-MM>/`
 The orchestrator preflights these and aborts with a clear message if missing.
 
-## 7. Disaster recovery
+## 7. Disaster recovery (rewritten 2026-07-28 — see docs/DATASET_ROLLBACK_AND_PANIC.md)
 
-Previous dataset versions survive in Firebase Hosting releases. To recover:
-REST-rollback the site to the prior version (see
-`scripts/bafa/recover-seed-from-app-export.mjs` header for the 2026-07-12
-procedure), curl the old JSON, re-inject with that script, rerun the pipeline.
+Datasets are NO LONGER served from hosting — the old hosting-release
+rollback is obsolete. Recovery escalates in this order:
+
+1. **Automatic**: `upload-datasets.mjs` verifies the served bytes after every
+   publish and restores the run's pre-update snapshot IN FULL on persistent
+   failure (nothing to do — read the run output).
+2. **Panic Button**: admin console → Overview → "Data operations — Panic
+   Rollback": pick a snapshot, type `ROLLBACK`. Full-set validation before
+   and after; audited.
+3. **Manual runbook**: docs/DATASET_ROLLBACK_AND_PANIC.md bottom section —
+   owner gcloud one-liners that work even when the console/function/auth
+   are all down.
+
+(The 2026-07-12 seed-recovery script `recover-seed-from-app-export.mjs`
+remains as a historical last resort for SOURCE data loss, which snapshots of
+the served bucket do not cover.)
+
+## 8. Completion checklist (printed by the orchestrator after --deploy)
+
+The update is NOT finished at "deploy done". Every box, every run:
+
+- [ ] serving verification passed (upload step) and stable-release.json promoted
+- [ ] one product page spot-checked per market (DE/UK/FR/PL/IT)
+- [ ] `node scripts/dataset-gate.mjs --approve`
+- [ ] `git add data_manifests/ && git commit && git push origin main`
+- [ ] `git status --short` → clean
+
+Skipping the approval desynchronizes next month's gate/shrink baselines from
+what is actually live.

@@ -280,11 +280,25 @@ for (const code of order) {
 if (DEPLOY) {
   console.log('\n════ Upload datasets (auth-protected Storage, + canaries) ════');
   execSync('node scripts/upload-datasets.mjs', { cwd: ROOT, stdio: 'inherit' });
-  console.log('\n════ Build & deploy all editions ════');
+
+  // Hosting releases are needed even for data-only updates: the landing-page
+  // catalogue counts (__MARKET_STATS__) are baked at BUILD time from the
+  // dataset files. The release itself is a sequential batch, NOT atomic —
+  // a mid-batch failure leaves earlier sites on the new build. That is safe
+  // for data (all sites already read the same re-published bucket objects),
+  // but the failed sites must be redeployed promptly.
+  console.log('\n════ Build & deploy all editions (sequential batch) ════');
   for (const cmd of ['npm run build:de', 'npm run build:uk', 'npm run build:fr', 'npm run build:pl', 'npm run build:it', 'npm run build:admin']) {
     execSync(cmd, { cwd: ROOT, stdio: 'inherit' });
   }
-  execSync('firebase deploy --only hosting:de,hosting:uk,hosting:fr,hosting:pl,hosting:it,hosting:hub', { cwd: ROOT, stdio: 'inherit' });
+  try {
+    execSync('firebase deploy --only hosting:de,hosting:uk,hosting:fr,hosting:pl,hosting:it,hosting:hub', { cwd: ROOT, stdio: 'inherit' });
+  } catch {
+    console.error('\n✗ HOSTING DEPLOY FAILED OR PARTIAL — datasets are already live (bucket), so');
+    console.error('  the sites keep working; finish the release by redeploying the failed targets:');
+    console.error('  firebase deploy --only hosting:de,hosting:uk,hosting:fr,hosting:pl,hosting:it,hosting:hub');
+    process.exit(1);
+  }
 }
 
 /* ── Summary ──────────────────────────────────────────────────────────────── */
@@ -292,3 +306,15 @@ if (DEPLOY) {
 console.log('\n════ Summary ════');
 for (const r of results) console.log(`  ${r.ok ? '✓' : '✗ (optional)'} [${r.code}] ${r.name} — ${r.secs}s`);
 console.log(DEPLOY ? '  ✓ deployed: de, uk, fr, pl, it, hub' : '  (no deploy — run with --deploy to ship)');
+
+// The update is NOT DONE until the baseline is approved and pushed — a
+// forgotten approval desynchronizes next month's gate/shrink checks and the
+// rollback docs from what is actually live (2026-07-28 review, finding #3).
+if (DEPLOY) {
+  console.log('\n════ COMPLETION CHECKLIST — the update is not finished until all boxes are ticked ════');
+  console.log('  [ ] serving verification passed above (upload step) and stable-release.json was promoted');
+  console.log('  [ ] spot-check one product page per market (DE/UK/FR/PL/IT)');
+  console.log('  [ ] node scripts/dataset-gate.mjs --approve');
+  console.log('  [ ] git add data_manifests/ && git commit && git push origin main');
+  console.log('  [ ] git status --short   → clean');
+}
