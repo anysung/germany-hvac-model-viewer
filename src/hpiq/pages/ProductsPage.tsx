@@ -181,16 +181,20 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
       {/* toolbar */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 28px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(255,255,255,.9)', ...frosted, flex: 'none' }}>
         <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.products.title}</span>
-        <div style={{ display: 'flex', border: '1px solid #e0e0e0', borderRadius: 999, overflow: 'hidden', fontSize: 12.5 }}>
+        {/* Segment choice — step ONE of any search, so it must read as a real
+            control: larger type, a visible border and a hover state (the old
+            hairline pill looked like a static label — 2026-07-27). */}
+        <div style={{ display: 'flex', border: '1.5px solid #b0b0b6', borderRadius: 999, overflow: 'hidden', fontSize: 14, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
           {(['residential', 'commercial'] as const).map(s => {
             const on = app.segment === s;
             return (
               <span
                 key={s}
+                className={on ? undefined : 'hp-press hp-seg-off'}
                 onClick={() => app.setSegment(s)}
                 style={{
-                  padding: '6px 16px', cursor: on ? 'default' : 'pointer',
-                  ...(on ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : { color: '#1d1d1f' }),
+                  padding: '9px 22px', cursor: on ? 'default' : 'pointer', fontWeight: 600, whiteSpace: 'nowrap',
+                  ...(on ? { background: '#1d1d1f', color: '#fff' } : { color: '#1d1d1f' }),
                 }}
               >
                 {s === 'residential' ? t.products.residential : t.products.commercial}

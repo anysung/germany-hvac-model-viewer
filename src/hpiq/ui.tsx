@@ -128,6 +128,13 @@ export const PlayIcon: React.FC = () => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z" /></svg>
 );
 
+/** Person silhouette — the global-nav Account button. */
+export const AccountIcon: React.FC<{ size?: number }> = ({ size = 13 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" />
+  </svg>
+);
+
 /**
  * Dual-handle capacity range slider (pointer drag, whole kW).
  * Stateless — parent owns [lo, hi]; stale-closure safe because each drag
@@ -189,7 +196,9 @@ export const CheckBox: React.FC<{
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
       cursor: onClick ? 'pointer' : undefined,
       boxSizing: 'border-box',
-      ...(on ? { background: C.primary } : { background: '#fff', border: `1px solid ${C.chip}` }),
+      // A clearly visible affordance: the unchecked box must read as a checkbox
+      // on every display (the old 1px #d2d2d7 hairline washed out — 2026-07-27).
+      ...(on ? { background: C.primary } : { background: '#fff', border: '1.5px solid #9a9aa0' }),
       ...style,
     }}
   >

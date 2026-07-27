@@ -20,7 +20,7 @@ import { preloadBrandArtwork } from './pdf/brandArtwork';
 import { preloadPdfFonts } from './pdf/pdfFonts';
 import { downloadPdf, printPdfViaShareSheet } from './pdf/deliverPdf';
 import { isIos } from './pwaInstall';
-import { FD, SignOutIcon } from './ui';
+import { FD, SignOutIcon, AccountIcon } from './ui';
 import { BrandLogo, WavingFlag } from '../components/BrandLogo';
 import { useViewport } from './useViewport';
 import { MobileApp } from './mobile/MobileApp';
@@ -366,16 +366,19 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
           )}
           <span
             onClick={() => setPage('account')}
-            title="Account"
+            title={t.nav.account}
             style={{
-              width: 27, height: 27, borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 11, cursor: 'pointer', boxSizing: 'border-box',
+              display: 'inline-flex', alignItems: 'center', gap: 7, borderRadius: 999, padding: '6px 14px',
+              fontSize: 12.5, cursor: 'pointer', whiteSpace: 'nowrap', flex: 'none', boxSizing: 'border-box',
               ...(page === 'account'
                 ? { background: '#fff', color: '#1d1d1f', border: '1px solid #fff', fontWeight: 600 }
-                : { background: '#2a2a2c', color: '#fff', border: '1px solid rgba(255,255,255,.25)' }),
+                : { background: '#2a2a2c', color: '#fff', border: '1px solid rgba(255,255,255,.3)' }),
             }}
+            data-testid="nav-account"
           >
-            {initials}
+            <AccountIcon />
+            {t.nav.account}
+            <span style={{ fontSize: 10.5, opacity: 0.65 }}>({initials})</span>
           </span>
           <span
             className="hp-press"

@@ -222,3 +222,6 @@
   pointer-events: none;
 }
 .hp-cmp-chip:hover .hp-cmp-tip { display: block; }
+
+/* Products segment toggle: hover feedback on the unselected half. */
+.hp-seg-off:hover { background: #f0f0f2; }
