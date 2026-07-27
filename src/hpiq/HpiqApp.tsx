@@ -250,9 +250,6 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     goProductsR290: () => { setRefFilter('R290'); setPage('products'); },
   };
 
-  const initials = (
-    ((user.firstName?.[0] ?? '') + (user.lastName?.[0] ?? '')) || user.email?.[0] || 'U'
-  ).toUpperCase();
 
   // The one printable document, mounted at <body> level (outside #root) so that
   // `@media print { #root { display:none } }` can't clip or blank it. It is
@@ -378,7 +375,6 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
           >
             <AccountIcon />
             {t.nav.account}
-            <span style={{ fontSize: 10.5, opacity: 0.65 }}>({initials})</span>
           </span>
           <span
             className="hp-press"
