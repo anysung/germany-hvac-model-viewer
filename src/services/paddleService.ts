@@ -14,7 +14,7 @@
  */
 import { PUBLIC_ENV } from '../config/env';
 import { SubPlanCode, BillingTerm, paddlePriceId, checkoutConfigured } from '../config/subscriptionPlans';
-import { hasPriceCatalogue } from '../config/paddlePrices';
+import { hasPriceCatalogue, IS_PADDLE_SANDBOX } from '../config/paddlePrices';
 import { User } from '../types';
 
 declare global {
@@ -29,10 +29,26 @@ export { checkoutConfigured };
 
 let loader: Promise<any> | null = null;
 
-/** Load + initialize Paddle.js v2 once. Rejects if unconfigured or blocked. */
-function loadPaddle(): Promise<any> {
+/** Paddle Retain identity: ONLY a Paddle customer id (`ctm_…`) is accepted —
+ *  never our uid or an email (docs: pwCustomer). Absent until the billing
+ *  webhook has written one, which is exactly the pre-first-purchase case
+ *  where Retain has nothing to work with anyway. */
+const pwCustomerFor = (user?: User | null) =>
+  user?.paddleCustomerId?.startsWith('ctm_') ? { id: user.paddleCustomerId } : {};
+
+/** Load + initialize Paddle.js v2 once. Rejects if unconfigured or blocked.
+ *  `user` (when known) identifies the signed-in customer to Paddle Retain. */
+function loadPaddle(user?: User | null): Promise<any> {
   if (!PUBLIC_ENV.PADDLE_CLIENT_TOKEN) return Promise.reject(new Error('paddle-not-configured'));
-  if (window.Paddle) return Promise.resolve(window.Paddle);
+  if (window.Paddle) {
+    // Already initialized (SPA: the customer may only now be known) — Retain
+    // is updated through Update(), because Initialize() may run only once.
+    try {
+      const pw = pwCustomerFor(user);
+      if (window.Paddle.Initialized && (pw as any).id) window.Paddle.Update({ pwCustomer: pw });
+    } catch { /* Retain identity is best-effort; never block checkout */ }
+    return Promise.resolve(window.Paddle);
+  }
   if (loader) return loader;
   loader = new Promise((resolve, reject) => {
     const s = document.createElement('script');
@@ -40,10 +56,17 @@ function loadPaddle(): Promise<any> {
     s.async = true;
     s.onload = () => {
       try {
-        if (PUBLIC_ENV.PADDLE_CLIENT_TOKEN.startsWith('test_')) {
-          window.Paddle.Environment.set('sandbox');
-        }
-        window.Paddle.Initialize({ token: PUBLIC_ENV.PADDLE_CLIENT_TOKEN });
+        // Live is Paddle.js's default; the sandbox switch fires ONLY for a
+        // `test_…` token, which is the same signal that selects the sandbox
+        // price catalogue (config/paddlePrices.ts). One env var, one
+        // environment — a live token can never reach the sandbox and vice versa.
+        if (IS_PADDLE_SANDBOX) window.Paddle.Environment.set('sandbox');
+        window.Paddle.Initialize({
+          token: PUBLIC_ENV.PADDLE_CLIENT_TOKEN,
+          // Retain only loads on live accounts; an empty object is the
+          // documented "no signed-in customer yet" value.
+          pwCustomer: pwCustomerFor(user),
+        });
         resolve(window.Paddle);
       } catch (e) { reject(e); }
     };
@@ -62,7 +85,7 @@ function loadPaddle(): Promise<any> {
  */
 export async function openCheckout(user: User, plan: SubPlanCode, term: BillingTerm): Promise<void> {
   if (!checkoutConfigured(plan, term)) throw new Error('paddle-not-configured');
-  const paddle = await loadPaddle();
+  const paddle = await loadPaddle(user);
   paddle.Checkout.open({
     items: [{ priceId: paddlePriceId(plan, term), quantity: 1 }],
     customer: user.email ? { email: user.email } : undefined,

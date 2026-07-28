@@ -753,6 +753,43 @@ async function panicRollback(req, res) {
 // Paddle webhook
 // ---------------------------------------------------------------------------
 
+/**
+ * Paddle's webhook source IPs, fetched from https://api.paddle.com/ips (the
+ * source of truth — never hard-coded) and cached for 12 h. Used as a cheap
+ * first filter in front of signature verification.
+ *
+ * FAIL-OPEN (deliberate): if the list cannot be fetched we allow the request
+ * through to the SIGNATURE check, which is the real security boundary. A
+ * transient DNS/network blip must never make us reject genuine paid events —
+ * the same principle the whole billing path follows.
+ */
+let _ipCache = { at: 0, cidrs: null };
+async function paddleIpAllowlist() {
+  if (_ipCache.cidrs && Date.now() - _ipCache.at < 12 * 3600_000) return _ipCache.cidrs;
+  try {
+    const res = await fetch('https://api.paddle.com/ips');
+    const body = await res.json();
+    const cidrs = (body && body.data && body.data.ipv4_cidrs) || [];
+    if (cidrs.length) _ipCache = { at: Date.now(), cidrs };
+  } catch (e) {
+    console.error('paddle ip list fetch failed — falling back to signature-only', e.message);
+  }
+  return _ipCache.cidrs;
+}
+
+/** Caller IP as seen behind Cloud Run's proxy (first X-Forwarded-For hop). */
+function callerIp(req) {
+  const xff = String(req.headers['x-forwarded-for'] || '');
+  return (xff.split(',')[0] || req.ip || '').trim();
+}
+
+/** Paddle publishes /32 CIDRs, so an exact-address match is sufficient. */
+function ipAllowed(ip, cidrs) {
+  if (!cidrs || !cidrs.length) return true;          // fail-open (see above)
+  if (!ip) return true;                              // unknown source → let the signature decide
+  return cidrs.some(c => c === ip || c === `${ip}/32` || c.split('/')[0] === ip);
+}
+
 /** Verify the Paddle-Signature header (ts=…;h1=…) against the raw body. */
 function verifyPaddleSignature(req) {
   const secret = process.env.PADDLE_WEBHOOK_SECRET || '';
@@ -920,6 +957,12 @@ async function recordAdjustment(adj, eventType, occurredAt) {
 }
 
 async function paddleWebhook(req, res) {
+  // Network-level filter first (cheap), signature second (authoritative).
+  const ip = callerIp(req);
+  if (!ipAllowed(ip, await paddleIpAllowlist())) {
+    console.warn('webhook rejected: source IP not in Paddle allowlist', ip);
+    return res.status(403).send('forbidden');
+  }
   if (!verifyPaddleSignature(req)) return res.status(401).send('bad signature');
 
   const event = req.body || {};
