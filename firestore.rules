@@ -281,6 +281,23 @@ service cloud.firestore {
     // (printQuotas collection removed 2026-07-12 — data-sheet printing is
     //  unlimited for all members; tiering runs on the subscription program.)
 
+    // ── Concurrent sessions (docs/CONCURRENT_SESSIONS.md) ─────────────────
+    // Session docs are written EXCLUSIVELY by the accountBilling function
+    // (Admin SDK, server time). Clients may only read/subscribe their own —
+    // the limit's adversary is the account owner's own client, so it gets
+    // no write path to lastSeenAt / revokedAt / grace state.
+    match /users/{userId}/sessions/{sessionId} {
+      allow read: if (isSignedIn() && request.auth.uid == userId) || isAdmin();
+      allow write: if false;
+    }
+
+    // Ops runtime settings (e.g. opsConfig/sessions kill switch): owner-only
+    // writes so limits can be tuned without a redeploy; admins may read.
+    match /opsConfig/{docId} {
+      allow read: if isAdmin();
+      allow write: if ownerToken();
+    }
+
     // ── Email registration history (repeat-trial prevention) ──────────────
     // Doc id = trim+lowercase email. Written ONLY by the billing Cloud
     // Functions (Admin SDK bypasses rules); admins may read for support.

@@ -44,12 +44,14 @@ interface Props {
   onRetryDatasets?: () => void;
   language: Language;
   setLanguage: (l: Language) => void;
+  /** Concurrent-session grace deadline (epoch ms) — drives the countdown banner. */
+  sessionGraceUntil?: number | null;
 }
 
 const NAV_IDS: Exclude<HpPage, 'account'>[] = ['find', 'products', 'label', 'datasheet', 'bafa', 'guide', 'news'];
 
 
-export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage }) => {
+export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage, sessionGraceUntil }) => {
   // Profile edits are written to Firestore; this overlay reflects them at once
   // (the auth listener would only refresh the profile on the next sign-in).
   const [userPatch, setUserPatch] = useState<Partial<User>>({});
@@ -260,6 +262,30 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     document.body,
   );
 
+  // Concurrent-session grace countdown: one live-ticking banner replaces the
+  // 20/10/5-minute discrete alerts (upgrade agreed 2026-07-28). Banner
+  // priority, single slot: dataset error > session grace > trial countdown.
+  const [nowTick, setNowTick] = useState(() => Date.now());
+  useEffect(() => {
+    if (!sessionGraceUntil) return;
+    const id = setInterval(() => setNowTick(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [sessionGraceUntil]);
+  const graceLeftMs = sessionGraceUntil ? Math.max(0, sessionGraceUntil - nowTick) : 0;
+  const graceUrgent = graceLeftMs > 0 && graceLeftMs <= 5 * 60_000;
+  const mmss = `${Math.floor(graceLeftMs / 60000)}:${String(Math.floor(graceLeftMs / 1000) % 60).padStart(2, '0')}`;
+  const sessionBanner = sessionGraceUntil && graceLeftMs > 0 ? (
+    <div data-testid="session-grace-banner" style={{ background: graceUrgent ? '#b42318' : '#9a6b00', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, padding: '9px 20px', fontSize: 13.5, flex: 'none' }}>
+      <span>{t.session.banner(mmss)}</span>
+      <button
+        onClick={() => setPage('account')}
+        style={{ background: '#fff', color: graceUrgent ? '#b42318' : '#9a6b00', border: 'none', borderRadius: 999, padding: '5px 15px', fontWeight: 600, cursor: 'pointer', fontSize: 12.5 }}
+      >
+        {t.session.cardTitle}
+      </button>
+    </div>
+  ) : null;
+
   // Trial countdown (days 5/6/7 = D-3..D-1): a slim nudge under the nav on
   // every app entry, linking to the Account subscription section. Pure UX —
   // the server rules close the window on day 8 regardless.
@@ -298,8 +324,8 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     return (
       <>
         {printPortal}
-        {(dataBanner || trialBanner) && (
-          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}{trialBanner}</div>
+        {(dataBanner || sessionBanner || trialBanner) && (
+          <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}{sessionBanner || trialBanner}</div>
         )}
         <MobileApp app={app} viewport={viewport} />
         {notice && (
@@ -389,7 +415,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
       </div>
 
       {dataBanner}
-      {trialBanner}
+      {sessionBanner || trialBanner}
 
       {/* ============ Pages ============ */}
       {page === 'find' && <FindPage app={app} />}

@@ -377,6 +377,196 @@ async function deleteAccount(req, res) {
 }
 
 // ---------------------------------------------------------------------------
+// Concurrent sessions (docs/CONCURRENT_SESSIONS.md, 2026-07-28)
+//
+// Enforcement is SERVER-side: session docs are client-read-only (rules deny
+// all client writes); every mutation happens here with server time. The
+// limit's adversary is the account owner's own client, so the client is
+// never trusted with lastSeenAt, grace state or revocation.
+// ---------------------------------------------------------------------------
+
+const SESSION_DEFAULTS = { enabled: true, activeLimit: 2, activeWindowMin: 10, graceMin: 30 };
+let _sessCfgCache = { at: 0, val: SESSION_DEFAULTS };
+
+/** opsConfig/sessions with a 60 s in-memory cache — the no-redeploy kill switch. */
+async function sessionConfig() {
+  if (Date.now() - _sessCfgCache.at < 60_000) return _sessCfgCache.val;
+  try {
+    const snap = await db.collection('opsConfig').doc('sessions').get();
+    _sessCfgCache = { at: Date.now(), val: { ...SESSION_DEFAULTS, ...(snap.exists ? snap.data() : {}) } };
+  } catch {
+    _sessCfgCache = { at: Date.now(), val: SESSION_DEFAULTS };   // fail-open: defaults
+  }
+  return _sessCfgCache.val;
+}
+
+const ADMIN_ROLES = ['owner', 'admin', 'support', 'ops'];
+const SESSION_ID_RE = /^[A-Za-z0-9_-]{8,64}$/;
+
+/**
+ * /sessionHeartbeat { sessionId, deviceName?, browser?, os? }
+ * One transaction: upsert session (server lastSeenAt) → active count →
+ * grace set/clear → post-expiry LRU eviction (never the caller).
+ */
+async function sessionHeartbeat(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const { sessionId, deviceName, browser, os } = req.body || {};
+  if (!SESSION_ID_RE.test(String(sessionId || ''))) return sendErr(res, 400, 'bad-session-id');
+
+  const cfg = await sessionConfig();
+  const userRef = db.collection('users').doc(caller.uid);
+  const sessRef = userRef.collection('sessions').doc(sessionId);
+
+  const out = await db.runTransaction(async (tx) => {
+    // All reads first (Firestore transaction contract).
+    const [userSnap, allSess] = await Promise.all([
+      tx.get(userRef),
+      tx.get(userRef.collection('sessions')),
+    ]);
+    const user = userSnap.exists ? userSnap.data() : {};
+    const now = Date.now();
+    const nowTs = Timestamp.fromMillis(now);
+
+    // Exemption: owner token, or any admin-role profile — unlimited sessions.
+    const exempt =
+      caller.owner === true ||
+      (caller.email === OWNER_EMAIL && caller.email_verified === true) ||
+      ADMIN_ROLES.includes(user.role);
+
+    // Upsert the caller's session with SERVER time only.
+    const self = allSess.docs.find(d => d.id === sessionId);
+    tx.set(sessRef, {
+      lastSeenAt: nowTs,
+      ...(self && self.data().createdAt ? {} : { createdAt: nowTs }),
+      ...(deviceName ? { deviceName: String(deviceName).slice(0, 60) } : {}),
+      ...(browser ? { browser: String(browser).slice(0, 40) } : {}),
+      ...(os ? { os: String(os).slice(0, 40) } : {}),
+    }, { merge: true });
+
+    // Housekeeping: drop long-dead session docs (30 days), a few per beat.
+    allSess.docs
+      .filter(d => d.id !== sessionId && tsMillis(d.data().lastSeenAt) != null && now - tsMillis(d.data().lastSeenAt) > 30 * 86400_000)
+      .slice(0, 5)
+      .forEach(d => tx.delete(d.ref));
+
+    // Active = not revoked AND server lastSeenAt within the window (the
+    // caller counts as "now" — its write above lands in this transaction).
+    const windowMs = cfg.activeWindowMin * 60_000;
+    const active = allSess.docs
+      .filter(d => !d.data().revokedAt)
+      .map(d => ({
+        id: d.id,
+        ref: d.ref,
+        lastSeen: d.id === sessionId ? now : (tsMillis(d.data().lastSeenAt) ?? 0),
+        created: tsMillis(d.data().createdAt) ?? 0,
+      }))
+      .filter(s => now - s.lastSeen <= windowMs);
+    if (!active.some(s => s.id === sessionId)) {
+      active.push({ id: sessionId, ref: sessRef, lastSeen: now, created: now });
+    }
+
+    const graceMs = user.sessionGraceUntil ? tsMillis(user.sessionGraceUntil) : null;
+    const clearGrace = () => {
+      if (user.sessionGraceUntil || user.sessionOverLimitSince) {
+        tx.set(userRef, { sessionGraceUntil: FieldValue.delete(), sessionOverLimitSince: FieldValue.delete() }, { merge: true });
+      }
+    };
+
+    if (!cfg.enabled || exempt) {
+      clearGrace();
+      return { activeCount: active.length, limit: null, graceUntil: null, revokedSelf: !!(self && self.data().revokedAt) };
+    }
+
+    if (active.length <= cfg.activeLimit) {
+      // Back within limit — the grace (if any) cancels silently.
+      clearGrace();
+      return { activeCount: active.length, limit: cfg.activeLimit, graceUntil: null, revokedSelf: false };
+    }
+
+    if (!graceMs) {
+      // Over limit, no grace yet → start the 30-minute window, count the event.
+      const until = now + cfg.graceMin * 60_000;
+      tx.set(userRef, {
+        sessionGraceUntil: Timestamp.fromMillis(until),
+        sessionOverLimitSince: nowTs,
+        overLimitEvents: FieldValue.increment(1),
+      }, { merge: true });
+      return { activeCount: active.length, limit: cfg.activeLimit, graceUntil: until, revokedSelf: false };
+    }
+
+    if (now < graceMs) {
+      // Grace still running — nothing to do but report it.
+      return { activeCount: active.length, limit: cfg.activeLimit, graceUntil: graceMs, revokedSelf: false };
+    }
+
+    // Grace expired and still over limit → evict the least-recently-active
+    // session that is NOT the caller (ties broken by oldest createdAt).
+    const victims = active
+      .filter(s => s.id !== sessionId)
+      .sort((a, b) => (a.lastSeen - b.lastSeen) || (a.created - b.created));
+    const victim = victims[0];
+    if (victim) {
+      tx.update(victim.ref, { revokedAt: nowTs, revokeReason: 'auto-limit' });
+      tx.set(userRef, {
+        sessionGraceUntil: FieldValue.delete(),
+        sessionOverLimitSince: FieldValue.delete(),
+        autoRevokedCount: FieldValue.increment(1),
+        lastAutoRevokeAt: nowIso(),
+      }, { merge: true });
+    }
+    return { activeCount: active.length - (victim ? 1 : 0), limit: cfg.activeLimit, graceUntil: null, revokedSelf: false, evicted: victim ? victim.id : null };
+  });
+
+  return res.status(200).json({ ok: true, ...out });
+}
+
+/** /revokeSession { sessionId } — sign out ONE of the caller's own sessions. */
+async function revokeSession(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const { sessionId } = req.body || {};
+  if (!SESSION_ID_RE.test(String(sessionId || ''))) return sendErr(res, 400, 'bad-session-id');
+  await db.collection('users').doc(caller.uid).collection('sessions').doc(sessionId)
+    .set({ revokedAt: Timestamp.now(), revokeReason: 'manual' }, { merge: true });
+  return res.status(200).json({ ok: true });
+}
+
+/** /revokeOtherSessions { keepSessionId } — everything but the current device.
+ *  Deliberately does NOT touch refresh tokens (the caller must survive). */
+async function revokeOtherSessions(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const { keepSessionId } = req.body || {};
+  if (!SESSION_ID_RE.test(String(keepSessionId || ''))) return sendErr(res, 400, 'bad-session-id');
+  const sess = await db.collection('users').doc(caller.uid).collection('sessions').get();
+  const batch = db.batch();
+  let n = 0;
+  for (const d of sess.docs) {
+    if (d.id === keepSessionId || d.data().revokedAt) continue;
+    batch.set(d.ref, { revokedAt: Timestamp.now(), revokeReason: 'manual' }, { merge: true });
+    n++;
+  }
+  if (n) await batch.commit();
+  return res.status(200).json({ ok: true, revoked: n });
+}
+
+/** /signOutEverywhere — all session docs + refresh-token revocation (hard
+ *  cutoff for every device INCLUDING the caller, which signs out locally). */
+async function signOutEverywhere(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const sess = await db.collection('users').doc(caller.uid).collection('sessions').get();
+  const batch = db.batch();
+  for (const d of sess.docs) {
+    if (!d.data().revokedAt) batch.set(d.ref, { revokedAt: Timestamp.now(), revokeReason: 'sign-out-everywhere' }, { merge: true });
+  }
+  await batch.commit();
+  await admin.auth().revokeRefreshTokens(caller.uid);
+  return res.status(200).json({ ok: true });
+}
+
+// ---------------------------------------------------------------------------
 // Dataset ops: /rollbackStatus + /panicRollback
 // (docs/DATASET_ROLLBACK_AND_PANIC.md — owner-only manual override)
 //
@@ -786,6 +976,10 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/paddleWebhook')) return await paddleWebhook(req, res);
     if (path.endsWith('/rollbackStatus')) return await rollbackStatus(req, res);
     if (path.endsWith('/panicRollback')) return await panicRollback(req, res);
+    if (path.endsWith('/sessionHeartbeat')) return await sessionHeartbeat(req, res);
+    if (path.endsWith('/revokeSession')) return await revokeSession(req, res);
+    if (path.endsWith('/revokeOtherSessions')) return await revokeOtherSessions(req, res);
+    if (path.endsWith('/signOutEverywhere')) return await signOutEverywhere(req, res);
     return sendErr(res, 404, 'not-found');
   } catch (e) {
     console.error(`accountBilling ${path} error`, e);

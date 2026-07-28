@@ -10,7 +10,7 @@ import { PUBLIC_ENV } from '../config/env';
 // The admin console must reach the ops endpoints even when the billing-flow
 // switch (VITE_BILLING_FN_URL) is not set for a build: the function URL is
 // stable and public (auth happens per-request), so a fixed fallback is safe.
-const OPS_FN_URL = PUBLIC_ENV.BILLING_FN_URL
+export const OPS_FN_URL = PUBLIC_ENV.BILLING_FN_URL
   || 'https://europe-west1-gen-lang-client-0324244302.cloudfunctions.net/accountBilling';
 
 export interface LiveObject { path: string; md5: string; size: number; updated: string; contentEncoding: string }

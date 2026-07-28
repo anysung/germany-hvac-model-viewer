@@ -1,7 +1,10 @@
 /** Account — subscription program, team seats, profile, language, legal. */
 import React, { useEffect, useState } from 'react';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
+import { getSessionId, revokeSessionFn, revokeOtherSessionsFn, signOutEverywhereFn } from '../../services/sessionService';
+import { tsToMillis } from '../../config/entitlement';
 import { requestDeletion } from '../../services/adminService';
 import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
 import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn } from '../../services/billingFnService';
@@ -378,6 +381,110 @@ const SubscriptionSection: React.FC<{
   );
 };
 
+/**
+ * Devices & sessions — the concurrent-session limit's visibility surface
+ * (docs/CONCURRENT_SESSIONS.md). Session docs are CLIENT-READ-ONLY: this card
+ * subscribes to the list and calls the server function for every action —
+ * there is deliberately no client write path to session state.
+ */
+const SessionsCard: React.FC<{ app: HpApp }> = ({ app }) => {
+  const t = tr(app.lang);
+  const s = t.session;
+  const { user } = app;
+  const isPreview = user.id === 'preview';
+  const mySid = getSessionId();
+  const [sessions, setSessions] = useState<{ id: string; deviceName?: string; lastSeenAt?: any; revokedAt?: any }[]>([]);
+  const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (isPreview) return;
+    const unsub = onSnapshot(
+      collection(db, 'users', user.id, 'sessions'),
+      snap => setSessions(snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }))),
+      () => {},   // fail-open: the card just stays empty
+    );
+    return unsub;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id]);
+
+  const alive = sessions
+    .filter(x => !x.revokedAt)
+    .sort((a, b) => (tsToMillis(b.lastSeenAt) ?? 0) - (tsToMillis(a.lastSeenAt) ?? 0));
+
+  const fmtSeen = (v: any) => {
+    const ms = tsToMillis(v);
+    if (ms == null) return '—';
+    const mins = Math.max(0, Math.round((Date.now() - ms) / 60000));
+    if (mins < 1) return s.lastSeen(app.lang === 'de' ? 'jetzt' : 'now');
+    if (mins < 60) return s.lastSeen(`${mins} min`);
+    return s.lastSeen(shortDate(new Date(ms).toISOString(), t.locale));
+  };
+
+  const act = (fn: () => Promise<{ ok: boolean }>, after?: () => void) => {
+    if (isPreview) { app.notify(t.account.previewOnly); return; }
+    setBusy(true);
+    fn()
+      .then(r => { app.notify(r.ok ? s.done : s.failed); after?.(); })
+      .catch(() => app.notify(s.failed))
+      .finally(() => setBusy(false));
+  };
+
+  return (
+    <Card style={{ gap: 10 }}>
+      <CardTitle>{s.cardTitle}</CardTitle>
+      <span style={{ fontSize: 12.5, color: '#7a7a7a', lineHeight: 1.55 }}>{s.cardText}</span>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }} data-testid="session-list">
+        {alive.map(x => (
+          <div key={x.id} style={{ display: 'flex', alignItems: 'center', gap: 10, border: '1px solid #f0f0f0', borderRadius: 10, padding: '9px 13px', fontSize: 13 }}>
+            <div style={{ minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {x.deviceName || x.id.slice(0, 8)}
+                {x.id === mySid && (
+                  <span style={{ marginLeft: 8, fontSize: 10.5, fontWeight: 700, background: '#e7f6ee', color: '#0a7a43', borderRadius: 999, padding: '2px 8px' }}>{s.thisDevice}</span>
+                )}
+              </span>
+              <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{fmtSeen(x.lastSeenAt)}</span>
+            </div>
+            {x.id !== mySid && (
+              <span
+                onClick={() => act(() => revokeSessionFn(x.id))}
+                style={{ marginLeft: 'auto', color: '#0066cc', fontSize: 12.5, cursor: 'pointer', flex: 'none' }}
+              >
+                {s.signOutOne}
+              </span>
+            )}
+          </div>
+        ))}
+        {alive.filter(x => x.id !== mySid).length === 0 && (
+          <span style={{ fontSize: 12.5, color: '#9a9aa0' }}>{s.noneOther}</span>
+        )}
+      </div>
+      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+        <span
+          className="hp-press"
+          onClick={() => !busy && act(() => revokeOtherSessionsFn())}
+          style={{ border: '1px solid #d2d2d7', borderRadius: 999, padding: '8px 16px', fontSize: 12.5, cursor: 'pointer', background: '#fff' }}
+          data-testid="signout-others"
+        >
+          {s.signOutOthers}
+        </span>
+        <span
+          className="hp-press"
+          onClick={() => {
+            if (busy) return;
+            if (!window.confirm(s.confirmAll)) return;
+            act(() => signOutEverywhereFn(), () => setTimeout(app.onLogout, 900));
+          }}
+          style={{ border: '1px solid #d2d2d7', borderRadius: 999, padding: '8px 16px', fontSize: 12.5, cursor: 'pointer', background: '#fff', color: '#c0392b' }}
+          data-testid="signout-all"
+        >
+          {s.signOutAll}
+        </span>
+      </div>
+    </Card>
+  );
+};
+
 /** Compact direct-email card for advertising / business enquiries. No form,
  *  no admin workflow — a mailto link only (marketing@heatpumpdb.eu). */
 const AdvertisingCard: React.FC<{ app: HpApp }> = ({ app }) => {
@@ -557,6 +664,9 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
               <span onClick={sendSetupLink} style={{ color: '#0066cc', fontSize: 13, cursor: 'pointer', marginTop: 2 }}>{t.account.sendLink(user.email)}</span>
             </Card>
           </div>
+
+          {/* R2b · Devices & sessions (concurrent-session limit — docs/CONCURRENT_SESSIONS.md) */}
+          <div style={{ order: 4 }}><SessionsCard app={app} /></div>
 
           {/* R3 · Advertising & partnerships */}
           <div style={{ order: 5 }}><AdvertisingCard app={app} /></div>

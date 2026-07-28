@@ -43,6 +43,22 @@ const EN = {
   },
 
   /** Free-trial countdown nudge (shown on days 5–7; access closes on day 8). */
+  /** Concurrent sessions (docs/CONCURRENT_SESSIONS.md). */
+  session: {
+    banner: (t: string) => `Device limit exceeded — the least-used session signs out in ${t}. Unused devices clear automatically.`,
+    cardTitle: 'Devices & sessions',
+    cardText: 'Your plan allows two concurrently active devices. Signing in on more starts a 30-minute grace period, then the least recently used session is signed out.',
+    thisDevice: 'This device',
+    lastSeen: (s: string) => `Last active ${s}`,
+    signOutOne: 'Sign out',
+    signOutOthers: 'Sign out other devices',
+    signOutAll: 'Sign out on all devices',
+    confirmAll: 'This signs you out everywhere, including this device. Continue?',
+    done: 'Done.',
+    failed: 'Action failed — please try again.',
+    noneOther: 'No other sessions.',
+  },
+
   trial: {
     banner: (d: number) =>
       d <= 1
@@ -693,6 +709,21 @@ const DE: HpStrings = {
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Alle Rechte vorbehalten.`,
     edition: 'Deutschland-Ausgabe',
     note: 'Produktdaten dienen der Information — prüfen Sie BAFA-, KfW- und EPREL-Quellen vor vertraglicher Nutzung.',
+  },
+
+  session: {
+    banner: (t: string) => `Gerätelimit überschritten — die am längsten ungenutzte Sitzung wird in ${t} abgemeldet. Ungenutzte Geräte werden automatisch bereinigt.`,
+    cardTitle: 'Geräte & Sitzungen',
+    cardText: 'Ihr Tarif erlaubt zwei gleichzeitig aktive Geräte. Bei mehr beginnt eine 30-minütige Karenzzeit, danach wird die am längsten ungenutzte Sitzung abgemeldet.',
+    thisDevice: 'Dieses Gerät',
+    lastSeen: (s: string) => `Zuletzt aktiv ${s}`,
+    signOutOne: 'Abmelden',
+    signOutOthers: 'Andere Geräte abmelden',
+    signOutAll: 'Auf allen Geräten abmelden',
+    confirmAll: 'Dies meldet Sie überall ab, auch auf diesem Gerät. Fortfahren?',
+    done: 'Erledigt.',
+    failed: 'Aktion fehlgeschlagen — bitte erneut versuchen.',
+    noneOther: 'Keine weiteren Sitzungen.',
   },
 
   trial: {
@@ -1678,6 +1709,21 @@ const FR_FR: HpStrings = {
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Tous droits réservés.`,
   },
 
+  session: {
+    banner: (t: string) => `Limite d’appareils dépassée — la session la moins utilisée sera déconnectée dans ${t}. Les appareils inutilisés sont libérés automatiquement.`,
+    cardTitle: 'Appareils et sessions',
+    cardText: 'Votre offre autorise deux appareils actifs simultanément. Au-delà, un délai de 30 minutes s’applique, puis la session la moins récemment utilisée est déconnectée.',
+    thisDevice: 'Cet appareil',
+    lastSeen: (s: string) => `Dernière activité ${s}`,
+    signOutOne: 'Déconnecter',
+    signOutOthers: 'Déconnecter les autres appareils',
+    signOutAll: 'Déconnecter tous les appareils',
+    confirmAll: 'Vous serez déconnecté partout, y compris sur cet appareil. Continuer ?',
+    done: 'Terminé.',
+    failed: 'Échec de l’action — veuillez réessayer.',
+    noneOther: 'Aucune autre session.',
+  },
+
   trial: {
     banner: (d: number) =>
       d <= 1
@@ -2490,6 +2536,21 @@ const PL_PL: HpStrings = {
     edition: 'Edycja polska',
     note: 'Dane produktów mają charakter informacyjny — przed użyciem w celach umownych zweryfikuj źródła programu Czyste Powietrze, listy ZUM i producentów.',
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Wszelkie prawa zastrzeżone.`,
+  },
+
+  session: {
+    banner: (t: string) => `Przekroczono limit urządzeń — najdłużej nieużywana sesja zostanie wylogowana za ${t}. Nieużywane urządzenia są zwalniane automatycznie.`,
+    cardTitle: 'Urządzenia i sesje',
+    cardText: 'Twój plan pozwala na dwa jednocześnie aktywne urządzenia. Po przekroczeniu obowiązuje 30-minutowy okres karencji, a następnie wylogowywana jest najdłużej nieużywana sesja.',
+    thisDevice: 'To urządzenie',
+    lastSeen: (s: string) => `Ostatnia aktywność ${s}`,
+    signOutOne: 'Wyloguj',
+    signOutOthers: 'Wyloguj pozostałe urządzenia',
+    signOutAll: 'Wyloguj na wszystkich urządzeniach',
+    confirmAll: 'Nastąpi wylogowanie wszędzie, także na tym urządzeniu. Kontynuować?',
+    done: 'Gotowe.',
+    failed: 'Akcja nie powiodła się — spróbuj ponownie.',
+    noneOther: 'Brak innych sesji.',
   },
 
   trial: {
@@ -3310,6 +3371,21 @@ const IT_IT: HpStrings = {
     edition: 'Edizione Italia',
     note: 'I dati dei prodotti hanno carattere informativo — prima dell’uso contrattuale verificare le fonti GSE (Conto Termico), Agenzia delle Entrate e dei produttori.',
     copyright: (y: number) => `© ${y} ${BRAND_TM} · Tutti i diritti riservati.`,
+  },
+
+  session: {
+    banner: (t: string) => `Limite di dispositivi superato — la sessione meno utilizzata verrà disconnessa tra ${t}. I dispositivi inutilizzati si liberano automaticamente.`,
+    cardTitle: 'Dispositivi e sessioni',
+    cardText: 'Il tuo piano consente due dispositivi attivi contemporaneamente. Oltre questo limite parte un periodo di tolleranza di 30 minuti, poi la sessione usata meno di recente viene disconnessa.',
+    thisDevice: 'Questo dispositivo',
+    lastSeen: (s: string) => `Ultima attività ${s}`,
+    signOutOne: 'Disconnetti',
+    signOutOthers: 'Disconnetti gli altri dispositivi',
+    signOutAll: 'Disconnetti da tutti i dispositivi',
+    confirmAll: 'Verrai disconnesso ovunque, incluso questo dispositivo. Continuare?',
+    done: 'Fatto.',
+    failed: 'Operazione non riuscita — riprova.',
+    noneOther: 'Nessun’altra sessione.',
   },
 
   trial: {

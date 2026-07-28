@@ -7,6 +7,7 @@ import {
   adminGoogleSignIn,
 } from './services/authService';
 import { TRIAL_FLOW_ENABLED } from './services/billingFnService';
+import { startSessionTracking } from './services/sessionService';
 import { accessExpired } from './config/entitlement';
 import { getMyOrg } from './services/subscriptionService';
 import { Organization } from './types';
@@ -184,6 +185,27 @@ const App: React.FC = () => {
   const [termsPrompt, setTermsPrompt] = useState<{ resolve: () => void; reject: () => void } | null>(null);
   const requestTermsConsent = () =>
     new Promise<void>((resolve, reject) => setTermsPrompt({ resolve, reject }));
+
+  // Concurrent sessions (docs/CONCURRENT_SESSIONS.md): grace deadline for the
+  // countdown banner, and the reason notice shown after a server-side revoke.
+  const [sessionGraceUntil, setSessionGraceUntil] = useState<number | null>(null);
+  const [sessionNotice, setSessionNotice] = useState<string | null>(null);
+  useEffect(() => {
+    if (!currentUser || currentUser.id === 'preview' || currentUser.status !== 'active') {
+      setSessionGraceUntil(null);
+      return;
+    }
+    const stop = startSessionTracking(currentUser.id, {
+      onState: st => setSessionGraceUntil(st.graceUntilMs),
+      onRevoked: reason => {
+        setSessionGraceUntil(null);
+        setSessionNotice(reason === 'auto-limit' ? (t as any).sessionRevokedLimit : (t as any).sessionRevokedOther);
+        logoutUser();
+      },
+    });
+    return stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser?.id, currentUser?.status]);
 
   // The signed-in user's team, for the entitlement check (a member's access
   // window is the org's). Loaded lazily; while null the check can only be
@@ -552,11 +574,21 @@ const App: React.FC = () => {
     </div>
   ) : null;
 
+  // Post-revoke reason notice (never a bare login screen) — shown on the auth
+  // surface after the server signed this device out.
+  const sessionNoticeEl = sessionNotice ? (
+    <div className="w-full max-w-xl mx-auto mb-5 flex items-start gap-3 rounded-xl border border-amber-300/40 bg-amber-400/10 px-4 py-3 text-sm text-amber-100" data-testid="session-notice">
+      <span className="flex-1 leading-relaxed">{sessionNotice}</span>
+      <button onClick={() => setSessionNotice(null)} className="text-amber-200/70 hover:text-white">×</button>
+    </div>
+  ) : null;
+
   // ... (Previous JSX code) ...
   if (currentView === 'LANDING') {
     return (
       <AuthShell t={t} language={language} setLanguage={setLanguage}>
         <div className="w-full flex flex-col items-center gap-10">
+        {sessionNoticeEl}
         <div className="w-full max-w-6xl grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
           {/* Hero — market story */}
           <div className="max-w-xl hp-fade-up">
@@ -662,6 +694,8 @@ const App: React.FC = () => {
     return (
       <AuthShell t={t} language={language} setLanguage={setLanguage}>
         {termsModal}
+        <div className="w-full flex flex-col items-center">
+        {sessionNoticeEl}
         <GlassCard className="w-full max-w-md p-8 hp-fade-up">
           <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-6 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.loginTitle}</h2>
@@ -699,6 +733,7 @@ const App: React.FC = () => {
           </p>
           <LegalFooter language={language} dark />
         </GlassCard>
+        </div>
       </AuthShell>
     );
   }
@@ -897,6 +932,7 @@ const App: React.FC = () => {
         onRetryDatasets={() => setDatasetsRetryTick(n => n + 1)}
         language={language}
         setLanguage={setLanguage}
+        sessionGraceUntil={sessionGraceUntil}
       />
     );
   }
