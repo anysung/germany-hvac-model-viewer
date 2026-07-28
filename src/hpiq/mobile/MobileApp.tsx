@@ -580,7 +580,7 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
               </span>
             </div>
           ))}
-          <span style={{ fontSize: 10.5, color: '#9a9aa0', lineHeight: 1.5 }}>{s.trialNote} {s.vatNote}</span>
+          <span style={{ fontSize: 10.5, color: '#9a9aa0', lineHeight: 1.5 }}>{s.trialNote} {s.vatNote} {s.eurBillingNote}</span>
         </div>
       )}
 

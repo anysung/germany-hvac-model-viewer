@@ -205,6 +205,7 @@ const PlanPicker: React.FC<{
         <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.55 }}>{s.cancelNote}</span>
         <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.55 }}>{s.fixedTermNote}</span>
         <span style={{ fontSize: 11.5, color: '#9a9aa0', lineHeight: 1.55 }}>{s.vatNote}</span>
+        <span style={{ fontSize: 11.5, color: '#9a9aa0', lineHeight: 1.55 }}>{s.eurBillingNote}</span>
       </div>
     </div>
   );

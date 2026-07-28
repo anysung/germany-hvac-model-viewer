@@ -141,6 +141,9 @@ export const PublicPricingPage: React.FC<{
           <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.55 }}>{s.cancelNote}</span>
           <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.55 }}>{s.fixedTermNote}</span>
           <span style={{ fontSize: 11.5, color: '#9a9aa0', lineHeight: 1.55 }}>{s.vatNote}</span>
+          {/* Every market bills in EUR (countryProfiles.currency) — say so, since
+              a non-euro cardholder's own bank does the conversion. */}
+          <span style={{ fontSize: 11.5, color: '#9a9aa0', lineHeight: 1.55 }} data-testid="eur-billing-note">{s.eurBillingNote}</span>
         </div>
       </div>
 

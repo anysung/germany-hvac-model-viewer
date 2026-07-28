@@ -43,10 +43,26 @@ export interface CountryProfile {
   /** Short market description used in AI prompts and UI copy. */
   marketName: string;
 
-  /** ISO 4217 currency code. */
+  /**
+   * ISO 4217 **billing** currency — the currency this market's subscriptions
+   * are charged in, and the key that selects the Paddle price catalogue
+   * (config/paddlePrices.ts). A market whose currency has no catalogue keeps
+   * checkout in "coming soon" mode, which is why this is a billing fact, not
+   * a display preference.
+   *
+   * ONE CURRENCY FOR EVERY MARKET — EUR (owner decision 2026-07-29). Paddle
+   * charges strictly in the currency a price is defined in; it does NOT
+   * convert to a local currency at checkout (verified against the live API:
+   * a GB customer on a EUR price is charged in EUR). Local-currency billing
+   * would require GBP/PLN price overrides in Paddle plus a catalogue block
+   * here. Until that is deliberately introduced, every market bills in EUR
+   * so there is a single set of prices to manage — and the pricing UI says
+   * so explicitly (i18n `sub.eurBillingNote`), because the customer's own
+   * bank does any conversion and may add a foreign-transaction fee.
+   */
   currency: string;
 
-  /** Single character currency symbol for UI display. */
+  /** Single character currency symbol for UI display. Matches `currency`. */
   currencySymbol: string;
 
   /** BCP 47 locale tag used for number/date formatting. */
@@ -200,8 +216,10 @@ export const COUNTRY_PROFILES: Record<CountryCode, CountryProfile> = {
     code: 'GB',
     name: 'United Kingdom',
     marketName: 'UK market',
-    currency: 'GBP',
-    currencySymbol: '£',
+    // Billed in EUR like every market (see the `currency` field docs) — Paddle
+    // does not convert, so a GBP value here would only disable checkout.
+    currency: 'EUR',
+    currencySymbol: '€',
     locale: 'en-GB',
     firestoreRoot: 'countries/GB',
     primaryRegistry: 'OFGEM_PEL',
@@ -232,8 +250,9 @@ export const COUNTRY_PROFILES: Record<CountryCode, CountryProfile> = {
     code: 'PL',
     name: 'Poland',
     marketName: 'Polish market',
-    currency: 'PLN',
-    currencySymbol: 'zł',
+    // Billed in EUR like every market (see the `currency` field docs).
+    currency: 'EUR',
+    currencySymbol: '€',
     locale: 'pl-PL',
     firestoreRoot: 'countries/PL',
     // PL catalogue is derived from the canonical (German-registry) baseline —
