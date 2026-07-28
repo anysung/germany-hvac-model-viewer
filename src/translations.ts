@@ -57,7 +57,7 @@ const EN_T = {
 
     // Registration pause (see src/config/registration.ts)
     regPausedTitle: "Registration is temporarily unavailable",
-    regPausedBody: "We are currently carrying out a system review as we prepare to expand the HeatPump Database across Europe. While the review is running, no new accounts can be created.",
+    regPausedBody: "We are currently carrying out a system review as we prepare to expand the HeatPump DataBase across Europe. While the review is running, no new accounts can be created.",
     regPausedReopen: "Expected reopening",
     regPausedExisting: "Already have an account? Existing members can sign in as usual.",
     regPausedNotice: "New registrations are paused during our European expansion review. Existing accounts are unaffected.",

@@ -18,10 +18,10 @@
  */
 
 /** Customer-facing product/brand identity used across the policy pages. */
-export const SERVICE_NAME = 'HeatPump Database (Europe)';
+export const SERVICE_NAME = 'HeatPump DataBase (Europe)';
 
 /** Prominent brand mark (trademark form) — Legal Notice, Terms intro, footers. */
-export const BRAND_TM = 'HeatPump Database (Europe)™';
+export const BRAND_TM = 'HeatPump DataBase (Europe)™';
 
 /* ── Verified operator identity (Paddle review). Facts, never translated. ──── */
 

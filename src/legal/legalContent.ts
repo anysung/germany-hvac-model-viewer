@@ -137,7 +137,7 @@ const EN = {
       {
         h: 'Account deletion',
         p: [
-          'You can request deletion at any time from the Account page. Deleting your HeatPump Database account does not cancel a subscription — billing must be cancelled separately through Manage billing.',
+          'You can request deletion at any time from the Account page. Deleting your HeatPump DataBase account does not cancel a subscription — billing must be cancelled separately through Manage billing.',
         ],
       },
       {
@@ -235,7 +235,7 @@ const EN = {
         h: 'How to cancel',
         p: [
           'Cancel through Manage billing on the Account page.',
-          'Deleting your HeatPump Database account does NOT cancel your subscription. Billing is handled separately and must be cancelled through Manage billing.',
+          'Deleting your HeatPump DataBase account does NOT cancel your subscription. Billing is handled separately and must be cancelled through Manage billing.',
         ],
       },
       { h: 'Exceptional refunds', p: [`If you believe your case is exceptional (for example a duplicate charge), send a New inquiry from the Account page or email ${SUPPORT_EMAIL}, and we will review it with Paddle.`] },
@@ -265,7 +265,7 @@ const DE = {
     title: 'Datenschutzerklärung',
     updated: ver.privacy,
     intro:
-      'HeatPump Database ist ein webbasierter, professioneller Datenbankdienst für die europäische Wärmepumpenbranche. Diese Erklärung beschreibt, welche Daten wir bei der Nutzung verarbeiten und warum. Wir erheben nur das Minimum, das für ein professionelles Konto erforderlich ist.',
+      'HeatPump DataBase ist ein webbasierter, professioneller Datenbankdienst für die europäische Wärmepumpenbranche. Diese Erklärung beschreibt, welche Daten wir bei der Nutzung verarbeiten und warum. Wir erheben nur das Minimum, das für ein professionelles Konto erforderlich ist.',
     sections: [
       {
         h: 'Verantwortlicher',
@@ -452,7 +452,7 @@ const FR = {
     title: 'Politique de confidentialité',
     updated: ver.privacy,
     intro:
-      "HeatPump Database est un service de base de données professionnel sur le web, destiné à la filière européenne des pompes à chaleur. Cette politique explique quelles données nous traitons et pourquoi. Nous ne collectons que le minimum nécessaire au fonctionnement d'un compte professionnel.",
+      "HeatPump DataBase est un service de base de données professionnel sur le web, destiné à la filière européenne des pompes à chaleur. Cette politique explique quelles données nous traitons et pourquoi. Nous ne collectons que le minimum nécessaire au fonctionnement d'un compte professionnel.",
     sections: [
       {
         h: 'Responsable du traitement',
@@ -516,7 +516,7 @@ const FR = {
       },
       {
         h: 'Suppression du compte',
-        p: ["Vous pouvez demander la suppression à tout moment depuis la page Compte. La suppression de votre compte HeatPump Database n'annule pas l'abonnement — la facturation doit être résiliée séparément via « Gérer la facturation »."],
+        p: ["Vous pouvez demander la suppression à tout moment depuis la page Compte. La suppression de votre compte HeatPump DataBase n'annule pas l'abonnement — la facturation doit être résiliée séparément via « Gérer la facturation »."],
       },
       {
         h: 'Vos droits',
@@ -609,7 +609,7 @@ const FR = {
         h: 'Comment résilier',
         p: [
           "Résiliez via « Gérer la facturation » sur la page Compte.",
-          "La suppression de votre compte HeatPump Database N'ANNULE PAS votre abonnement. La facturation est gérée séparément et doit être résiliée via « Gérer la facturation ».",
+          "La suppression de votre compte HeatPump DataBase N'ANNULE PAS votre abonnement. La facturation est gérée séparément et doit être résiliée via « Gérer la facturation ».",
         ],
       },
       { h: 'Cas exceptionnels', p: [`Si votre situation est exceptionnelle (par exemple un double débit), envoyez une « Nouvelle demande » depuis la page Compte ou écrivez à ${SUPPORT_EMAIL} ; nous l'examinerons avec Paddle.`] },
@@ -714,7 +714,7 @@ const PL = {
       {
         h: 'Usunięcie konta',
         p: [
-          'Usunięcia konta można zażądać w każdej chwili na stronie Konto. Usunięcie konta HeatPump Database nie anuluje subskrypcji — rozliczenia należy anulować osobno w sekcji „Zarządzaj rozliczeniami”.',
+          'Usunięcia konta można zażądać w każdej chwili na stronie Konto. Usunięcie konta HeatPump DataBase nie anuluje subskrypcji — rozliczenia należy anulować osobno w sekcji „Zarządzaj rozliczeniami”.',
         ],
       },
       {
@@ -812,7 +812,7 @@ const PL = {
         h: 'Jak anulować',
         p: [
           'Subskrypcję anulują Państwo w sekcji „Zarządzaj rozliczeniami” na stronie Konto.',
-          'Usunięcie konta HeatPump Database NIE anuluje subskrypcji. Rozliczenia są prowadzone osobno i muszą zostać anulowane w sekcji „Zarządzaj rozliczeniami”.',
+          'Usunięcie konta HeatPump DataBase NIE anuluje subskrypcji. Rozliczenia są prowadzone osobno i muszą zostać anulowane w sekcji „Zarządzaj rozliczeniami”.',
         ],
       },
       { h: 'Zwroty w wyjątkowych przypadkach', p: [`Jeżeli uważają Państwo, że Państwa przypadek jest wyjątkowy (na przykład podwójne obciążenie), prosimy wysłać „Nowe zapytanie” ze strony Konto lub napisać na adres ${SUPPORT_EMAIL} — rozpatrzymy sprawę wspólnie z Paddle.`] },
@@ -917,7 +917,7 @@ const IT = {
       {
         h: 'Cancellazione dell’account',
         p: [
-          'Potete richiedere la cancellazione in qualsiasi momento dalla pagina Account. La cancellazione dell’account HeatPump Database non annulla l’abbonamento — la fatturazione deve essere disdetta separatamente tramite «Gestisci fatturazione».',
+          'Potete richiedere la cancellazione in qualsiasi momento dalla pagina Account. La cancellazione dell’account HeatPump DataBase non annulla l’abbonamento — la fatturazione deve essere disdetta separatamente tramite «Gestisci fatturazione».',
         ],
       },
       {
@@ -1015,7 +1015,7 @@ const IT = {
         h: 'Come disdire',
         p: [
           'Disdite tramite «Gestisci fatturazione» sulla pagina Account.',
-          'La cancellazione dell’account HeatPump Database NON disdice l’abbonamento. La fatturazione è gestita separatamente e deve essere disdetta tramite «Gestisci fatturazione».',
+          'La cancellazione dell’account HeatPump DataBase NON disdice l’abbonamento. La fatturazione è gestita separatamente e deve essere disdetta tramite «Gestisci fatturazione».',
         ],
       },
       { h: 'Rimborsi eccezionali', p: [`Se ritenete che il vostro caso sia eccezionale (ad esempio un addebito doppio), inviate una «Nuova richiesta» dalla pagina Account oppure scrivete a ${SUPPORT_EMAIL}: lo esamineremo insieme a Paddle.`] },
