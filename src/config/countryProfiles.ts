@@ -59,6 +59,15 @@ export interface CountryProfile {
    * so there is a single set of prices to manage — and the pricing UI says
    * so explicitly (i18n `sub.eurBillingNote`), because the customer's own
    * bank does any conversion and may add a foreign-transaction fee.
+   *
+   * Paddle's account-level **automatic currency conversion** (Business account
+   * > Currencies) would make checkout charge GBP/PLN without any catalogue
+   * change. It is deliberately left OFF — 0 active conversions — and the owner
+   * reaffirmed that on 2026-07-29: one euro price, displayed and charged, in
+   * every market. Turning it on would make checkout disagree with the prices
+   * this file's markets display and with `sub.eurBillingNote`, so it may only
+   * be enabled together with a pricing UI that resolves live localized prices
+   * (Paddle `PricePreview`) and a rewrite of that note. Do not enable it alone.
    */
   currency: string;
 
