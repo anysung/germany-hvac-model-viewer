@@ -8,14 +8,9 @@ import React, { useEffect, useState } from 'react';
 import { getNews, getNewsFor } from '../../services/dbService';
 import { HeatPump, NewsItem } from '../../types';
 import { ACTIVE_COUNTRY, COUNTRY_PROFILES } from '../../config/countryProfiles';
+import { COUNTRY_SITES } from '../../hpiq/market';
 import { StatCard, SectionCard, PageHeader } from './shared';
 import { AdminLang } from './adminI18n';
-
-const SITE_URLS: Record<string, string> = {
-  DE: 'https://www.heatpumpdb.de',
-  GB: 'https://www.heatpumpdb.uk',
-  FR: 'https://www.heatpumpdb.fr',
-};
 
 /**
  * All-markets grid — the unified console view. Dataset counts are injected at
@@ -53,8 +48,10 @@ const MarketsGrid: React.FC<{ ko: boolean; locale: string }> = ({ ko, locale }) 
               <div className="flex justify-between"><span>{ko ? '뉴스 기사' : 'News articles'}</span><span className="font-medium text-gray-900">{news ? news.length : '…'}</span></div>
               <div className="flex justify-between"><span>{ko ? '최신 기사' : 'Latest article'}</span><span className="font-medium text-gray-900">{news ? fmtD(latest) : '…'}</span></div>
             </div>
-            <a href={SITE_URLS[p.code] ?? '#'} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-blue-600 hover:underline pt-1">
-              {SITE_URLS[p.code]?.replace('https://', '') ?? '—'} ↗
+            {/* ONE source for public site URLs (market.ts COUNTRY_SITES) — the
+                old local map here silently missed PL/IT when they launched. */}
+            <a href={COUNTRY_SITES[p.code]?.url ?? '#'} target="_blank" rel="noopener noreferrer" className="inline-block text-xs text-blue-600 hover:underline pt-1">
+              {COUNTRY_SITES[p.code]?.url.replace('https://', '') ?? '—'} ↗
             </a>
           </div>
         );
