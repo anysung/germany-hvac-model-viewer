@@ -124,6 +124,15 @@ The orchestrator preflights these and aborts with a clear message if missing.
 Datasets are NO LONGER served from hosting — the old hosting-release
 rollback is obsolete. Recovery escalates in this order:
 
+0. **Prevention — the update refuses to start on a sick system** (2026-07-29):
+   `upload-datasets.mjs` runs `verify-serving.mjs --preflight` against the
+   CURRENTLY LIVE set before it copies anything. A snapshot inherits the
+   health of what it captures, so snapshotting broken data would hand us a
+   restore point that rolls back into the fault. On failure nothing is touched
+   and no snapshot is taken — the message to act on is "live data is already
+   unhealthy", not "the update failed". Deliberate override:
+   `--preflight-override --reason="…"` (reason mandatory, stamped onto the
+   snapshot and shown on the Panic Button).
 1. **Automatic**: `upload-datasets.mjs` verifies the served bytes after every
    publish and restores the run's pre-update snapshot IN FULL on persistent
    failure (nothing to do — read the run output).

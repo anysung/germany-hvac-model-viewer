@@ -147,12 +147,55 @@ if (!DRY && !GATE_PASSED) {
 }
 
 /**
+ * PRE-UPDATE HEALTH CHECK (owner decision 2026-07-29).
+ *
+ * The gate above validates what is coming IN and verify-serving validates what
+ * went OUT — but until now nothing validated the state we are about to FREEZE as
+ * the rollback point. That was the hole: a snapshot inherits the health of
+ * whatever was live, so snapshotting already-broken data produces a restore
+ * point that rolls back INTO the fault. The emergency device would then fail at
+ * exactly the moment it is needed.
+ *
+ * So: check live → (only if healthy) snapshot → update. Same module, same
+ * infra-retry/data-fail-fast discipline as the post-publish verification —
+ * a transient network blip must not block the monthly update, and a real data
+ * fault must not be retried away.
+ *
+ * A failure here is NOT "the update failed"; it is "production is already
+ * broken and nobody noticed". Nothing is touched and the operator decides.
+ */
+const PREFLIGHT_OVERRIDE = process.argv.includes('--preflight-override');
+const PREFLIGHT_REASON = (process.argv.find(a => a.startsWith('--reason=')) ?? '').slice('--reason='.length);
+let preflight = { result: 'skipped' };
+
+if (!DRY) {
+  if (PREFLIGHT_OVERRIDE) {
+    if (!PREFLIGHT_REASON.trim()) {
+      console.error('✗ --preflight-override requires --reason="…" — an unexplained override is not recorded history.');
+      process.exit(1);
+    }
+    console.log(`⚠ Pre-update check OVERRIDDEN — reason: ${PREFLIGHT_REASON}\n`);
+    preflight = { result: 'overridden', reason: PREFLIGHT_REASON, at: new Date().toISOString() };
+  } else {
+    try {
+      execFileSync(process.execPath, [join(ROOT, 'scripts/verify-serving.mjs'), '--preflight'], { stdio: 'inherit' });
+      preflight = { result: 'passed', at: new Date().toISOString() };
+    } catch {
+      // verify-serving already printed the operator notification and what to do.
+      console.error('\n✗ Update NOT started. Production is unchanged and no snapshot was taken.');
+      process.exit(1);
+    }
+  }
+}
+
+/**
  * PRE-PUBLISH SNAPSHOT (docs/DATASET_ROLLBACK_AND_PANIC.md, 2026-07-27).
  * The complete live set is copied server-side to snapshots/<runId>/ BEFORE the
  * first overwrite. That snapshot is the run's rollback point: it is
- * self-consistent by construction (it IS what was serving), so a mid-run
- * failure or a bad publish is always recoverable as a full set — never as
- * per-object generations, which could mix update epochs.
+ * self-consistent by construction (it IS what was serving), and — since the
+ * pre-update check above — it is also known-HEALTHY, which is what makes it
+ * worth restoring. Always a full set, never per-object generations, which
+ * could mix update epochs.
  */
 const RUN_ID = 'snap-' + new Date().toISOString().replace(/[-:]/g, '').replace('T', '-').slice(0, 15);
 if (!DRY) {
@@ -163,6 +206,23 @@ if (!DRY) {
   } catch {
     console.error('✗ Snapshot failed — ABORTING before any upload. Production is unchanged.');
     process.exit(1);
+  }
+
+  /**
+   * Stamp the snapshot with HOW it was cleared. In a panic nobody can re-run the
+   * checks — the Panic Button lists restore points and the operator must be able
+   * to tell a verified one from an overridden one at a glance, without judging.
+   * Best-effort: a missing stamp degrades the UI to "unverified", never blocks
+   * the update, and never blocks a restore.
+   */
+  try {
+    const stampPath = join(tmpdir(), `${RUN_ID}-preflight.json`);
+    writeFileSync(stampPath, JSON.stringify({ runId: RUN_ID, preflight, objects: 10 }, null, 2));
+    execFileSync('gcloud', ['storage', 'cp', stampPath, `${BUCKET}/snapshots/${RUN_ID}/PREFLIGHT.json`],
+      { stdio: ['ignore', 'ignore', 'inherit'] });
+    rmSync(stampPath, { force: true });
+  } catch {
+    console.warn('⚠ Could not stamp the snapshot with its pre-update result — continuing (the snapshot itself is intact).');
   }
 }
 

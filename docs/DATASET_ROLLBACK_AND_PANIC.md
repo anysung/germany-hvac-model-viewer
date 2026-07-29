@@ -20,16 +20,41 @@ model executing this work follows THIS scope.
   automatic path: for semantically-wrong data the checks can't see, customer
   reports, or when the automatic path itself is broken. Owner-only, typed
   confirmation, audited, idempotent.
+- **A snapshot is only worth as much as the state it captures** (owner
+  decision 2026-07-29). A snapshot inherits the health of whatever was live,
+  so freezing already-broken data produces a restore point that rolls back
+  INTO the fault — the emergency device failing at the moment it is needed.
+  Therefore: **check live → (only if healthy) snapshot → update.**
 - Object Versioning stays enabled as a last-ditch safety net (accidental
   deletion), but the operational restore path is snapshots only.
 
 ## Mechanics
 
+0. **Pre-update check** — `scripts/verify-serving.mjs --preflight` runs FIRST,
+   before anything is copied or written. It validates the CURRENTLY LIVE set
+   with the same module and the same infra-retry / data-fail-fast discipline
+   as the post-publish verification (deliberately the same script: the bytes
+   examined are the same live objects, so the checks must be too).
+   - **Pass** → the snapshot is taken and stamped `passed`.
+   - **Fail** → the update never starts. Nothing is touched, no snapshot is
+     taken. This is not "the update failed" — it is "production is already
+     broken and nobody noticed", which outranks the update. The operator
+     decides: repair live first (Panic Rollback to a verified snapshot), or
+     proceed deliberately with
+     `node scripts/upload-datasets.mjs --preflight-override --reason="…"`.
+     The reason is mandatory and is stamped onto the snapshot.
 1. **Snapshots** — `scripts/upload-datasets.mjs` copies every live object to
    `gs://heatpumpdb-datasets/snapshots/<runId>/…` (server-side copy) BEFORE
    the first upload of a run. `<runId>` = UTC `YYYYMMDD-HHmmss`. The snapshot
-   is self-consistent because it captures the set that was actually serving.
+   is self-consistent because it captures the set that was actually serving,
+   and — since step 0 — known-healthy, which is what makes it worth restoring.
    Metadata (contentType/encoding/cacheControl) rides along with the copy.
+   Each snapshot carries `PREFLIGHT.json` recording how it was cleared
+   (`passed` / `overridden` + reason); `rollbackStatus` returns this as a
+   separate `snapshotMeta` map — kept apart from the `snapshots` list so a
+   metadata change can never break the restore UI — and the Panic Button
+   labels each restore point `verified` / `OVERRIDDEN` / `unverified`, because
+   in a panic nobody has time to work out whether a snapshot was ever checked.
 2. **Stable manifest** — `data_manifests/stable-release.json` (committed)
    records the current stable set: runId, publish time, per-object md5 +
    item counts, and the pre-update snapshot prefix. **Promoted ONLY after

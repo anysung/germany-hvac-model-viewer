@@ -80,9 +80,24 @@ export const PanicCard: React.FC<{ al: AdminLang }> = ({ al }) => {
         <div>
           <div className="text-xs font-bold text-gray-500 uppercase mb-1">{A.pbSnapshots}</div>
           {status?.snapshots?.length ? (
-            <select value={snapshotId} onChange={e => setSnapshotId(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
-              {status.snapshots.map(s => <option key={s} value={s}>{s}</option>)}
-            </select>
+            <>
+              <select value={snapshotId} onChange={e => setSnapshotId(e.target.value)} className="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+                {status.snapshots.map(s => {
+                  const m = status.snapshotMeta?.[s];
+                  // Label the restore point itself: in a panic there is no time to
+                  // look up whether a snapshot was ever checked.
+                  const tag = m?.result === 'passed' ? A.pbVerified
+                    : m?.result === 'overridden' ? A.pbOverridden
+                    : A.pbUnverified;
+                  return <option key={s} value={s}>{s} — {tag}</option>;
+                })}
+              </select>
+              {status.snapshotMeta?.[snapshotId]?.result === 'overridden' && (
+                <p className="text-xs text-orange-600 mt-1 max-w-xs">
+                  {A.pbOverriddenNote} {status.snapshotMeta[snapshotId]?.reason}
+                </p>
+              )}
+            </>
           ) : (
             <div className="text-sm text-gray-400">{A.pbNoSnapshots}</div>
           )}

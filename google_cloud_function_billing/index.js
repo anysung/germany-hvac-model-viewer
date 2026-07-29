@@ -636,6 +636,24 @@ function validateFullSet(byPath, degraded) {
   return verified;
 }
 
+/**
+ * How each snapshot was cleared before it was taken (upload-datasets.mjs writes
+ * PREFLIGHT.json). Returned as a SEPARATE map so `snapshots` keeps its string[]
+ * shape — this is the emergency path, and a change here must not be able to
+ * break the restore UI. Entirely best-effort: an unreadable or absent stamp
+ * simply leaves the restore point unlabelled.
+ */
+async function readPreflightStamps(ids) {
+  const meta = {};
+  await Promise.all(ids.map(async id => {
+    try {
+      const [buf] = await gcs.bucket(DATASET_BUCKET).file(`snapshots/${id}/PREFLIGHT.json`).download();
+      meta[id] = JSON.parse(buf.toString('utf8')).preflight ?? null;
+    } catch { /* pre-dates the stamp, or unreadable — leave unlabelled */ }
+  }));
+  return meta;
+}
+
 async function rollbackStatus(req, res) {
   const owner = await verifyOwner(req);
   if (!owner) return sendErr(res, 403, 'owner-only');
@@ -648,6 +666,7 @@ async function rollbackStatus(req, res) {
     ok: true,
     live,
     snapshots,
+    snapshotMeta: await readPreflightStamps(snapshots),
     degraded: !CANARIES,
     lock: lockSnap.exists ? lockSnap.data() : null,
   });

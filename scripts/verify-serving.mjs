@@ -4,9 +4,19 @@
  * (docs/DATASET_ROLLBACK_AND_PANIC.md).
  *
  * The dataset gate validates the CANDIDATE files before publish; this script
- * validates the SERVED bytes after publish. The check logic itself lives in
+ * validates the SERVED bytes. The check logic itself lives in
  * google_cloud_function_billing/datasetChecks.js — the SAME module the Panic
  * Button uses pre/post-restore, so "verified" means one thing everywhere.
+ *
+ * TWO ROLES, ONE SCRIPT — the bytes examined are the same live objects either
+ * way, so the checks must be too:
+ *   • default      — POST-publish: did the release we just shipped come out healthy?
+ *   • --preflight  — PRE-update (owner decision 2026-07-29): is what is live RIGHT
+ *     NOW healthy, BEFORE upload-datasets.mjs freezes it as the run's rollback
+ *     point? A snapshot of already-broken data is a worthless restore point —
+ *     you would roll back INTO the fault. Failing here means the update never
+ *     starts and nothing is touched; the operator is told that live data is
+ *     unhealthy, which is more urgent than the update itself.
  *
  * Failure discipline (owner-approved): INFRA-type failures (download/network)
  * are retried 2× with a pause — a transient blip must never trigger a
@@ -19,7 +29,7 @@
  * release (upload-datasets writes it only AFTER this verification passes, so
  * a new release is always compared against the previous stable one).
  *
- * Usage: node scripts/verify-serving.mjs
+ * Usage: node scripts/verify-serving.mjs [--preflight]
  * Requires: gcloud auth with read access to the bucket.
  */
 import { readFileSync, existsSync } from 'node:fs';
@@ -57,6 +67,13 @@ function decode(buf) {
 }
 
 // ── Run ─────────────────────────────────────────────────────────────────────
+/** Pre-update health check rather than post-publish verification (see header). */
+const PREFLIGHT = process.argv.includes('--preflight');
+
+console.log(PREFLIGHT
+  ? 'PRE-UPDATE CHECK — validating the CURRENTLY LIVE set before it becomes the rollback point…\n'
+  : 'Verifying the SERVED datasets…\n');
+
 let failedAny = false;
 const parsedBySegment = {};
 
@@ -108,7 +125,20 @@ for (const [cc, files] of Object.entries(DATASETS)) {
 }
 
 if (failedAny) {
+  if (PREFLIGHT) {
+    // Not "the update failed" — the update never ran. What failed is production.
+    console.error('\n✗ PRE-UPDATE CHECK FAILED — the live datasets are ALREADY unhealthy.');
+    console.error('  The update was NOT started and NOTHING was touched. No snapshot was taken,');
+    console.error('  because freezing this state would give us a broken rollback point.');
+    console.error('\n  This needs an operator decision. Customers are being served the data above.');
+    console.error('  Either repair production first (Panic Rollback to a verified snapshot), or,');
+    console.error('  if the finding is understood and acceptable, proceed deliberately with:');
+    console.error('    node scripts/upload-datasets.mjs --preflight-override --reason="…"');
+    process.exit(1);
+  }
   console.error('\n✗ SERVING VERIFICATION FAILED — do not declare this release stable.');
   process.exit(1);
 }
-console.log('\n✓ Serving verification passed — the published set is healthy.');
+console.log(PREFLIGHT
+  ? '\n✓ Pre-update check passed — live data is healthy and safe to snapshot.'
+  : '\n✓ Serving verification passed — the published set is healthy.');

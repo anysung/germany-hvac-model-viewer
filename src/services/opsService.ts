@@ -14,11 +14,21 @@ export const OPS_FN_URL = PUBLIC_ENV.BILLING_FN_URL
   || 'https://europe-west1-gen-lang-client-0324244302.cloudfunctions.net/accountBilling';
 
 export interface LiveObject { path: string; md5: string; size: number; updated: string; contentEncoding: string }
+/** How a snapshot was cleared before it was taken (upload-datasets.mjs stamp).
+ *  Absent for snapshots predating the pre-update check, or if unreadable. */
+export interface PreflightStamp {
+  result: 'passed' | 'overridden' | 'skipped';
+  reason?: string;
+  at?: string;
+}
 export interface RollbackStatus {
   ok: boolean;
   error?: string;
   live?: LiveObject[];
   snapshots?: string[];
+  /** snapshot id → how it was cleared. Kept separate from `snapshots` so the
+   *  restore list itself can never be broken by a metadata change. */
+  snapshotMeta?: Record<string, PreflightStamp | null>;
   lock?: { by: string; snapshotId: string; startedAt: string; expiresAtMs: number } | null;
 }
 export interface RollbackResult {
