@@ -10,10 +10,11 @@
  * source, and a silent change to any of them would send inquiries to the wrong
  * (or one global) Admin destination. This test pins them.
  *
- * It also proves the layout task did NOT touch the routing files.
+ * Every assertion reads the SOURCE, so it holds whatever the git state is. See
+ * the note at the bottom for the working-tree check that used to live here and
+ * why it was removed.
  */
 import { readFileSync } from 'node:fs';
-import { execSync } from 'node:child_process';
 
 const read = p => readFileSync(new URL(`../${p}`, import.meta.url), 'utf8').replace(/\s+/g, ' ');
 
@@ -74,18 +75,22 @@ check('the phone shell no longer references SUPPORT_EMAIL (no mailto support)',
 check('the phone Support action opens the in-app inquiry (setSupportOpen), not a mailto',
   /setSupportOpen\(true\)/.test(mobile) && !/mailto:\$\{SUPPORT_EMAIL\}/.test(mobile));
 
-console.log('\nThe layout task did not touch the routing');
-// A behavioural guarantee: this feature must be layout-only. If any routing file
-// shows up as modified vs HEAD, that assumption is broken and must be reviewed.
-try {
-  const dirty = execSync(
-    'git status --porcelain src/services/supportService.ts src/components/admin/InboxPage.tsx src/components/AdminDashboard.tsx firestore.rules',
-    { cwd: new URL('..', import.meta.url).pathname, encoding: 'utf8' },
-  ).trim();
-  check('routing + rules files are unmodified in the working tree', dirty === '', `changed: ${dirty}`);
-} catch (e) {
-  console.log(`  · (git status unavailable — skipped: ${String(e.message).split('\n')[0]})`);
-}
+/*
+ * REMOVED (2026-07-30): a `git status --porcelain` check asserting the routing
+ * and rules files were "unmodified in the working tree".
+ *
+ * It was added to guarantee that one past layout-only task did not touch
+ * routing, but as a standing assertion it measures whether you have committed
+ * yet — not whether the contract holds. That makes it inverted from what we
+ * want in both directions: a committed regression passes it, and a correct
+ * uncommitted edit fails it. It cried wolf during the admin console work
+ * (a deliberate firestore.rules addition) and would do so on every future
+ * legitimate edit to these files.
+ *
+ * The protection was never in that check anyway — it is in the content
+ * assertions above, which read the source and hold regardless of git state.
+ * Add new invariants there.
+ */
 
 console.log(failed ? `\n✗ ${failed} contract assertion(s) failed\n` : '\n✓ inquiry routing contract holds\n');
 process.exit(failed ? 1 : 0);
