@@ -119,7 +119,17 @@ const T = {
   segmentShiftPct: 5,
   // A source snapshot older than this is stale enough to question publishing.
   sourceAgeDays: 120,
+  // Of the previously published ids we sampled, how many must still exist. With a
+  // 2 % product-drop ceiling, ordinary churn leaves ~98 % of a sample intact; a
+  // changed id scheme leaves ~0 %. 80 % is far below normal and far above churn.
+  idCarryOverPct: 80,
 };
+
+/** How many ids to keep per market as carry-over probes (see id_probes). */
+const ID_PROBES = 250;
+
+/** cc → full Set of candidate source_ids, for testing baseline probes against. */
+const candidateIdSets = {};
 
 const fmtPct = (a, b) => (b === 0 ? 0 : ((a - b) / b) * 100);
 
@@ -198,6 +208,38 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     return kw != null && (!Number.isFinite(kw) || kw <= 0 || kw > 2000);
   }).length;
 
+  /**
+   * ηs COLUMN-SWAP DETECTOR. A heat pump is always more efficient at a lower
+   * flow temperature, so seasonal efficiency at 35 °C must exceed 55 °C
+   * (EU 811/2013). The reverse is not a plausible measurement — it means the two
+   * columns were transposed somewhere in parsing, which would silently invert
+   * every energy-label class we derive. Measured 0 inversions in 20,238 records
+   * carrying both values (DE/PL/IT, 2026-07-30), so this can only fire on a
+   * regression. Equal values are allowed: a few registry rows genuinely repeat.
+   */
+  const etaInversions = items.filter(i => {
+    const a = i.efficiency_35C_percent, b = i.efficiency_55C_percent;
+    return typeof a === 'number' && typeof b === 'number' && a < b;
+  }).length;
+
+  /**
+   * ID CARRY-OVER PROBES. The counts above catch a catalogue that shrinks, and
+   * `hash` tells us the id set changed — but it changes every month by design, so
+   * neither notices the dangerous case: the same NUMBER of products republished
+   * under DIFFERENT ids. That happens when model-name normalisation or a derived
+   * key changes (PL `PL-<zum id>`, IT `IT-<gse entry key>` are OUR keys), and it
+   * would silently re-create every product as new: match history orphaned, saved
+   * links dead, listing continuity lost.
+   *
+   * Storing every id would bloat the manifest, so we keep an evenly-spaced sample
+   * and later check how many still exist. Wholesale churn drops carry-over to
+   * ~zero; ordinary removals barely move it.
+   */
+  const sortedIds = [...new Set(ids)].sort();
+  candidateIdSets[cc] = new Set(sortedIds);
+  const probeStep = Math.max(1, Math.floor(sortedIds.length / ID_PROBES));
+  const idProbes = sortedIds.filter((_, n) => n % probeStep === 0).slice(0, ID_PROBES);
+
   // Local listing overlay (field names differ per registry — LOCAL_OVERLAY)
   const OV = LOCAL_OVERLAY[cc] ?? NO_OVERLAY;
   const EXCEPTIONS = OV.exceptions;
@@ -249,6 +291,7 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     unclassified: seg.unclassified,
     duplicate_source_ids: dupIds,
     invalid_capacities: badCapacity,
+    eta_inversions: etaInversions,
     missing_model: missingModel,
     manufacturers: new Set(items.map(i => i.manufacturer_short ?? i.manufacturer)).size,
     local_confirmed: confirmed,
@@ -262,6 +305,7 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     source_snapshot: parts[0].data.meta.pel_snapshot ?? parts[0].data.meta.source_snapshot ?? null,
     generated_at: parts[0].data.meta.generated_at ?? null,
     hash: createHash('sha256').update(JSON.stringify(items.map(i => i.source_id).sort())).digest('hex').slice(0, 16),
+    id_probes: idProbes,
   };
   manifest.markets[cc] = m;
 
@@ -280,6 +324,10 @@ for (const [cc, files] of Object.entries(DATASETS)) {
   if (idWithoutConfirmation > 0) block(`[${cc}] ${idWithoutConfirmation} products carry a local registration id without a confirmed listing — that implies a listing we never established`);
   if (sharedLocalIds > 0) warn(`[${cc}] ${sharedLocalIds} local ids cover several canonical products and are approved by an evidenced exception`);
   if (badCapacity > 0) block(`[${cc}] ${badCapacity} records have an implausible rated capacity`);
+  if (etaInversions > 0) {
+    block(`[${cc}] ${etaInversions} records have seasonal efficiency at 35 °C BELOW 55 °C — physically impossible, `
+      + `so the two columns were transposed. Publishing this would invert the derived energy-label classes.`);
+  }
   if (missingModel > 0) block(`[${cc}] ${missingModel} records have no model name`);
   if (seg.unclassified > 0) block(`[${cc}] ${seg.unclassified} published products have no segment — every public product must be classifiable`);
   if (eligible !== items.length) block(`[${cc}] ${items.length - eligible} published products fail Data Sheet eligibility`);
@@ -379,6 +427,27 @@ if (!baseline) {
     }
     if (cur.manufacturers < prev.manufacturers * 0.9) {
       block(`[${cc}] ${prev.manufacturers - cur.manufacturers} manufacturers disappeared — a normalization or parser regression`);
+    }
+
+    /**
+     * ID CARRY-OVER. Every check above compares SIZES, so republishing the same
+     * number of products under new ids passes them all. Sample the baseline's
+     * probe ids and see how many survive: normal removals barely move this,
+     * a changed id scheme takes it to almost nothing.
+     */
+    if (Array.isArray(prev.id_probes) && prev.id_probes.length >= 20) {
+      const live = new Set(cur.id_probes ?? []);
+      // cur.id_probes is a SAMPLE, so membership must be tested against the full
+      // candidate id set, not the candidate's own sample.
+      const candidateIds = candidateIdSets[cc] ?? live;
+      const kept = prev.id_probes.filter(id => candidateIds.has(id)).length;
+      const keptPct = (kept / prev.id_probes.length) * 100;
+      if (keptPct < T.idCarryOverPct) {
+        block(`[${cc}] only ${keptPct.toFixed(1)}% of previously published ids still exist `
+          + `(${kept}/${prev.id_probes.length} sampled), floor ${T.idCarryOverPct}% — the SAME products are being `
+          + `republished under NEW ids. Model-name normalisation or a derived key changed; match history, `
+          + `saved links and listing continuity would all be orphaned.`);
+      }
     }
   }
 }

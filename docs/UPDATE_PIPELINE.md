@@ -51,6 +51,8 @@
 | **Shrink guard** | orchestrator | Any catalogue count dropping below the live datasets (read from `gs://heatpumpdb-datasets` via gcloud, minus 1 canary/file); intentional reductions need `--allow-shrink` |
 | Fail-fast + atomic deploy | orchestrator | Partial cross-country deploys — nothing ships unless every dataset verifies |
 | Auth-protected datasets + canaries | `scripts/upload-datasets.mjs` + `storage.rules` | Anonymous bulk scraping of the catalogue; canary (honeytoken) records prove extraction if our data surfaces elsewhere |
+| **ID carry-over probes** | `dataset-gate.mjs` (`id_probes`, floor 80 %) | The same products republished under NEW ids — every other gate compares sizes, so a changed model-name normalisation or derived key (PL `PL-<zum id>`, IT `IT-<gse entry key>`) passed them all while orphaning match history and saved links. Activates once a baseline approved with probes exists (added 2026-07-30) |
+| **ηs column-swap detector** | `dataset-gate.mjs` (`eta_inversions`) | Seasonal efficiency at 35 °C parsed BELOW 55 °C — physically impossible (EU 811/2013), so the columns were transposed, which would invert every derived energy-label class. Measured 0 inversions in 20,238 records, so it can only fire on a regression |
 
 ## 3. Monthly run — commands
 
