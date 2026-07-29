@@ -18,6 +18,8 @@ import {
 } from '../../config/subscriptionPlans';
 import { StatCard, SectionCard, PageHeader, EmptyState, SubBadge } from './shared';
 import { AdminLang, ADMIN_I18N } from './adminI18n';
+import { COUNTRY_PROFILES } from '../../config/countryProfiles';
+import { PromotionsCard } from './PromotionsCard';
 
 export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
   const A = ADMIN_I18N[al];
@@ -28,6 +30,8 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
   // by design: they never gate anyone automatically (owner principle 2026-07-27).
   const [reviews, setReviews] = useState<any[]>([]);
   const [msg, setMsg] = useState('');
+  /** Promotion-list market filter: 'all' | '' (any-market grants) | country code. */
+  const [grantMarket, setGrantMarket] = useState<string>('all');
 
   const load = async () => {
     const [u, g, c, r] = await Promise.all([
@@ -51,6 +55,10 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
   };
 
   const flash = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 3000); };
+
+  const visibleGrants = grantMarket === 'all'
+    ? grants
+    : grants.filter(g => (g.country ?? '') === grantMarket);
 
   const subs = users.filter(u => u.subscription);
   const count = (st: string) => subs.filter(u => u.subscription!.status === st).length;
@@ -113,17 +121,34 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
         <p className="text-xs text-gray-500 mb-4">{A.grText}</p>
         <GrantForm al={al} users={users} onCreated={existing => { flash(existing ? A.grCreatedExisting : A.grCreated); load(); }} />
         <div className="mt-5">
-          <div className="text-xs font-bold text-gray-500 uppercase mb-2">{A.grList}</div>
-          {grants.length === 0 ? (
+          <div className="flex items-center justify-between mb-2 gap-3 flex-wrap">
+            <div className="text-xs font-bold text-gray-500 uppercase">{A.grList}</div>
+            {/* Filter the promotion list by the market it was issued for. */}
+            <select
+              value={grantMarket}
+              onChange={e => setGrantMarket(e.target.value)}
+              className="px-2 py-1 border rounded text-xs bg-white"
+            >
+              <option value="all">{A.grAllMarkets}</option>
+              <option value="">{A.grAnyMarket}</option>
+              {Object.values(COUNTRY_PROFILES).map(m => (
+                <option key={m.code} value={m.code}>{A.marketNames[m.code] ?? m.name}</option>
+              ))}
+            </select>
+          </div>
+          {visibleGrants.length === 0 ? (
             <div className="text-sm text-gray-400">{A.grNone}</div>
           ) : (
             <table className="min-w-full text-sm">
               <tbody className="divide-y divide-gray-100">
-                {grants.map(g => {
+                {visibleGrants.map(g => {
                   const expired = new Date(g.endsAt) < new Date() || !!g.revokedAt;
                   return (
                     <tr key={g.email} className={expired ? 'opacity-50' : ''}>
                       <td className="py-2 pr-4 font-medium text-gray-800 whitespace-nowrap">{g.email}</td>
+                      <td className="py-2 pr-4 whitespace-nowrap text-gray-600">
+                        {g.country ? (A.marketNames[g.country] ?? g.country) : <span className="text-gray-400">{A.grAnyMarket}</span>}
+                      </td>
                       <td className="py-2 pr-4 whitespace-nowrap">{SUB_PLAN_NAMES[g.planCode]}</td>
                       <td className="py-2 pr-4 text-gray-500 whitespace-nowrap">{g.startsAt.slice(0, 10)} → {g.endsAt.slice(0, 10)}</td>
                       <td className="py-2 pr-4 text-xs whitespace-nowrap">
@@ -150,6 +175,9 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
           )}
         </div>
       </SectionCard>
+
+      {/* Discount campaigns — registry only, never a Paddle write (see the card) */}
+      <PromotionsCard al={al} />
 
       {/* Scheduled changes */}
       <SectionCard title={A.blChanges} icon="🔁" className="mb-6">
@@ -213,6 +241,7 @@ const GrantForm: React.FC<{ al: AdminLang; users: User[]; onCreated: (existing: 
   const today = new Date().toISOString().slice(0, 10);
   const [email, setEmail] = useState('');
   const [plan, setPlan] = useState<SubPlanCode>('professional');
+  const [market, setMarket] = useState('');   // '' = any market
   const [startsAt, setStartsAt] = useState(today);
   const [endsAt, setEndsAt] = useState('');
   const [note, setNote] = useState('');
@@ -232,7 +261,7 @@ const GrantForm: React.FC<{ al: AdminLang; users: User[]; onCreated: (existing: 
         e, plan,
         new Date(startsAt + 'T00:00:00Z').toISOString(),
         new Date(endsAt + 'T23:59:59Z').toISOString(),
-        note.trim(), 'Admin', existing,
+        note.trim(), 'Admin', existing, market || undefined,
       );
       setEmail(''); setNote(''); setEndsAt('');
       onCreated(!!existing);
@@ -253,6 +282,15 @@ const GrantForm: React.FC<{ al: AdminLang; users: User[]; onCreated: (existing: 
         {A.grPlan}
         <select value={plan} onChange={e => setPlan(e.target.value as SubPlanCode)} className={`${inp} font-normal`}>
           {SUB_PLAN_CODES.map(p => <option key={p} value={p}>{SUB_PLAN_NAMES[p]}</option>)}
+        </select>
+      </label>
+      <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
+        {A.grMarket}
+        <select value={market} onChange={e => setMarket(e.target.value)} className={`${inp} font-normal`}>
+          <option value="">{A.grAnyMarket}</option>
+          {Object.values(COUNTRY_PROFILES).map(m => (
+            <option key={m.code} value={m.code}>{A.marketNames[m.code] ?? m.name}</option>
+          ))}
         </select>
       </label>
       <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">

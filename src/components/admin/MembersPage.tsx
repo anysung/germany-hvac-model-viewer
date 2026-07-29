@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
-import { requestDeletion, updateAdminNotes } from '../../services/adminService';
+import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
+import { adminClearSessions } from '../../services/opsService';
+import { COUNTRY_PROFILES } from '../../config/countryProfiles';
 import { adminAssignSubscription, adminClearSubscription } from '../../services/subscriptionService';
 import { User } from '../../types';
 import {
@@ -297,6 +299,11 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
                       <button onClick={() => handleAction('delete', selectedUser)} className="text-xs px-3 py-1.5 rounded border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-red-600">{A.mbDelete}</button>
                     </div>
                   </div>
+
+                  {/* Support tools — resolve the two tickets that actually arrive:
+                      "I can't sign in on my new device" and "I registered on the
+                      wrong country site". Both are non-destructive. */}
+                  <SupportTools al={al} user={selectedUser} onChanged={load} />
                 </div>
               )}
 
@@ -425,6 +432,95 @@ const SubscriptionAdminPanel: React.FC<{ al: AdminLang; user: User; onChanged: (
 };
 
 // ── Helper Components ─────────────────────────────────────────────────
+
+/**
+ * SupportTools — the two member problems that actually generate tickets.
+ *
+ * 1. LOCKED OUT BY THE DEVICE LIMIT. Two active devices are allowed, so a member
+ *    who replaces a laptop (or clears storage) can be refused. Their own
+ *    "sign out everywhere" cannot help: it requires being signed in, which is
+ *    precisely what fails. The server clears session documents only — never
+ *    entitlements, status or refresh tokens.
+ * 2. REGISTERED ON THE WRONG COUNTRY SITE. `country` drives which market
+ *    workspace the member appears in and which news/market content they see;
+ *    the catalogue itself is identical everywhere, so correcting it is a
+ *    filing fix, not an entitlement change.
+ *
+ * Password resets are NOT offered here: Firebase's own reset email is
+ * self-service from the sign-in page, and sending it from the console would
+ * mean an admin action that looks, to the member, like an unexplained
+ * "reset your password" mail — a phishing pattern we should not create.
+ */
+const SupportTools: React.FC<{ al: AdminLang; user: User; onChanged: () => void }> = ({ al, user, onChanged }) => {
+  const A = ADMIN_I18N[al];
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [market, setMarket] = useState(user.country || '');
+
+  useEffect(() => { setMarket(user.country || ''); setMsg(''); }, [user.id, user.country]);
+
+  const flash = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 4000); };
+
+  const clearSessions = async () => {
+    if (!confirm(A.stClearConfirm(user.email))) return;
+    setBusy(true);
+    try {
+      const r = await adminClearSessions(user.id);
+      flash(A.stCleared(r.revoked ?? 0));
+    } catch (e: any) {
+      flash(`${A.stFailed} ${String(e?.message ?? e)}`);
+    } finally { setBusy(false); }
+  };
+
+  const saveMarket = async () => {
+    if (!market || market === (user.country || '')) return;
+    setBusy(true);
+    try {
+      await setUserCountry(user.id, market);
+      flash(A.stMarketSaved);
+      onChanged();
+    } catch (e: any) {
+      flash(`${A.stFailed} ${String(e?.message ?? e)}`);
+    } finally { setBusy(false); }
+  };
+
+  const btn = 'text-xs px-3 py-1.5 rounded border disabled:opacity-50';
+
+  return (
+    <div className="pt-3 border-t border-gray-100 space-y-2">
+      <div className="text-xs font-bold text-gray-500 uppercase">{A.stTitle}</div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <button onClick={clearSessions} disabled={busy} className={`${btn} border-blue-300 text-blue-700 hover:bg-blue-50`}>
+          🔓 {A.stClearSessions}
+        </button>
+        <span className="text-[11px] text-gray-400">{A.stClearHint}</span>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-xs text-gray-600">{A.stMarket}</span>
+        <select
+          value={market}
+          onChange={e => setMarket(e.target.value)}
+          className="px-2 py-1 border rounded text-xs bg-white"
+        >
+          {Object.values(COUNTRY_PROFILES).map(m => (
+            <option key={m.code} value={m.code}>{A.marketNames[m.code] ?? m.name}</option>
+          ))}
+        </select>
+        <button
+          onClick={saveMarket}
+          disabled={busy || !market || market === (user.country || '')}
+          className={`${btn} border-gray-300 text-gray-700 hover:bg-gray-50`}
+        >
+          {A.stMarketSave}
+        </button>
+      </div>
+
+      {msg && <div className="text-xs text-gray-700 bg-gray-50 border border-gray-200 rounded p-2">{msg}</div>}
+    </div>
+  );
+};
 
 const DetailRow: React.FC<{ label: string; value: React.ReactNode }> = ({ label, value }) => (
   <div className="flex justify-between items-center">

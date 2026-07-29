@@ -205,6 +205,15 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // Discount campaign registry (admin bookkeeping — see types.ts Promotion).
+    // ADMIN-ONLY, read included: these records are internal campaign planning,
+    // not customer-facing content, and nothing on the payment path reads them.
+    // Keeping clients out entirely means a wrong entry here can never reach a
+    // checkout, and unannounced campaigns are not readable before launch.
+    match /promotions/{code} {
+      allow read, write: if isAdmin();
+    }
+
     // Team 3 / Team 5 organizations. Created by admin (or billing webhook —
     // Admin SDK bypasses rules). The owner manages seats but never the plan;
     // an invited user may claim a seat for themselves. Org docs are readable

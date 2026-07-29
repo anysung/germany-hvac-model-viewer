@@ -20,7 +20,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import {
-  User, Organization, FreeAccessGrant, SubscriptionChangeRequest, UserSubscription,
+  User, Organization, FreeAccessGrant, SubscriptionChangeRequest, UserSubscription, Promotion,
 } from '../types';
 import {
   SubPlanCode, BillingTerm, SUB_PLANS, TERM_MONTHS, isTeamPlan,
@@ -28,6 +28,7 @@ import {
 
 const ORGS = 'organizations';
 const GRANTS = 'freeAccessGrants';
+const PROMOS = 'promotions';
 const CHANGES = 'subscriptionChangeRequests';
 
 const nowIso = () => new Date().toISOString();
@@ -282,6 +283,38 @@ export async function adminClearSubscription(target: User): Promise<void> {
 
 // ── Free-access grants (admin promotions) ───────────────────────────────────
 
+/* ── Promotions (discount campaign registry) ─────────────────────────────────
+ * Bookkeeping only: Paddle owns the discounts themselves (immutable once used,
+ * created by a human in the dashboard). Nothing on the payment path reads these
+ * records, so a wrong entry can misinform but can never break a checkout.
+ * See types.ts Promotion for the full rationale. */
+
+export async function listPromotions(): Promise<Promotion[]> {
+  const snap = await getDocs(collection(db, PROMOS));
+  return snap.docs.map(d => d.data() as Promotion)
+    .sort((a, b) => (b.createdAt ?? '').localeCompare(a.createdAt ?? ''));
+}
+
+/** Admin: register a campaign. The code is the doc id, so re-saving the same
+ *  code updates it rather than creating a duplicate. */
+export async function savePromotion(p: Omit<Promotion, 'createdAt' | 'createdBy'> & {
+  createdAt?: string; createdBy?: string;
+}): Promise<void> {
+  const code = p.code.trim().toUpperCase();
+  if (!code) throw new Error('promotion code required');
+  await setDoc(doc(db, PROMOS, code), {
+    ...p,
+    code,
+    createdAt: p.createdAt ?? nowIso(),
+    createdBy: p.createdBy ?? 'Admin',
+  }, { merge: true });
+}
+
+/** Retire a campaign. Kept (never deleted) so past promotions stay reportable. */
+export async function archivePromotion(code: string): Promise<void> {
+  await updateDoc(doc(db, PROMOS, code.trim().toUpperCase()), { archivedAt: nowIso() });
+}
+
 export async function listGrants(): Promise<FreeAccessGrant[]> {
   const snap = await getDocs(collection(db, GRANTS));
   return snap.docs.map(d => d.data() as FreeAccessGrant)
@@ -301,6 +334,9 @@ export async function createGrant(
   note: string,
   grantedBy: string,
   existingUser: User | null,
+  /** Market the promotion belongs to; omit/'' for "any market". Reporting label
+   *  only — redemption is unaffected (see FreeAccessGrant.country). */
+  country?: string,
 ): Promise<void> {
   const key = emailKey(email);
   // endsAtTs mirrors endsAt as a Timestamp: rules cannot parse ISO strings, so
@@ -309,6 +345,8 @@ export async function createGrant(
   const grant: FreeAccessGrant = {
     email: key, planCode: plan, startsAt, endsAt, endsAtTs,
     note: note || '', grantedBy, createdAt: nowIso(),
+    // Firestore rejects undefined — only include the key when actually set.
+    ...(country ? { country } : {}),
     ...(existingUser ? { redeemedByUid: existingUser.id, redeemedAt: nowIso() } : {}),
   };
   await setDoc(doc(db, GRANTS, key), grant);

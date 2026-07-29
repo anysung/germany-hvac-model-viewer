@@ -457,6 +457,40 @@ export interface SubscriptionChangeRequest {
 }
 
 /** Admin-issued free access (promotions). Doc id = lowercased email. */
+/**
+ * A discount campaign, recorded so the console is the one place that answers
+ * "what promotions are running, where, and until when".
+ *
+ * DELIBERATE BOUNDARY — this registry does NOT create, edit or delete anything
+ * in Paddle, and does not apply a discount at checkout. Paddle is the merchant
+ * of record and its discounts are immutable once used, so they are created in
+ * the Paddle dashboard by a human; `paddleDiscountId` / `code` link this record
+ * to that entity. Everything here is operational bookkeeping: which markets a
+ * campaign targets, which plans, when it runs, and whether it is still live.
+ * Nothing on the payment path reads it, so a wrong entry can misinform but
+ * can never break a checkout.
+ */
+export interface Promotion {
+  /** Firestore doc id — the customer-facing coupon code, uppercased. */
+  code: string;
+  /** Paddle discount id (`dsc_…`) this code corresponds to, if created there. */
+  paddleDiscountId?: string;
+  /** What the customer gets, e.g. "20% off the first year". Free text: the
+   *  authoritative amount lives in Paddle, this is the human description. */
+  description: string;
+  /** Target markets (ISO country codes). Empty = every market. */
+  markets: string[];
+  /** Target plans. Empty = every plan. */
+  planCodes: string[];
+  startsAt: string;
+  endsAt: string;
+  note?: string;
+  createdBy: string;
+  createdAt: string;
+  /** Set when the campaign is retired; the record is kept for reporting. */
+  archivedAt?: string;
+}
+
 export interface FreeAccessGrant {
   email: string;
   planCode: 'professional' | 'team_3' | 'team_5';
@@ -469,6 +503,17 @@ export interface FreeAccessGrant {
    * opens the trial/subscription access window.
    */
   endsAtTs?: FirestoreTimestampLike;
+  /**
+   * Market this promotion belongs to (ISO country of a COUNTRY_PROFILES site),
+   * or undefined for "any market". OPERATIONAL LABEL ONLY — it records which
+   * country campaign the grant was issued for so the Billing page can be
+   * filtered and reported per market. It is deliberately NOT enforced at
+   * redemption: the grant is keyed by email and the catalogue is identical in
+   * every market, so refusing a recipient who happens to sign in on another
+   * country site would break a legitimate promotion for no benefit. Redemption
+   * rules (firestore.rules) are unchanged and never read this field.
+   */
+  country?: string;
   note?: string;
   grantedBy: string;
   createdAt: string;

@@ -566,6 +566,44 @@ async function signOutEverywhere(req, res) {
   return res.status(200).json({ ok: true });
 }
 
+/**
+ * /adminClearSessions { uid } — support action: clear EVERY device session for
+ * another account.
+ *
+ * With a 2-device limit the predictable support ticket is "I changed laptop and
+ * cannot sign in". The user's own /signOutEverywhere cannot help them: it needs
+ * them to be signed in, which is exactly what they cannot do. This is the
+ * admin-side equivalent, and the only endpoint that acts on someone else.
+ *
+ * Deliberately narrow: it revokes session documents ONLY. It does NOT revoke
+ * refresh tokens, touch entitlements, or change account status — clearing a
+ * device list must never become a way to lock someone out, and the fail-open
+ * billing principle means access windows are never altered here. Owner-gated
+ * (the only admin today) and audited like the panic path.
+ */
+async function adminClearSessions(req, res) {
+  const owner = await verifyOwner(req);
+  if (!owner) return sendErr(res, 403, 'owner-only');
+  const uid = String((req.body || {}).uid || '');
+  if (!/^[A-Za-z0-9_-]{6,128}$/.test(uid)) return sendErr(res, 400, 'bad-uid');
+
+  const sess = await db.collection('users').doc(uid).collection('sessions').get();
+  const batch = db.batch();
+  let n = 0;
+  for (const d of sess.docs) {
+    if (d.data().revokedAt) continue;
+    batch.set(d.ref, { revokedAt: Timestamp.now(), revokeReason: 'admin-support' }, { merge: true });
+    n++;
+  }
+  if (n) await batch.commit();
+
+  await db.collection('opsAuditLog').add({
+    action: 'adminClearSessions', targetUid: uid, revoked: n,
+    by: owner.email || owner.uid, at: new Date().toISOString(),
+  });
+  return res.status(200).json({ ok: true, revoked: n });
+}
+
 // ---------------------------------------------------------------------------
 // Dataset ops: /rollbackStatus + /panicRollback
 // (docs/DATASET_ROLLBACK_AND_PANIC.md — owner-only manual override)
@@ -1042,6 +1080,7 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/revokeSession')) return await revokeSession(req, res);
     if (path.endsWith('/revokeOtherSessions')) return await revokeOtherSessions(req, res);
     if (path.endsWith('/signOutEverywhere')) return await signOutEverywhere(req, res);
+    if (path.endsWith('/adminClearSessions')) return await adminClearSessions(req, res);
     return sendErr(res, 404, 'not-found');
   } catch (e) {
     console.error(`accountBilling ${path} error`, e);

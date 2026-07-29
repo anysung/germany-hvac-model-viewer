@@ -58,3 +58,11 @@ export const fetchRollbackStatus = (): Promise<RollbackStatus> => call('rollback
 /** Restore a COMPLETE snapshot set to live. `confirm` must be 'ROLLBACK'. */
 export const executePanicRollback = (snapshotId: string, confirm: string): Promise<RollbackResult> =>
   call('panicRollback', { snapshotId, confirm });
+
+/**
+ * Support action: clear every device session for a member who is locked out by
+ * the 2-device limit. Revokes session documents ONLY — never entitlements,
+ * status or refresh tokens (see the endpoint's own note).
+ */
+export const adminClearSessions = (uid: string): Promise<{ ok: boolean; revoked?: number; error?: string }> =>
+  call('adminClearSessions', { uid });

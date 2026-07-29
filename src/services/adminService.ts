@@ -114,6 +114,26 @@ export async function updateAdminNotes(
   );
 }
 
+/**
+ * Correct which market a member is filed under (they registered on the wrong
+ * country site). `country` decides which market workspace they appear in and
+ * which market content they are served; the product catalogue is identical in
+ * every market (canonical baseline), so this is a filing correction and never
+ * touches entitlements, status or the access window.
+ */
+export async function setUserCountry(
+  userId: string,
+  country: string,
+  adminName = 'Admin'
+): Promise<void> {
+  await updateDoc(doc(db, 'users', userId), { country });
+  await logActivity(
+    'ADMIN', 'SYSTEM',
+    `Market corrected to ${country} for user ${userId}`,
+    '', adminName
+  );
+}
+
 // ── Industry Insight Override ─────────────────────────────────────────
 
 /** Override Industry Insight access for a specific user */
