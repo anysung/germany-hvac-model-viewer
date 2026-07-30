@@ -156,6 +156,16 @@ The update is NOT finished at "deploy done". Every box, every run:
 - [ ] serving verification passed (upload step) and stable-release.json promoted
 - [ ] one product page spot-checked per market (DE/UK/FR/PL/IT)
 - [ ] `node scripts/dataset-gate.mjs --approve`
+- [ ] **Curated funding content review** (owner rule 2026-07-30): read the news
+      cycle's output for each market — if it produced a SPECIAL FEATURE (a major
+      funding/regulatory change), the funding page's hardcoded content must be
+      synced by hand: the cards, the timeline AND the Common Questions
+      (`bafa.*` + `guide.faqs` in src/hpiq/i18n.ts, both languages of that
+      market). The live "Current programmes" list refreshes itself from
+      Firestore; the curated blocks do NOT — this checklist item is their only
+      update mechanism, and the July 2026 BEG reform showed what happens
+      without it (the DE page described an abolished bonus for nine days).
+      No change reported → leave content as is.
 - [ ] `git add data_manifests/ && git commit && git push origin main`
 - [ ] `git status --short` → clean
 
