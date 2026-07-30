@@ -2,7 +2,13 @@ const functions = require('@google-cloud/functions-framework');
 const admin = require('firebase-admin');
 const { GoogleGenAI } = require('@google/genai');
 
-admin.initializeApp();
+// Explicit projectId: Firestore's lazy auto-detection (metadata server) raced
+// on a fresh Gen2 instance on 2026-07-30 — "Client is not yet ready to issue
+// requests" thrown from the projectId getter at publish time, twice in a row,
+// while the same lockfile-pinned SDK worked on the previous revision. Naming
+// the project removes the detection path entirely; credentials still come
+// from ADC as before.
+admin.initializeApp({ projectId: process.env.GCLOUD_PROJECT || 'gen-lang-client-0324244302' });
 const firestoreDb = admin.firestore();
 
 // Legacy manufacturer-research loop still writes to the DE product collection.
