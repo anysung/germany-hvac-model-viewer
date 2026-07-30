@@ -2,7 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- maximum-scale=1 stops iOS auto-zooming when an input with font-size
+         <16px gets focus — in the installed (standalone) app that zoom never
+         reverts on its own, leaving the page "escaped" beyond the window until
+         the user pinches out (owner report 2026-07-31, Find search). Manual
+         pinch-zoom still works: iOS ≥10 ignores the cap for user gestures, so
+         accessibility zoom is preserved. Belt-and-braces with the ≥16px input
+         rule in index.css. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover" />
     <title>HeatPump DB — Heat Pump Database</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>

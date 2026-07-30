@@ -30,7 +30,7 @@ import { shortDate } from '../model';
 import { NEWS_SERIF, localizedNews, newsEyebrow, articleDeepLink, emailArticleHref, makeArticlePdf } from '../newsModel';
 import { printPdfViaShareSheet } from '../pdf/deliverPdf';
 
-type MTab = Extract<HpPage, 'find' | 'products' | 'bafa' | 'datasheet' | 'news' | 'account'> | 'guide';
+type MTab = Extract<HpPage, 'find' | 'products' | 'bafa' | 'datasheet' | 'news' | 'account' | 'label'> | 'guide';
 
 /* ── Tiny tab icons (stroke style matching the desktop icon set) ─────────── */
 
@@ -47,6 +47,8 @@ const ICONS: Record<MTab, string> = {
   guide: 'M4 5h16M4 12h16M4 19h10',
   account: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c0-4 3.6-6 8-6s8 2 8 6',
   datasheet: 'M6 2h9l5 5v15H6zM15 2v5h5M9 12h8M9 16h8M9 8h3',
+  // EU energy label: tag outline with the class arrow
+  label: 'M4 4h10l6 8-6 8H4zM8 9v6M8 12h5',
 };
 
 /* ── PWA install (mobile browsers never volunteer the prompt themselves) ── */
@@ -212,6 +214,19 @@ const MobileDataSheet: React.FC<{ app: HpApp }> = ({ app }) => {
           <span style={{ fontFamily: FD, fontSize: 21, fontWeight: 600 }}>{t.m.mdsTitle}</span>
           {dsp && <span style={{ fontSize: 12, color: '#7a7a7a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>{dsp.model}</span>}
         </div>
+        {/* Document kind — the same product/energy-label switch the desktop
+            studio has (owner request 2026-07-31: the print/PDF view offered no
+            EU-label option on mobile). Drives dsMode → the SAME jsPDF pipeline. */}
+        {dsp && (
+          <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', fontSize: 12.5, width: 'fit-content' }} data-testid="mds-mode">
+            {([['product', t.ds.modeProduct], ['label', t.ds.modeLabel]] as const).map(([m, lbl]) => (
+              <span key={m} onClick={() => app.setDsMode(m)}
+                style={{ padding: '7px 15px', cursor: 'pointer', whiteSpace: 'nowrap', ...(app.dsMode === m ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : { color: '#1d1d1f' }) }}>
+                {lbl}
+              </span>
+            ))}
+          </div>
+        )}
         {dsp ? (
           <div style={{ display: 'flex', gap: 9 }}>
             <span className="hp-press" onClick={app.downloadSheetPdf} style={actionBtn(t.m.mdsPdf, true)}>⬇ {t.m.mdsPdf}</span>
@@ -234,6 +249,74 @@ const MobileDataSheet: React.FC<{ app: HpApp }> = ({ app }) => {
           <div style={{ padding: '40px 16px', textAlign: 'center', color: '#7a7a7a', fontSize: 13.5 }}>{t.find.emptySub}</div>
         )}
       </div>
+    </div>
+  );
+};
+
+/* ── EU energy label (phone/tablet): the desktop page's CORE — class filter,
+   record search, and the label sheet — in a card list. Reached from the header
+   menu (owner request 2026-07-31); row tap opens the ENERGY LABEL data sheet
+   (openDataSheet(id,'label')), matching the desktop inspector's primary action. */
+
+const MobileLabel: React.FC<{ app: HpApp }> = ({ app }) => {
+  const t = tr(app.lang);
+  const [q, setQ] = useState('');
+  const records = React.useMemo(() => {
+    let list = app.store ? app.store.labelRecords(app.classFilter) : [];
+    const needle = q.trim().toLowerCase();
+    if (needle.length >= 2) list = list.filter(v => `${v.model} ${v.mfr}`.toLowerCase().includes(needle));
+    return list;
+  }, [app.store, app.classFilter, q]);
+  const shown = records.slice(0, 80);
+
+  return (
+    <div style={{ padding: '18px 16px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <span style={{ fontFamily: FD, fontSize: 'clamp(21px, 6vw, 25px)', fontWeight: 600, letterSpacing: '-0.3px' }}>{t.label.title}</span>
+
+      {/* search + class chips (sticky, like Find) */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 20, margin: '0 -16px', padding: '4px 16px 8px', background: 'rgba(245,245,247,.94)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, border: '1px solid #d2d2d7', background: '#fff', borderRadius: 999, padding: '10px 16px' }}>
+          <input
+            value={q}
+            onChange={e => setQ(e.target.value)}
+            placeholder={t.find.placeholder}
+            style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 16, fontFamily: 'inherit', color: '#1d1d1f', padding: 0, outline: 'none' }}
+          />
+          {q && <span onClick={() => setQ('')} style={{ color: '#b6b6bc', cursor: 'pointer', fontSize: 15, padding: '2px 4px' }}>✕</span>}
+        </div>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          {['A+++', 'A++', 'A+'].map(c => {
+            const on = app.classFilter === c;
+            return (
+              <span key={c} className="hp-press" onClick={() => app.setClassFilter(on ? null : c)}
+                style={{ borderRadius: 999, padding: '6px 14px', fontSize: 12.5, cursor: 'pointer', ...(on ? { background: '#0066cc', color: '#fff', fontWeight: 600 } : { border: '1px solid #d2d2d7', background: '#fff', color: '#1d1d1f' }) }}>
+                {c}
+              </span>
+            );
+          })}
+          <span style={{ marginLeft: 'auto', fontSize: 11.5, color: '#7a7a7a' }}>{t.label.countLine(String(shown.length), records.length.toLocaleString())}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {shown.map(v => (
+          <div key={v.id} className="hp-press" onClick={() => app.openDataSheet(v.id, 'label')}
+            style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 12, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 11, cursor: 'pointer' }}>
+            {/* class badge — the record's W35 class, arrow-tag shaped like the EU label */}
+            <span style={{ flex: 'none', minWidth: 44, textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#fff', background: '#009036', borderRadius: 6, padding: '7px 8px' }}>{v.label || '—'}</span>
+            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <span style={{ fontSize: 13.5, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.model}</span>
+              <span style={{ fontSize: 11.5, color: '#7a7a7a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.mfr}{v.ratedKw ? ` · ${v.ratedKw}` : ''}</span>
+            </div>
+            <span style={{ flex: 'none', fontSize: 12, color: '#0066cc', whiteSpace: 'nowrap' }}>{t.label.labelSheetBtn}</span>
+          </div>
+        ))}
+        {records.length === 0 && (
+          <div style={{ padding: '32px 8px', textAlign: 'center', color: '#7a7a7a', fontSize: 13 }}>{t.find.noMatchSub}</div>
+        )}
+      </div>
+
+      <span style={{ fontSize: 10.5, color: '#9a9aa0', lineHeight: 1.5 }}>{t.label.aboutText}</span>
     </div>
   );
 };
@@ -566,22 +649,39 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
               );
             })}
           </div>
-          {SUB_PLAN_CODES.map(code => (
-            <div key={code} style={{ border: code === 'team_3' && term === 'annual' ? '2px solid #0066cc' : '1px solid #e0e0e0', borderRadius: 12, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
-                <span style={{ fontSize: 14, fontWeight: 600 }}>{s.planNames[code]}</span>
-                <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{s.planUsers[code]} · {isTeamPlan(code) ? s.teamTrialBadge : s.trialBadge}</span>
+          {/* Plan cards — ONE fixed anatomy for every plan (owner report
+              2026-07-31: Professional and Team rows wrapped differently and
+              looked unprofessional). Row 1 name+badge, row 2 price line,
+              row 3 full-width CTA: nothing wraps, nothing shifts between
+              plans, the popular pick is marked instead of implied. */}
+          {SUB_PLAN_CODES.map(code => {
+            const popular = code === 'team_3' && term === 'annual';
+            return (
+              <div key={code} style={{ position: 'relative', border: popular ? '2px solid #0066cc' : '1px solid #e0e0e0', borderRadius: 12, padding: '13px 14px 12px', display: 'flex', flexDirection: 'column', gap: 9 }}>
+                {popular && (
+                  <span style={{ position: 'absolute', top: -9, left: 14, fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', borderRadius: 999, padding: '2px 9px', background: '#0066cc', color: '#fff' }}>{s.mostPopular}</span>
+                )}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                    <span style={{ fontSize: 14.5, fontWeight: 600 }}>{s.planNames[code]}</span>
+                    <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{s.planUsers[code]}</span>
+                  </div>
+                  <span style={{ flex: 'none', fontSize: 10, fontWeight: 700, borderRadius: 999, padding: '3px 9px', background: '#e7f6ee', color: '#0a7a43', whiteSpace: 'nowrap' }}>
+                    {isTeamPlan(code) ? s.teamTrialBadge : s.trialBadge}
+                  </span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
+                  <span style={{ fontFamily: FD, fontSize: 20, fontWeight: 700, letterSpacing: '-0.3px' }}>{formatEur(SUB_PLANS[code].prices[term])}</span>
+                  <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{s.perTerm[term]}{isTeamPlan(code) ? ` ${s.forWholeTeam}` : ''}</span>
+                  <span style={{ fontSize: 10, fontWeight: 600, color: '#9a9aa0' }}>{s.exclVat}</span>
+                </div>
+                <span className="hp-press" onClick={() => startCheckout(code)}
+                  style={{ display: 'block', textAlign: 'center', background: popular ? '#0066cc' : '#1d1d1f', color: '#fff', borderRadius: 999, padding: '11px 0', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+                  {s.startTrial.replace(' ›', '')}
+                </span>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-                <span style={{ fontFamily: FD, fontSize: 16, fontWeight: 700 }}>{formatEur(SUB_PLANS[code].prices[term])}</span>
-                <span style={{ fontSize: 10.5, color: '#7a7a7a' }}>{s.perTerm[term]}</span>
-                <span style={{ fontSize: 9.5, fontWeight: 600, color: '#9a9aa0' }}>{s.exclVat}</span>
-              </div>
-              <span className="hp-press" onClick={() => startCheckout(code)} style={{ background: '#0066cc', color: '#fff', borderRadius: 999, padding: '8px 14px', fontSize: 12, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap' }}>
-                {s.startTrial.replace(' ›', '')}
-              </span>
-            </div>
-          ))}
+            );
+          })}
           <span style={{ fontSize: 10.5, color: '#9a9aa0', lineHeight: 1.5 }}>{s.trialNote} {s.vatNote} {s.eurBillingNote}</span>
         </div>
       )}
@@ -675,16 +775,21 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
   const t = tr(app.lang);
   const [detailOpen, setDetailOpen] = useState(false);
 
-  // Footer tab set (owner decision 2026-07-12): Data sheet replaces Funding,
-  // Funding guide replaces News. Funding (bafa) + News stay reachable via
-  // deep links / in-page links, so they're still valid page states.
-  const MOBILE_TABS: MTab[] = ['find', 'products', 'datasheet', 'guide', 'account'];
-  const VALID_PAGES = ['find', 'products', 'datasheet', 'guide', 'bafa', 'news', 'account'];
+  // Footer tab set (owner decision 2026-07-31): News replaces Data sheet — the
+  // sheet is a document you reach FROM a product (detail button / label row),
+  // not a destination you browse to, so it left the tab bar (and deliberately
+  // does NOT appear in the header menu either). Pages the footer cannot show
+  // (Funding, EU energy label) live in the header dropdown menu instead.
+  const MOBILE_TABS: MTab[] = ['find', 'products', 'news', 'guide', 'account'];
+  const MENU_PAGES: MTab[] = ['bafa', 'label'];
+  const VALID_PAGES = ['find', 'products', 'datasheet', 'guide', 'bafa', 'news', 'account', 'label'];
   const page: MTab = VALID_PAGES.includes(app.page) ? (app.page as MTab) : 'find';
   const tabLabel: Record<MTab, string> = {
     find: t.m.tabSearch, products: t.products.title, datasheet: t.m.mdsTitle,
     bafa: t.m.tabFunding, news: t.nav.news, guide: t.nav.guide, account: t.nav.account,
+    label: t.nav.label,
   };
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const openProduct = (id: string) => {
     app.setSelectedId(id);
@@ -709,7 +814,7 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
         <WavingFlag height={20} />
         {isTablet && (
           <div style={{ display: 'flex', gap: 3, fontSize: 13, marginLeft: 10, overflowX: 'auto' }}>
-            {(['find', 'products', 'bafa', 'guide', 'news'] as MTab[]).map(id => (
+            {(['find', 'products', 'label', 'bafa', 'guide', 'news'] as MTab[]).map(id => (
               <span key={id} onClick={() => { app.go(id as HpPage); }} style={{ padding: '6px 12px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap', ...(page === id ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' } : { color: 'rgba(255,255,255,.65)' }) }}>
                 {tabLabel[id]}
               </span>
@@ -731,8 +836,40 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
               {(((app.user.firstName?.[0] ?? '') + (app.user.lastName?.[0] ?? '')) || app.user.email?.[0] || 'U').toUpperCase()}
             </span>
           )}
+          {/* Phone: header menu — the pages the footer cannot show (owner
+              request 2026-07-31). Data sheet is deliberately absent: it is
+              reached from a product, never browsed to. */}
+          {viewport === 'phone' && (
+            <span
+              onClick={() => setMenuOpen(o => !o)}
+              aria-label="Menu"
+              data-testid="mobile-menu-btn"
+              style={{ width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderRadius: 8, background: menuOpen || MENU_PAGES.includes(page) ? 'rgba(255,255,255,.16)' : 'transparent' }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </span>
+          )}
         </div>
       </div>
+
+      {/* Phone: dropdown menu panel (tap-out to close) */}
+      {viewport === 'phone' && menuOpen && (
+        <>
+          <div onClick={() => setMenuOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 90 }} />
+          <div data-testid="mobile-menu" style={{ position: 'fixed', top: 'calc(56px + env(safe-area-inset-top))', right: 10, zIndex: 91, background: '#fff', borderRadius: 14, border: '1px solid rgba(0,0,0,.08)', boxShadow: '0 12px 32px rgba(0,0,0,.18)', overflow: 'hidden', minWidth: 210 }}>
+            {MENU_PAGES.map((id, i) => (
+              <span
+                key={id}
+                onClick={() => { setMenuOpen(false); setDetailOpen(false); app.go(id as HpPage); }}
+                style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '13px 17px', fontSize: 14.5, cursor: 'pointer', borderBottom: i < MENU_PAGES.length - 1 ? '1px solid #f0f0f0' : undefined, fontWeight: page === id ? 600 : 400, background: page === id ? '#f5f5f7' : '#fff', color: '#1d1d1f' }}
+              >
+                <Ic d={ICONS[id]} active={page === id} />
+                {tabLabel[id]}
+              </span>
+            ))}
+          </div>
+        </>
+      )}
 
       {/* PWA install (mobile browsers show no automatic prompt) */}
       <InstallBanner app={app} onIosGuide={() => setIosGuide(true)} />
@@ -744,6 +881,7 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
         {page === 'products' && <MobileProducts app={app} viewport={viewport} onOpen={openProduct} />}
         {page === 'datasheet' && <MobileDataSheet app={app} />}
         {page === 'bafa' && <MobileFunding app={app} goGuide={tab => { app.setGuideTab(tab); app.go('guide'); }} />}
+        {page === 'label' && <MobileLabel app={app} />}
         {page === 'guide' && <MobileGuide app={app} />}
         {page === 'news' && <MobileNews app={app} />}
         {page === 'account' && <MobileAccount app={app} />}

@@ -157,3 +157,16 @@
 /* (The legacy print block for the removed HeatPumpApp modal was deleted
    2026-07-12. Data-sheet printing now lives entirely in hpiq.css via the
    #hpiq-print-mount portal + a clean #root display toggle.) */
+/* ── Touch devices: no input may trigger the iOS focus auto-zoom ─────────────
+   iOS zooms the whole page when a focused input's font-size is under 16px, and
+   the installed (standalone) app never zooms back out — the "screen escaped
+   the window" bug (owner report 2026-07-31, Find search). The viewport
+   maximum-scale cap in index.html handles today's Safari; this rule removes
+   the CAUSE on every current and future field, so the fix does not depend on
+   Safari's meta-tag behaviour staying put. Desktop (fine pointer) keeps its
+   designed sizes. */
+@media (pointer: coarse) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
