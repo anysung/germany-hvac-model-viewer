@@ -49,7 +49,7 @@ export const GuidePage: React.FC<{ app: HpApp }> = ({ app }) => {
               <span
                 key={id}
                 className="hp-press"
-                onClick={() => app.setGuideTab(id)}
+                onClick={() => { app.setGuideTab(id); app.setFaqOpen(0); /* the FAQ list swaps with the tab — a stale open index would expand a random answer */ }}
                 style={{
                   borderRadius: 999, padding: '7px 17px', fontSize: 13, cursor: 'pointer',
                   ...(on ? { background: '#fff', color: '#1d1d1f', fontWeight: 600 } : { border: '1px solid rgba(255,255,255,.35)', color: '#fff' }),
@@ -125,7 +125,12 @@ export const GuidePage: React.FC<{ app: HpApp }> = ({ app }) => {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <span style={{ fontFamily: FD, fontSize: 21, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.guide.faqTitle}</span>
           <div style={{ border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden' }}>
-            {t.guide.faqs.map(([q, a], i) => {
+            {/* Audience-split FAQ (owner request 2026-07-31): installers are the
+                app's primary subscribers — their set is operational (their role
+                in the funding process, sales-relevant mechanics); the homeowner
+                set is lighter reference material. Follows the page's existing
+                For homeowners | For installers tab. */}
+            {(isPro ? t.guide.faqsPro : t.guide.faqsHome).map(([q, a], i) => {
               const open = app.faqOpen === i;
               return (
                 <div key={q} style={{ borderBottom: '1px solid #f0f0f0' }}>

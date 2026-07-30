@@ -26,18 +26,28 @@ const check = (n, ok, d = '') => {
   else { failed++; console.error(`  FAIL  ${n}${d ? `\n        ${d}` : ''}`); }
 };
 
-// DE and GB default to English UI, France to French (market.ts DEFAULT_LANGUAGE).
+// Each edition opens in its DEFAULT UI language (market.ts UI_LANGUAGES order):
+// DE→German, GB→English, FR→French, PL→Polish, IT→Italian. Assuming English for
+// DE broke this suite when the DE preview started booting German (2026-07-31).
 const EN = { language: 'App language.', support: 'Support.', ad: 'Advertising & partnerships.',
   adBody: 'Advertising inquiries and business opportunities.', terms: 'Terms & policies.',
   contact: 'Contact support & view replies ›', account: 'Account', mine: 'My inquiries' };
 const LABELS = {
-  DE: EN, GB: EN,
+  DE: { language: 'App-Sprache.', support: 'Support.', ad: 'Werbung & Partnerschaften.',
+    adBody: 'Anfragen zu Werbung und Geschäftsmöglichkeiten.', terms: 'Rechtliches.',
+    contact: 'Support kontaktieren & Antworten ansehen ›', account: 'Konto', mine: 'Meine Anfragen' },
+  GB: EN,
   FR: { language: 'Langue de l’application.', support: 'Support.', ad: 'Publicité & partenariats.',
     adBody: 'Demandes publicitaires et opportunités commerciales.', terms: 'Conditions & politiques.',
     contact: 'Contacter le support & voir les réponses ›', account: 'Compte', mine: 'Mes demandes' },
   PL: { language: 'Język aplikacji.', support: 'Pomoc.', ad: 'Reklama i partnerstwa.',
     adBody: 'Zapytania reklamowe i możliwości współpracy biznesowej.', terms: 'Regulaminy i polityki.',
     contact: 'Skontaktuj się z pomocą i zobacz odpowiedzi ›', account: 'Konto', mine: 'Moje zgłoszenia' },
+  // IT was in the runner's loop but missing here — [IT] crashed on LABELS.account
+  // before any check ran (found 2026-07-31, same gap as account-layout TITLES).
+  IT: { language: 'Lingua dell’app.', support: 'Supporto.', ad: 'Pubblicità e partnership.',
+    adBody: 'Richieste pubblicitarie e opportunità di collaborazione.', terms: 'Termini e politiche.',
+    contact: 'Contatta il supporto e vedi le risposte ›', account: 'Account', mine: 'Le mie richieste' },
 }[COUNTRY];
 
 const browser = await chromium.launch();

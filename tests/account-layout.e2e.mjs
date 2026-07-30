@@ -23,21 +23,37 @@ const check = (n, ok, d = '') => {
   else { failed++; console.error(`  FAIL  ${n}${d ? `\n        ${d}` : ''}`); }
 };
 
-// Each edition opens in its DEFAULT UI language: DE and GB default to English,
-// France to French (src/hpiq/market.ts DEFAULT_LANGUAGE). The Account card titles
-// are the same keys in every dictionary, so the visible text follows that default.
+// Each edition opens in its DEFAULT UI language (market.ts UI_LANGUAGES order):
+// DE→German, GB→English, FR→French, PL→Polish, IT→Italian. Titles below must be
+// the DEFAULT language of each market — assuming English for DE broke this suite
+// when the DE preview started booting German (found 2026-07-31; same stale
+// premise as the products sort-label fix). navAccount is the header button's
+// title attribute (t.nav.account), which the click selector needs per market.
 const EN = { company: 'Company profile.', personal: 'Personal profile.', support: 'Support.',
   terms: 'Terms & policies.', language: 'App language.', email: 'Email & password.',
-  ad: 'Advertising & partnerships.', del: 'Delete account.', adBody: 'Advertising inquiries and business opportunities.' };
+  ad: 'Advertising & partnerships.', del: 'Delete account.', adBody: 'Advertising inquiries and business opportunities.',
+  navAccount: 'Account' };
 const TITLES = {
-  DE: EN,
+  DE: { company: 'Unternehmensprofil.', personal: 'Persönliches Profil.', support: 'Support.',
+    terms: 'Rechtliches.', language: 'App-Sprache.', email: 'E-Mail & Passwort.',
+    ad: 'Werbung & Partnerschaften.', del: 'Konto löschen.', adBody: 'Anfragen zu Werbung und Geschäftsmöglichkeiten.',
+    navAccount: 'Konto' },
   GB: EN,
   FR: { company: 'Profil de l’entreprise.', personal: 'Profil personnel.', support: 'Support.',
     terms: 'Conditions & politiques.', language: 'Langue de l’application.', email: 'E-mail & mot de passe.',
-    ad: 'Publicité & partenariats.', del: 'Supprimer le compte.', adBody: 'Demandes publicitaires et opportunités commerciales.' },
+    ad: 'Publicité & partenariats.', del: 'Supprimer le compte.', adBody: 'Demandes publicitaires et opportunités commerciales.',
+    navAccount: 'Compte' },
   PL: { company: 'Profil firmy.', personal: 'Profil osobisty.', support: 'Pomoc.',
     terms: 'Regulaminy i polityki.', language: 'Język aplikacji.', email: 'E-mail i hasło.',
-    ad: 'Reklama i partnerstwa.', del: 'Usuń konto.', adBody: 'Zapytania reklamowe i możliwości współpracy biznesowej.' },
+    ad: 'Reklama i partnerstwa.', del: 'Usuń konto.', adBody: 'Zapytania reklamowe i możliwości współpracy biznesowej.',
+    navAccount: 'Konto' },
+  // IT was in the runner's market loop but missing here, so [IT] crashed with
+  // "T.company undefined" before any check ran (found 2026-07-31). Titles from
+  // the IT_IT dictionary — the IT edition defaults to Italian.
+  IT: { company: 'Profilo aziendale.', personal: 'Profilo personale.', support: 'Supporto.',
+    terms: 'Termini e politiche.', language: 'Lingua dell’app.', email: 'E-mail e password.',
+    ad: 'Pubblicità e partnership.', del: 'Elimina account.', adBody: 'Richieste pubblicitarie e opportunità di collaborazione.',
+    navAccount: 'Account' },
 }[COUNTRY];
 
 const browser = await chromium.launch();
@@ -63,7 +79,7 @@ async function run(role) {
 
   await page.goto(`${BASE}&as=${role}`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(3500);
-  await page.locator('[title="Account"]').first().click();
+  await page.locator(`[title="${TITLES.navAccount}"]`).first().click();
   await page.waitForTimeout(1500);
 
   console.log(`\n[${COUNTRY} · ${role}]`);
@@ -115,14 +131,14 @@ async function run(role) {
       while (card && !(card.style && card.style.borderRadius === '18px')) card = card.parentElement;
       return card ? !card.innerText.includes('support@heatpumpdb.eu') : false;
     }));
-  check('[support] the "New inquiry" control is still present', (await page.locator('text=/New inquiry|Neue Anfrage|Nouvelle demande|Nowe zgłoszenie/').count()) > 0);
+  check('[support] the "New inquiry" control is still present', (await page.locator('text=/New inquiry|Neue Anfrage|Nouvelle demande|Nowe zgłoszenie|Nuova richiesta/').count()) > 0);
 
   // ── Team card position (role-based) ──
   if (role === 'owner' || role === 'member') {
     // Team titles follow the same default-language rule (DE/GB → English, FR → French).
     const teamTitle = role === 'owner'
-      ? (COUNTRY === 'FR' ? 'Gestion de l’équipe.' : COUNTRY === 'PL' ? 'Zarządzanie zespołem.' : 'Team management.')
-      : (COUNTRY === 'FR' ? 'Votre équipe.' : COUNTRY === 'PL' ? 'Twój zespół.' : 'Your team.');
+      ? (COUNTRY === 'DE' ? 'Teamverwaltung.' : COUNTRY === 'FR' ? 'Gestion de l’équipe.' : COUNTRY === 'PL' ? 'Zarządzanie zespołem.' : COUNTRY === 'IT' ? 'Gestione del team.' : 'Team management.')
+      : (COUNTRY === 'DE' ? 'Ihr Team.' : COUNTRY === 'FR' ? 'Votre équipe.' : COUNTRY === 'PL' ? 'Twój zespół.' : COUNTRY === 'IT' ? 'Il tuo team.' : 'Your team.');
     const team = await cardBox(page, teamTitle);
     check(`[${role}] the team card renders in the right column, above App language`,
       !!team && team.cx > leftCx - 1 && team.y < boxes.language.y,
@@ -145,7 +161,7 @@ for (const role of ['pro', 'owner', 'member']) await run(role);
   const page = await ctx.newPage();
   await page.goto(`${BASE}&as=pro`, { waitUntil: 'domcontentloaded' });
   await page.waitForTimeout(3500);
-  await page.locator('[title="Account"]').first().click();
+  await page.locator(`[title="${TITLES.navAccount}"]`).first().click();
   await page.waitForTimeout(1500);
   console.log(`\n[${COUNTRY} · single-column @760px]`);
 

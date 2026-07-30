@@ -250,7 +250,7 @@ const MobileGuide: React.FC<{ app: HpApp }> = ({ app }) => {
       <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.guide.heroTitle}</span>
       <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', fontSize: 13, width: 'fit-content' }}>
         {([['home', t.guide.tabHome], ['pro', t.guide.tabPro]] as const).map(([id, label]) => (
-          <span key={id} onClick={() => app.setGuideTab(id)} style={{ padding: '8px 16px', cursor: 'pointer', ...(app.guideTab === id ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : {}) }}>
+          <span key={id} onClick={() => { app.setGuideTab(id); app.setFaqOpen(0); /* FAQ list swaps with the tab */ }} style={{ padding: '8px 16px', cursor: 'pointer', ...(app.guideTab === id ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : {}) }}>
             {label}
           </span>
         ))}
@@ -297,8 +297,10 @@ const MobileGuide: React.FC<{ app: HpApp }> = ({ app }) => {
 
       <span style={{ fontFamily: FD, fontSize: 18, fontWeight: 600 }}>{t.guide.faqTitle}</span>
       <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 14, overflow: 'hidden' }}>
-        {t.guide.faqs.map(([q, a], i) => (
-          <div key={q} style={{ borderBottom: i < t.guide.faqs.length - 1 ? '1px solid #f0f0f0' : undefined }}>
+        {/* Audience-split FAQ — same rule as the desktop GuidePage: installer
+            set on the pro tab, consumer set on the home tab. */}
+        {(pro ? t.guide.faqsPro : t.guide.faqsHome).map(([q, a], i) => (
+          <div key={q} style={{ borderBottom: i < (pro ? t.guide.faqsPro : t.guide.faqsHome).length - 1 ? '1px solid #f0f0f0' : undefined }}>
             <div onClick={() => app.setFaqOpen(app.faqOpen === i ? -1 : i)} style={{ padding: '13px 16px', display: 'flex', justifyContent: 'space-between', gap: 10, cursor: 'pointer' }}>
               <span style={{ fontSize: 13.5, fontWeight: 600, lineHeight: 1.4 }}>{q}</span>
               <span style={{ color: '#7a7a7a' }}>{app.faqOpen === i ? '−' : '+'}</span>
