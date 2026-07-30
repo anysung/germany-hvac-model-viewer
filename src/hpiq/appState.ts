@@ -2,7 +2,7 @@
  * Cross-page app state contract (see handoff README "Interactions & state").
  * One shell owns this state; every cross-page link preserves context.
  */
-import { NewsItem, User, Language } from '../types';
+import { NewsItem, PolicyItem, User, Language } from '../types';
 import { ProductStore } from './productService';
 
 export type HpPage = 'find' | 'products' | 'label' | 'datasheet' | 'bafa' | 'guide' | 'news' | 'account';
@@ -18,6 +18,10 @@ export interface HpApp {
   /** Reflect a self-service profile edit locally (Firestore is the source of truth). */
   patchUser: (patch: Partial<User>) => void;
   news: NewsItem[];
+  /** Market policy/programme items (countries/<cc>/policies) — refreshed monthly
+   *  by the news pipeline; the funding page renders them as the live
+   *  "current programmes" list. */
+  policies: PolicyItem[];
 
   /** "Data status" / footer snapshot date. */
   dataStatusDate: string;

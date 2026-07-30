@@ -54,6 +54,33 @@ export const BafaPage: React.FC<{ app: HpApp }> = ({ app }) => {
           </div>
         </div>
 
+        {/* Current programmes & regulations — LIVE list from countries/<cc>/policies,
+            refreshed monthly by the news pipeline (same run as the news cycle,
+            owner request 2026-07-30). The curated cards/timeline above stay
+            editorial; this list is the always-current programme inventory.
+            Renders nothing while empty (load failure / pre-login) — the page
+            must never show an empty shell section. */}
+        {app.policies.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <span style={{ fontFamily: FD, fontSize: 21, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.bafa.programsTitle}</span>
+            <div style={{ border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden' }}>
+              {app.policies.map((p, i) => (
+                <div key={p.id ?? p.title} style={{ display: 'flex', gap: 18, padding: '18px 24px', borderBottom: i < app.policies.length - 1 ? '1px solid #f0f0f0' : undefined, alignItems: 'baseline', flexWrap: 'wrap' }}>
+                  <span style={{ flex: '0 0 88px', fontSize: 10.5, fontWeight: 600, letterSpacing: '.05em', border: '1px solid #e0e0e0', borderRadius: 999, padding: '3px 10px', textAlign: 'center', color: '#7a7a7a', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{p.category}</span>
+                  <div style={{ flex: 1, minWidth: 260, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <span style={{ fontSize: 14.5, fontWeight: 600 }}>{p.title}</span>
+                    <span style={{ fontSize: 13, lineHeight: 1.55, color: '#4a4a4e' }}>{p.summary}</span>
+                    {/^https?:\/\//.test(p.sourceUrl ?? '') && (
+                      <span onClick={() => window.open(p.sourceUrl, '_blank', 'noopener')} style={{ fontSize: 12.5, color: '#0066cc', cursor: 'pointer' }}>{t.bafa.programsOpen}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{t.bafa.programsNote}</span>
+          </div>
+        )}
+
         {/* two audiences */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
           <div style={{ background: '#272729', color: '#fff', borderRadius: 18, padding: '26px 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>

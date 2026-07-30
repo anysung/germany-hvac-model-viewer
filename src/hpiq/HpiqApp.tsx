@@ -217,6 +217,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   const app: HpApp = {
     store, allStore, user, patchUser,
     news: dbData?.newsFeed ?? [],
+    policies: dbData?.policySummary ?? [],
     dataStatusDate, bafaSnapshotDate, eprelSyncDate, totalListed,
     page, go: setPage,
     query, setQuery,

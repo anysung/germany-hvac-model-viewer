@@ -820,6 +820,33 @@ functions.http('autoUpdateDatabase', async (req, res) => {
     return res.status(200).json({ status: 'skipped', reason: 'Auto-update is disabled. Set AUTO_UPDATE_ENABLED=true to re-enable.' });
   }
 
+  /**
+   * FRESHNESS GUARD (scheduler only, owner decision 2026-07-30): skip the
+   * scheduled run when the newest article is younger than 21 days. The owner
+   * sometimes runs the monthly cycle early by hand (as on 2026-07-30, replacing
+   * the 2026-08-02 slot); without this guard the scheduler would publish a
+   * second, near-duplicate batch days later. 21 days skips only a slot whose
+   * work was already done ahead of schedule and can never skip two in a row
+   * (the monthly gap is ~30 days). DE is the sentinel market — every run
+   * publishes all markets together. Manual API-key runs are never guarded, and
+   * a read failure falls open (the run proceeds) — a guard must not be able to
+   * kill the pipeline.
+   */
+  if (isScheduler) {
+    try {
+      const snap = await firestoreDb.collection('countries/DE/news')
+        .orderBy('date', 'desc').limit(1).get();
+      const newest = snap.empty ? null : Date.parse(snap.docs[0].data().date);
+      if (newest && Date.now() - newest < 21 * 24 * 3600 * 1000) {
+        const days = Math.round((Date.now() - newest) / 86400000);
+        console.log(`Freshness guard: newest article is ${days}d old (<21d) — this monthly slot was already covered by a manual run. Skipping.`);
+        return res.status(200).json({ status: 'skipped', reason: `newest article ${days}d old — monthly slot already covered by a manual run` });
+      }
+    } catch (e) {
+      console.warn(`Freshness guard read failed (${e.message}) — proceeding with the run.`);
+    }
+  }
+
   if (!isScheduler && (!SECRET_KEY || providedKey !== SECRET_KEY)) {
     console.warn(`Unauthorized access attempt from ${req.ip}`);
     return res.status(403).json({ error: 'Unauthorized: Invalid or missing API key' });

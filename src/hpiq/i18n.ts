@@ -309,11 +309,11 @@ const EN = {
     heroTitle: 'BAFA / KfW.',
     heroSub: 'Curated German funding updates for heat pumps. Confirmed changes, clearly separated from guidance.',
     card1Title: 'BEG EM — HEAT PUMPS',
-    card1Head: 'Up to 40%',
-    card1Text: 'Base 30% + 5% efficiency bonus (natural refrigerant) + climate-speed bonus. Caps apply.',
+    card1Head: '30–80%',
+    card1Text: 'Since 21 Jul 2026: base 30% + income-tiered bonus (household income under €30,000) + child supplement + 16% speed bonus. The 5% efficiency bonus was abolished; eligible costs capped at €28,000 for the first unit.',
     card2Title: 'KFW 458 — GRANT PORTAL',
     card2Head: 'Open',
-    card2Text: 'Applications accepted for owner-occupied single-family homes; commitment before delivery contract.',
+    card2Text: 'Applications accepted for owner-occupied single-family homes; commitment before delivery contract. Income-bonus applicants document household income.',
     card3Title: 'BAFA LIST COVERAGE',
     card3Head: (n: string) => `${n} heat pumps`,
     card3Text: 'Listed units in this app — refreshed with every regular data update.',
@@ -321,8 +321,9 @@ const EN = {
     confirmed: 'CONFIRMED',
     guidance: 'GUIDANCE',
     timeline: [
+      { date: '21 Jul 2026', badge: 'CONFIRMED', strong: 'BEG reform in force', rest: ' — funding restructured for applications from 21 July: base rate 30%, income-tiered bonus for household incomes under €30,000 plus a child supplement (up to 80% total), climate-speed bonus reduced from 20% to 16%, the 5% efficiency bonus abolished, and eligible costs capped at €28,000 for the first residential unit (previously €30,000). From 1 February 2027 the cap falls by €750 every six months.' },
+      { date: '21 Jul 2026', badge: 'GUIDANCE', strong: 'Applications submitted before 21 July', rest: ' — approved or submitted applications keep the previous conditions; the new rules apply only to applications from 21 July 2026. Natural-refrigerant requirements are expected to become a funding precondition — R290 units in this app already satisfy them.' },
       { date: '6 Jul 2026', badge: 'CONFIRMED', strong: 'BAFA list update (July snapshot)', rest: ' — 33 newly listed units; 3,594 entries no longer on the active list vs June; 23 spec corrections. Products that left the list remain in this app for reference, marked "Delisted".' },
-      { date: '6 Jul 2026', badge: 'GUIDANCE', strong: 'Delisted units and funding', rest: ' — units absent from the current BAFA list are unlikely to be BEG EM eligible. Always re-verify the BAFA ID on the official list on the day of application.' },
       { date: '19 Jun 2026', badge: 'CONFIRMED', strong: 'BAFA list update (June snapshot)', rest: ' — 649 newly listed units; 276 entries left the active list vs March; 786 spec updates.' },
     ] as { date: string; badge: 'CONFIRMED' | 'GUIDANCE'; strong: string; rest: string }[],
     installerTitle: 'WHAT INSTALLERS SHOULD KNOW',
@@ -338,6 +339,11 @@ const EN = {
       { title: 'BMWK — Federal Ministry for Economic Affairs and Climate Action', sub: 'Energy transition & building efficiency policy' },
     ],
     sourcesNote: 'Summaries above are editorial guidance, not legal or funding advice. Official sources prevail.',
+    /* Live "current programmes" list — countries/<cc>/policies, refreshed
+       monthly by the news pipeline (same run as the news cycle). */
+    programsTitle: 'Current programmes & regulations.',
+    programsNote: 'Compiled from official sources by the monthly editorial update. Verify conditions on the official page before relying on them.',
+    programsOpen: 'Official page ›',
   },
 
   guide: {
@@ -948,11 +954,11 @@ const DE: HpStrings = {
     heroTitle: 'BAFA / KfW.',
     heroSub: 'Kuratierte Förder-Updates für Wärmepumpen in Deutschland. Bestätigte Änderungen, klar getrennt von Einordnungen.',
     card1Title: 'BEG EM — WÄRMEPUMPEN',
-    card1Head: 'Bis zu 40 %',
-    card1Text: 'Basis 30 % + 5 % Effizienz-Bonus (natürliches Kältemittel) + Klimageschwindigkeits-Bonus. Es gelten Höchstgrenzen.',
+    card1Head: '30–80 %',
+    card1Text: 'Seit 21. Juli 2026: Basis 30 % + einkommensgestaffelter Bonus (Haushaltseinkommen unter 30.000 €) + Kinderzuschlag + 16 % Geschwindigkeits-Bonus. Der 5 %-Effizienz-Bonus ist entfallen; förderfähige Kosten auf 28.000 € für die erste Wohneinheit begrenzt.',
     card2Title: 'KFW 458 — ANTRAGSPORTAL',
     card2Head: 'Geöffnet',
-    card2Text: 'Anträge für selbstgenutzte Einfamilienhäuser möglich; Zusage vor Abschluss des Liefervertrags.',
+    card2Text: 'Anträge für selbstgenutzte Einfamilienhäuser möglich; Zusage vor Abschluss des Liefervertrags. Für den Einkommensbonus ist das Haushaltseinkommen nachzuweisen.',
     card3Title: 'BAFA-LISTEN-ABDECKUNG',
     card3Head: (n: string) => `${n} Wärmepumpen`,
     card3Text: 'Gelistete Geräte in dieser App — aktualisiert mit jedem regulären Daten-Update.',
@@ -960,6 +966,8 @@ const DE: HpStrings = {
     confirmed: 'BESTÄTIGT',
     guidance: 'EINORDNUNG',
     timeline: [
+      { date: '21. Juli 2026', badge: 'CONFIRMED', strong: 'BEG-Reform in Kraft', rest: ' — Förderung für Anträge ab dem 21. Juli neu strukturiert: Basissatz 30 %, einkommensgestaffelter Bonus für Haushaltseinkommen unter 30.000 € plus Kinderzuschlag (insgesamt bis 80 %), Klimageschwindigkeits-Bonus von 20 % auf 16 % gesenkt, der 5 %-Effizienz-Bonus entfallen, förderfähige Kosten auf 28.000 € für die erste Wohneinheit begrenzt (zuvor 30.000 €). Ab 1. Februar 2027 sinkt die Grenze halbjährlich um 750 €.' },
+      { date: '21. Juli 2026', badge: 'GUIDANCE', strong: 'Anträge vor dem 21. Juli', rest: ' — bewilligte oder gestellte Anträge behalten die bisherigen Konditionen; die neuen Regeln gelten nur für Anträge ab dem 21. Juli 2026. Natürliche Kältemittel sollen künftig Fördervoraussetzung werden — R290-Geräte in dieser App erfüllen das bereits.' },
       { date: '6. Juli 2026', badge: 'CONFIRMED', strong: 'BAFA-Listen-Update (Juli-Stand)', rest: ' — 33 neu gelistete Geräte; 3.594 Einträge gegenüber Juni nicht mehr auf der aktiven Liste; 23 Spezifikationskorrekturen. Gestrichene Produkte bleiben in dieser App als Referenz erhalten und sind mit „Gestrichen" markiert.' },
       { date: '6. Juli 2026', badge: 'GUIDANCE', strong: 'Gestrichene Geräte und Förderung', rest: ' — Geräte, die nicht auf der aktuellen BAFA-Liste stehen, sind voraussichtlich nicht BEG-EM-förderfähig. Die BAFA-ID immer am Tag der Antragstellung auf der offiziellen Liste prüfen.' },
       { date: '19. Juni 2026', badge: 'CONFIRMED', strong: 'BAFA-Listen-Update (Juni-Stand)', rest: ' — 649 neu gelistete Geräte; 276 Einträge gegenüber März nicht mehr auf der aktiven Liste; 786 Spezifikations-Updates.' },
@@ -977,6 +985,9 @@ const DE: HpStrings = {
       { title: 'BMWK — Bundesministerium für Wirtschaft und Klimaschutz', sub: 'Energiewende & Gebäudeeffizienz-Politik' },
     ],
     sourcesNote: 'Die obigen Zusammenfassungen sind redaktionelle Einordnungen, keine Rechts- oder Förderberatung. Maßgeblich sind die offiziellen Quellen.',
+    programsTitle: 'Aktuelle Programme & Regelwerke.',
+    programsNote: 'Monatlich redaktionell aus offiziellen Quellen zusammengestellt. Konditionen vor Verlass stets auf der offiziellen Seite prüfen.',
+    programsOpen: 'Offizielle Seite ›',
   },
 
   guide: {
@@ -1415,6 +1426,9 @@ const GB: HpStrings = {
       { title: 'GOV.UK — Apply for the Boiler Upgrade Scheme', sub: 'Official guidance for property owners' },
     ],
     sourcesNote: 'Summaries above are editorial guidance, not legal or funding advice. Official sources prevail.',
+    programsTitle: 'Current programmes & regulations.',
+    programsNote: 'Compiled from official sources by the monthly editorial update. Verify conditions on the official page before relying on them.',
+    programsOpen: 'Official page ›',
   },
 
   guide: {
@@ -1597,6 +1611,9 @@ const FR_EN: HpStrings = {
       { title: 'ADEME — Agence de la transition écologique', sub: 'Energy transition guidance' },
     ],
     sourcesNote: 'Summaries above are editorial guidance, not legal or funding advice. Official sources prevail.',
+    programsTitle: 'Current programmes & regulations.',
+    programsNote: 'Compiled from official sources by the monthly editorial update. Verify conditions on the official page before relying on them.',
+    programsOpen: 'Official page ›',
   },
 
   guide: {
@@ -1976,6 +1993,9 @@ const FR_FR: HpStrings = {
       { title: 'ADEME — Agence de la transition écologique', sub: 'Références transition énergétique' },
     ],
     sourcesNote: 'Les synthèses ci-dessus sont des repères éditoriaux, ni conseil juridique ni décision d’aide. Les sources officielles prévalent.',
+    programsTitle: 'Programmes et réglementations en vigueur.',
+    programsNote: 'Synthèse mensuelle établie à partir des sources officielles. Vérifiez les conditions sur la page officielle avant toute décision.',
+    programsOpen: 'Page officielle ›',
   },
 
   guide: {
@@ -2410,6 +2430,7 @@ const PL_EN: HpStrings = {
     confirmed: 'CONFIRMED',
     guidance: 'GUIDANCE',
     timeline: [
+      { date: '20 Jul 2026', badge: 'CONFIRMED', strong: 'Czyste Powietrze reform in force', rest: ' — NFOŚiGW enacted the announced changes: an additional 10% support for selected thermo-modernisation works, the project-completion window after an advance payment extended from 120 to 180 days, wider eligibility (including owners who acquired the property through adverse possession) and simplified close-out documentation. Heat pumps, pellet boilers and wood-gasification boilers on Lista ZUM remain the eligible devices; from 2027 heat pumps are the only electric heating the programme supports.' },
       { date: '16 Jul 2026', badge: 'CONFIRMED', strong: 'Czyste Powietrze — changes from 20 July 2026', rest: ' — the current edition (running since 31 March 2025) is updated with effect from 20 July 2026. Example caps by income level: ground-source heat pumps up to 18,000 / 31,500 / 45,000 zł; higher-class air/water units up to 14,080 / 24,640 / 35,200 zł.' },
       { date: '16 Jul 2026', badge: 'CONFIRMED', strong: 'Lista ZUM requirement', rest: ' — for invoices dated from 14 June 2024 the heat pump must appear on Lista ZUM (lista-zum.ios.edu.pl, run by IOŚ-PIB). This app shows the confirmed ZUM status of every product.' },
       { date: '16 Jul 2026', badge: 'GUIDANCE', strong: 'ZUM listing is a product-side condition', rest: ' — actual grant eligibility additionally depends on the applicant, the building, household income and the programme rules. This app shows technical reference data and never assesses or guarantees eligibility.' },
@@ -2427,6 +2448,9 @@ const PL_EN: HpStrings = {
       { title: 'Moje Ciepło — new-build grant programme', sub: 'Grants for new single-family buildings' },
     ],
     sourcesNote: 'Summaries above are editorial guidance (verified July 2026), not legal or funding advice. Official sources prevail.',
+    programsTitle: 'Current programmes & regulations.',
+    programsNote: 'Compiled from official sources by the monthly editorial update. Verify conditions on the official page before relying on them.',
+    programsOpen: 'Official page ›',
   },
 
   guide: {
@@ -2789,6 +2813,7 @@ const PL_PL: HpStrings = {
     confirmed: 'POTWIERDZONE',
     guidance: 'WSKAZÓWKA',
     timeline: [
+      { date: '20 lip 2026', badge: 'CONFIRMED', strong: 'Reforma Czyste Powietrze weszła w życie', rest: ' — NFOŚiGW wdrożył zapowiadane zmiany: dodatkowe 10% wsparcia dla wybranych prac termomodernizacyjnych, wydłużenie terminu zakończenia przedsięwzięcia po wypłacie zaliczki ze 120 do 180 dni, szersza dostępność programu (m.in. właściciele nieruchomości nabytych przez zasiedzenie) oraz uproszczona dokumentacja końcowa. Pompy ciepła, kotły na pellet i kotły zgazowujące drewno z listy ZUM pozostają urządzeniami kwalifikowanymi; od 2027 r. pompy ciepła będą jedynym wspieranym ogrzewaniem elektrycznym.' },
       { date: '16 lip 2026', badge: 'CONFIRMED', strong: 'Czyste Powietrze — zmiany od 20 lipca 2026', rest: ' — obecna edycja programu (trwająca od 31 marca 2025) zostaje zaktualizowana ze skutkiem od 20 lipca 2026. Przykładowe limity według poziomu dochodu: gruntowe pompy ciepła do 18 000 / 31 500 / 45 000 zł; powietrzne pompy ciepła o podwyższonej klasie do 14 080 / 24 640 / 35 200 zł.' },
       { date: '16 lip 2026', badge: 'CONFIRMED', strong: 'Wymóg listy ZUM', rest: ' — dla faktur wystawionych od 14 czerwca 2024 pompa ciepła musi znajdować się na liście ZUM (lista-zum.ios.edu.pl, prowadzonej przez IOŚ-PIB). Ta aplikacja pokazuje potwierdzony status ZUM każdego produktu.' },
       { date: '16 lip 2026', badge: 'GUIDANCE', strong: 'Wpis na liście ZUM to warunek po stronie produktu', rest: ' — faktyczne prawo do dotacji zależy dodatkowo od wnioskodawcy, budynku, dochodu gospodarstwa domowego i zasad programu. Serwis pokazuje techniczne dane referencyjne i nie ocenia ani nie gwarantuje przyznania dotacji.' },
@@ -2806,6 +2831,9 @@ const PL_PL: HpStrings = {
       { title: 'Moje Ciepło — program dla nowych budynków', sub: 'Dotacje dla nowych budynków jednorodzinnych' },
     ],
     sourcesNote: 'Powyższe podsumowania to wskazówki redakcyjne (stan zweryfikowany: lipiec 2026), a nie porada prawna ani decyzja o dotacji. Rozstrzygające są oficjalne źródła.',
+    programsTitle: 'Aktualne programy i regulacje.',
+    programsNote: 'Zestawiane co miesiąc redakcyjnie z oficjalnych źródeł. Przed podjęciem decyzji zweryfikuj warunki na stronie oficjalnej.',
+    programsOpen: 'Strona oficjalna ›',
   },
 
   guide: {
@@ -3263,6 +3291,9 @@ const IT_EN: HpStrings = {
       { title: 'Agenzia delle Entrate — tax deductions', sub: 'Ecobonus / renovation deduction rules' },
     ],
     sourcesNote: 'Summaries above are editorial guidance (verified July 2026), not legal or incentive advice. Official sources prevail.',
+    programsTitle: 'Current programmes & regulations.',
+    programsNote: 'Compiled from official sources by the monthly editorial update. Verify conditions on the official page before relying on them.',
+    programsOpen: 'Official page ›',
   },
 
   guide: {
@@ -3649,6 +3680,9 @@ const IT_IT: HpStrings = {
       { title: 'Agenzia delle Entrate — detrazioni fiscali', sub: 'Regole Ecobonus e detrazioni per ristrutturazioni' },
     ],
     sourcesNote: 'I riepiloghi qui sopra sono indicazioni redazionali (verificate a luglio 2026), non consulenza legale né decisioni sugli incentivi. Prevalgono le fonti ufficiali.',
+    programsTitle: 'Programmi e normative in vigore.',
+    programsNote: 'Sintesi mensile redatta da fonti ufficiali. Verifica le condizioni sulla pagina ufficiale prima di farvi affidamento.',
+    programsOpen: 'Pagina ufficiale ›',
   },
 
   guide: {
