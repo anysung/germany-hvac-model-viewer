@@ -1079,3 +1079,12 @@ Post-run validation (inline Node script, full 455-file scan):
 - 2026-07-06T03:14:04.382Z spaceheatersolardevice: saved page 3 (7 records)
 - 2026-07-06T03:14:04.383Z spaceheatersolardevice: wrote _meta.json (complete=true, records=207/207)
 - 2026-07-06T03:14:05.386Z run complete (full): [{"group":"spaceheaters","totalReported":45623,"recordsSaved":45623,"pagesSaved":457,"pagesSkipped":0},{"group":"spaceheatertemperaturecontrol","totalReported":842,"recordsSaved":842,"pagesSaved":9,"pagesSkipped":0},{"group":"spaceheatersolardevice","totalReported":207,"recordsSaved":207,"pagesSaved":3,"pagesSkipped":0}]
+- 2026-07-29T23:47:01.198Z probe OK: https://eprel.ec.europa.eu/api (HTTP 200)
+- 2026-07-29T23:48:04.888Z probe OK: https://eprel.ec.europa.eu/api (HTTP 200)
+- 2026-07-29T23:48:06.096Z spaceheaters: skipped 457 already-downloaded pages (resume mode)
+- 2026-07-29T23:48:06.098Z spaceheaters: wrote _meta.json (complete=true, records=45623/45623)
+- 2026-07-29T23:48:07.118Z spaceheatertemperaturecontrol: skipped 9 already-downloaded pages (resume mode)
+- 2026-07-29T23:48:07.120Z spaceheatertemperaturecontrol: wrote _meta.json (complete=true, records=842/842)
+- 2026-07-29T23:48:08.134Z spaceheatersolardevice: skipped 3 already-downloaded pages (resume mode)
+- 2026-07-29T23:48:08.136Z spaceheatersolardevice: wrote _meta.json (complete=true, records=207/207)
+- 2026-07-29T23:48:09.137Z run complete (full): [{"group":"spaceheaters","totalReported":45623,"recordsSaved":45623,"pagesSaved":457,"pagesSkipped":457},{"group":"spaceheatertemperaturecontrol","totalReported":842,"recordsSaved":842,"pagesSaved":9,"pagesSkipped":9},{"group":"spaceheatersolardevice","totalReported":207,"recordsSaved":207,"pagesSaved":3,"pagesSkipped":3}]

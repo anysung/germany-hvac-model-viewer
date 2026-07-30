@@ -75,7 +75,9 @@ check('[residential] products load', (await rows()) > 0);
 
 // Sorting capacity high→low brings the single largest residential product to the
 // top: if THAT one is ≤ 23 kW, then no residential product is above the threshold.
-const resMaxKw = await sortAndReadTopKw(/high to low|hoch|décroissante|haut|od najwyższej|decrescente/i);
+// German says "Leistung — absteigend" (never "hoch"); the old word only worked
+// while the DE preview still defaulted to English.
+const resMaxKw = await sortAndReadTopKw(/high to low|absteigend|décroissante|haut|od najwyższej|decrescente/i);
 check(`[segment] no residential product exceeds ${THRESHOLD} kW`,
   Number.isFinite(resMaxKw) && resMaxKw <= THRESHOLD, `largest residential = ${resMaxKw} kW`);
 
@@ -88,7 +90,7 @@ check('[commercial] catalogue loads (non-zero)', comRows > 0, `rows=${comRows}`)
 check('[commercial] total is plausible (>100)', comTotal > 100, `total=${comTotal}`);
 
 // Mirror image: the smallest commercial product must still be above the threshold.
-const comMinKw = await sortAndReadTopKw(/low to high|niedrig|croissante|bas|od najniższej|crescente/i);
+const comMinKw = await sortAndReadTopKw(/low to high|aufsteigend|croissante|bas|od najniższej|crescente/i);
 check(`[segment] every commercial product is above ${THRESHOLD} kW`,
   Number.isFinite(comMinKw) && comMinKw > THRESHOLD, `smallest commercial = ${comMinKw} kW`);
 
