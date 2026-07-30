@@ -127,6 +127,12 @@ export default defineConfig(({ mode }) => {
   const m = MARKET_HTML[country] ?? MARKET_HTML.DE;
   let outDir = 'dist';
 
+  // Build fingerprint for the in-app update check (src/updateCheck.ts): the
+  // bundle carries __BUILD_ID__, the deploy carries /version.json with the same
+  // value, and a resumed home-screen app compares the two. Any per-build unique
+  // value works — wall-clock is the simplest honest one.
+  const buildId = Date.now().toString(36);
+
   return {
     plugins: [
       react(),
@@ -181,6 +187,9 @@ export default defineConfig(({ mode }) => {
             );
         },
         closeBundle() {
+          // Update beacon — every deploy (market sites AND the admin console)
+          // publishes its build id; served no-cache via firebase.json headers.
+          writeFileSync(resolve(outDir, 'version.json'), JSON.stringify({ build: buildId }));
           if (isAdminBuild) {
             // Admin console: block all crawling; no sitemap/manifest.
             writeFileSync(resolve(outDir, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
@@ -241,6 +250,7 @@ export default defineConfig(({ mode }) => {
       // Polyfill process.env.API_KEY so it works in the browser
       // CRITICAL FIX: Added || "" to prevent build failure if API_KEY is undefined in Cloud Build env
       'process.env.API_KEY': JSON.stringify(env.API_KEY || process.env.API_KEY || ""),
+      '__BUILD_ID__': JSON.stringify(buildId),
       '__MARKET_STATS__': JSON.stringify(marketStats(country)),
       '__ALL_MARKET_STATS__': JSON.stringify({ DE: marketStats('DE'), GB: marketStats('GB'), FR: marketStats('FR'), PL: marketStats('PL'), IT: marketStats('IT') }),
     }

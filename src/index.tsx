@@ -2,6 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css'; // Import the CSS file
+import { startUpdateCheck } from './updateCheck';
+
+// Installed home-screen apps resume a frozen page instance — this is what
+// brings them onto a new deploy (see updateCheck.ts).
+startUpdateCheck();
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
