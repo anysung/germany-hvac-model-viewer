@@ -15,7 +15,7 @@
  * Deploy: npm run deploy:eu  (Firebase Hosting target "eu").
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import QRCode from 'qrcode';
@@ -33,6 +33,16 @@ execFileSync(join(ROOT, 'node_modules/.bin/esbuild'), [
 ], { cwd: ROOT });
 const { logoSvgDoc, flagSvgDoc } = await import(pathToFileURL(tmp).href);
 rmSync(tmp, { force: true });
+
+/* energyClass: the app's own EU-811/2013 mapping (src/hpiq/model.ts) — bundled
+   the same way so the public pages can never diverge from the app. */
+const tmp2 = join(ROOT, 'node_modules', '.hub-model.mjs');
+execFileSync(join(ROOT, 'node_modules/.bin/esbuild'), [
+  'src/hpiq/model.ts', '--bundle', '--format=esm', '--platform=node', `--outfile=${tmp2}`,
+  '--define:import.meta.env={"VITE_COUNTRY_CODE":"DE","VITE_APP_MODE":"app"}',
+], { cwd: ROOT });
+const { energyClass } = await import(pathToFileURL(tmp2).href);
+rmSync(tmp2, { force: true });
 
 const LOGO = logoSvgDoc('dark');                       // full lockup, dark theme
 const FAVICON = logoSvgDoc('light', true);             // symbol-only for the tab
@@ -212,7 +222,7 @@ const HTML = `<!doctype html>
 
   <footer>
     <div>${MARKETS.map(m => `<a href="${m.url}">${m.host}</a>`).join(' · ')}</div>
-    <div><a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a></div>
+    <div><a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a> · <a href="/models/">Model index</a></div>
     <div class="legal">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · Product data is provided for information — verify against official sources before contractual use.</div>
   </footer>
 
@@ -230,10 +240,193 @@ const HTML = `<!doctype html>
 </html>
 `;
 
-writeFileSync(join(OUT, 'index.html'), HTML);
-writeFileSync(join(OUT, 'favicon.svg'), FAVICON);
-writeFileSync(join(OUT, 'robots.txt'), 'User-agent: *\nAllow: /\n\nSitemap: https://www.heatpumpdb.eu/sitemap.xml\n');
+/* ══════════════════════════════════════════════════════════════════════════
+   PUBLIC MODEL INDEX — the "bait-level" SEO list (owner decision 2026-08-01).
+
+   Strategy (recorded in the decision thread): expose ONLY six already-public
+   facts per model (manufacturer · model · rated capacity · SCOP · refrigerant
+   · EU energy class) for ~3–5% of the canonical catalogue, selected by a
+   brand-power-law heuristic (top manufacturers by catalogue presence, their
+   best complete models). NO listing status — that stays behind the account,
+   both as the compliance-safe choice and as the reason to sign up. Pages are
+   invisible in every app UI; discovery is this generator's sitemap + one
+   low-profile hub-footer link + model-to-model interlinks (orphan pages do
+   not rank; cloaking is never used). Phase 2 grows the set quarterly from
+   our own search analytics, capped at ~10%.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+const REG_OPEN = false;   // flip when registration reopens — changes CTA copy only
+const TARGET = 300;       // ≈4% of the canonical 7,190
+const TOP_MFRS = 12;
+
+const canonical = [
+  ...JSON.parse(readFileSync(join(ROOT, 'public/data/products.json'), 'utf8')).items,
+  ...JSON.parse(readFileSync(join(ROOT, 'public/data/products-commercial.json'), 'utf8')).items,
+];
+const snapshotDate = JSON.parse(readFileSync(join(ROOT, 'public/data/products.json'), 'utf8'))._meta.generated.slice(0, 10);
+
+/* Complete = all six public fields present. */
+const complete = canonical.filter(x =>
+  (x.manufacturer_short ?? x.manufacturer) && x.model &&
+  (x.power_35C_kw ?? x.power_55C_kw) && x.scop && x.refrigerant && x.efficiency_35C_percent);
+
+/* Brand power law: rank manufacturers by catalogue presence, take the top 12,
+   then allocate the ~300 slots proportionally (min 8 each), best-SCOP first. */
+const byMfr = new Map();
+for (const x of complete) {
+  const m = x.manufacturer_short ?? x.manufacturer;
+  (byMfr.get(m) ?? byMfr.set(m, []).get(m)).push(x);
+}
+const ranked = [...byMfr.entries()].sort((a, b) => b[1].length - a[1].length).slice(0, TOP_MFRS);
+const totalTop = ranked.reduce((n, [, v]) => n + v.length, 0);
+const picked = [];
+for (const [mfr, items] of ranked) {
+  const quota = Math.max(8, Math.round(TARGET * items.length / totalTop));
+  const seen = new Set();
+  const best = items
+    .sort((a, b) => (b.scop ?? 0) - (a.scop ?? 0))
+    .filter(x => { const k = x.model; if (seen.has(k)) return false; seen.add(k); return true; })
+    .slice(0, quota);
+  picked.push(...best.map(x => ({ x, mfr })));
+}
+picked.length = Math.min(picked.length, 340);
+
+const slugOf = ({ x, mfr }) =>
+  `${mfr}-${x.model}`.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70) + '-' + String(x.source_id).slice(-4);
+
+const models = picked.map(pk => ({
+  slug: slugOf(pk),
+  mfr: pk.mfr,
+  model: pk.x.model,
+  kw: (pk.x.power_35C_kw ?? pk.x.power_55C_kw).toFixed(1),
+  scop: Number(pk.x.scop).toFixed(2),
+  ref: String(pk.x.refrigerant),
+  cls: energyClass(pk.x.efficiency_35C_percent),
+}));
+const bySlug = new Map(models.map(m => [m.slug, m]));
+if (bySlug.size !== models.length) throw new Error('slug collision');
+
+mkdirSync(join(OUT, 'models'), { recursive: true });
+
+const pageShell = (title, desc, canonicalPath, body, ld) => `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<link rel="canonical" href="https://www.heatpumpdb.eu${canonicalPath}">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}
+<style>
+  :root { --red:#ff6b52; --blue:#2997ff; --ink:#f5f5f7; --mut:#93a1b8; --bg:#0b1626; --card:#101f36; --line:rgba(255,255,255,.09); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--ink); min-height:100dvh; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:880px; margin:0 auto; padding:34px 22px 60px; }
+  a { color:var(--blue); text-decoration:none; }
+  .crumb { font-size:12.5px; color:var(--mut); margin-bottom:22px; display:block; }
+  h1 { font-size:clamp(22px,4.5vw,32px); font-weight:700; letter-spacing:-.02em; line-height:1.2; }
+  .mfr { color:var(--mut); font-size:14px; margin-top:4px; }
+  table { width:100%; border-collapse:collapse; margin:26px 0 8px; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  th, td { text-align:left; padding:13px 16px; font-size:14px; border-bottom:1px solid var(--line); }
+  th { color:var(--mut); font-weight:500; width:44%; }
+  tr:last-child th, tr:last-child td { border-bottom:none; }
+  .snap { font-size:11.5px; color:var(--mut); }
+  .cta { margin:30px 0 10px; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:22px; }
+  .cta h2 { font-size:16.5px; margin-bottom:8px; }
+  .cta p { font-size:13.5px; color:#c7d2e2; line-height:1.6; }
+  .mgrid { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+  .mbtn { border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:13px; color:var(--ink); background:rgba(255,255,255,.04); }
+  .mbtn:hover { border-color:var(--blue); }
+  .rel { margin-top:30px; }
+  .rel h3 { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--mut); margin-bottom:10px; }
+  .rel a { display:inline-block; margin:0 12px 8px 0; font-size:13.5px; }
+  ul.idx { list-style:none; column-width:260px; column-gap:28px; margin-top:20px; }
+  ul.idx li { margin-bottom:9px; font-size:14px; break-inside:avoid; }
+  ul.idx small { color:var(--mut); }
+  footer { margin-top:44px; font-size:11.5px; color:var(--mut); line-height:1.7; }
+</style>
+</head>
+<body><div class="wrap">
+<a class="crumb" href="/">HeatPump DB</a> ${body}
+<footer>Data from official European registry sources · snapshot ${snapshotDate} · Listing status, full specifications, comparison and data sheets are available in the app.<br>© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · <a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a></footer>
+</div></body></html>
+`;
+
+const ctaBlock = `
+<div class="cta">
+  <h2>Full specification, comparison and print-ready data sheets</h2>
+  <p>${REG_OPEN
+    ? 'Every new account includes a free first week with full access — official listing status, complete performance tables, 4-model comparison and quote-ready PDF data sheets. Choose your market to get started:'
+    : 'Official listing status, complete performance tables, 4-model comparison and quote-ready PDF data sheets live in the app. Registration reopens shortly — the free first week will be included with every new account. Choose your market:'}</p>
+  <div class="mgrid">${MARKETS.map(m => `<a class="mbtn" href="${m.url}">${m.name} — ${m.host}</a>`).join('')}</div>
+</div>`;
+
+models.forEach((m, i) => {
+  const prev = models[(i - 1 + models.length) % models.length];
+  const next = models[(i + 1) % models.length];
+  const same = models.filter(o => o.mfr === m.mfr && o.slug !== m.slug).slice(0, 6);
+  const title = `${m.mfr} ${m.model} — heat pump specifications | HeatPump DB`;
+  const desc = `${m.mfr} ${m.model}: rated capacity ${m.kw} kW, SCOP ${m.scop}, refrigerant ${m.ref}, EU energy class ${m.cls}. Registry-based data — full specification and listing status in the HeatPump DB app.`;
+  const ld = {
+    '@context': 'https://schema.org', '@type': 'Product',
+    name: `${m.mfr} ${m.model}`, brand: { '@type': 'Brand', name: m.mfr },
+    category: 'Air-to-water heat pump',
+  };
+  const body = `
+<h1>${m.mfr} ${m.model}</h1>
+<div class="mfr">Air/water heat pump · registry-based reference data</div>
+<table>
+  <tr><th>Manufacturer</th><td>${m.mfr}</td></tr>
+  <tr><th>Model</th><td>${m.model}</td></tr>
+  <tr><th>Rated heating capacity</th><td>${m.kw} kW</td></tr>
+  <tr><th>SCOP (seasonal COP)</th><td>${m.scop}</td></tr>
+  <tr><th>Refrigerant</th><td>${m.ref}</td></tr>
+  <tr><th>EU energy class (W35)</th><td>${m.cls}</td></tr>
+</table>
+<span class="snap">Snapshot ${snapshotDate} — verify against official sources before contractual use.</span>
+${ctaBlock}
+<div class="rel"><h3>More ${m.mfr} models</h3>${same.map(o => `<a href="/models/${o.slug}.html">${o.model}</a>`).join('')}</div>
+<div class="rel"><h3>Browse</h3><a href="/models/">All indexed models</a> · <a href="/models/${prev.slug}.html">‹ ${prev.model}</a> · <a href="/models/${next.slug}.html">${next.model} ›</a></div>`;
+  writeFileSync(join(OUT, 'models', `${m.slug}.html`), pageShell(title, desc, `/models/${m.slug}.html`, body, ld));
+});
+
+/* Index page — grouped by manufacturer. */
+const groups = [...new Set(models.map(m => m.mfr))].map(mfr => ({
+  mfr, items: models.filter(m => m.mfr === mfr),
+}));
+const idxBody = `
+<h1>Heat pump model index</h1>
+<div class="mfr">${models.length} selected models from the European catalogue · basic reference data only</div>
+${ctaBlock}
+${groups.map(g => `<div class="rel"><h3>${g.mfr} (${g.items.length})</h3><ul class="idx">${g.items.map(m =>
+  `<li><a href="/models/${m.slug}.html">${m.model}</a> <small>· ${m.kw} kW · ${m.cls}</small></li>`).join('')}</ul></div>`).join('')}`;
+writeFileSync(join(OUT, 'models', 'index.html'),
+  pageShell(`Heat pump model index — ${models.length} models | HeatPump DB`,
+    `Reference index of ${models.length} air/water heat pump models: rated capacity, SCOP, refrigerant and EU energy class. Full specifications in the HeatPump DB app.`,
+    '/models/', idxBody, null));
+
+/* robots: search engines welcome, AI-training crawlers opted out (consistent
+   with the country sites' protected-database posture). */
+const AI_CRAWLERS = ['GPTBot', 'ChatGPT-User', 'OAI-SearchBot', 'ClaudeBot', 'Claude-Web',
+  'anthropic-ai', 'CCBot', 'Google-Extended', 'Applebot-Extended',
+  'PerplexityBot', 'Bytespider', 'meta-externalagent', 'cohere-ai'];
+writeFileSync(join(OUT, 'robots.txt'),
+  'User-agent: *\nAllow: /\n\n'
+  + AI_CRAWLERS.map(ua => `User-agent: ${ua}\nDisallow: /\n`).join('\n')
+  + '\nSitemap: https://www.heatpumpdb.eu/sitemap.xml\n');
+
+const today = new Date().toISOString().slice(0, 10);
 writeFileSync(join(OUT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
-  + `  <url><loc>https://www.heatpumpdb.eu/</loc><lastmod>${new Date().toISOString().slice(0, 10)}</lastmod><changefreq>monthly</changefreq></url>\n</urlset>\n`);
-console.log(`hub-landing/ 생성 완료 — index.html ${(HTML.length / 1024).toFixed(0)}kB (자체 완결, QR ${MARKETS.length}종 인라인)`);
+  + `  <url><loc>https://www.heatpumpdb.eu/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>\n`
+  + `  <url><loc>https://www.heatpumpdb.eu/models/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>\n`
+  + models.map(m => `  <url><loc>https://www.heatpumpdb.eu/models/${m.slug}.html</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>`).join('\n')
+  + `\n</urlset>\n`);
+
+writeFileSync(join(OUT, 'index.html'), HTML);
+writeFileSync(join(OUT, 'favicon.svg'), FAVICON);
+console.log(`hub-landing/ 생성 완료 — index ${(HTML.length / 1024).toFixed(0)}kB · 모델 페이지 ${models.length}개 (${[...new Set(models.map(m => m.mfr))].length}개 제조사, 스냅샷 ${snapshotDate})`);
