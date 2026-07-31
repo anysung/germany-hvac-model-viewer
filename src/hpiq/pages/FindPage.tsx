@@ -24,7 +24,7 @@ export const FindPage: React.FC<{ app: HpApp }> = ({ app }) => {
           <span style={{ fontFamily: FD, fontSize: 40, fontWeight: 600, letterSpacing: '-0.374px', lineHeight: 1.1 }}>{t.find.heroTitle}</span>
           <span style={{ fontSize: 17, color: '#7a7a7a', letterSpacing: '-0.374px' }}>{t.find.heroSub(totalText)}</span>
         </div>
-        <div style={{ width: 660, maxWidth: '90%', display: 'flex', alignItems: 'center', gap: 11, background: '#fff', border: '1px solid #e0e0e0', borderRadius: 999, padding: '6px 8px 6px 22px' }}>
+        <div data-tour="search" style={{ width: 660, maxWidth: '90%', display: 'flex', alignItems: 'center', gap: 11, background: '#fff', border: '1px solid #e0e0e0', borderRadius: 999, padding: '6px 8px 6px 22px' }}>
           <SearchIcon size={16} style={{ flex: 'none' }} />
           <input
             ref={inputRef}
@@ -120,7 +120,7 @@ export const FindPage: React.FC<{ app: HpApp }> = ({ app }) => {
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 2 }}>
-                    <span className="hp-press" onClick={() => app.openProduct(p.id)} style={{ background: '#0066cc', color: '#fff', borderRadius: 999, padding: '8px 18px', fontSize: 13.5, cursor: 'pointer' }}>{t.find.viewDetails}</span>
+                    <span className="hp-press" data-tour="result-open" onClick={() => app.openProduct(p.id)} style={{ background: '#0066cc', color: '#fff', borderRadius: 999, padding: '8px 18px', fontSize: 13.5, cursor: 'pointer' }}>{t.find.viewDetails}</span>
                     <span onClick={() => app.openDataSheet(p.id, 'product')} style={{ color: '#0066cc', fontSize: 13.5, cursor: 'pointer' }}>{t.find.dataSheet}</span>
                   </div>
                 </div>

@@ -351,7 +351,7 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                 zIndex lifts the tray's stacking context (frosted = backdrop-filter
                 creates one) above the later-painted table rows — without it the
                 mini-mode popover and the chip tooltips render BEHIND the list. */}
-            <div ref={trayRef} style={{ position: 'relative', zIndex: 40, display: 'flex', alignItems: 'center', gap: 12, padding: '11px 20px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(245,245,247,.92)', ...frosted, flex: 'none' }}>
+            <div ref={trayRef} data-tour="compare-tray" style={{ position: 'relative', zIndex: 40, display: 'flex', alignItems: 'center', gap: 12, padding: '11px 20px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(245,245,247,.92)', ...frosted, flex: 'none' }}>
               <span style={{ ...sectionLabel, flex: 'none' } as React.CSSProperties}>{t.products.compare}</span>
 
               {trayMini ? (

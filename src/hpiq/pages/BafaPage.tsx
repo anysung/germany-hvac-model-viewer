@@ -42,7 +42,7 @@ export const BafaPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
         {/* recent changes */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <span style={{ fontFamily: FD, fontSize: 21, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.bafa.recentChanges}</span>
+          <span data-tour="funding" style={{ fontFamily: FD, fontSize: 21, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.bafa.recentChanges}</span>
           <div style={{ border: '1px solid #e0e0e0', borderRadius: 18, overflow: 'hidden' }}>
             {t.bafa.timeline.map((entry, i) => (
               <div key={entry.date + entry.strong} style={{ display: 'flex', gap: 18, padding: '18px 24px', borderBottom: i < t.bafa.timeline.length - 1 ? '1px solid #f0f0f0' : undefined, alignItems: 'baseline' }}>

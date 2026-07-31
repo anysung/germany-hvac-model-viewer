@@ -170,3 +170,35 @@
     font-size: 16px !important;
   }
 }
+
+/* ── Interactive feature tour (spotlight coachmarks) ───────────────────────── */
+/* Pulsing halo around the highlighted element — draws the eye without hiding
+   anything. Runs on the spotlight frame, not the target, so target styling is
+   never touched. */
+@keyframes hp-tour-pulse {
+  0%   { box-shadow: 0 0 0 9999px rgba(15,15,18,.55), 0 0 0 0 rgba(0,102,204,.55); }
+  70%  { box-shadow: 0 0 0 9999px rgba(15,15,18,.55), 0 0 0 14px rgba(0,102,204,0); }
+  100% { box-shadow: 0 0 0 9999px rgba(15,15,18,.55), 0 0 0 0 rgba(0,102,204,0); }
+}
+.hp-tour-spot {
+  animation: hp-tour-pulse 1.8s ease-out infinite;
+  transition: top .38s cubic-bezier(.3,.9,.3,1), left .38s cubic-bezier(.3,.9,.3,1),
+              width .38s cubic-bezier(.3,.9,.3,1), height .38s cubic-bezier(.3,.9,.3,1);
+}
+/* Tooltip card: slide-fade in on every step change. */
+@keyframes hp-tour-pop {
+  from { opacity: 0; transform: translateY(10px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hp-tour-tip { animation: hp-tour-pop .32s cubic-bezier(.2,.9,.3,1.2) both; }
+/* Finish check: springy scale-in. */
+@keyframes hp-tour-check {
+  0% { transform: scale(0); } 60% { transform: scale(1.18); } 100% { transform: scale(1); }
+}
+.hp-tour-check { animation: hp-tour-check .5s cubic-bezier(.3,1.4,.4,1) both; }
+/* Guided-click hint chip: gentle bounce. */
+@keyframes hp-tour-nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.hp-tour-nudge { animation: hp-tour-nudge 1.1s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .hp-tour-spot, .hp-tour-tip, .hp-tour-check, .hp-tour-nudge { animation: none; }
+}

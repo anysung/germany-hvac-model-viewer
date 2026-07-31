@@ -37,6 +37,7 @@ const ListedChips: React.FC<{ v: HpVM; t: ReturnType<typeof tr> }> = ({ v, t }) 
 /** Card used by both Find results and the Products list. */
 const ProductCard: React.FC<{ v: HpVM; t: ReturnType<typeof tr>; onOpen: () => void; selected?: boolean }> = ({ v, t, onOpen, selected }) => (
   <div
+    data-tour="result-open"
     onClick={onOpen}
     style={{
       background: '#fff', border: '1px solid #e0e0e0', borderRadius: 14, padding: '13px 15px',
@@ -107,6 +108,7 @@ export const MobileDetail: React.FC<{ app: HpApp; v: HpVM; viewport: Viewport; o
           downloadable data sheet for this product. */}
       <span
         className="hp-press"
+        data-tour="detail-sheet"
         onClick={() => { app.openDataSheet(v.id, 'product'); onClose(); }}
         style={{ background: '#0066cc', color: '#fff', borderRadius: 12, padding: '13px 0', fontSize: 14.5, fontWeight: 600, textAlign: 'center', cursor: 'pointer' }}
       >
@@ -169,7 +171,7 @@ export const MobileFind: React.FC<{ app: HpApp; viewport: Viewport; onOpen: (id:
     <div style={{ padding: '18px 16px 24px', display: 'flex', flexDirection: 'column', gap: 13 }}>
       <span style={{ fontFamily: FD, fontSize: 'clamp(22px, 6.5vw, 26px)', fontWeight: 600, letterSpacing: '-0.3px' }}>{t.find.heroTitle}</span>
       <div style={{ position: 'sticky', top: 0, zIndex: 20, margin: '0 -16px', padding: '6px 16px 8px', background: 'rgba(245,245,247,.94)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 9, border: '1px solid #d2d2d7', background: '#fff', borderRadius: 999, padding: '12px 16px', boxShadow: '0 1px 4px rgba(0,0,0,.05)' }}>
+      <div data-tour="search" style={{ display: 'flex', alignItems: 'center', gap: 9, border: '1px solid #d2d2d7', background: '#fff', borderRadius: 999, padding: '12px 16px', boxShadow: '0 1px 4px rgba(0,0,0,.05)' }}>
         <SearchIcon size={15} />
         <input
           value={q}

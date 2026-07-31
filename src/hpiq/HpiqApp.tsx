@@ -329,7 +329,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
         {(dataBanner || sessionBanner || trialBanner) && (
           <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}{sessionBanner || trialBanner}</div>
         )}
-        <OnboardingTour app={app} />
+        <OnboardingTour app={app} viewport="phone" />
         <MobileApp app={app} viewport={viewport} />
         {notice && (
           <div style={{ position: 'fixed', bottom: 84, left: '50%', transform: 'translateX(-50%)', zIndex: 100, background: '#1d1d1f', color: '#fff', borderRadius: 999, padding: '11px 22px', fontSize: 13.5, boxShadow: '0 8px 24px rgba(0,0,0,.22)', maxWidth: '86vw' }}>
@@ -343,7 +343,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   return (
     <div className="hpiq-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#fff' }}>
       {printPortal}
-      <OnboardingTour app={app} />
+      <OnboardingTour app={app} viewport="desktop" />
 
       {/* ============ Global nav ============ */}
       <div className="hp-gnav" style={{ background: '#000', color: '#fff', display: 'flex', alignItems: 'center', gap: 28, padding: '0 28px', height: 60, position: 'sticky', top: 0, zIndex: 50, flex: 'none' }}>
@@ -391,6 +391,17 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
               ))}
             </div>
           )}
+          {/* Tutor icon — replay the interactive tour any time (owner 2026-07-31). */}
+          <span
+            onClick={() => window.dispatchEvent(new CustomEvent('hpdb-tour-open'))}
+            title={t.tour.accountReplay}
+            data-testid="nav-tutor"
+            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', flex: 'none', color: 'rgba(255,255,255,.75)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.75)')}
+          >
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5zM6.5 11v4.4c0 1.2 2.5 2.6 5.5 2.6s5.5-1.4 5.5-2.6V11M22 9v5" /></svg>
+          </span>
           <span
             onClick={() => setPage('account')}
             title={t.nav.account}

@@ -117,7 +117,7 @@ const MobileFunding: React.FC<{ app: HpApp; goGuide: (tab: 'home' | 'pro') => vo
   const card: React.CSSProperties = { border: '1px solid #e0e0e0', borderRadius: 14, padding: '15px 17px', display: 'flex', flexDirection: 'column', gap: 5, background: '#fff' };
   return (
     <div style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div data-tour="funding" style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.bafa.heroTitle}</span>
         <span style={{ fontSize: 13.5, color: '#7a7a7a', lineHeight: 1.5 }}>{t.bafa.heroSub}</span>
       </div>
@@ -218,7 +218,7 @@ const MobileDataSheet: React.FC<{ app: HpApp }> = ({ app }) => {
             studio has (owner request 2026-07-31: the print/PDF view offered no
             EU-label option on mobile). Drives dsMode → the SAME jsPDF pipeline. */}
         {dsp && (
-          <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', fontSize: 12.5, width: 'fit-content' }} data-testid="mds-mode">
+          <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', fontSize: 12.5, width: 'fit-content' }} data-testid="mds-mode" data-tour="ds-mode">
             {([['product', t.ds.modeProduct], ['label', t.ds.modeLabel]] as const).map(([m, lbl]) => (
               <span key={m} onClick={() => app.setDsMode(m)}
                 style={{ padding: '7px 15px', cursor: 'pointer', whiteSpace: 'nowrap', ...(app.dsMode === m ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : { color: '#1d1d1f' }) }}>
@@ -509,7 +509,7 @@ const MobileNews: React.FC<{ app: HpApp }> = ({ app }) => {
   }
 
   return (
-    <div style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+    <div data-tour="news" style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
       <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.news.title}</span>
       <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{t.news.pill}</span>
       <input
@@ -851,6 +851,16 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
           {/* Phone: header menu — the pages the footer cannot show (owner
               request 2026-07-31). Data sheet is deliberately absent: it is
               reached from a product, never browsed to. */}
+          {viewport === 'phone' && (
+            <span
+              onClick={() => window.dispatchEvent(new CustomEvent('hpdb-tour-open'))}
+              aria-label="Tutor"
+              data-testid="mobile-tutor-btn"
+              style={{ width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', borderRadius: 8 }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 9l10-4.5L22 9l-10 4.5zM6.5 11v4.4c0 1.2 2.5 2.6 5.5 2.6s5.5-1.4 5.5-2.6V11M22 9v5" /></svg>
+            </span>
+          )}
           {viewport === 'phone' && (
             <span
               onClick={() => setMenuOpen(o => !o)}
