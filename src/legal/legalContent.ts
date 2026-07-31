@@ -128,6 +128,14 @@ const EN = {
         ],
       },
       {
+        h: 'Product usage analytics (first-party, cookieless)',
+        p: [
+          'To understand which features are used and where searches fail, the app records a small set of usage events first-party: search performed, search with no results, product opened, listing status viewed, comparison opened, and data sheet exported.',
+          'Events carry a timestamp, market, interface language, device class (phone/tablet/desktop), subscription tier, a random per-session identifier and a one-way hashed account reference. They never contain your name, email address, IP address, company data or free-typed search text (queries are reduced to normalised tokens with numbers and address-like fragments removed).',
+          'No cookies are set for this purpose and no third-party analytics service receives the data; it is stored with our EU-region infrastructure providers listed above and deleted automatically after 13 months. Legal basis: our legitimate interest in operating and improving a professional service (Art. 6(1)(f) GDPR). You may object at any time via the support address below.',
+        ],
+      },
+      {
         h: 'Data retention',
         p: [
           'Account and company data are kept while your account exists. After deletion we retain only what we must for legal, accounting or evidence purposes; billing records are retained by Paddle for statutory periods.',
@@ -324,6 +332,14 @@ const DE = {
         p: ['Konten sind personengebunden und dürfen nicht geteilt werden. Wir protokollieren Kontoaktivität, um Kontoteilung und unbefugte Datenentnahme zu erkennen. Produktdaten werden nur an angemeldete, freigegebene Konten ausgeliefert.'],
       },
       {
+        h: 'Produkt-Nutzungsanalyse (First-Party, ohne Cookies)',
+        p: [
+          'Um zu verstehen, welche Funktionen genutzt werden und wo Suchen scheitern, zeichnet die App eine kleine Zahl von Nutzungsereignissen selbst auf: Suche ausgeführt, Suche ohne Treffer, Produkt geöffnet, Listenstatus angesehen, Vergleich geöffnet und Datenblatt exportiert.',
+          'Ereignisse enthalten Zeitstempel, Markt, Oberflächensprache, Geräteklasse (Telefon/Tablet/Desktop), Abostufe, eine zufällige Sitzungskennung und eine einweg-gehashte Kontoreferenz. Sie enthalten niemals Namen, E-Mail-Adresse, IP-Adresse, Unternehmensdaten oder frei eingegebenen Suchtext (Suchanfragen werden auf normalisierte Begriffe reduziert; Zahlen und adressartige Fragmente werden entfernt).',
+          'Es werden hierfür keine Cookies gesetzt und kein Drittanbieter-Analysedienst erhält die Daten; sie werden bei unseren oben genannten EU-Infrastrukturanbietern gespeichert und nach 13 Monaten automatisch gelöscht. Rechtsgrundlage: unser berechtigtes Interesse am Betrieb und an der Verbesserung eines professionellen Dienstes (Art. 6 Abs. 1 lit. f DSGVO). Sie können jederzeit über die unten genannte Support-Adresse widersprechen.',
+        ],
+      },
+      {
         h: 'Speicherdauer',
         p: ['Konto- und Unternehmensdaten werden für die Dauer des Kontos gespeichert. Nach Löschung bewahren wir nur auf, was aus rechtlichen, buchhalterischen oder Nachweisgründen erforderlich ist; Abrechnungsunterlagen werden von Paddle für die gesetzlichen Fristen aufbewahrt.', 'Zur Verhinderung wiederholter kostenloser Testphasen und missbräuchlicher Nutzung speichern wir nach Kontolöschung für bis zu ein Jahr einen minimalen Eintrag der bei der Registrierung verwendeten E-Mail-Adresse (berechtigtes Interesse, Art. 6 Abs. 1 lit. f DSGVO). Er dient ausschließlich der Prüfung der Testphasen-Berechtigung und wird danach automatisch gelöscht.'],
       },
@@ -509,6 +525,14 @@ const FR = {
       {
         h: 'Sécurité et prévention des abus',
         p: ["Les comptes sont personnels et ne peuvent pas être partagés. Nous journalisons l'activité des comptes afin de détecter le partage de compte et l'extraction non autorisée de la base. Les données produits ne sont servies qu'aux comptes connectés et approuvés."],
+      },
+      {
+        h: "Mesure d'usage du produit (first-party, sans cookies)",
+        p: [
+          "Pour comprendre quelles fonctions sont utilisées et où les recherches échouent, l'application enregistre elle-même un petit nombre d'événements d'usage : recherche effectuée, recherche sans résultat, produit ouvert, statut de référencement consulté, comparaison ouverte et fiche technique exportée.",
+          "Les événements comportent un horodatage, le marché, la langue de l'interface, la classe d'appareil (téléphone/tablette/ordinateur), le niveau d'abonnement, un identifiant de session aléatoire et une référence de compte hachée à sens unique. Ils ne contiennent jamais votre nom, votre adresse e-mail, votre adresse IP, des données d'entreprise ni le texte saisi librement (les requêtes sont réduites à des termes normalisés, chiffres et fragments d'adresse supprimés).",
+          "Aucun cookie n'est déposé à cette fin et aucun service d'analyse tiers ne reçoit ces données ; elles sont stockées chez nos prestataires d'infrastructure en région UE cités ci-dessus et supprimées automatiquement après 13 mois. Base juridique : notre intérêt légitime à exploiter et améliorer un service professionnel (art. 6, §1, f du RGPD). Vous pouvez vous y opposer à tout moment via l'adresse de support ci-dessous.",
+        ],
       },
       {
         h: 'Durée de conservation',
@@ -702,6 +726,14 @@ const PL = {
         h: 'Bezpieczeństwo i zapobieganie nadużyciom',
         p: [
           'Konta są osobiste i nie mogą być współdzielone. Rejestrujemy aktywność kont, aby wykrywać współdzielenie kont i nieuprawnione pozyskiwanie zawartości bazy danych. Dane produktowe są udostępniane wyłącznie zalogowanym, zatwierdzonym kontom.',
+        ],
+      },
+      {
+        h: 'Analityka użycia produktu (first-party, bez plików cookie)',
+        p: [
+          'Aby zrozumieć, które funkcje są używane i gdzie wyszukiwania kończą się niepowodzeniem, aplikacja samodzielnie rejestruje niewielki zestaw zdarzeń: wykonane wyszukiwanie, wyszukiwanie bez wyników, otwarcie produktu, wyświetlenie statusu z listy, otwarcie porównania i eksport karty danych.',
+          'Zdarzenia zawierają znacznik czasu, rynek, język interfejsu, klasę urządzenia (telefon/tablet/komputer), poziom subskrypcji, losowy identyfikator sesji oraz jednokierunkowo zahaszowane odniesienie do konta. Nigdy nie zawierają imienia i nazwiska, adresu e-mail, adresu IP, danych firmy ani swobodnie wpisanego tekstu (zapytania są redukowane do znormalizowanych tokenów, z usunięciem liczb i fragmentów przypominających adresy).',
+          'W tym celu nie są ustawiane żadne pliki cookie, a dane nie trafiają do zewnętrznych usług analitycznych; są przechowywane u naszych dostawców infrastruktury w regionie UE wymienionych powyżej i automatycznie usuwane po 13 miesiącach. Podstawa prawna: nasz prawnie uzasadniony interes w prowadzeniu i ulepszaniu profesjonalnej usługi (art. 6 ust. 1 lit. f RODO). W każdej chwili można wnieść sprzeciw przez podany niżej adres wsparcia.',
         ],
       },
       {
@@ -905,6 +937,14 @@ const IT = {
         h: 'Sicurezza e prevenzione degli abusi',
         p: [
           'Gli account sono personali e non possono essere condivisi. Registriamo l’attività degli account per rilevare la condivisione degli account e l’estrazione non autorizzata della banca dati. I dati dei prodotti sono forniti esclusivamente ad account autenticati e approvati.',
+        ],
+      },
+      {
+        h: "Analisi d'uso del prodotto (first-party, senza cookie)",
+        p: [
+          "Per capire quali funzioni vengono usate e dove le ricerche falliscono, l'app registra in proprio un piccolo insieme di eventi d'uso: ricerca eseguita, ricerca senza risultati, prodotto aperto, stato di catalogo visualizzato, confronto aperto e scheda tecnica esportata.",
+          "Gli eventi contengono data e ora, mercato, lingua dell'interfaccia, classe di dispositivo (telefono/tablet/desktop), livello di abbonamento, un identificatore di sessione casuale e un riferimento all'account con hash unidirezionale. Non contengono mai nome, indirizzo e-mail, indirizzo IP, dati aziendali né testo digitato liberamente (le query sono ridotte a token normalizzati, con numeri e frammenti simili a indirizzi rimossi).",
+          "A questo scopo non vengono impostati cookie e nessun servizio di analisi di terze parti riceve i dati; sono conservati presso i nostri fornitori di infrastruttura in regione UE elencati sopra ed eliminati automaticamente dopo 13 mesi. Base giuridica: il nostro legittimo interesse a gestire e migliorare un servizio professionale (art. 6, par. 1, lett. f GDPR). È possibile opporsi in qualsiasi momento tramite l'indirizzo di supporto indicato sotto.",
         ],
       },
       {

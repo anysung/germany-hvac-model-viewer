@@ -48,7 +48,7 @@ export const MARKETING_EMAIL = 'marketing@heatpumpdb.eu';
 
 /** Bump when the wording changes materially; stamped on the profile at signup. */
 export const TERMS_VERSION = '2026-07-22';
-export const PRIVACY_VERSION = '2026-07-27';
+export const PRIVACY_VERSION = '2026-08-01';
 /**
  * Data-use consent (anti-extraction notice shown in the signup consent popup —
  * translations termsData). Bump when that wording changes materially; the

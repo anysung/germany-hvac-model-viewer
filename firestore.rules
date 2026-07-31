@@ -205,6 +205,28 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
+    // First-party usage events (privacy-policy contract 2026-08-01).
+    // WRITE-ONLY for signed-in clients: create with a whitelisted, PII-free
+    // field set; no client may ever read, update or delete an event (reading
+    // is the admin export script's job via service credentials). expireAt
+    // drives the 13-month Firestore TTL policy.
+    match /events/{id} {
+      allow create: if isSignedIn() &&
+        request.resource.data.keys().hasOnly([
+          'event', 'at', 'expireAt', 'market', 'locale', 'authState', 'plan',
+          'deviceClass', 'sessionId', 'userRef',
+          'qTokens', 'queryNormalised', 'models', 'via', 'mode',
+        ]) &&
+        request.resource.data.event in [
+          'search_performed', 'search_zero_results', 'product_view',
+          'listing_status_viewed', 'comparison_created', 'datasheet_exported',
+        ] &&
+        // The normalised query is the only free-ish text — hard-cap it.
+        (!('queryNormalised' in request.resource.data) ||
+          request.resource.data.queryNormalised.size() <= 80);
+      allow read, update, delete: if false;
+    }
+
     // Discount campaign registry (admin bookkeeping — see types.ts Promotion).
     // ADMIN-ONLY, read included: these records are internal campaign planning,
     // not customer-facing content, and nothing on the payment path reads them.

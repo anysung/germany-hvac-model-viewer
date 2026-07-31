@@ -25,6 +25,7 @@ import { BrandLogo, WavingFlag } from '../components/BrandLogo';
 import { useViewport } from './useViewport';
 import { MobileApp } from './mobile/MobileApp';
 import { OnboardingTour } from './OnboardingTour';
+import { analyticsIdentify, track, normaliseQuery } from '../services/analyticsService';
 import { FindPage } from './pages/FindPage';
 import { ProductsPage } from './pages/ProductsPage';
 import { LabelPage } from './pages/LabelPage';
@@ -149,6 +150,36 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   // reached inside the click gesture — an await in between loses it).
   useEffect(() => { void preloadBrandArtwork(ACTIVE_COUNTRY.code); void preloadPdfFonts(); }, []);
 
+  // First-party usage analytics (privacy-policy contract, 2026-08-01): hashed
+  // identity once per session; six events wired below. Fire-and-forget only.
+  useEffect(() => {
+    const acc = accessInfo(user);
+    const state = acc.state === 'trial' ? 'trial' : user.subscription ? 'paid' : 'free';
+    void analyticsIdentify(user.id, state as any, user.subscription?.planCode, language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.id, language]);
+
+  // search_performed / search_zero_results — debounced on the shared query
+  // (Find page, both shells use app.query). Zero-result queries carry only the
+  // normalised token form (see analyticsService.normaliseQuery).
+  useEffect(() => {
+    const q = query.trim();
+    if (q.length < 2 || !store) return;
+    const t = setTimeout(() => {
+      const res = store.search(q, 1);
+      track('search_performed', { qTokens: normaliseQuery(q) ? normaliseQuery(q).split(' ').length : 0 });
+      if (res.total === 0) track('search_zero_results', { queryNormalised: normaliseQuery(q) });
+    }, 1400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  // comparison_created — rising edge of the compare modal with >=2 models.
+  useEffect(() => {
+    if (showCompare && compare.length >= 2) track('comparison_created', { models: compare.length });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCompare]);
+
   // Default selections once data arrives (inspector patterns are always-on).
   useEffect(() => {
     if (!store) return;
@@ -201,6 +232,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
    * "Print" — the only reliable way to reach a printer with the right geometry.
    */
   const printSheet = () => {
+    track('datasheet_exported', { via: 'print', mode: dsMode });
     if (!isIos()) { window.print(); return; }
     const made = makePdf();
     if (!made) return;
@@ -209,6 +241,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
 
   /** PDF DOWNLOAD: always just saves the generated file. Never a share sheet. */
   const downloadSheetPdf = () => {
+    track('datasheet_exported', { via: 'pdf', mode: dsMode });
     const made = makePdf();
     if (!made) return;
     try { downloadPdf(made.doc, made.filename); }
@@ -244,6 +277,8 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
       const s = segmentOf(id);
       if (s && s !== segment) switchSegment(s);
       setSelectedId(id); setPage('products');
+      track('product_view', {});
+      if (LOCAL_LISTING_FILTER) track('listing_status_viewed', {});
     },
     openDataSheet: (id, mode) => {
       const s = segmentOf(id);
