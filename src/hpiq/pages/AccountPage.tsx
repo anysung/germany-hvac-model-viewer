@@ -147,7 +147,8 @@ const PlanPicker: React.FC<{
                 {team ? s.perUserEq(formatEur(Math.round(perUserMonth(code, term) * 100) / 100)) : (term !== 'monthly' ? s.perMonthEq(formatEur(Math.round(perMonth(code, term) * 100) / 100)) : ' ')}
               </span>
               <span style={{ fontSize: 12.5, color: '#333', lineHeight: 1.5, flex: 1 }}>{s.planBlurbs[code]}</span>
-              <span style={{ ...pill('#e7f6ee', '#0a7a43'), width: 'fit-content' }}>{team ? s.teamTrialBadge : s.trialBadge}</span>
+              {/* No trial badge — checkout charges immediately; the free first
+                  week is granted at signup, not by a plan (2026-07-31). */}
               <span
                 className="hp-press"
                 onClick={() => choose(code)}

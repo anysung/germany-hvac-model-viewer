@@ -128,7 +128,9 @@ export const PublicPricingPage: React.FC<{
                   {team ? s.perUserEq(formatEur(Math.round(perUserMonth(code, term) * 100) / 100)) : (term !== 'monthly' ? s.perMonthEq(formatEur(Math.round(perMonth(code, term) * 100) / 100)) : ' ')}
                 </span>
                 <span style={{ fontSize: 12.5, color: '#333', lineHeight: 1.5, flex: 1 }}>{s.planBlurbs[code]}</span>
-                <span style={{ ...pill('#e7f6ee', '#0a7a43'), width: 'fit-content' }}>{team ? s.teamTrialBadge : s.trialBadge}</span>
+                {/* No trial badge: Paddle checkout charges immediately — the free
+                    first week is an ACCOUNT property (granted at signup), not a
+                    property of any plan (program fix 2026-07-31). */}
               </div>
             );
           })}

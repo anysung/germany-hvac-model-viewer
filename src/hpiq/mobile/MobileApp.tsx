@@ -661,14 +661,11 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
                 {popular && (
                   <span style={{ position: 'absolute', top: -9, left: 14, fontSize: 9.5, fontWeight: 700, letterSpacing: '.04em', borderRadius: 999, padding: '2px 9px', background: '#0066cc', color: '#fff' }}>{s.mostPopular}</span>
                 )}
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-                    <span style={{ fontSize: 14.5, fontWeight: 600 }}>{s.planNames[code]}</span>
-                    <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{s.planUsers[code]}</span>
-                  </div>
-                  <span style={{ flex: 'none', fontSize: 10, fontWeight: 700, borderRadius: 999, padding: '3px 9px', background: '#e7f6ee', color: '#0a7a43', whiteSpace: 'nowrap' }}>
-                    {isTeamPlan(code) ? s.teamTrialBadge : s.trialBadge}
-                  </span>
+                {/* No trial badge — checkout charges immediately; the free first
+                    week is granted at signup, not by a plan (2026-07-31). */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                  <span style={{ fontSize: 14.5, fontWeight: 600 }}>{s.planNames[code]}</span>
+                  <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{s.planUsers[code]}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, flexWrap: 'wrap' }}>
                   <span style={{ fontFamily: FD, fontSize: 20, fontWeight: 700, letterSpacing: '-0.3px' }}>{formatEur(SUB_PLANS[code].prices[term])}</span>
