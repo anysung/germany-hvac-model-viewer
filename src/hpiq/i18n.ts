@@ -59,6 +59,31 @@ const EN = {
     noneOther: 'No other sessions.',
   },
 
+  /* Feature tour (onboarding invitation + 6 UVP steps — owner 2026-07-31). */
+  tour: {
+    inviteTitle: 'New here? Take the 2-minute tour.',
+    inviteBody: 'Six quick cards showing what this app does best — from instant model search to print-ready data sheets.',
+    inviteStart: 'Start the tour',
+    inviteLater: 'Maybe later',
+    inviteToday: 'Not today',
+    inviteNever: 'Don\u2019t show again',
+    skip: 'Skip tour',
+    back: 'Back',
+    next: 'Next',
+    done: 'Start using the app',
+    open: 'Try it now \u203a',
+    accountReplay: 'App tour',
+    accountReplayText: 'A 2-minute walkthrough of the main features. You can rewatch it any time.',
+    steps: [
+      { title: 'Europe\u2019s registry-based heat pump database', body: 'Thousands of heat pump models with technical data drawn from official European sources \u2014 refreshed with every regular data update, so what you quote is what is listed.' },
+      { title: 'Find any model in seconds', body: 'Type a model name, outdoor-unit code or manufacturer \u2014 results appear as you type. The fastest route from a nameplate to the full specification.' },
+      { title: 'Filters built for real decisions', body: 'Narrow by refrigerant (R290), capacity, efficiency and official listing status. Residential and commercial are split at 23 kW, and you can compare up to 4 models side by side.' },
+      { title: 'Print-ready data sheets', body: 'Every product generates a clean PDF data sheet with its official registry ID \u2014 ready as the technical annex to a quote or funding application. Choose the product sheet or the EU energy label sheet.' },
+      { title: 'Funding, always current', body: 'The funding page tracks the market\u2019s current programmes and confirmed changes; the step-by-step guide and installer FAQ turn them into an application-ready checklist.' },
+      { title: 'A monthly market briefing', body: 'Curated news on funding, market and technology for your country \u2014 published with every monthly update. That\u2019s the tour \u2014 the search field is waiting.' },
+    ] as { title: string; body: string }[],
+  },
+
   trial: {
     banner: (d: number) =>
       d <= 1
@@ -747,6 +772,30 @@ const DE: HpStrings = {
     done: 'Erledigt.',
     failed: 'Aktion fehlgeschlagen — bitte erneut versuchen.',
     noneOther: 'Keine weiteren Sitzungen.',
+  },
+
+  tour: {
+    inviteTitle: 'Neu hier? Die 2-Minuten-Tour.',
+    inviteBody: 'Sechs kurze Karten zeigen, was diese App am besten kann \u2014 von der Sofortsuche bis zum druckfertigen Datenblatt.',
+    inviteStart: 'Tour starten',
+    inviteLater: 'Vielleicht sp\u00e4ter',
+    inviteToday: 'Heute nicht',
+    inviteNever: 'Nicht mehr anzeigen',
+    skip: 'Tour \u00fcberspringen',
+    back: 'Zur\u00fcck',
+    next: 'Weiter',
+    done: 'App jetzt nutzen',
+    open: 'Gleich ausprobieren \u203a',
+    accountReplay: 'App-Tour',
+    accountReplayText: 'Ein 2-Minuten-Rundgang durch die wichtigsten Funktionen. Jederzeit erneut abspielbar.',
+    steps: [
+      { title: 'Europas registerbasierte W\u00e4rmepumpen-Datenbank', body: 'Tausende W\u00e4rmepumpen-Modelle mit technischen Daten aus offiziellen europ\u00e4ischen Quellen \u2014 aktualisiert mit jedem regul\u00e4ren Daten-Update. Was Sie anbieten, ist das, was gelistet ist.' },
+      { title: 'Jedes Modell in Sekunden finden', body: 'Modellname, Au\u00dfeneinheit oder Hersteller eintippen \u2014 die Ergebnisse erscheinen w\u00e4hrend der Eingabe. Der schnellste Weg vom Typenschild zur vollen Spezifikation.' },
+      { title: 'Filter f\u00fcr echte Entscheidungen', body: 'Eingrenzen nach K\u00e4ltemittel (R290), Leistung, Effizienz und offiziellem Listenstatus. Wohn- und Gewerbebereich sind bei 23 kW getrennt, bis zu 4 Modelle direkt vergleichbar.' },
+      { title: 'Druckfertige Datenbl\u00e4tter', body: 'Jedes Produkt erzeugt ein sauberes PDF-Datenblatt mit offizieller Register-ID \u2014 als technische Anlage f\u00fcr Angebot oder F\u00f6rderantrag. Wahlweise Produkt-Datenblatt oder EU-Energielabel-Blatt.' },
+      { title: 'F\u00f6rderung, immer aktuell', body: 'Die F\u00f6rderseite verfolgt die aktuellen Programme und best\u00e4tigten \u00c4nderungen; der Schritt-f\u00fcr-Schritt-Leitfaden und die Installateur-FAQ machen daraus eine antragsfertige Checkliste.' },
+      { title: 'Ein monatliches Markt-Briefing', body: 'Kuratierte Nachrichten zu F\u00f6rderung, Markt und Technik f\u00fcr Ihren Markt \u2014 mit jedem Monats-Update. Das war die Tour \u2014 das Suchfeld wartet.' },
+    ] as { title: string; body: string }[],
   },
 
   trial: {
@@ -1811,6 +1860,30 @@ const FR_FR: HpStrings = {
     noneOther: 'Aucune autre session.',
   },
 
+  tour: {
+    inviteTitle: 'Nouveau ici ? La visite en 2 minutes.',
+    inviteBody: 'Six cartes rapides montrent ce que cette app fait de mieux \u2014 de la recherche instantan\u00e9e \u00e0 la fiche technique pr\u00eate \u00e0 imprimer.',
+    inviteStart: 'Commencer la visite',
+    inviteLater: 'Plus tard',
+    inviteToday: 'Pas aujourd\u2019hui',
+    inviteNever: 'Ne plus afficher',
+    skip: 'Passer la visite',
+    back: 'Retour',
+    next: 'Suivant',
+    done: 'Utiliser l\u2019app',
+    open: 'Essayer maintenant \u203a',
+    accountReplay: 'Visite de l\u2019app',
+    accountReplayText: 'Un tour de 2 minutes des fonctions principales. Rejouable \u00e0 tout moment.',
+    steps: [
+      { title: 'La base europ\u00e9enne des pompes \u00e0 chaleur', body: 'Des milliers de mod\u00e8les avec des donn\u00e9es techniques issues de sources europ\u00e9ennes officielles \u2014 actualis\u00e9es \u00e0 chaque mise \u00e0 jour r\u00e9guli\u00e8re. Ce que vous proposez est ce qui est r\u00e9f\u00e9renc\u00e9.' },
+      { title: 'Trouver un mod\u00e8le en quelques secondes', body: 'Tapez un nom de mod\u00e8le, un code d\u2019unit\u00e9 ext\u00e9rieure ou un fabricant \u2014 les r\u00e9sultats apparaissent pendant la saisie. Le chemin le plus court de la plaque signal\u00e9tique \u00e0 la sp\u00e9cification compl\u00e8te.' },
+      { title: 'Des filtres pour de vraies d\u00e9cisions', body: 'Affinez par fluide (R290), puissance, efficacit\u00e9 et certification. R\u00e9sidentiel et tertiaire sont s\u00e9par\u00e9s \u00e0 23 kW, et vous pouvez comparer jusqu\u2019\u00e0 4 mod\u00e8les c\u00f4te \u00e0 c\u00f4te.' },
+      { title: 'Fiches techniques pr\u00eates \u00e0 imprimer', body: 'Chaque produit g\u00e9n\u00e8re une fiche PDF nette \u2014 l\u2019annexe technique id\u00e9ale d\u2019un devis ou d\u2019un dossier d\u2019aides. Au choix : fiche produit ou fiche \u00e9tiquette \u00e9nergie UE.' },
+      { title: 'Les aides, toujours \u00e0 jour', body: 'La page aides suit les programmes en vigueur et les changements confirm\u00e9s ; le guide pas \u00e0 pas et la FAQ installateurs en font une checklist pr\u00eate \u00e0 d\u00e9poser.' },
+      { title: 'Un briefing march\u00e9 mensuel', body: 'Des actualit\u00e9s cur\u00e9es \u2014 aides, march\u00e9, technologies \u2014 pour votre pays, publi\u00e9es \u00e0 chaque mise \u00e0 jour mensuelle. La visite est finie \u2014 le champ de recherche vous attend.' },
+    ] as { title: string; body: string }[],
+  },
+
   trial: {
     banner: (d: number) =>
       d <= 1
@@ -2680,6 +2753,30 @@ const PL_PL: HpStrings = {
     done: 'Gotowe.',
     failed: 'Akcja nie powiodła się — spróbuj ponownie.',
     noneOther: 'Brak innych sesji.',
+  },
+
+  tour: {
+    inviteTitle: 'Nowy tutaj? Przewodnik w 2 minuty.',
+    inviteBody: 'Sze\u015b\u0107 szybkich kart pokazuje, co ta aplikacja robi najlepiej \u2014 od b\u0142yskawicznej wyszukiwarki po gotowe do druku karty danych.',
+    inviteStart: 'Rozpocznij przewodnik',
+    inviteLater: 'Mo\u017ce p\u00f3\u017aniej',
+    inviteToday: 'Nie dzisiaj',
+    inviteNever: 'Nie pokazuj wi\u0119cej',
+    skip: 'Pomi\u0144 przewodnik',
+    back: 'Wstecz',
+    next: 'Dalej',
+    done: 'Zacznij korzysta\u0107',
+    open: 'Wypr\u00f3buj teraz \u203a',
+    accountReplay: 'Przewodnik po aplikacji',
+    accountReplayText: 'Dwuminutowy przegl\u0105d g\u0142\u00f3wnych funkcji. Mo\u017cesz go odtworzy\u0107 w ka\u017cdej chwili.',
+    steps: [
+      { title: 'Europejska baza pomp ciep\u0142a oparta na rejestrach', body: 'Tysi\u0105ce modeli pomp ciep\u0142a z danymi technicznymi z oficjalnych \u017ar\u00f3de\u0142 europejskich \u2014 od\u015bwie\u017cane przy ka\u017cdej regularnej aktualizacji. Oferujesz to, co jest na li\u015bcie.' },
+      { title: 'Ka\u017cdy model w kilka sekund', body: 'Wpisz nazw\u0119 modelu, kod jednostki zewn\u0119trznej lub producenta \u2014 wyniki pojawiaj\u0105 si\u0119 podczas pisania. Najszybsza droga od tabliczki znamionowej do pe\u0142nej specyfikacji.' },
+      { title: 'Filtry do prawdziwych decyzji', body: 'Zaw\u0119\u017caj po czynniku (R290), mocy, efektywno\u015bci i statusie na li\u015bcie ZUM. Segment mieszkaniowy i komercyjny dzieli granica 23 kW, a do 4 modeli por\u00f3wnasz obok siebie.' },
+      { title: 'Karty danych gotowe do druku', body: 'Ka\u017cdy produkt generuje czyteln\u0105 kart\u0119 PDF ze statusem ZUM \u2014 gotowy za\u0142\u0105cznik techniczny do oferty lub wniosku o dotacj\u0119. Do wyboru: karta produktu lub karta etykiety energetycznej UE.' },
+      { title: 'Dotacje zawsze aktualne', body: 'Strona dotacji \u015bledzi bie\u017c\u0105ce programy i potwierdzone zmiany; przewodnik krok po kroku i FAQ dla instalator\u00f3w zamieniaj\u0105 je w gotow\u0105 checklist\u0119.' },
+      { title: 'Comiesi\u0119czny briefing rynkowy', body: 'Wyselekcjonowane wiadomo\u015bci o dotacjach, rynku i technologii dla Polski \u2014 publikowane z ka\u017cd\u0105 comiesi\u0119czn\u0105 aktualizacj\u0105. To koniec przewodnika \u2014 wyszukiwarka czeka.' },
+    ] as { title: string; body: string }[],
   },
 
   trial: {
@@ -3557,6 +3654,30 @@ const IT_IT: HpStrings = {
     done: 'Fatto.',
     failed: 'Operazione non riuscita — riprova.',
     noneOther: 'Nessun’altra sessione.',
+  },
+
+  tour: {
+    inviteTitle: 'Nuovo qui? Il tour in 2 minuti.',
+    inviteBody: 'Sei schede rapide mostrano il meglio di questa app \u2014 dalla ricerca istantanea alle schede tecniche pronte da stampare.',
+    inviteStart: 'Inizia il tour',
+    inviteLater: 'Forse pi\u00f9 tardi',
+    inviteToday: 'Non oggi',
+    inviteNever: 'Non mostrare pi\u00f9',
+    skip: 'Salta il tour',
+    back: 'Indietro',
+    next: 'Avanti',
+    done: 'Inizia a usare l\u2019app',
+    open: 'Provalo ora \u203a',
+    accountReplay: 'Tour dell\u2019app',
+    accountReplayText: 'Una panoramica di 2 minuti delle funzioni principali. Rivedibile in qualsiasi momento.',
+    steps: [
+      { title: 'Il database europeo delle pompe di calore', body: 'Migliaia di modelli con dati tecnici da fonti europee ufficiali \u2014 aggiornati a ogni aggiornamento regolare. Ci\u00f2 che proponi \u00e8 ci\u00f2 che risulta a catalogo.' },
+      { title: 'Ogni modello in pochi secondi', body: 'Digita nome modello, codice unit\u00e0 esterna o produttore \u2014 i risultati compaiono mentre scrivi. La via pi\u00f9 rapida dalla targhetta alla specifica completa.' },
+      { title: 'Filtri per decisioni vere', body: 'Restringi per refrigerante (R290), potenza, efficienza e stato nel catalogo GSE. Residenziale e commerciale sono separati a 23 kW, e puoi confrontare fino a 4 modelli affiancati.' },
+      { title: 'Schede tecniche pronte da stampare', body: 'Ogni prodotto genera una scheda PDF pulita \u2014 l\u2019allegato tecnico ideale per preventivi e pratiche di incentivo. A scelta: scheda prodotto o scheda etichetta energetica UE.' },
+      { title: 'Incentivi sempre aggiornati', body: 'La pagina incentivi segue i programmi in vigore e i cambiamenti confermati; la guida passo-passo e le FAQ per installatori li trasformano in una checklist pronta.' },
+      { title: 'Un briefing di mercato mensile', body: 'Notizie curate su incentivi, mercato e tecnologia per l\u2019Italia \u2014 pubblicate con ogni aggiornamento mensile. Il tour \u00e8 finito \u2014 il campo di ricerca ti aspetta.' },
+    ] as { title: string; body: string }[],
   },
 
   trial: {

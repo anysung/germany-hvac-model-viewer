@@ -715,6 +715,21 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
         </div>
       )}
 
+      {/* Feature-tour replay — its own always-rendered card (the language card
+          above is hidden on single-language editions like GB, so the replay
+          entry must not live inside it). */}
+      <div style={card}>
+        <span style={sectionLabel}>{t.tour.accountReplay}</span>
+        <span style={{ fontSize: 12.5, color: '#555', lineHeight: 1.5 }}>{t.tour.accountReplayText}</span>
+        <span
+          className="hp-press"
+          onClick={() => window.dispatchEvent(new CustomEvent('hpdb-tour-open'))}
+          style={{ fontSize: 13, color: '#0066cc', cursor: 'pointer', width: 'fit-content' }}
+        >
+          {t.tour.inviteStart} ›
+        </span>
+      </div>
+
       <div style={card}>
         <span style={sectionLabel}>{t.account.support}</span>
         <span style={{ fontSize: 12.5, color: '#555', lineHeight: 1.5 }}>{t.account.supportText}</span>

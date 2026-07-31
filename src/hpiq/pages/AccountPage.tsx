@@ -655,6 +655,16 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
                 ))}
               </div>
               <span style={{ fontSize: 12.5, color: '#7a7a7a', lineHeight: 1.5 }}>{t.account.languageNote}</span>
+              {/* Feature-tour replay — what makes the 5-session invitation
+                  ceiling safe: the tour is reachable here forever. */}
+              <span
+                className="hp-press"
+                onClick={() => window.dispatchEvent(new CustomEvent('hpdb-tour-open'))}
+                style={{ fontSize: 13, color: '#0066cc', cursor: 'pointer', width: 'fit-content' }}
+                data-testid="tour-replay"
+              >
+                {t.tour.accountReplay} ›
+              </span>
             </Card>
           </div>
 
