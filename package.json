@@ -40,7 +40,9 @@
     "verify:remote": "node scripts/verify-remote-datasets.mjs",
     "test:account": "bash tests/run-account-e2e.sh",
     "test:routing": "node tests/inquiry-routing.contract.mjs",
-    "test:account:mobile": "bash tests/run-account-mobile-e2e.sh"
+    "test:account:mobile": "bash tests/run-account-mobile-e2e.sh",
+    "build:hub": "node scripts/build-hub-landing.mjs",
+    "deploy:eu": "npm run build:hub && firebase deploy --only hosting:eu"
   },
   "dependencies": {
     "@google/genai": "*",
@@ -61,6 +63,7 @@
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.1",
     "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17"
+    "@types/react-dom": "^18.2.17",
+    "qrcode": "^1.5.4"
   }
 }
