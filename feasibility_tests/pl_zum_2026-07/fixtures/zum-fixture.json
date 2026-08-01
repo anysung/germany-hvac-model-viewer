@@ -1,0 +1,67 @@
+[
+  {
+    "zumId": "FIX-0001",
+    "manufacturer": "__FIXTURE Viessmann Climate Solutions",
+    "name": "Vitocal 150-A Typ AWO-E-AC/AWO-E-AC-AF 151.A13",
+    "category": "air_water_higher",
+    "ratedKw55": 12.4,
+    "class55": "A++",
+    "eprel": null,
+    "family": false,
+    "status": "active",
+    "_expect": "confirmed:exact_model",
+    "_note": "synthetic — real canonical model string; exercises M3 positive path"
+  },
+  {
+    "zumId": "FIX-0002",
+    "manufacturer": "__FIXTURE Galmet",
+    "name": "Prima 10GT",
+    "category": "dhw",
+    "ratedKw55": 9.2,
+    "class55": null,
+    "eprel": "734564",
+    "family": false,
+    "status": "active",
+    "_expect": "confirmed:eprel_exact",
+    "_note": "synthetic — real canonical EPREL number; exercises M1 positive path"
+  },
+  {
+    "zumId": "FIX-0003",
+    "manufacturer": "__FIXTURE Galmet",
+    "name": "Prima 10GT",
+    "category": "dhw",
+    "ratedKw55": 25,
+    "class55": null,
+    "eprel": "734564",
+    "family": false,
+    "status": "active",
+    "_expect": "conflict (capacity 25 vs 9.17)",
+    "_note": "synthetic — same EPREL but contradictory capacity must NOT confirm"
+  },
+  {
+    "zumId": "FIX-0004",
+    "manufacturer": "__FIXTURE Brand",
+    "name": "Fantasy Pump 9000",
+    "category": "air_water",
+    "ratedKw55": 8,
+    "class55": "A++",
+    "eprel": "999999999",
+    "family": false,
+    "status": "active",
+    "_expect": "unmatched",
+    "_note": "synthetic — unknown EPREL + unknown model"
+  },
+  {
+    "zumId": "FIX-0005",
+    "manufacturer": "__FIXTURE Series Co",
+    "name": "Typoszereg XYZ 4-16 kW",
+    "category": "ground",
+    "ratedKw55": null,
+    "class55": "A+++",
+    "eprel": null,
+    "family": true,
+    "status": "active",
+    "_expect": "candidate:family_entry",
+    "_note": "synthetic — family entry must never confirm"
+  }
+]

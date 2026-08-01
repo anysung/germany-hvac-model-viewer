@@ -431,10 +431,12 @@ writeFileSync(join(OUT, 'sitemap.xml'),
   + `\n</urlset>\n`);
 
 writeFileSync(join(OUT, 'index.html'), HTML);
-/* Generic app icon (no flag — pan-market hub identity). Master + sizes live in
-   hub-assets/ (committed), generated from brandSvg arc geometry + BRAND_COLORS
-   by the one-off in scripts history — never hand-drawn. */
-for (const f of ['appicon-48.png', 'appicon-192.png', 'appicon-180.png', 'appicon-512.png']) {
-  copyFileSync(join(ROOT, 'hub-assets', f), join(OUT, f));
+/* Generic app icon (no flag — pan-market hub identity). Lives with every other
+   market's icons at public/icons/eu-<size>.png (owner convention call,
+   2026-08-01); masters in brand-assets/ (…appicon-navy*). Composed from
+   brandSvg arc geometry + BRAND_COLORS — never hand-drawn. */
+for (const [src, dst] of [['eu-48.png', 'appicon-48.png'], ['eu-192.png', 'appicon-192.png'],
+  ['eu-180.png', 'appicon-180.png'], ['eu-512.png', 'appicon-512.png']]) {
+  copyFileSync(join(ROOT, 'public/icons', src), join(OUT, dst));
 }
 console.log(`hub-landing/ 생성 완료 — index ${(HTML.length / 1024).toFixed(0)}kB · 모델 페이지 ${models.length}개 (${[...new Set(models.map(m => m.mfr))].length}개 제조사, 스냅샷 ${snapshotDate})`);
