@@ -15,7 +15,7 @@
  * Deploy: npm run deploy:eu  (Firebase Hosting target "eu").
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, readFileSync, copyFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import QRCode from 'qrcode';
@@ -45,7 +45,6 @@ const { energyClass } = await import(pathToFileURL(tmp2).href);
 rmSync(tmp2, { force: true });
 
 const LOGO = logoSvgDoc('dark');                       // full lockup, dark theme
-const FAVICON = logoSvgDoc('light', true);             // symbol-only for the tab
 
 /* ── Markets (counts = data_manifests/production.json, canary-free) ── */
 const MARKETS = [
@@ -124,7 +123,9 @@ const HTML = `<!doctype html>
 <meta property="og:description" content="One database, five markets. Every listed heat pump — searchable, comparable, printable.">
 <meta property="og:url" content="https://www.heatpumpdb.eu/">
 <meta property="og:type" content="website">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">${JSON.stringify({
@@ -317,7 +318,9 @@ const pageShell = (title, desc, canonicalPath, body, ld) => `<!doctype html>
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="https://www.heatpumpdb.eu${canonicalPath}">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}
@@ -428,5 +431,10 @@ writeFileSync(join(OUT, 'sitemap.xml'),
   + `\n</urlset>\n`);
 
 writeFileSync(join(OUT, 'index.html'), HTML);
-writeFileSync(join(OUT, 'favicon.svg'), FAVICON);
+/* Generic app icon (no flag — pan-market hub identity). Master + sizes live in
+   hub-assets/ (committed), generated from brandSvg arc geometry + BRAND_COLORS
+   by the one-off in scripts history — never hand-drawn. */
+for (const f of ['appicon-48.png', 'appicon-192.png', 'appicon-180.png', 'appicon-512.png']) {
+  copyFileSync(join(ROOT, 'hub-assets', f), join(OUT, f));
+}
 console.log(`hub-landing/ 생성 완료 — index ${(HTML.length / 1024).toFixed(0)}kB · 모델 페이지 ${models.length}개 (${[...new Set(models.map(m => m.mfr))].length}개 제조사, 스냅샷 ${snapshotDate})`);
