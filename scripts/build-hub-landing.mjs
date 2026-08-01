@@ -404,7 +404,10 @@ const HTML = `<!doctype html>
    invisible in every app UI; discovery is this generator's sitemap + one
    low-profile hub-footer link + model-to-model interlinks (orphan pages do
    not rank; cloaking is never used). Phase 2 grows the set quarterly from
-   our own search analytics, capped at ~10%.
+   our own search analytics, capped at ~10% — an INTERNAL protected-database/
+   anti-scraping ceiling, not a Google rule. Expansion gate (marketing
+   advisory 2026-08-01, adopted): never grow the subset while Search Console
+   index retention is falling or while subset\u2192registration is unmeasured.
    ══════════════════════════════════════════════════════════════════════════ */
 
 const REG_OPEN = false;   // flip when registration reopens — changes CTA copy only
@@ -435,9 +438,15 @@ const picked = [];
 for (const [mfr, items] of ranked) {
   const quota = Math.max(8, Math.round(TARGET * items.length / totalTop));
   const seen = new Set();
+  const seenSpec = new Set();   // near-duplicate guard: identical displayed specs → identical page
   const best = items
     .sort((a, b) => (b.scop ?? 0) - (a.scop ?? 0))
-    .filter(x => { const k = x.model; if (seen.has(k)) return false; seen.add(k); return true; })
+    .filter(x => {
+      const k = x.model; if (seen.has(k)) return false; seen.add(k);
+      const sp = `${(x.power_35C_kw ?? x.power_55C_kw).toFixed(1)}|${Number(x.scop).toFixed(2)}|${x.refrigerant}|${energyClass(x.efficiency_35C_percent)}`;
+      if (seenSpec.has(sp)) return false; seenSpec.add(sp);
+      return true;
+    })
     .slice(0, quota);
   picked.push(...best.map(x => ({ x, mfr })));
 }
@@ -459,6 +468,10 @@ const models = picked.map(pk => ({
 const bySlug = new Map(models.map(m => [m.slug, m]));
 if (bySlug.size !== models.length) throw new Error('slug collision');
 
+/* Regenerate from scratch — stale pages from a previous selection must not
+   linger (their prev/next links would dangle and near-duplicates would
+   survive the dedup guard). */
+rmSync(join(OUT, 'models'), { recursive: true, force: true });
 mkdirSync(join(OUT, 'models'), { recursive: true });
 
 const pageShell = (title, desc, canonicalPath, body, ld) => `<!doctype html>
@@ -523,6 +536,10 @@ models.forEach((m, i) => {
   const prev = models[(i - 1 + models.length) % models.length];
   const next = models[(i + 1) % models.length];
   const same = models.filter(o => o.mfr === m.mfr && o.slug !== m.slug).slice(0, 6);
+  const similar = models
+    .filter(o => o.mfr !== m.mfr && Math.abs(Number(o.kw) - Number(m.kw)) <= 1.5)
+    .sort((a, b) => Math.abs(Number(a.kw) - Number(m.kw)) - Math.abs(Number(b.kw) - Number(m.kw)))
+    .slice(0, 3);
   const title = `${m.mfr} ${m.model} — heat pump specifications | HeatPump DB`;
   const desc = `${m.mfr} ${m.model}: rated capacity ${m.kw} kW, SCOP ${m.scop}, refrigerant ${m.ref}, EU energy class ${m.cls}. Registry-based data — full specification and listing status in the HeatPump DB app.`;
   const ld = {
@@ -541,12 +558,42 @@ models.forEach((m, i) => {
   <tr><th>Refrigerant</th><td>${m.ref}</td></tr>
   <tr><th>EU energy class (W35)</th><td>${m.cls}</td></tr>
 </table>
-<span class="snap">Snapshot ${snapshotDate} — verify against official sources before contractual use.</span>
+<span class="snap">Snapshot ${snapshotDate} — verify against official sources before contractual use. The EU energy class shown is derived from registry seasonal efficiency values per EU Regulation 811/2013; it is not an official label. <a href="/models/methodology.html">How this data is compiled</a>.</span>
 ${ctaBlock}
 <div class="rel"><h3>More ${m.mfr} models</h3>${same.map(o => `<a href="/models/${o.slug}.html">${o.model}</a>`).join('')}</div>
+${similar.length ? `<div class="rel"><h3>Similar capacity, other manufacturers</h3>${similar.map(o => `<a href="/models/${o.slug}.html">${o.mfr} ${o.model} (${o.kw} kW)</a>`).join('')}</div>` : ''}
 <div class="rel"><h3>Browse</h3><a href="/models/">All indexed models</a> · <a href="/models/${prev.slug}.html">‹ ${prev.model}</a> · <a href="/models/${next.slug}.html">${next.model} ›</a></div>`;
   writeFileSync(join(OUT, 'models', `${m.slug}.html`), pageShell(title, desc, `/models/${m.slug}.html`, body, ld));
 });
+
+/* Methodology page (marketing advisory 2026-08-01, mandatory item 6):
+   what makes the model pages citable. Generic vocabulary only — no national
+   registry names on the pan-market surface. */
+const methBody = `
+<h1>How this data is compiled</h1>
+<div class="mfr">Methodology for the public model index</div>
+<div class="cta" style="margin-top:26px">
+  <h2>Sources</h2>
+  <p>Every record originates from official European registry and public-authority sources. Values are published as found in the source at the stated snapshot date — never estimated, interpolated or generated. Each market application additionally shows the model's national listing status from that market's own official list; listing status is intentionally not part of this public index.</p>
+</div>
+<div class="cta">
+  <h2>Selection and refresh</h2>
+  <p>The index is a small curated subset of the full catalogue: mainstream manufacturers' models with complete public core data (manufacturer, model designation, rated capacity, seasonal efficiency, refrigerant). The underlying catalogue is refreshed on a monthly update cycle; each page shows the snapshot date its values were taken from.</p>
+</div>
+<div class="cta">
+  <h2>EU energy class</h2>
+  <p>The energy class shown is derived from the registry-published seasonal space-heating efficiency (\u03b7s) according to EU Regulation 811/2013. It is a calculated reference value, not an official product label. Always verify the manufacturer's label and current registry entries before contractual use.</p>
+</div>
+<div class="cta">
+  <h2>Independence</h2>
+  <p>HeatPump DataBase (Europe) is an independent professional reference. It is not affiliated with, endorsed by, or acting for any public authority, registry operator or manufacturer. Product names and trademarks remain the property of their owners.</p>
+</div>
+${ctaBlock}
+<div class="rel"><h3>Browse</h3><a href="/models/">All indexed models</a></div>`;
+writeFileSync(join(OUT, 'models', 'methodology.html'),
+  pageShell('How this data is compiled — methodology | HeatPump DB',
+    'Sources, refresh cycle and derivation rules behind the HeatPump DB public model index: official European registry data, monthly snapshots, EU 811/2013 energy-class derivation.',
+    '/models/methodology.html', methBody, null));
 
 /* Index page — grouped by manufacturer. */
 const groups = [...new Set(models.map(m => m.mfr))].map(mfr => ({
@@ -556,6 +603,7 @@ const idxBody = `
 <h1>Heat pump model index</h1>
 <div class="mfr">${models.length} selected models from the European catalogue · basic reference data only</div>
 ${ctaBlock}
+<span class="snap"><a href="/models/methodology.html">How this data is compiled</a></span>
 ${groups.map(g => `<div class="rel"><h3>${g.mfr} (${g.items.length})</h3><ul class="idx">${g.items.map(m =>
   `<li><a href="/models/${m.slug}.html">${m.model}</a> <small>· ${m.kw} kW · ${m.cls}</small></li>`).join('')}</ul></div>`).join('')}`;
 writeFileSync(join(OUT, 'models', 'index.html'),
@@ -578,6 +626,7 @@ writeFileSync(join(OUT, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
   + `  <url><loc>https://www.heatpumpdb.eu/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>\n`
   + `  <url><loc>https://www.heatpumpdb.eu/models/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>\n`
+  + `  <url><loc>https://www.heatpumpdb.eu/models/methodology.html</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq></url>\n`
   + models.map(m => `  <url><loc>https://www.heatpumpdb.eu/models/${m.slug}.html</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq></url>`).join('\n')
   + `\n</urlset>\n`);
 
