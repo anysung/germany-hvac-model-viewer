@@ -31,7 +31,7 @@ execFileSync(join(ROOT, 'node_modules/.bin/esbuild'), [
   // brandSvg's import chain reads vite-only import.meta.env — pin it for node.
   '--define:import.meta.env={"VITE_COUNTRY_CODE":"DE","VITE_APP_MODE":"app"}',
 ], { cwd: ROOT });
-const { logoSvgDoc, flagSvgDoc } = await import(pathToFileURL(tmp).href);
+const { logoSvgDoc, flagSvgDoc, logoInner, BRAND_COLORS } = await import(pathToFileURL(tmp).href);
 rmSync(tmp, { force: true });
 
 /* energyClass: the app's own EU-811/2013 mapping (src/hpiq/model.ts) — bundled
@@ -44,7 +44,11 @@ execFileSync(join(ROOT, 'node_modules/.bin/esbuild'), [
 const { energyClass } = await import(pathToFileURL(tmp2).href);
 rmSync(tmp2, { force: true });
 
-const LOGO = logoSvgDoc('dark');                       // full lockup, dark theme
+// Animated lockup — the SAME living logo the app header renders (logoInner
+// animated:true + the app's own spin/DB-color keyframes copied verbatim into
+// the page CSS; --hp-db-a/b vars inline like BrandLogo.tsx does).
+const cDark = BRAND_COLORS.dark;
+const LOGO = `<svg class="logo" viewBox="0 0 348 64" fill="none" role="img" aria-label="HeatPump DB" style="--hp-db-a:${cDark.red};--hp-db-b:${cDark.blue}">${logoInner({ theme: 'dark', symbolOnly: false, animated: true })}</svg>`;
 
 /* ── Markets (counts = data_manifests/production.json, canary-free) ── */
 const MARKETS = [
@@ -151,8 +155,25 @@ const HTML = `<!doctype html>
   h1 { font-size:clamp(30px,5.4vw,52px); font-weight:700; letter-spacing:-.025em; line-height:1.12; }
   h1 .grad { background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .sub { max-width:640px; margin:18px auto 0; color:var(--mut); font-size:clamp(14.5px,1.7vw,17px); line-height:1.65; }
-  .chips { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:26px; }
-  .fchip { border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:12.8px; color:#c7d2e2; background:rgba(255,255,255,.03); backdrop-filter:blur(6px); }
+  /* Living logo — identical animation source to the app header (index.css). */
+  @keyframes hp-logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .hp-logo-spin { transform-box: view-box; transform-origin: 32px 32px; animation: hp-logo-spin 6s linear infinite; will-change: transform; }
+  @keyframes hp-logo-db { 0%, 46% { fill: var(--hp-db-b); } 50%, 96% { fill: var(--hp-db-a); } 100% { fill: var(--hp-db-b); } }
+  .hp-logo-db { fill: var(--hp-db-b); animation: hp-logo-db 6s linear infinite; }
+  @media (prefers-reduced-motion:reduce) { .hp-logo-spin, .hp-logo-db { animation:none; } }
+
+  /* Key features — an explicit label + two rows of three, sized to be READ,
+     not skimmed (owner call 2026-08-01: the old pill row was too quiet). */
+  .feat-label { margin-top:34px; font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .chips { display:grid; grid-template-columns:repeat(3, minmax(0, 250px)); gap:12px; justify-content:center; margin-top:16px; }
+  .fchip { display:flex; align-items:center; gap:11px; border:1px solid rgba(255,255,255,.16); border-radius:14px;
+    padding:14px 18px; font-size:15px; font-weight:600; color:#e8eef7; text-align:left;
+    background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); backdrop-filter:blur(6px);
+    transition:border-color .3s, transform .3s; }
+  .fchip:hover { border-color:rgba(41,151,255,.55); transform:translateY(-2px); }
+  .fic { font-size:19px; flex:none; }
+  @media (max-width:700px) { .chips { grid-template-columns:repeat(2, minmax(0, 1fr)); } .fchip { font-size:13.5px; padding:12px 14px; } }
 
   /* ── Market grid ── */
   .sect { font-size:12.5px; font-weight:700; letter-spacing:.14em; color:var(--mut); text-transform:uppercase; text-align:center; margin:clamp(18px,4vh,40px) 0 20px; }
@@ -206,10 +227,11 @@ const HTML = `<!doctype html>
 <body>
   <div class="wrap">
     <header>
-      ${LOGO.replace('<svg ', '<svg class="logo" role="img" aria-label="HeatPump DB" ')}
+      ${LOGO}
       <h1>Every listed heat pump in Europe.<br><span class="grad">One database.</span></h1>
       <p class="sub">Registry-based technical data for installers and professionals — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.</p>
-      <div class="chips">${FEATURES.map(([e, l]) => `<span class="fchip">${e}&nbsp; ${l}</span>`).join('')}</div>
+      <div class="feat-label">Key features</div>
+      <div class="chips">${FEATURES.map(([e, l]) => `<span class="fchip"><span class="fic">${e}</span>${l}</span>`).join('')}</div>
     </header>
 
     <div class="sect">Choose your market</div>

@@ -40,8 +40,25 @@
   h1 { font-size:clamp(30px,5.4vw,52px); font-weight:700; letter-spacing:-.025em; line-height:1.12; }
   h1 .grad { background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .sub { max-width:640px; margin:18px auto 0; color:var(--mut); font-size:clamp(14.5px,1.7vw,17px); line-height:1.65; }
-  .chips { display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-top:26px; }
-  .fchip { border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:12.8px; color:#c7d2e2; background:rgba(255,255,255,.03); backdrop-filter:blur(6px); }
+  /* Living logo — identical animation source to the app header (index.css). */
+  @keyframes hp-logo-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .hp-logo-spin { transform-box: view-box; transform-origin: 32px 32px; animation: hp-logo-spin 6s linear infinite; will-change: transform; }
+  @keyframes hp-logo-db { 0%, 46% { fill: var(--hp-db-b); } 50%, 96% { fill: var(--hp-db-a); } 100% { fill: var(--hp-db-b); } }
+  .hp-logo-db { fill: var(--hp-db-b); animation: hp-logo-db 6s linear infinite; }
+  @media (prefers-reduced-motion:reduce) { .hp-logo-spin, .hp-logo-db { animation:none; } }
+
+  /* Key features — an explicit label + two rows of three, sized to be READ,
+     not skimmed (owner call 2026-08-01: the old pill row was too quiet). */
+  .feat-label { margin-top:34px; font-size:13px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .chips { display:grid; grid-template-columns:repeat(3, minmax(0, 250px)); gap:12px; justify-content:center; margin-top:16px; }
+  .fchip { display:flex; align-items:center; gap:11px; border:1px solid rgba(255,255,255,.16); border-radius:14px;
+    padding:14px 18px; font-size:15px; font-weight:600; color:#e8eef7; text-align:left;
+    background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.02)); backdrop-filter:blur(6px);
+    transition:border-color .3s, transform .3s; }
+  .fchip:hover { border-color:rgba(41,151,255,.55); transform:translateY(-2px); }
+  .fic { font-size:19px; flex:none; }
+  @media (max-width:700px) { .chips { grid-template-columns:repeat(2, minmax(0, 1fr)); } .fchip { font-size:13.5px; padding:12px 14px; } }
 
   /* ── Market grid ── */
   .sect { font-size:12.5px; font-weight:700; letter-spacing:.14em; color:var(--mut); text-transform:uppercase; text-align:center; margin:clamp(18px,4vh,40px) 0 20px; }
@@ -95,10 +112,11 @@
 <body>
   <div class="wrap">
     <header>
-      <svg class="logo" role="img" aria-label="HeatPump DB" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348 64" width="348" height="64" fill="none"><defs><style>@font-face{font-family:'Inter';font-style:normal;font-weight:600;src:url(data:font/woff2;base64,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) format('woff2');}</style></defs><g><path d="M10 32 A22 22 0 0 1 54 32" stroke="#ff6b52" stroke-width="5.5" stroke-linecap="round"/><path d="M54 32 A22 22 0 0 1 10 32" stroke="#2997ff" stroke-width="5.5" stroke-linecap="round"/><path d="M49 31 L54 38 L59 31" stroke="#ff6b52" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 33 L10 26 L15 33" stroke="#2997ff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="32" cy="32" r="6.5" fill="#f5f5f7"/><text x="82" y="46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-weight="600" font-size="40" letter-spacing="-0.7" fill="#f5f5f7">HeatPump<tspan fill="#ff6b52"> DB</tspan></text></svg>
+      <svg class="logo" viewBox="0 0 348 64" fill="none" role="img" aria-label="HeatPump DB" style="--hp-db-a:#ff6b52;--hp-db-b:#2997ff"><g class="hp-logo-spin"><path d="M10 32 A22 22 0 0 1 54 32" stroke="#ff6b52" stroke-width="5.5" stroke-linecap="round"/><path d="M54 32 A22 22 0 0 1 10 32" stroke="#2997ff" stroke-width="5.5" stroke-linecap="round"/><path d="M49 31 L54 38 L59 31" stroke="#ff6b52" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 33 L10 26 L15 33" stroke="#2997ff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></g><circle cx="32" cy="32" r="6.5" fill="#f5f5f7"/><text x="82" y="46" font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-weight="600" font-size="40" letter-spacing="-0.7" fill="#f5f5f7">HeatPump<tspan class="hp-logo-db"> DB</tspan></text></svg>
       <h1>Every listed heat pump in Europe.<br><span class="grad">One database.</span></h1>
       <p class="sub">Registry-based technical data for installers and professionals — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.</p>
-      <div class="chips"><span class="fchip">⚡&nbsp; Instant model search</span><span class="fchip">⚖️&nbsp; Compare 4 side-by-side</span><span class="fchip">📄&nbsp; Print-ready data sheets</span><span class="fchip">🏷️&nbsp; EU energy label sheets</span><span class="fchip">💶&nbsp; Funding tracked monthly</span><span class="fchip">📰&nbsp; Market news briefings</span></div>
+      <div class="feat-label">Key features</div>
+      <div class="chips"><span class="fchip"><span class="fic">⚡</span>Instant model search</span><span class="fchip"><span class="fic">⚖️</span>Compare 4 side-by-side</span><span class="fchip"><span class="fic">📄</span>Print-ready data sheets</span><span class="fchip"><span class="fic">🏷️</span>EU energy label sheets</span><span class="fchip"><span class="fic">💶</span>Funding tracked monthly</span><span class="fchip"><span class="fic">📰</span>Market news briefings</span></div>
     </header>
 
     <div class="sect">Choose your market</div>
