@@ -78,15 +78,99 @@ for (const m of MARKETS) {
   })).replace('<svg ', '<svg class="qr" aria-hidden="true" ');
   m.flag = flagSvgDoc(m.cc, false).replace('<svg ', '<svg class="flag" aria-hidden="true" ');
 }
+/* Language switcher flags: GB stands for English. */
+const LANG_FLAGS = [['en', 'GB'], ['de', 'DE'], ['fr', 'FR'], ['pl', 'PL'], ['it', 'IT']]
+  .map(([lang, cc]) => [lang, flagSvgDoc(cc, false).replace('<svg ', '<svg class="lf" aria-hidden="true" ')]);
 
-const FEATURES = [
-  ['⚡', 'Instant model search'],
-  ['⚖️', 'Compare 4 side-by-side'],
-  ['📄', 'Print-ready data sheets'],
-  ['🏷️', 'EU energy label sheets'],
-  ['💶', 'Funding tracked monthly'],
-  ['📰', 'Market news briefings'],
-];
+const FEAT_ICONS = ['⚡', '⚖️', '📄', '🏷️', '💶', '📰'];
+
+/* ── Hub i18n: EN default, DE/FR/PL/IT switchable (owner 2026-08-01).
+   Client-side swap via data-i18n keys — the served HTML is English (what
+   Google indexes; the hreflang cluster already routes languages to the
+   country sites). Registry names in chips are proper nouns and never
+   translate. */
+const I18N = {
+  en: {
+    h1a: 'Every listed heat pump in Europe.', h1b: 'One database.',
+    sub: 'Registry-based technical data for installers and professionals — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.',
+    featLabel: 'Key features',
+    features: ['Instant model search', 'Compare 4 side-by-side', 'Print-ready data sheets', 'EU energy label sheets', 'Funding tracked monthly', 'Market news briefings'],
+    sect: 'Choose your market', models: 'models', open: 'Open',
+    band: '<strong>Built for daily installer work.</strong> Official listing status on every product, the EU energy label one click away, and the month\u2019s funding changes already summarised when you open the app. Professional &amp; Team subscriptions — the free first week is included with every new account.',
+    legal: 'Product data is provided for information — verify against official sources before contractual use.',
+    tag: {
+      DE: 'The BAFA-list database for installers and planners.',
+      GB: 'The Ofgem PEL companion for MCS installers.',
+      FR: 'The air/water heat-pump reference base for RGE professionals.',
+      PL: 'The heat-pump database with confirmed ZUM status.',
+      IT: 'The database with GSE catalogue status (Conto Termico).',
+    },
+  },
+  de: {
+    h1a: 'Jede gelistete Wärmepumpe in Europa.', h1b: 'Eine Datenbank.',
+    sub: 'Registerbasierte technische Daten für Fachhandwerk und Profis — in Sekunden durchsuchbar, direkt vergleichbar, als angebotsfertige Datenblätter druckbar. Aktualisiert mit jedem Monats-Update.',
+    featLabel: 'Kernfunktionen',
+    features: ['Sofortige Modellsuche', '4 Modelle im Vergleich', 'Druckfertige Datenblätter', 'EU-Energielabel-Blätter', 'Förderung monatlich verfolgt', 'Markt-News-Briefings'],
+    sect: 'Wählen Sie Ihren Markt', models: 'Modelle', open: 'Öffnen:',
+    band: '<strong>Für die tägliche Installateursarbeit gebaut.</strong> Offizieller Listenstatus an jedem Produkt, das EU-Energielabel einen Klick entfernt, und die Förderänderungen des Monats beim Öffnen der App bereits zusammengefasst. Professional- &amp; Team-Abos — die kostenlose erste Woche ist bei jedem neuen Konto enthalten.',
+    legal: 'Produktdaten dienen der Information — vor vertraglicher Nutzung an offiziellen Quellen prüfen.',
+    tag: {
+      DE: 'Die Datenbank zur BAFA-Liste — für Fachhandwerk und Planer.',
+      GB: 'Der Ofgem-PEL-Begleiter für MCS-Installateure.',
+      FR: 'Die Luft/Wasser-Referenzdatenbank für RGE-Profis.',
+      PL: 'Die Wärmepumpen-Datenbank mit bestätigtem ZUM-Status.',
+      IT: 'Die Datenbank mit GSE-Katalogstatus (Conto Termico).',
+    },
+  },
+  fr: {
+    h1a: 'Toutes les pompes à chaleur référencées en Europe.', h1b: 'Une seule base.',
+    sub: 'Données techniques issues des registres pour installateurs et professionnels — recherche en quelques secondes, comparaison côte à côte, fiches techniques prêtes pour le devis. Actualisées à chaque mise à jour mensuelle.',
+    featLabel: 'Fonctions clés',
+    features: ['Recherche instantanée', 'Comparer 4 modèles', 'Fiches techniques prêtes à imprimer', 'Fiches étiquette énergie UE', 'Aides suivies chaque mois', 'Briefings marché'],
+    sect: 'Choisissez votre marché', models: 'modèles', open: 'Ouvrir :',
+    band: '<strong>Conçu pour le travail quotidien de l\u2019installateur.</strong> Statut officiel de référencement sur chaque produit, l\u2019étiquette énergie UE à un clic, et les changements d\u2019aides du mois déjà résumés à l\u2019ouverture. Abonnements Professional &amp; Team — la première semaine gratuite est incluse avec chaque nouveau compte.',
+    legal: 'Les données produits sont fournies à titre d\u2019information — vérifiez auprès des sources officielles avant tout usage contractuel.',
+    tag: {
+      DE: 'La base de la liste BAFA — pour artisans et bureaux d\u2019études.',
+      GB: 'Le compagnon Ofgem PEL des installateurs MCS.',
+      FR: 'La base de référence des PAC air/eau pour les pros RGE.',
+      PL: 'La base des pompes à chaleur avec statut ZUM confirmé.',
+      IT: 'La base avec statut au catalogue GSE (Conto Termico).',
+    },
+  },
+  pl: {
+    h1a: 'Każda pompa ciepła z europejskich rejestrów.', h1b: 'Jedna baza.',
+    sub: 'Dane techniczne oparte na rejestrach dla instalatorów i profesjonalistów — wyszukiwanie w sekundy, porównanie obok siebie, karty danych gotowe do oferty. Odświeżane przy każdej comiesięcznej aktualizacji.',
+    featLabel: 'Kluczowe funkcje',
+    features: ['Błyskawiczna wyszukiwarka', 'Porównanie 4 modeli', 'Karty danych do druku', 'Karty etykiety energetycznej UE', 'Dotacje śledzone co miesiąc', 'Briefingi rynkowe'],
+    sect: 'Wybierz swój rynek', models: 'modeli', open: 'Otwórz:',
+    band: '<strong>Stworzona do codziennej pracy instalatora.</strong> Oficjalny status z listy przy każdym produkcie, etykieta energetyczna UE o klik, a zmiany w dotacjach z danego miesiąca już podsumowane po otwarciu aplikacji. Subskrypcje Professional i Team — bezpłatny pierwszy tydzień w każdym nowym koncie.',
+    legal: 'Dane produktów mają charakter informacyjny — przed użyciem w umowach zweryfikuj w oficjalnych źródłach.',
+    tag: {
+      DE: 'Baza listy BAFA — dla instalatorów i projektantów.',
+      GB: 'Towarzysz listy Ofgem PEL dla instalatorów MCS.',
+      FR: 'Referencyjna baza PAC powietrze/woda dla profesjonalistów RGE.',
+      PL: 'Baza pomp ciepła z potwierdzonym statusem ZUM.',
+      IT: 'Baza ze statusem w katalogu GSE (Conto Termico).',
+    },
+  },
+  it: {
+    h1a: 'Ogni pompa di calore censita in Europa.', h1b: 'Un unico database.',
+    sub: 'Dati tecnici basati sui registri per installatori e professionisti — ricerca in pochi secondi, confronto affiancato, schede tecniche pronte per il preventivo. Aggiornati a ogni aggiornamento mensile.',
+    featLabel: 'Funzioni chiave',
+    features: ['Ricerca istantanea', 'Confronto di 4 modelli', 'Schede tecniche pronte da stampare', 'Schede etichetta energetica UE', 'Incentivi seguiti ogni mese', 'Briefing di mercato'],
+    sect: 'Scegli il tuo mercato', models: 'modelli', open: 'Apri:',
+    band: '<strong>Costruito per il lavoro quotidiano dell\u2019installatore.</strong> Stato ufficiale di catalogo su ogni prodotto, etichetta energetica UE a un clic e i cambiamenti degli incentivi del mese già riassunti all\u2019apertura. Abbonamenti Professional e Team — la prima settimana gratuita è inclusa in ogni nuovo account.',
+    legal: 'I dati prodotto sono forniti a scopo informativo — verificare sulle fonti ufficiali prima dell\u2019uso contrattuale.',
+    tag: {
+      DE: 'Il database della lista BAFA — per installatori e progettisti.',
+      GB: 'Il compagno Ofgem PEL per gli installatori MCS.',
+      FR: 'La base di riferimento delle PdC aria/acqua per i professionisti RGE.',
+      PL: 'Il database delle pompe di calore con stato ZUM confermato.',
+      IT: 'Il database con lo stato nel catalogo GSE (Conto Termico).',
+    },
+  },
+};
 
 const cardHtml = (m, i) => `
       <a class="card" href="${m.url}" style="--i:${i}">
@@ -97,13 +181,13 @@ const cardHtml = (m, i) => `
             <span class="card-host">${m.host}</span>
           </div>
         </div>
-        <p class="card-tag">${m.tag}</p>
+        <p class="card-tag" data-i18n="tag.${m.cc}">${I18N.en.tag[m.cc]}</p>
         <div class="card-meta">
           <span class="chip">${m.chip}</span>
-          <span class="models">${m.models} <em>models</em></span>
+          <span class="models">${m.models} <em data-i18n="models">models</em></span>
         </div>
         <div class="card-foot">
-          <span class="cta">Open ${m.host} <span class="arr">→</span></span>
+          <span class="cta"><span data-i18n="open">Open</span> ${m.host} <span class="arr">→</span></span>
           <span class="qr-tile" title="Scan to open on your phone">${m.qr}</span>
         </div>
       </a>`;
@@ -221,32 +305,51 @@ const HTML = `<!doctype html>
   footer a { color:#aab8cc; text-decoration:none; margin:0 7px; }
   footer a:hover { color:var(--ink); }
   .legal { margin-top:8px; font-size:11px; color:#6d7b91; }
+
+  /* ── Language switcher — five CIRCULAR buttons, top-right (owner 2026-08-01).
+     The circle is the BUTTON; the flag inside stays the brand waving cloth
+     (never cropped to a disc — brand rule). GB flag = English. ── */
+  .langbar { position:fixed; top:14px; right:16px; z-index:50; display:flex; gap:8px;
+    padding:7px 9px; border-radius:999px; background:rgba(11,22,38,.72); border:1px solid var(--line);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+  .langbtn { width:34px; height:34px; border-radius:50%; border:1.5px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.05); cursor:pointer; display:flex; align-items:center; justify-content:center;
+    padding:0; opacity:.62; transition:opacity .25s, transform .25s, border-color .25s, box-shadow .25s; }
+  .langbtn:hover { opacity:1; transform:translateY(-1.5px); border-color:rgba(255,255,255,.4); }
+  .langbtn[aria-pressed="true"] { opacity:1; border-color:var(--blue);
+    box-shadow:0 0 0 2px rgba(41,151,255,.35), 0 3px 10px rgba(0,0,0,.35); }
+  .langbtn .lf { width:21px; height:auto; display:block; pointer-events:none; }
+  @media (max-width:700px) { .langbar { top:10px; right:10px; gap:6px; padding:6px 7px; }
+    .langbtn { width:30px; height:30px; } .langbtn .lf { width:18px; } }
   @media (prefers-reduced-motion:reduce) { .card, .card:hover .flag { animation:none; } .card { transition:none; } }
 </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="langbar" role="group" aria-label="Language">
+      ${LANG_FLAGS.map(([lang, f]) => `<button class="langbtn" data-lang="${lang}" aria-label="${lang}">${f}</button>`).join('')}
+    </div>
     <header>
       ${LOGO}
-      <h1>Every listed heat pump in Europe.<br><span class="grad">One database.</span></h1>
-      <p class="sub">Registry-based technical data for installers and professionals — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.</p>
-      <div class="feat-label">Key features</div>
-      <div class="chips">${FEATURES.map(([e, l]) => `<span class="fchip"><span class="fic">${e}</span>${l}</span>`).join('')}</div>
+      <h1><span data-i18n="h1a">${I18N.en.h1a}</span><br><span class="grad" data-i18n="h1b">${I18N.en.h1b}</span></h1>
+      <p class="sub" data-i18n="sub">${I18N.en.sub}</p>
+      <div class="feat-label" data-i18n="featLabel">${I18N.en.featLabel}</div>
+      <div class="chips">${FEAT_ICONS.map((e, i) => `<span class="fchip"><span class="fic">${e}</span><span data-i18n="features.${i}">${I18N.en.features[i]}</span></span>`).join('')}</div>
     </header>
 
-    <div class="sect">Choose your market</div>
+    <div class="sect" data-i18n="sect">${I18N.en.sect}</div>
     <div class="grid" id="grid">${MARKETS.map(cardHtml).join('')}
     </div>
   </div>
 
   <div class="band">
-    <p><strong>Built for daily installer work.</strong> Official listing status on every product, the EU energy label one click away, and the month's funding changes already summarised when you open the app. Professional &amp; Team subscriptions — the free first week is included with every new account.</p>
+    <p data-i18n-html="band">${I18N.en.band}</p>
   </div>
 
   <footer>
     <div>${MARKETS.map(m => `<a href="${m.url}">${m.host}</a>`).join(' · ')}</div>
     <div><a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a> · <a href="/models/">Model index</a></div>
-    <div class="legal">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · Product data is provided for information — verify against official sources before contractual use.</div>
+    <div class="legal">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · <span data-i18n="legal">${I18N.en.legal}</span></div>
   </footer>
 
 <script>
@@ -258,6 +361,32 @@ const HTML = `<!doctype html>
       c.style.setProperty('--my', (e.clientY - r.top) + 'px');
     }
   });
+
+  // ── i18n: served HTML is English (what crawlers index); the switcher swaps
+  //    text client-side and remembers the choice. band uses innerHTML (trusted
+  //    build-time strings only — nothing user-supplied ever enters I18N).
+  const I18N = ${JSON.stringify(I18N)};
+  const pick = (obj, path) => path.split('.').reduce((o, k) => (o ? o[k] : undefined), obj);
+  function setLang(lang) {
+    const d = I18N[lang] || I18N.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const v = pick(d, el.getAttribute('data-i18n'));
+      if (typeof v === 'string') el.textContent = v;
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const v = pick(d, el.getAttribute('data-i18n-html'));
+      if (typeof v === 'string') el.innerHTML = v;
+    });
+    document.documentElement.lang = lang === 'en' ? 'en' : lang;
+    document.querySelectorAll('.langbtn').forEach(b =>
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    try { localStorage.setItem('hub-lang', lang); } catch {}
+  }
+  document.querySelectorAll('.langbtn').forEach(b =>
+    b.addEventListener('click', () => setLang(b.dataset.lang)));
+  let saved = 'en';
+  try { saved = localStorage.getItem('hub-lang') || 'en'; } catch {}
+  setLang(I18N[saved] ? saved : 'en');
 </script>
 </body>
 </html>
