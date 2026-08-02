@@ -647,6 +647,40 @@ async function runAutoUpdate(budget, options = {}) {
     : MARKETS.map(m => m.code);
   const markets = MARKETS.filter(m => requested.includes(m.code));
 
+  /**
+   * FRESHNESS GUARD (scheduler runs only; owner decision 2026-07-30, made
+   * PER-MARKET after the 2026-08-01 incident): skip a market whose newest
+   * article is younger than 21 days, because the owner sometimes runs the
+   * monthly cycle early by hand and the scheduler would otherwise publish a
+   * second, near-duplicate batch days later. 21 days can only ever skip a slot
+   * whose work was already done ahead of schedule, never two in a row (the
+   * monthly gap is ~30 days).
+   *
+   * Why per-market and not a single sentinel: it USED to read DE alone and
+   * decide for everyone. On 2026-08-01 a leftover 2025 function overwrote the
+   * DE archive with 2025 sample articles; the sentinel then read "17 months
+   * old", the guard opened, and the 2026-08-02 slot the owner had explicitly
+   * asked to skip ran for all five markets. One market's bad data must never
+   * decide another market's run. Manual API-key runs are never guarded, and a
+   * read failure falls open (a guard must not be able to kill the pipeline).
+   */
+  const FRESH_DAYS = 21;
+  const freshnessSkipDays = async (code) => {
+    if (!options.guardFreshness) return null;
+    try {
+      const snap = await firestoreDb.collection(`countries/${code}/news`)
+        .orderBy('date', 'desc').limit(1).get();
+      if (snap.empty) return null;                       // no archive → must run
+      const newest = Date.parse(snap.docs[0].data().date);
+      if (!newest) return null;                          // unparsable → fall open
+      const days = (Date.now() - newest) / 86400000;
+      return days >= 0 && days < FRESH_DAYS ? Math.round(days) : null;
+    } catch (e) {
+      console.warn(`[${code}] Freshness guard read failed (${e.message}) — proceeding.`);
+      return null;
+    }
+  };
+
   // Step 0 (FIRST — must never be starved by the research loop): generate
   // the monthly HeatPump DB editorial articles + policy items per market and
   // publish them immediately. The manufacturer research below can consume the
@@ -655,12 +689,26 @@ async function runAutoUpdate(budget, options = {}) {
   let deNews = [];
   let dePolicies = [];
   for (const market of markets) {
+    const skipDays = await freshnessSkipDays(market.code);
+    if (skipDays !== null) {
+      console.log(`[${market.code}] Freshness guard: newest article is ${skipDays}d old (<${FRESH_DAYS}d) — this slot was already covered. Skipping this market.`);
+      perMarket[market.code] = { skipped: true, reason: `newest article ${skipDays}d old` };
+      continue;
+    }
     console.log(`[${market.code}] Researching latest news and policies (priority step)...`);
     const { news, policies } = await researchNewsAndPolicies(ai, budget, market);
     console.log(`[${market.code}]   → Generated ${news.length} articles, ${policies.length} policy items.`);
     await publishNewsAndPolicies(market.code, news, policies);
     perMarket[market.code] = { newsUpdated: news.length, policiesUpdated: policies.length };
     if (market.code === 'DE') { deNews = news; dePolicies = policies; }
+  }
+
+  // Every market was already covered → nothing to do; do not spend the
+  // research budget on a slot the owner already ran by hand.
+  if (options.guardFreshness && markets.length > 0
+      && markets.every(m => perMarket[m.code]?.skipped)) {
+    console.log('Freshness guard: every requested market was already covered — skipping this run.');
+    return { mode: 'skipped', markets: perMarket, budget: budget.summary };
   }
 
   // newsOnly mode: publish news/policies and stop — used for manual refreshes
@@ -820,33 +868,6 @@ functions.http('autoUpdateDatabase', async (req, res) => {
     return res.status(200).json({ status: 'skipped', reason: 'Auto-update is disabled. Set AUTO_UPDATE_ENABLED=true to re-enable.' });
   }
 
-  /**
-   * FRESHNESS GUARD (scheduler only, owner decision 2026-07-30): skip the
-   * scheduled run when the newest article is younger than 21 days. The owner
-   * sometimes runs the monthly cycle early by hand (as on 2026-07-30, replacing
-   * the 2026-08-02 slot); without this guard the scheduler would publish a
-   * second, near-duplicate batch days later. 21 days skips only a slot whose
-   * work was already done ahead of schedule and can never skip two in a row
-   * (the monthly gap is ~30 days). DE is the sentinel market — every run
-   * publishes all markets together. Manual API-key runs are never guarded, and
-   * a read failure falls open (the run proceeds) — a guard must not be able to
-   * kill the pipeline.
-   */
-  if (isScheduler) {
-    try {
-      const snap = await firestoreDb.collection('countries/DE/news')
-        .orderBy('date', 'desc').limit(1).get();
-      const newest = snap.empty ? null : Date.parse(snap.docs[0].data().date);
-      if (newest && Date.now() - newest < 21 * 24 * 3600 * 1000) {
-        const days = Math.round((Date.now() - newest) / 86400000);
-        console.log(`Freshness guard: newest article is ${days}d old (<21d) — this monthly slot was already covered by a manual run. Skipping.`);
-        return res.status(200).json({ status: 'skipped', reason: `newest article ${days}d old — monthly slot already covered by a manual run` });
-      }
-    } catch (e) {
-      console.warn(`Freshness guard read failed (${e.message}) — proceeding with the run.`);
-    }
-  }
-
   if (!isScheduler && (!SECRET_KEY || providedKey !== SECRET_KEY)) {
     console.warn(`Unauthorized access attempt from ${req.ip}`);
     return res.status(403).json({ error: 'Unauthorized: Invalid or missing API key' });
@@ -871,7 +892,9 @@ functions.http('autoUpdateDatabase', async (req, res) => {
       : typeof countriesRaw === 'string' && countriesRaw.trim()
         ? countriesRaw.split(',').map(s => s.trim())
         : undefined;
-    const result = await runAutoUpdate(budget, { newsOnly, countries });
+    // Scheduler runs are freshness-guarded per market; manual API-key runs
+    // are deliberate and always proceed.
+    const result = await runAutoUpdate(budget, { newsOnly, countries, guardFreshness: isScheduler });
     console.log('=== Auto Update Complete ===', JSON.stringify(result));
     return res.status(200).json({ status: 'success', ...result });
   } catch (err) {
