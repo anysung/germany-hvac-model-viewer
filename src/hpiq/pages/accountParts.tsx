@@ -22,7 +22,9 @@ import { COMPANY_TYPES, COMPANY_TYPE_OTHER_MAX, normalizeCompanyType } from '../
 import { LEGAL_ROUTES, LegalDoc } from '../../config/legal';
 import { LEGAL_NAV } from '../../legal/LegalPage';
 import { normalizeWebsite, trim, websiteHref } from '../../utils/profile';
-import { updateMyProfile } from '../../services/authService';
+import {
+  updateMyProfile, currentSignInMethods, linkSignInProvider, unlinkSignInProvider,
+} from '../../services/authService';
 import {
   inviteMember, cancelInvite, resendInvite, removeMember, leaveTeam,
   updateOrgCompany, seatsUsed,
@@ -580,6 +582,104 @@ const statusChip = (status: string, label: string) => (
  * `embedded` drops the outer Card chrome so the phone subview can host it inside
  * its own back-navigated screen without a double border.
  */
+/* ── Sign-in methods (link/unlink Google & Apple) ─────────────────────────────
+ * Adds LOGIN CREDENTIALS to the existing Firebase account — the account email,
+ * team seat, entitlements and billing are keyed to the uid and never change.
+ * Popup only (see authService.linkSignInProvider). Shared by the desktop
+ * Account page (Card) and the phone shell (plain — caller wraps it). */
+export const SignInMethodsCard: React.FC<{ app: HpApp; plain?: boolean }> = ({ app, plain }) => {
+  const t = tr(app.lang);
+  const a = t.account as any;
+  const isPreview = app.user.id === 'preview';
+  const [methods, setMethods] = useState<string[]>(currentSignInMethods());
+  const [busy, setBusy] = useState(false);
+
+  const notifyError = (e: any) => {
+    const code = String(e?.code ?? e?.message ?? '');
+    if (code.includes('popup-closed') || code.includes('cancelled-popup')) return; // user backed out
+    app.notify(
+      code.includes('credential-already-in-use') || code.includes('email-already-in-use') ? a.signinInUse
+      : code.includes('popup-blocked') || code.includes('operation-not-supported') ? a.signinPopupBlocked
+      : code.includes('last-method') ? a.signinLastMethod
+      : a.signinFailed,
+    );
+  };
+
+  const doLink = async (name: 'google' | 'apple') => {
+    if (busy) return;
+    if (isPreview) { app.notify(t.account.previewOnly); return; }
+    setBusy(true);
+    try {
+      await linkSignInProvider(name);
+      setMethods(currentSignInMethods());
+      app.notify(a.signinLinked);
+    } catch (e) { notifyError(e); }
+    finally { setBusy(false); }
+  };
+
+  const doUnlink = async (pid: string) => {
+    if (busy) return;
+    if (isPreview) { app.notify(t.account.previewOnly); return; }
+    if (methods.length <= 1) { app.notify(a.signinLastMethod); return; }
+    setBusy(true);
+    try {
+      await unlinkSignInProvider(pid);
+      setMethods(currentSignInMethods());
+      app.notify(a.signinUnlinked);
+    } catch (e) { notifyError(e); }
+    finally { setBusy(false); }
+  };
+
+  const row: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', borderBottom: '1px solid #f0f0f0', fontSize: 13.5 };
+  const badge: React.CSSProperties = { fontSize: 11, fontWeight: 600, borderRadius: 999, padding: '3px 10px', background: '#e7f6ee', color: '#0a7a43' };
+  const actionBtn = (primary: boolean): React.CSSProperties => ({
+    fontSize: 12, borderRadius: 999, padding: '5px 14px', cursor: 'pointer',
+    ...(primary ? { background: '#0066cc', color: '#fff' } : { border: '1px solid #d2d2d7', background: '#fff', color: '#1d1d1f' }),
+  });
+
+  const providers: Array<{ pid: string; label: string; linkName?: 'google' | 'apple' }> = [
+    { pid: 'password', label: a.signinEmailMethod },
+    { pid: 'google.com', label: 'Google', linkName: 'google' },
+    { pid: 'apple.com', label: 'Apple', linkName: 'apple' },
+  ];
+
+  const body = (
+    <>
+      <span style={{ fontSize: 13, color: '#333', lineHeight: 1.55 }}>{a.signinText}</span>
+      <div style={{ display: 'flex', flexDirection: 'column' }} data-testid="signin-methods">
+        {providers.map((p, i) => {
+          const connected = methods.includes(p.pid);
+          return (
+            <div key={p.pid} style={{ ...row, ...(i === providers.length - 1 ? { borderBottom: 'none' } : {}) }}>
+              <span style={{ flex: 1, fontWeight: 600 }}>{p.label}</span>
+              {connected && <span style={badge}>{a.signinConnected}</span>}
+              {connected
+                ? (methods.length > 1 && (
+                    <span className="hp-press" onClick={() => doUnlink(p.pid)} style={actionBtn(false)} data-testid={`signin-unlink-${p.pid}`}>
+                      {a.signinDisconnect}
+                    </span>
+                  ))
+                : (p.linkName && (
+                    <span className="hp-press" onClick={() => doLink(p.linkName!)} style={actionBtn(true)} data-testid={`signin-link-${p.pid}`}>
+                      {a.signinConnect}
+                    </span>
+                  ))}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+
+  if (plain) return <>{body}</>;
+  return (
+    <Card style={{ gap: 9 }}>
+      <CardTitle>{a.signinTitle}</CardTitle>
+      {body}
+    </Card>
+  );
+};
+
 export const SupportCard: React.FC<{ app: HpApp; embedded?: boolean }> = ({ app, embedded }) => {
   const t = tr(app.lang);
   const { user } = app;

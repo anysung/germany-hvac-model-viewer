@@ -9,6 +9,8 @@ import {
   sendEmailVerification,
   GoogleAuthProvider,
   OAuthProvider,
+  linkWithPopup,
+  unlink,
   type User as FirebaseUser,
 } from 'firebase/auth';
 import {
@@ -413,6 +415,43 @@ export const loginUser = async (email: string, pass: string): Promise<User> => {
   } catch (error: any) {
     throw new Error(error.message);
   }
+};
+
+// --- Sign-in methods (Account page: link/unlink Google & Apple) ---
+// Team members register with their COMPANY email (the invitation key) and may
+// attach a personal Google/Apple identity to the SAME Firebase account here.
+// Membership, billing and entitlements stay keyed to the uid + company email —
+// linking only adds a login credential, so it can never touch a subscription.
+// Popup only (no redirect fallback): a link redirect would come back through
+// completeRedirectSignIn() on boot and be mistaken for a fresh social sign-in.
+
+/** Provider ids currently attached to the signed-in account
+ *  ('password' | 'google.com' | 'apple.com'). */
+export const currentSignInMethods = (): string[] =>
+  auth.currentUser?.providerData.map(p => p.providerId) ?? [];
+
+export const linkSignInProvider = async (providerName: 'google' | 'apple'): Promise<void> => {
+  const u = auth.currentUser;
+  if (!u) throw new Error('not-signed-in');
+  const provider =
+    providerName === 'google'
+      ? new GoogleAuthProvider()
+      : (() => {
+          const p = new OAuthProvider('apple.com');
+          p.addScope('email');
+          p.addScope('name');
+          return p;
+        })();
+  await linkWithPopup(u, provider);
+};
+
+/** Detach a login method — always keeping at least one, or the account
+ *  would become unreachable. */
+export const unlinkSignInProvider = async (providerId: string): Promise<void> => {
+  const u = auth.currentUser;
+  if (!u) throw new Error('not-signed-in');
+  if (u.providerData.length <= 1) throw new Error('last-method');
+  await unlink(u, providerId);
 };
 
 // --- Social login (Google / Apple via Firebase popup) ---

@@ -14,7 +14,7 @@ import { HpApp, HpPage } from '../appState';
 import { tr } from '../i18n';
 import { UI_LANGUAGES, FUNDING_SOURCE_LINKS, MARKET_ICON_32 } from '../market';
 import { LEGAL_ROUTES, LegalDoc, MARKETING_EMAIL } from '../../config/legal';
-import { SupportCard } from '../pages/accountParts';
+import { SupportCard, SignInMethodsCard } from '../pages/accountParts';
 import { LEGAL_NAV } from '../../legal/LegalPage';
 import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
 import { SubPlanCode, BillingTerm, BILLING_TERMS, SUB_PLANS, SUB_PLAN_CODES, formatEur, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct } from '../../config/subscriptionPlans';
@@ -699,6 +699,12 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
           </span>
         </div>
       )}
+
+      {/* Sign-in methods — same shared component as the desktop Account page */}
+      <div style={card}>
+        <span style={sectionLabel}>{(t.account as any).signinTitle}</span>
+        <SignInMethodsCard app={app} plain />
+      </div>
 
       {UI_LANGUAGES.length > 1 && (
         <div style={card}>

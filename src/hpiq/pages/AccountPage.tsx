@@ -25,6 +25,7 @@ import { shortDate } from '../model';
 import {
   Card, CardTitle, CompanyProfileCard, PersonalProfileCard,
   TeamSummaryCard, YourTeamCard, TeamManagementView, PoliciesCard, SupportCard,
+  SignInMethodsCard,
 } from './accountParts';
 import { previewOrg } from '../devPreview';
 import { MARKETING_EMAIL } from '../../config/legal';
@@ -676,6 +677,9 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
               <span onClick={sendSetupLink} style={{ color: '#0066cc', fontSize: 13, cursor: 'pointer', marginTop: 2 }}>{t.account.sendLink(user.email)}</span>
             </Card>
           </div>
+
+          {/* R2a · Sign-in methods (link/unlink Google & Apple) */}
+          <div style={{ order: 3 }}><SignInMethodsCard app={app} /></div>
 
           {/* R2b · Devices & sessions (concurrent-session limit — docs/CONCURRENT_SESSIONS.md) */}
           <div style={{ order: 4 }}><SessionsCard app={app} /></div>
