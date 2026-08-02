@@ -629,11 +629,16 @@ async function publishNewsAndPolicies(marketCode, news, policies) {
     console.log(`[${marketCode}] Policies published.`);
   }
 
+  // Counts must describe what is STORED, not what this run happened to
+  // generate: a run that produced nothing (e.g. a model parse failure) used to
+  // stamp policyCount: 0 while five policies sat untouched in the collection,
+  // and the admin overview then showed zero.
   const totalNews = (await firestoreDb.collection(`countries/${marketCode}/news`).count().get()).data().count;
+  const totalPolicies = (await firestoreDb.collection(`countries/${marketCode}/policies`).count().get()).data().count;
   await firestoreDb.collection('countries').doc(marketCode).set({
     lastUpdated: new Date().toISOString(),
     newsCount: totalNews,
-    policyCount: policies.length,
+    policyCount: totalPolicies,
   }, { merge: true });
 }
 
