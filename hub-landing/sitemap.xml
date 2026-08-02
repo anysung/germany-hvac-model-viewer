@@ -2,283 +2,269 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.heatpumpdb.eu/</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/methodology.html</loc><lastmod>2026-08-01</lastmod><changefreq>yearly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ersd-vm2e-4201.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ersd-vm6e-4202.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ersd-ym9e-4203.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst20d-vm2e-4191.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst20d-vm6e-4192.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst20d-ym9e-4193.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst30d-vm2ee-4194.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst30d-vm6ee-4195.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst30d-ym9ee-4196.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt20x-vm2d-8665.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt20x-vm6d-8664.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt30x-vm2ed-8663.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst20d-ym9e-4171.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehsd-mee-4197.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehsd-vm2e-4198.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehsd-vm6e-4199.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehsd-ym9e-4200.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst17d-vm2e-4182.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst17d-ym9e-4183.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst20d-vm2e-4184.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst20d-vm6e-4185.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst20d-ym9e-4186.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst30d-vm6ee-4187.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-ehst30d-ym9ee-4188.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst17d-vm2e-4189.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm40va2-erst17d-vm6e-4190.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt30x-ym9ee-1075.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt20x-vm2d-8620.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt20x-vm2e-1064.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt20x-ym9e-1072.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt30x-vm2ee-1094.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpx-me-1099.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpx-vm2e-1104.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpx-ym9e-1109.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-ersd-vm2e-4179.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-ersd-vm6e-4180.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-ersd-ym9e-4181.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst20d-vm2e-4169.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst20d-vm6e-4170.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst30d-vm2ee-4172.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst30d-vm6ee-4173.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-erst30d-ym9ee-4174.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt20x-vm2e-1063.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt20x-ym9e-1071.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt30x-vm2ee-1093.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpt30x-ym9ee-1074.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpx-md-8667.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpx-me-1098.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpx-vm2e-1103.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpx-ym9d-8666.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-erpx-ym9e-1108.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-7035.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-erpt20x-m-e-7026.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-erpt30x-m-e-7027.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-erpx-m-e-7031.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-erpx-me-7030.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120yaa-bs-7034.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-ehpt20x-ym9e-1059.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm30va-ehsd-mee-4175.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm85yaa-ehpt20x-ym9e-1058.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-ehpt30x-ym9ee-1067.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wm112yaa-erpt20x-vm6d-8619.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm60va2-ehsd-mee-4219.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz100vaa-bs-7020.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz120vaa-bs-ehpt20x-m-e-7022.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-shwm60vaa-ersf-mee-4324.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-shwm80yaa-ersf-mee-4334.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm80va2-ersd-vm2e-4245.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-shwm100yaa-ersf-mee-4344.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-swm60vaa-ersf-mee-4274.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz100vaa-bs-ehpt20x-m-e-7008.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm60va2-ehsd-vm2e-4220.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-shwm140yaa-ersf-mee-4364.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-swm80yaa-ersf-mee-4284.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm80va2-ehsd-mee-4241.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz85vaa-bs-7006.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-shwm120yaa-ersf-mee-4354.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz50vaa-bs-erpt20x-vm2e-0795.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz50vaa-bs-erpx-ym9e-0581.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-mehp-ib-g07-40y-2717.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm100va-ehsd-mee-4263.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-swm100yaa-ersf-mee-4294.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-shwm80yaa-ehsd-ym9d-9404.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-swm120yaa-ersf-mee-4304.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz60vaa-bs-erpt20x-vm2e-1407.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz85vaa-bs-ehpt17x-m-e-6990.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-suz-swm100va-ehsd-vm2e-4264.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-shwm100yaa-ehsd-ym9d-9427.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-shwm60vaa-ehsd-ym9d-9357.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-hwm140yha-erpt20x-vm2e-1065.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-shwm120yaa-ehsd-ym9d-9460.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-shwm140yaa-ehsd-ym9d-9510.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz50vaa-bs-ehpt17x-vm2e-0790.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz50vaa-bs-ehpt17x-vm6e-0791.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz80vaa-bs-erpt17x-vm2e-1417.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-pud-swm120yaa-ehsd-ym9d-9498.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-hwm140yha-ehpt20x-ym9e-1060.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz60vaa-bs-ehpt17x-vm2e-0582.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz60vaa-bs-ehpt20x-ym9e-1406.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-puz-wz80vaa-bs-ehpt17x-vm2e-1414.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-i-nx2-n-g07-d-0051-1693.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-mehp-is-g07-0051-8296.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/mitsubishi-i-nx2-n-g07-0082-1689.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-10-400-v001-7881.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-10-400-v002-7882.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-10-400-v001-7879.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-10-400-v002-7880.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-10--7885.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-10--7886.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-10-400-7883.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-10-400-7884.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-10-400--7889.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-10-400--7890.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-250-a-awmof-251-a1-10-400-7887.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-250-a-awmof-251-a1-10-400-7888.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-13-400-v001-7893.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-13-400-v002-7894.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-13-400-v001-7891.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-13-400-v002-7892.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-13--7897.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-13--7898.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-13-400-7895.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-13-400-7896.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-13-400--7901.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-13-400--7902.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-250-a-awmof-251-a1-13-400-7899.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-250-a-awmof-251-a1-13-400-7900.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-10-400-v001-7927.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-10-400-v002-7928.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-150-a-awmof-151-a1-10-400-7929.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-150-a-awmof-151-a1-10-400-7930.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-150-a-awmof-151-a1-10-400--7933.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-150-a-awmof-151-a1-10-400--7934.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-150-a-awmof-151-a1-10-400-7931.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-modular-awmiw-a1-19-v051-odu-150-a-awmof-151-a1-10-400-7932.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-10-230-v001-7857.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-10-230-v002-7858.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-10-230-v001-7855.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-250-a-awmof-251-a1-10-230-v002-7856.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-10--7861.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-2c-awmit-a1-19-v056-odu-250-a-awmof-251-a1-10--7862.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-10-230-7859.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-compact-awmit-a1-19-v053-odu-250-a-awmof-251-a1-10-230-7860.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-10-230--7865.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-hybrid-hwmiw-a1-19-v054-odu-250-a-awmof-251-a1-10-230--7866.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-13-230-v001-7869.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-s-awb-m-e-ac-201-e10-2927.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-13-400-v001-7935.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-s-awb-m-e-ac-201-e08-2923.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-19-400-v001-7845.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-16-400-v001-7833.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-250-a-pro-typ-awo-ac-af-251-a40-5066.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-250-a-pro-typ-awo-ac-af-251-b40-7525.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-10-230-v001-7903.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-16-400-v001-7943.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-06-230-v001-7965.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-s-awb-m-e-ac-201-e06-2919.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-e-ac-201-a13-2559.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-e-ac-201-a16-2560.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-06-230-v001-7995.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-e-ac-201-a10-2558.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-04-230-v001-7953.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-13-230-v001-7911.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-16-230-v001-7919.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-awmiw-a1-19-v052-odu-150-a-awmof-151-a1-04-230-v001-7987.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-m-e-ac-201-a10-2557.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-m-e-ac-201-a08-2556.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-idu-a-2c-awmiw-a1-19-v055-odu-250-a-awmof-251-a1-08-230-v001-7977.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-pro-awo-ac-204-a128-1017.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-awo-m-e-ac-201-a06-2555.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/viessmann-vitocal-200-a-pro-awo-ac-202-a064-0997.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-4-1-7558.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-4-1-ibh-7570.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-4-1t-7559.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-4-1t-ibh-7571.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-box-wisan-pmp-1-s-4-1-hqcn-nee-1-bc-a-7582.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-box-wisan-pmp-1-s-4-1t-hqcn-nee-1-bc-a-7583.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-invisible-wisan-pmp-1-s-4-1-hqcn-nee-1-ic-a-7606.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-invisible-wisan-pmp-1-s-4-1t-hqcn-nee-1-ic-a-7607.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-4-1-hqcn-nee-1-mc-a-7612.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-4-1-ibh-hqcn-nee-1-mc-a-7624.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-4-1t-hqcn-nee-1-mc-a-7613.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-4-1t-ibh-hqcn-nee-1-mc-a-7625.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-tower-wisan-pmp-1-s-4-1-hqcn-nee-1-tc-a-7594.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-tower-wisan-pmp-1-s-4-1t-hqcn-nee-1-tc-a-7595.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-5-1-7560.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-5-1-ibh-7572.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-5-1t-7561.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-5-1t-ibh-7573.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-box-wisan-pmp-1-s-5-1-hqcn-nee-1-bc-a-7584.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-box-wisan-pmp-1-s-5-1t-hqcn-nee-1-bc-a-7585.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-invisible-wisan-pmp-1-s-5-1-hqcn-nee-1-ic-a-7608.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-invisible-wisan-pmp-1-s-5-1t-hqcn-nee-1-ic-a-7609.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-5-1-hqcn-nee-1-mc-a-7614.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-5-1-ibh-hqcn-nee-1-mc-a-7626.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-5-1t-hqcn-nee-1-mc-a-7615.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-mini-wisan-pmp-1-s-5-1t-ibh-hqcn-nee-1-mc-a-7627.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-tower-wisan-pmp-1-s-5-1-hqcn-nee-1-tc-a-7596.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-tower-wisan-pmp-1-s-5-1t-hqcn-nee-1-tc-a-7597.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-4-1-4598.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-invisible-sqkn-yee-1-ic-misan-yee-1-s-4-1-4610.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-tower-sqkn-yee-1-tc-misan-yee-1-s-4-1-190l-4590.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-tower-sqkn-yee-1-tc-misan-yee-1-s-4-1-250l-4591.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-5-1-4599.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-invisible-sqkn-yee-1-ic-misan-yee-1-s-5-1-4611.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-tower-sqkn-yee-1-tc-misan-yee-1-s-5-1-190l-4592.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-tower-sqkn-yee-1-tc-misan-yee-1-s-5-1-250l-4593.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-3-1-4597.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-invisible-sqkn-yee-1-ic-misan-yee-1-s-3-1-4609.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-tower-sqkn-yee-1-tc-misan-yee-1-s-3-1-190l-4588.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-4-1-4829.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-2-1-4529.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-5-1-4830.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-2-1-7556.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-4-1-3601.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-2-1-3599.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-5-1-3602.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-3-1-7557.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-6-1-4600.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-pmp-1-s-12-1-9576.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-6-1-7562.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-7-1-4601.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-3-1-3600.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-sphera-evo-2-0-box-sqkn-yee-1-bc-misan-yee-1-s-8-1-4607.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-3-1-4828.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-2-1-4827.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-7-1-7564.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-box-wisan-yme-1-s-6-1-hqcn-nee-1-bc-a-6648.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-pro-wisan-pmp-1-s-8-1-7566.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-25-2-en-5565.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-6-1t-3604.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-6-1-3603.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-7-1-4832.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-7-1-3605.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-f-wisan-pme-1-s-8-1-3607.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-30-2-en-5566.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-edge-evo-2-0-wisan-yme-1-s-8-1-4833.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-14-1-en-exc-9488.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-16-1-en-5561.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-18-1-en-exc-9495.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-18-1-en-5562.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-19-1-en-exc-9498.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-19-1-en-5563.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/clivet-wisan-p-20-1-en-exc-9501.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-006-6155.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-008-6156.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-002-6153.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-010-7141.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-010-ln-7142.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-010-xln-7143.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-004-6154.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-016-7150.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-016-ln-7151.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-016-xln-7152.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-ashp-046-xln-9828.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-014-7147.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-014-ln-7148.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-014-xln-7149.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-012-7144.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-012-ln-7145.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-012-xln-7146.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-080-heat-ln-ec-r454b-6126.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-080-heat-xln-ec-r454b-6127.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-019-7153.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-019-ln-7154.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-leaf-019-xln-7155.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-090-heat-ln-ec-r454b-6136.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-090-heat-xln-ec-r454b-6137.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-080-he-ln-6236.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-080-he-sn-6237.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-080-he-xln-6238.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-ashp-067-xln-9820.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-090-he-ln-6239.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-090-he-sn-6240.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-090-he-xln-6241.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cxc-009-7133.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/trane-cxc-009-xln-7134.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-130-se-ln-6173.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-130-he-ln-6053.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-100-heat-ln-ec-r454b-6187.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-180-heat-ln-ec-r454b-6143.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-110-he-ln-6251.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-110-heat-ln-ec-r454b-6195.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-130-heat-ln-ec-r454b-6228.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-130-heat-ln-ac-r454b-6201.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-100-he-sn-6246.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-080-she-xln-ec-r454b-6089.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-080-sse-xln-ec-r454b-6087.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-180-he-ln-6065.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-140-heat-ln-ec-r454b-6095.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxaf-190-heat-ln-ec-r454b-6151.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-190-he-ln-6068.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-190-se-ln-6210.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cxc-007-7131.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/trane-cmaf-033-he-ec-ln-r454b-6226.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-11-mbe-ar-e-wlw-11-mbe-ar-logatherm-wlw186i-2-9201.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-11-mbe-ar-tp-wlw-11-mbe-ar-logatherm-wlw186i--9202.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-13-mbe-ar-e-wlw-13-mbe-ar-logatherm-wlw186i-2-9203.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-13-mbe-ar-tp-wlw-13-mbe-ar-logatherm-wlw186i--9204.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-wlw286-2-22-9045.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-13-mbb-ar-e-wlw-13-mbb-ar-p3-logatherm-wlw1-9927.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-13-mbb-ar-t180-wlw-13-mbb-ar-p3-logatherm-w-9928.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-15-mbe-ar-e-wlw-15-mbe-ar-logatherm-wlw186i-2-9205.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw186i-15-mbe-ar-tp-wlw-15-mbe-ar-logatherm-wlw186i--9206.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-2-6-ar-s-e-b-t-ts-9538.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-10-mbb-ar-e-wlw-10-mbb-ar-p3-logatherm-wlw1-9925.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-10-mbb-ar-t180-wlw-10-mbb-ar-p3-logatherm-w-9926.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-14-ar-e-4329.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-4-ar-e-4576.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-4-mbb-ar-e-wlw-4-mbb-ar-logatherm-wlw176i-2-9314.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-4-mbb-ar-t180-wlw-4-mbb-ar-logatherm-wlw166-9317.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-2-4-ar-s-e-b-t-ts-4577.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-6-mbb-ar-e-wlw-6-mbb-ar-logatherm-wlw176i-2-9315.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-6-mbb-ar-t180-wlw-6-mbb-ar-logatherm-wlw166-9318.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-2-4-ar-b-s-5005.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-2-4-ar-t190-s-5006.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-7-mbb-ar-e-wlw-7-mbb-ar-logatherm-wlw176i-2-9316.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw166i-7-mbb-ar-t180-wlw-7-mbb-ar-logatherm-wlw166-9319.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-wlw196i-11-a-h-4666.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logatherm-wlw196i-6-ar-tp120-3329.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw176i-10-ar-e-logatherm-wlw-10-mb-ar-wlw176i-12-e-2871.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw176i-12-ar-e-logatherm-wlw-12-mb-ar-wlw176i-12-e-2888.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw186i-10-ar-e-logatherm-wlw-10-mb-ar-wlw186i-12-e-2878.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw176i-10-ar-tp70-logatherm-wlw-10-mb-ar-wlw176i-1-2868.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-logaplus-m-wlw176i-10-ar-t180-logatherm-wlw-10-mb-ar-wlw176i-1-2869.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/buderus-wlw286-2-42-9047.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-ech2o-10kw-300l-500l-h-c-biv-6049.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-ech2o-12kw-300l-500l-h-c-biv-6050.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-ech2o-8kw-300l-500l-h-c-biv-6048.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-f-10kw-180l-230lh-c-6044.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-f-12kw-180l-230l-h-c-6045.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-f-8kw-180l-230l-h-c-6043.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-w-10kw-h-c-6039.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-w-12kw-h-c-6040.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-w-8kw-h-c-6038.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-ech2o-6kw-300l-500l-h-c-biv-6047.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-f-6kw-180l-230l-h-c-6042.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-w-6kw-h-c-6037.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-ech2o300l-6kw-h-c-biv-8160.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-ech2o300l-7kw-h-c-biv-8165.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-ech2o500l-6kw-h-c-biv-8161.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-ech2o500l-7kw-h-c-biv-8166.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-f180l-6kw-h-c-8157.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-f180l-7kw-h-c-8163.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-f230l-6kw-h-c-8158.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-f230l-7kw-h-c-8164.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-w-6kw-h-c-8156.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-epsks-ech2o300l-4kw-h-c-biv-8153.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-mt-ech2o-bg-10-300l-500l-h-c-biv-0321.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-4-h-ech2o-14kw-300l-500l-h-c-biv-6051.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-mt-ech2o-bg-8-300l-500l-h-c-biv-5356.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-mt-ech2o-bg-10-300l-500l-h-biv-5354.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk025czp-a1-9760.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-ht-ech2o-bg-14-500l-h-c-biv-0456.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-mt-ech2o-bg-8-300l-500l-h-biv-5353.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk020czp-a1-9758.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-ht-ech2o-bg-14-500l-h-biv-0457.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-daikin-altherma-3-h-mt-f-bg-10-230l-bi-zone-h-1563.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk085czp-a2-9776.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk025czn-a1-9759.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk050czp-a2-9767.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk020czn-a1-9757.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/daikin-ewyk085czn-a2-9775.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb083sp0-7218.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb08sp0-7219.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-8d-fbp-a-6496.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thmld-8d-3fbp--6495.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkl-10d-hbp-b-3311.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10d-3hbp-3312.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10s-6hbp-3313.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10s-9hbp-3314.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-8d-hbp-a-3290.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thmld-8d-3hbp--3289.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkl-10d-hbp-b-3315.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10d-3hbp-3316.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10s-6hbp-3317.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkld-10s-9hbp-3318.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-10d-hbp-a-3292.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thmld-10d-3hbp-3291.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb043sp0-7214.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-4d-fbp-a-6492.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb063sp0-7216.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-6d-fbp-a-6494.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb103sp0-7220.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb123tp0-7226.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkl-16d-hbp-a-3319.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-12d-hbp-a-3294.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-thml-12s-fbp-a-6504.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb123sp0-7222.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkl-16d-hbp-a-3331.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb143tp0-7232.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-smkl-6d-hbp-a--4984.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/gd-tcl-intelligent-heating-ventilating-equipment-co-ltd-hb143sp0-7228.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/samsung-ae050cxydek-ae160dnympk-6785.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae050cxydek-eu-ae200dnwmpk-eu-6777.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae050cxydgk-mim-e03fn-6793.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/samsung-ae050cxydgk-mim-e03gn-6801.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-hub-mono-ht-r290-5-200ai-6776.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-hub-mono-ht-r290-5-200-ae050cxydek-ae200cnwmeg-3272.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-hydro-mono-ht-r290-5-160ai-6784.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-mono-ht-r290-5-re-ai-6792.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-mono-ht-r290-5-re-ka-6800.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-mono-ht-r290-5-re-ae050cxydek-mim-e03en-3277.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/samsung-wplw-hub-mono-ht-r290-5-200-ae050cxydek-ae200rnwmeg-4398.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/samsung-ae120bxydgg-eu-ae160dnympk-eu-6736.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae120bxydgg-eu-ae200dnwmpk-eu-6730.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae120bxydgg-eu-mim-e03fn-6743.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae120bxydgg-eu-mim-e03gn-6749.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/samsung-ae120cxydgk-ae160dnympk-6789.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae080cxydgk-ae160dnympk-6787.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae140bxydgg-eu-ae160dnympk-eu-6738.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae125dxedgg-eu-ae200dnwspg-eu-9544.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae160cxydgk-ae160dnympk-6791.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae160dxedgg-eu-ae160dnzspg-eu-7689.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae125hctpes-eu-ae160dnympk-eu-8902.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae080bxydgg-eu-ae160dnympk-eu-6734.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/samsung-ae160hctpgs-eu-ae160dnympk-eu-8907.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/ait-helox-se-14-1p-9438.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-helox-se-14-3p-9439.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-se-14-1p-9244.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-se-14-3p-9245.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/ait-helox-11-4270.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-11-4163.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/ait-helox-16-3750.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-16-3749.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/ait-ladv-9-hdv-12-0642.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-ladv-9-hdv-9-0643.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-ladv-9-hsdv-12-1-0660.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-ladv-9-hsdv-9-0644.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-lwdv-91-1-3-hdv-9-1-3-3453.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/ait-lwdv-91-1-3-hsdv-12-1m3-3513.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-helox-se-11-1p-9436.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-helox-se-8-1p-9434.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-helox-se-5-1p-9433.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-5-2809.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-lwdv-91-1-3-hdv-12-3-3452.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-hybrox-8-2810.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-lwav-82r1-3-hv-12-3-3520.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-paros-4-1-3578.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-lav-8-hsv-12-1-0662.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/ait-jabbah-5-1-0676.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-control-box-3-5hp-rasm-3-5vtw2e-atw-cbx-01-7776.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-h-3-5hp-rasm-3-5vtw2e-hwm-w2e-b-7756.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-h-combi-3-5hp-rasm-3-5vtw2e-hwd-w2e-220s-7767.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-5hp-ras-5whvnpe-rwm-5-0n1e-7737.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-combi-5hp-ras-5whvnpe-rwd-5-0nw1e-220s-k-6652.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-5hp-ras-5whnpe-rwm-5-0n1e-6646.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-combi-5hp-ras-5whnpe-rwd-5-0nw1e-220s-k-6655.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-4hp-ras-4whvnpe-rwm-4-0n1e-7736.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-combi-4hp-ras-4whvnpe-rwd-4-0nw1e-220s-k-6651.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-2hp-ras-2whvrp1-rwm-2-0r1e-6715.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-4hp-ras-4whnpe-rwm-4-0n1e-6645.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-combi-2hp-ras-2whvrp1-rwd-2-0rw1e-220s-k-6648.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/hitachi-yutaki-s-combi-4hp-ras-4whnpe-rwd-4-0nw1e-220s-k-6654.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-control-box-6hp-rasm-6tw2e-atw-cbx-01-7782.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-h-combi-4hp-rasm-4tw2e-hwd-w2e-220s-7771.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-control-box-4hp-rasm-4tw2e-atw-cbx-01-7780.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-control-box-5hp-rasm-5tw2e-atw-cbx-01-7781.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-h-combi-5hp-rasm-5tw2e-hwd-w2e-220s-7772.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-control-box-2hp-rasm-2vtw2e-atw-cbx-01-7774.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/hitachi-airh2o-800-h-combi-6hp-rasm-6tw2e-hwd-w2e-220s-7773.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-vitocal-200-a-awmof-201-a1-10-230-v005-9959.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh-m008h-4024.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh-m010h-4025.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
@@ -289,18 +275,18 @@
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh-m004h-4022.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh006hp-3136.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh-m012h-4026.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh-m012h-9-4027.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh010h1-ng-7409.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/carrier-30awh010h19-ng-7410.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-11-oed-t-b-cs8800iaw-11-o-t-b-awei-d-9185.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-11-ombd-t-b-cs8800iaw-11-o-t-b-awmbi-d-9192.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-13-oed-t-b-cs8800iaw-13-o-t-b-awei-d-9195.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-13-ombd-t-b-cs8800iaw-13-o-t-b-awmbi-d-9197.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs5001aw-22-9046.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs-7001i-aw-7-or-m-ms-e-b-s-3530.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-13-oe-t-cs3800iaw-13-o-t-awei-9893.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-13-om-t-cs3800iaw-13-o-t-awmi-9894.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs-7400i-aw-7-or-m-ms-e-b-s-3722.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-15-oed-t-b-cs8800iaw-15-o-t-b-awei-d-9199.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
-  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs8800iaw-15-ombd-t-b-cs8800iaw-15-o-t-b-awmbi-d-9200.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
   <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-10-oe-t-cs3800iaw-10-o-t-awei-9891.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-4-oe-s-cs3800iaw-4-o-s-awei-9269.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs-7400i-aw-5-or-m-ms-e-b-s-3721.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-6-oe-s-cs3800iaw-6-o-s-awei-9271.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
+  <url><loc>https://www.heatpumpdb.eu/models/bosch-compress-cs3800iaw-7-oe-s-cs3800iaw-7-o-s-awei-9272.html</loc><lastmod>2026-08-01</lastmod><changefreq>monthly</changefreq></url>
 </urlset>
