@@ -414,6 +414,11 @@ const App: React.FC = () => {
    * queue. The profile is created active and the seat is claimed at once.
    */
   const handleInvitedSignup = async (values: SignupFormValues) => {
+    // Same account/data-use consent popup as every other registration path
+    // (one account per person; no data extraction) — invited seats included.
+    try { await requestTermsConsent(); }
+    catch { alert(t.termsDeclined); return; }
+
     setIsLoading(true);
     try {
       const user = await registerInvitedMember(inviteOrgId, {
@@ -584,6 +589,24 @@ const App: React.FC = () => {
   ) : null;
 
   // ... (Previous JSX code) ...
+  // Invited team member arriving on their invitation link: this MUST be checked
+  // before the LANDING branch — the initial view state is 'LANDING', so placing
+  // it later makes the invited-signup screen unreachable (defect found 2026-08-02:
+  // invite links showed the ordinary landing page).
+  if (isInvite && !currentUser) {
+    return (
+      <AuthShell t={t} language={language} setLanguage={setLanguage}>
+        {termsModal}
+        <GlassCard className="w-full max-w-xl p-8 hp-fade-up" >
+          <h2 className="text-2xl font-bold text-white mb-1" data-testid="invite-title">{t.invTitle}</h2>
+          <p className="text-white/50 text-sm mb-6">{t.invSub}</p>
+          <SignupForm t={t} language={language} isLoading={isLoading} invitedEmail={invitedEmail} onSubmit={handleInvitedSignup} />
+          <LegalFooter language={language} dark />
+        </GlassCard>
+      </AuthShell>
+    );
+  }
+
   if (currentView === 'LANDING') {
     return (
       <AuthShell t={t} language={language} setLanguage={setLanguage}>
@@ -737,19 +760,6 @@ const App: React.FC = () => {
       </AuthShell>
     );
   }
-  if (isInvite && !currentUser) {
-    return (
-      <AuthShell t={t} language={language} setLanguage={setLanguage}>
-        <GlassCard className="w-full max-w-xl p-8 hp-fade-up" >
-          <h2 className="text-2xl font-bold text-white mb-1" data-testid="invite-title">{t.invTitle}</h2>
-          <p className="text-white/50 text-sm mb-6">{t.invSub}</p>
-          <SignupForm t={t} language={language} isLoading={isLoading} invitedEmail={invitedEmail} onSubmit={handleInvitedSignup} />
-          <LegalFooter language={language} dark />
-        </GlassCard>
-      </AuthShell>
-    );
-  }
-
   // Registration pause — the Sign Up entry stays visible everywhere; choosing it
   // explains why it is closed instead of showing a form that cannot succeed.
   // Same copy in every country edition (DE/GB/FR), localized by the active UI
@@ -782,6 +792,7 @@ const App: React.FC = () => {
   if (currentView === 'SIGNUP') {
     return (
       <AuthShell t={t} language={language} setLanguage={setLanguage}>
+        {termsModal}
         <GlassCard className="w-full max-w-2xl p-8 hp-fade-up">
           <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-6 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.createAccount}</h2>
