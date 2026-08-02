@@ -883,7 +883,21 @@ functions.http('autoUpdateDatabase', async (req, res) => {
   console.log(`=== Auto Update Started === Budget limit: $${budgetLimitUsd} | ${new Date().toISOString()}`);
 
   try {
-    const newsOnly = req.query?.newsOnly === 'true' || req.body?.newsOnly === true;
+    /*
+     * newsOnly is the DEFAULT (hardened 2026-08-02). Everything the product
+     * actually serves — news + policies — lives in this mode. The remaining
+     * "full" mode is the LEGACY manufacturer-research loop, which writes
+     * AI-researched rows into countries/DE/products, a collection no app
+     * reads (the catalogue comes from the Storage datasets). It used to run
+     * whenever a caller merely omitted newsOnly, so a single mis-shaped
+     * request — or a guessed API key — could start it. It now requires an
+     * explicit, deliberate ?full=true.
+     */
+    const fullLegacyRun = req.query?.full === 'true' || req.body?.full === true;
+    const newsOnly = !fullLegacyRun;
+    if (fullLegacyRun) {
+      console.warn('LEGACY full run requested (?full=true) — this writes countries/DE/products, which no app reads.');
+    }
     // ?countries=GB or ?countries=DE,GB (body: {"countries":["GB"]}) narrows
     // the run to specific markets; default = all configured markets.
     const countriesRaw = req.query?.countries ?? req.body?.countries;
