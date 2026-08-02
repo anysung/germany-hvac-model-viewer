@@ -129,7 +129,7 @@ service cloud.firestore {
           request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['status', 'isActive', 'deletionRequestedAt', 'deletionNote', 'lastActiveAt']) &&
           (
-            // Self-service deletion request (Apple 5.1.1(v) / Google Play account deletion)
+            // Self-service deletion request (GDPR Art. 17 right to erasure)
             request.resource.data.status == 'deletion_requested' ||
             // Heartbeat-only update
             request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastActiveAt'])

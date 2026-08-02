@@ -39,7 +39,7 @@ import { AdminLang, ADMIN_I18N, loadAdminLang, saveAdminLang } from './component
 // Unified operations console build (own hosting site, all markets, admin-only).
 const IS_ADMIN_BUILD = PUBLIC_ENV.APP_MODE === 'admin';
 // Use Firestore Service
-import { getProducts, getCommercialProducts, getNews, getPolicies, getBAFA } from './services/dbService';
+import { getProducts, getCommercialProducts, getNews, getPolicies } from './services/dbService';
 
 type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'VERIFY_EMAIL' | 'APP' | 'ADMIN_DASHBOARD' | 'COUNTRY_MISMATCH';
 
@@ -285,12 +285,11 @@ const App: React.FC = () => {
         let productsFailed = false;
         const orEmpty = <T,>(p: Promise<T[]>): Promise<T[]> =>
           p.catch(err => { console.error('Dataset load failed:', err); productsFailed = true; return []; });
-        const [products, commercialProducts, news, policies, bafa] = await Promise.all([
+        const [products, commercialProducts, news, policies] = await Promise.all([
             orEmpty(getProducts()),
             orEmpty(getCommercialProducts()),
             getNews(),
-            getPolicies(),
-            getBAFA()
+            getPolicies()
         ]);
         setDatasetsFailed(productsFailed);
 
@@ -301,8 +300,7 @@ const App: React.FC = () => {
             products: products,
             commercialProducts: commercialProducts,
             newsFeed: news,
-            policySummary: policies,
-            bafaListLinks: bafa
+            policySummary: policies
         };
         setFullDatabase(dbData);
       } catch (err) {

@@ -106,7 +106,10 @@ check('CTA reads "continue to plan selection"',
 // lives in the Legal Notice; the sensitive registration NUMBER appears ONLY there.
 const FORBIDDEN = [
   [/to be completed|zu ergänzen|à compléter|\[.*?\]/i, 'placeholder'],
-  [/app store|App Store|App-Store|Google Play|in-app purchase|boutique d.applications/i, 'app-store wording'],
+  // Widened 2026-08-02: the old pattern missed "Store subscriptions" (EN) and
+  // "abonnements boutique" (FR), which survived in the delete-account dialog
+  // long after app-store distribution was dropped.
+  [/app store|App-Store|Google Play|in-app purchase|boutique d.applications|store subscription|abonnements? boutique|restore purchases?/i, 'app-store wording'],
 ];
 
 for (const [path, id] of [['/privacy', 'legal-privacy'], ['/terms', 'legal-terms'], ['/refund-policy', 'legal-refund'], ['/imprint', 'legal-imprint']]) {

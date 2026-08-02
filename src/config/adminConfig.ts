@@ -79,18 +79,6 @@ export const USER_ROLES: { value: UserRole; label: string; isAdmin: boolean }[] 
 
 export type EntitlementSource = 'plan' | 'admin_override' | 'promo' | 'system';
 
-// ── Billing Channels ──────────────────────────────────────────────────
-
-export type BillingChannel = 'apple' | 'google' | 'direct' | 'admin_grant' | 'trial';
-
-export const BILLING_CHANNELS: { value: BillingChannel; label: string }[] = [
-  { value: 'apple',       label: 'Apple App Store' },
-  { value: 'google',      label: 'Google Play' },
-  { value: 'direct',      label: 'Direct (Stripe)' },
-  { value: 'admin_grant', label: 'Admin Grant' },
-  { value: 'trial',       label: 'Trial' },
-];
-
 // ── Audit Action Types ────────────────────────────────────────────────
 
 export const AUDIT_ACTIONS = [

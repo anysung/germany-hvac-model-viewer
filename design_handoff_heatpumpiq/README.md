@@ -71,16 +71,39 @@ Dark hero "Funding, step by step." with **For homeowners | For installers** pill
 ### 7. News (curated, low-frequency)
 "Market intelligence." + "Curated · updated 2–3× monthly" chip; dark featured card (category badge, 28px headline, dek, Sky Link Blue "Read the briefing ›"); 3 article cards (category badge, 18px headline, dek, date + read time); parchment newsletter band with blue "Subscribe ›".
 
-### 8. Account (app-store compliance page, via avatar)
+### 8. Account (via avatar)
+
+> **Superseded, 2026-08-02 — read this before following the card list below.**
+> This section was written when app-store distribution was still planned. **It
+> no longer is: HeatPump DB is web-only and billed through Paddle (merchant of
+> record).** The original text is kept for design provenance, but the
+> app-store clauses are void:
+> * **No "Restore purchases" button.** It was a store requirement; there is no
+>   store. Do not reintroduce it.
+> * Plan changes and cancellation happen **in-app / via the Paddle billing
+>   portal**, never "in Google Play / App Store". Plan, term and seats are
+>   fixed for a paid period and change at the next renewal
+>   (`subscriptionChangeRequests`).
+> * The delete-account note must reference an **active subscription under
+>   Billing**, not a store subscription.
+> * **No "Use on the web" card** and no `/enter` route — the web *is* the
+>   product. (`MARKET_ENTER_URL` was removed on 2026-08-02.)
+> * Pricing/trial wording here is stale: see `src/config/subscriptionPlans.ts`
+>   (Professional / Team 3 / Team 5 × monthly / 6-month / annual). Checkout
+>   charges immediately; the free first week is granted at signup, not by a
+>   plan.
+> The live implementation is `src/hpiq/pages/AccountPage.tsx` +
+> `accountParts.tsx`; where the two disagree, the implementation wins.
+
 Parchment header "Account." Content max-width 1160px:
-- **Subscription card**: "HeatpumpIQ Pro — active" badge, renewal date + €29/month, 7-day free-trial note, note that plan changes/cancellation happen in Google Play / App Store, buttons "Manage plan ›" + "Restore purchases" (store requirement), side panel "INCLUDED IN PRO" list.
+- **Subscription card**: plan badge + status, renewal date and price, "Manage plan ›", side panel of included features.
 - **Profile card**: email / display name / company / role rows + "Edit profile ›".
-- **App language card**: Deutsch | English segmented control (Deutsch default for Germany edition).
-- **Use on the web card**: sync explanation, monospace link chip `www.heatpumpiq.de/enter`, "Copy link" + "Email me the link".
+- **App language card**: segmented control (market's own languages; see `src/hpiq/market.ts`).
+- **Sign-in methods card**: email & password / Google / Apple, connect + disconnect (added 2026-08-02).
 - **Email & password card**: secure setup link by email.
 - **Support card**: 1–3 business days reply, "Contact support & view replies ›".
 - **Terms & policies card**: Privacy policy › / Terms of use › / **Impressum ›** (German legal requirement).
-- **Delete account card**: permanence warning, boxed note *"Subscriptions started via the App Store or Google Play must be cancelled directly in that store before deleting the account"* (store requirement), bordered "Delete account" button (kept quiet/ink — no red accent in this design system).
+- **Delete account card**: permanence warning, note that an active subscription must be cancelled separately under Billing, bordered "Delete account" button (kept quiet/ink — no red accent in this design system).
 
 ## Interactions & state (summary)
 State: `page`, `query`, `compare[]` (max 4), `selectedId`, `labelSelId`, `showCompare`, `dsMode`, `dsId`, `dsSections{}`, `refFilter`, `classFilter`, `mfrFilter[]`, `guideTab`, `checked{}`, `faqOpen`, `lang`. All cross-page links preserve context (e.g. Find→Products selects the row; label inspector→Data sheet switches to label mode with the model preselected). Selection/compare updates are optimistic (instant). Loading is expressed via skeleton rows, never spinners or blocking screens.

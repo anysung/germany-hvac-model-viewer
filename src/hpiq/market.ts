@@ -94,8 +94,7 @@ export const MARKET_ICON_32 = IS_GB ? '/icons/uk-32.png' : `/icons/${ACTIVE_COUN
  */
 export const MARKET_WEB_DOMAIN = IS_GB ? 'www.heatpumpdb.uk' : IS_FR ? 'www.heatpumpdb.fr' : IS_PL ? 'www.heatpumpdb.pl' : IS_IT ? 'www.heatpumpdb.it' : 'www.heatpumpdb.de';
 
-/** Sign-in entry URL shown on the Account page ("use on the web"). */
-export const MARKET_ENTER_URL = `${MARKET_WEB_DOMAIN}/enter`;
+
 
 /**
  * Every market's public site — used by the one-email-one-country redirect

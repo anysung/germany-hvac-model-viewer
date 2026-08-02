@@ -1,7 +1,7 @@
 import { collection, getDocs, getDoc, doc, query, limit } from 'firebase/firestore';
 import { ref, getBlob, getMetadata as getStorageMetadata, type StorageReference } from 'firebase/storage';
 import { db, datasetStorage } from '../firebase';
-import { HeatPump, NewsItem, PolicyItem, BAFAItem } from '../types';
+import { HeatPump, NewsItem, PolicyItem } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 import { cacheGet, cachePut } from './datasetCache';
 
@@ -9,7 +9,6 @@ import { cacheGet, cachePut } from './datasetCache';
 // all country-specific routing is driven by ACTIVE_COUNTRY, not hardcoded strings.
 const NEWS_REF   = `${ACTIVE_COUNTRY.firestoreRoot}/news`;
 const POLICY_REF = `${ACTIVE_COUNTRY.firestoreRoot}/policies`;
-const BAFA_REF   = `${ACTIVE_COUNTRY.firestoreRoot}/bafa`;
 
 /**
  * Load a product dataset.
@@ -139,16 +138,6 @@ export const getPolicies = async (): Promise<PolicyItem[]> => {
     return snapshot.docs.map(doc => doc.data() as PolicyItem);
   } catch (error) {
     console.error("Error fetching policies:", error);
-    return [];
-  }
-};
-
-export const getBAFA = async (): Promise<BAFAItem[]> => {
-  try {
-    const snapshot = await getDocs(collection(db, BAFA_REF));
-    return snapshot.docs.map(d => d.data() as BAFAItem);
-  } catch (error) {
-    console.error("Error fetching BAFA:", error);
     return [];
   }
 };
