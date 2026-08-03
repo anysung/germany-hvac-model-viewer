@@ -41,6 +41,7 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
   const [dType, setDType] = useState<'percentage' | 'flat'>('percentage');
   const [amount, setAmount] = useState('');
   const [recurN, setRecurN] = useState('');
+  const [usageLimit, setUsageLimit] = useState('');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
 
@@ -75,6 +76,7 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
           description: description.trim(), type: dType, amount: amount.trim(),
           code: c, enabledForCheckout: true,
           ...(recurN.trim() ? { recur: true, maxRecurringIntervals: Number(recurN) } : {}),
+          ...(usageLimit.trim() ? { usageLimit: Number(usageLimit) } : {}),
           expiresAt: new Date(endsAt + 'T23:59:59Z').toISOString(),
           ...(restrictToPlans ? { restrictToPlans } : {}),
         });
@@ -141,6 +143,10 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
         <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
           {A.pmRecur}
           <input value={recurN} onChange={e => setRecurN(e.target.value.replace(/[^0-9]/g, ''))} placeholder="1" className={`${inp} w-20 font-normal`} />
+        </label>
+        <label className="flex flex-col gap-1 text-xs font-bold text-gray-500" title={A.pmUsageLimitHint}>
+          {A.pmUsageLimit}
+          <input value={usageLimit} onChange={e => setUsageLimit(e.target.value.replace(/[^0-9]/g, ''))} placeholder="100" className={`${inp} w-24 font-normal`} />
         </label>
         <label className="flex flex-col gap-1 text-xs font-bold text-gray-500 flex-grow min-w-[200px]">
           {A.pmDescription}

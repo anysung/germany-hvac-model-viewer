@@ -199,7 +199,9 @@ const EN = {
   // Discount campaigns (registry — no Paddle writes)
   pmTitle: 'Discount campaigns',
   pmText: 'Register a promotion so you can tell later which campaign a discounted invoice came from.',
-  pmBoundary: 'Bookkeeping only. Create the discount itself in the Paddle dashboard (a used discount can never be edited), then record its id here. Nothing on this page changes what a customer is charged.',
+  pmBoundary: 'Saving with a type + amount CREATES the real discount in Paddle (server-side) and records its dsc_ id here. Paddle alone validates codes and computes prices — a used discount can never be edited, so double-check before saving. A discount made in the Paddle dashboard can still be registered by pasting its dsc_ id.',
+  pmUsageLimit: 'Usage limit (people)',
+  pmUsageLimitHint: 'e.g. 100 = first 100 redemptions, then the code stops working. Empty = unlimited. Renewals never count.',
   pmCode: 'Coupon code',
   pmPaddleId: 'Paddle discount id',
   pmDescription: 'What the customer gets',
@@ -418,7 +420,9 @@ const KO: typeof EN = {
   // 할인 캠페인 (등록부 — Paddle 쓰기 없음)
   pmTitle: '할인 캠페인',
   pmText: '나중에 할인된 청구서가 어느 캠페인에서 나온 것인지 확인할 수 있도록 프로모션을 등록합니다.',
-  pmBoundary: '기록 전용입니다. 할인 자체는 Paddle 대시보드에서 만드세요(사용된 할인은 수정이 불가능합니다). 그 id를 여기에 기록해 두는 것이며, 이 페이지는 고객 청구액을 바꾸지 않습니다.',
+  pmBoundary: '유형+금액을 넣고 저장하면 서버가 Paddle에 실제 할인을 생성하고 dsc_ id를 여기에 기록합니다. 코드 검증과 가격 계산은 전적으로 Paddle이 합니다 — 사용된 할인은 수정이 불가능하니 저장 전에 다시 확인하세요. Paddle 대시보드에서 만든 할인은 dsc_ id를 붙여넣어 등록할 수도 있습니다.',
+  pmUsageLimit: '사용 한도(인원)',
+  pmUsageLimitHint: '예: 100 = 선착순 100회 사용 후 코드 자동 중지. 비우면 무제한. 갱신 결제는 횟수에 포함되지 않습니다.',
   pmCode: '쿠폰 코드',
   pmPaddleId: 'Paddle 할인 id',
   pmDescription: '혜택 내용',
