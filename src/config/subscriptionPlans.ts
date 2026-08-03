@@ -143,3 +143,37 @@ export function subscriptionUnlocked(status: SubStatus | undefined | null, perio
   if (status === 'canceled' && periodEndsAt) return new Date(periodEndsAt).getTime() > Date.now();
   return false;
 }
+
+/* ── Entitlement view (2026-08-03 two-layer program) ─────────────────────────
+ * `user.subscription` = paid facts, written ONLY by the Paddle webhook.
+ * `user.grant`        = marketing free access, written only by admin tooling.
+ * Display and unlock decisions read the EFFECTIVE view below; the layers
+ * never write into each other, so a paid subscription starting during a
+ * grant simply takes the lead (auto-conversion) with no data conflict. */
+
+import type { User, UserGrant, UserSubscription } from '../types';
+
+/** A marketing grant presented in the UserSubscription shape the UI knows. */
+export function grantAsSubscription(g: UserGrant | null | undefined): UserSubscription | null {
+  if (!g) return null;
+  const activeNow = new Date(g.endsAt).getTime() > Date.now();
+  return {
+    provider: 'free_grant',
+    planCode: g.planCode,
+    status: activeNow ? 'active' : 'expired',
+    seatLimit: SUB_PLANS[g.planCode]?.seatLimit ?? 1,
+    paidPeriodStartsAt: g.startsAt,
+    currentPeriodEndsAt: g.endsAt,
+    cancelAtPeriodEnd: true,
+  };
+}
+
+/** The subscription-like record the UI should show: an unlocking paid
+ *  subscription wins; otherwise an active grant; otherwise whichever exists. */
+export function effectiveSubscription(user: Pick<User, 'subscription' | 'grant'>): UserSubscription | null {
+  const sub = user.subscription ?? null;
+  if (sub && subscriptionUnlocked(sub.status, sub.currentPeriodEndsAt)) return sub;
+  const g = grantAsSubscription(user.grant);
+  if (g && g.status === 'active') return g;
+  return sub ?? g;
+}

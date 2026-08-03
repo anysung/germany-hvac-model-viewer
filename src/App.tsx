@@ -15,7 +15,7 @@ import {
   SUB_PLANS, SUB_PLAN_CODES, SUB_PLAN_NAMES, BILLING_TERMS, TERM_NAMES,
   formatEur, perMonth, checkoutConfigured, BillingTerm, SubPlanCode,
 } from './config/subscriptionPlans';
-import { openCheckout } from './services/paddleService';
+import { openCheckout, captureCouponFromUrl } from './services/paddleService';
 import { HpiqApp } from './hpiq/HpiqApp';
 import { AdminDashboard } from './components/AdminDashboard';
 import {
@@ -177,6 +177,9 @@ const App: React.FC = () => {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPass, setLoginPass] = useState('');
   // Team invitation link produced by the Team Owner in Account → Team management.
+  // Campaign coupon links (?coupon=CODE): stash for checkout before anything
+  // else touches the URL.
+  captureCouponFromUrl();
   const inviteParams = new URLSearchParams(window.location.search);
   const inviteOrgId = inviteParams.get('invite') ?? '';
   const invitedEmail = (inviteParams.get('email') ?? '').trim().toLowerCase();

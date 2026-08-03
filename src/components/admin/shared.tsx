@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { PlanCode, USER_STATUS_OPTIONS } from '../../config/adminConfig';
-import { SUB_PLAN_NAMES } from '../../config/subscriptionPlans';
+import { SUB_PLAN_NAMES, effectiveSubscription } from '../../config/subscriptionPlans';
 
 // ── Status Badge ──────────────────────────────────────────────────────
 
@@ -56,7 +56,9 @@ const SUB_STATUS_COLORS: Record<string, string> = {
 };
 
 export const SubBadge: React.FC<{ user: UserLike }> = ({ user }) => {
-  const sub = user.subscription;
+  // Two-layer view (2026-08-03): an unlocking PAID subscription wins; else an
+  // active marketing grant shows as "<plan> · active · free".
+  const sub = effectiveSubscription(user as any);
   if (!sub) {
     return <span className="px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap border bg-gray-50 text-gray-400 border-gray-200">—</span>;
   }
@@ -69,7 +71,7 @@ export const SubBadge: React.FC<{ user: UserLike }> = ({ user }) => {
   );
 };
 
-interface UserLike { subscription?: { planCode: string; status: string; provider?: string } }
+interface UserLike { subscription?: { planCode: string; status: string; provider?: string }; grant?: unknown }
 
 // ── Action Badge (for logs) ───────────────────────────────────────────
 

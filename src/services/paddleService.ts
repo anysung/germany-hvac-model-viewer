@@ -83,17 +83,37 @@ function loadPaddle(user?: User | null): Promise<any> {
  * the billing webhook attach the subscription to the Firebase account (and
  * the team org) regardless of the email used at checkout.
  */
+const COUPON_KEY = 'hpdb-coupon';
+
+/** Stash a campaign link's ?coupon=CODE for the (possibly later) checkout. */
+export function captureCouponFromUrl(): void {
+  try {
+    const code = new URLSearchParams(window.location.search).get('coupon');
+    if (code && /^[a-zA-Z0-9]{1,32}$/.test(code)) sessionStorage.setItem(COUPON_KEY, code.toUpperCase());
+  } catch { /* storage unavailable — the checkout field still works */ }
+}
+
+function pendingCouponCode(): string | null {
+  try { return sessionStorage.getItem(COUPON_KEY); } catch { return null; }
+}
+
 export async function openCheckout(user: User, plan: SubPlanCode, term: BillingTerm): Promise<void> {
   if (!checkoutConfigured(plan, term)) throw new Error('paddle-not-configured');
   const paddle = await loadPaddle(user);
+  // Marketing coupons (owner program 2026-08-03): the overlay shows Paddle's
+  // own discount-code field, and a code carried in from a campaign link
+  // (?coupon=CODE, stashed at app start) is pre-applied. Paddle alone
+  // validates codes and computes prices — the app never does.
+  const coupon = pendingCouponCode();
   paddle.Checkout.open({
     items: [{ priceId: paddlePriceId(plan, term), quantity: 1 }],
     customer: user.email ? { email: user.email } : undefined,
+    ...(coupon ? { discountCode: coupon } : {}),
     customData: {
       userId: user.id, planCode: plan, billingTerm: term,
       country: user.country ?? '', orgId: user.orgId ?? '',
     },
-    settings: { displayMode: 'overlay', theme: 'dark' },
+    settings: { displayMode: 'overlay', theme: 'dark', showAddDiscounts: true },
   });
 }
 

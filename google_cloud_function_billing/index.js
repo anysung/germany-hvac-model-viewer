@@ -41,6 +41,90 @@ const RETENTION_DAYS = 365;
 const TEAM_PLANS = { team_3: 3, team_5: 5 };
 const PLAN_SEATS = { professional: 1, team_3: 3, team_5: 5 };
 
+// ---------------------------------------------------------------------------
+// Paddle catalogue + server-side API (2026-08-03 program)
+//
+// The webhook derives plan/term from the PRICE ID on the subscription items —
+// custom_data is only a fallback. custom_data is written once at checkout and
+// never updated by Paddle when items change, so deriving the plan from it
+// would freeze a subscription on its original plan after an upgrade.
+// ---------------------------------------------------------------------------
+const PADDLE_ENV = (process.env.PADDLE_ENV || 'live').toLowerCase();
+const PADDLE_API_BASE = PADDLE_ENV === 'sandbox' ? 'https://sandbox-api.paddle.com' : 'https://api.paddle.com';
+
+const PRICE_CATALOGUE = {
+  live: {
+    pri_01kxxw08bvfz6fe8ke0x4zgnt7: ['professional', 'monthly'],
+    pri_01kxxw3yy10aw2qdy7y64xa0yn: ['professional', 'six_months'],
+    pri_01kxxw5qbvmfx75rc7f42p5d50: ['professional', 'annual'],
+    pri_01kxxw8xtvk8dvpa60c0dzxyvn: ['team_3', 'monthly'],
+    pri_01kxxwbgmpnj9jvcp218evxqfc: ['team_3', 'six_months'],
+    pri_01kxxwde1bwd4x7tgn6sypkb4g: ['team_3', 'annual'],
+    pri_01kxxwfm97ve7nfgnggtshfs49: ['team_5', 'monthly'],
+    pri_01kxxwhr4xyeq9gwd567j2x7me: ['team_5', 'six_months'],
+    pri_01kxxwkhfjj3wsy5k7jekt2acn: ['team_5', 'annual'],
+  },
+  sandbox: {
+    pri_01kxchdg26azdq1przy3hnezff: ['professional', 'monthly'],
+    pri_01kxchdgawhejbptxtdgm6j5wq: ['professional', 'six_months'],
+    pri_01kxchdgj2w4gpdmdfbqkhtsqn: ['professional', 'annual'],
+    pri_01kxchdh34vrxtxth8bkpzmh8n: ['team_3', 'monthly'],
+    pri_01kxchdh7r99cm3fwk1bz1gz0k: ['team_3', 'six_months'],
+    pri_01kxchdhcm7efjmkh7s1673j82: ['team_3', 'annual'],
+    pri_01kxchdhrmrtqmhataynyqdcdm: ['team_5', 'monthly'],
+    pri_01kxchdj04dzbf9j5s92tkwvvz: ['team_5', 'six_months'],
+    pri_01kxchdj4rtpj7ndzj30sawddw: ['team_5', 'annual'],
+  },
+};
+/** price_id → [planCode, billingTerm], searching both environments (webhooks
+ *  from either environment must resolve; ids are globally unique). */
+function planFromPriceId(priceId) {
+  return PRICE_CATALOGUE.live[priceId] || PRICE_CATALOGUE.sandbox[priceId] || null;
+}
+function priceIdFor(planCode, billingTerm) {
+  const cat = PRICE_CATALOGUE[PADDLE_ENV] || PRICE_CATALOGUE.live;
+  for (const [id, [p, t]] of Object.entries(cat)) if (p === planCode && t === billingTerm) return id;
+  return null;
+}
+/** Derive [planCode, billingTerm] from subscription items; null when unknown. */
+function planFromItems(sub) {
+  for (const item of (sub && sub.items) || []) {
+    const id = item && item.price && item.price.id;
+    const hit = id && planFromPriceId(id);
+    if (hit) return hit;
+  }
+  return null;
+}
+
+/** Server-side Paddle API call. Throws on non-2xx with the response body. */
+async function paddleApi(method, apiPath, body) {
+  const key = process.env.PADDLE_API_KEY;
+  if (!key) { const e = new Error('paddle-api-key-missing'); e.code = 'paddle-api-key-missing'; throw e; }
+  const res = await fetch(`${PADDLE_API_BASE}${apiPath}`, {
+    method,
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const e = new Error(`paddle-api ${res.status}: ${JSON.stringify(json).slice(0, 300)}`);
+    e.code = 'paddle-api-error'; e.status = res.status; e.body = json;
+    throw e;
+  }
+  return json.data ?? json;
+}
+
+/** Admin gate for ops endpoints: signed-in caller whose profile role is
+ *  admin/owner. (verifyOwner stays the stricter gate for panic actions.) */
+async function verifyAdmin(req) {
+  const caller = await verifyCaller(req);
+  if (!caller) return null;
+  const snap = await db.collection('users').doc(caller.uid).get();
+  const role = snap.exists ? snap.data().role : null;
+  if (role === 'admin' || role === 'owner') return caller;
+  return null;
+}
+
 // Browser origins allowed to call the account endpoints. Extend via the
 // ALLOWED_ORIGINS env var (comma-separated) when a market domain is added —
 // this list is part of the market-expansion checklist, like the reCAPTCHA and
@@ -293,6 +377,30 @@ async function deleteAccount(req, res) {
 
   const userRef = db.collection('users').doc(uid);
   const changeRef = db.collection('subscriptionChangeRequests').doc(uid);
+
+  // A deleted account must not keep billing: cancel any Paddle subscription
+  // IMMEDIATELY first (the UI has already taken the double confirmation).
+  // Best effort — a Paddle outage must not trap the user in an undeletable
+  // account (owner: user convenience first), so on failure the deletion
+  // proceeds and the orphaned subscription is parked for the admin to cancel
+  // in the Paddle dashboard.
+  try {
+    const preSnap = await userRef.get();
+    const pre = preSnap.exists ? preSnap.data() : null;
+    const subId = pre && pre.paddleSubscriptionId;
+    const subActive = pre && pre.subscription && ['active', 'trialing', 'past_due'].includes(pre.subscription.status);
+    if (subId && subActive) {
+      await paddleApi('POST', `/subscriptions/${subId}/cancel`, { effective_from: 'immediately' });
+    }
+  } catch (e) {
+    console.error(`deleteAccount ${uid}: paddle cancel failed`, e);
+    await db.collection('paddleAdjustments').doc(`orphan-cancel-${uid}`).set({
+      kind: 'orphaned-subscription', uid,
+      note: 'Account deleted but the Paddle cancel call failed — cancel this subscription manually in the Paddle dashboard.',
+      error: String(e && e.message || e).slice(0, 300),
+      needsAdminReview: true, createdAt: nowIso(),
+    }, { merge: true }).catch(() => {});
+  }
 
   const result = await db.runTransaction(async (tx) => {
     const userSnap = await tx.get(userRef);
@@ -910,8 +1018,11 @@ async function applySubscriptionEvent(sub, eventType, occurredAt) {
     if (orgIdPre) orgSnap = await tx.get(db.collection('organizations').doc(orgIdPre));
 
     const custom = custom0;
-    const planCode = custom.planCode || (user.subscription && user.subscription.planCode) || 'professional';
-    const billingTerm = custom.billingTerm || (user.subscription && user.subscription.billingTerm) || null;
+    // Plan/term come from the PRICE on the subscription (custom_data is a
+    // checkout-time snapshot that Paddle never updates on item changes).
+    const derived = planFromItems(sub);
+    const planCode = (derived && derived[0]) || custom.planCode || (user.subscription && user.subscription.planCode) || 'professional';
+    const billingTerm = (derived && derived[1]) || custom.billingTerm || (user.subscription && user.subscription.billingTerm) || null;
     const status = PADDLE_STATUS_MAP[sub.status] || 'active';
     const periodEnd = sub.current_billing_period && sub.current_billing_period.ends_at
       ? sub.current_billing_period.ends_at : null;
@@ -932,13 +1043,27 @@ async function applySubscriptionEvent(sub, eventType, occurredAt) {
       lastPaddleEventAt: occurredAt || nowIso(),
     };
 
+    // Access window. GRANT-side facts extend; the ONE deny-side fact that may
+    // close the window is a CONFIRMED FINAL CANCELLATION (subscription.canceled)
+    // — the explicit exception the fail-open principle allows. past_due,
+    // refunds and ordering gaps still never shorten anything. A separate
+    // marketing grant (user.grant, outside Paddle) keeps its own window.
+    const isFinalCancel = eventType === 'subscription.canceled';
+    const grantEndMs = user.grant && user.grant.endsAt ? Date.parse(user.grant.endsAt) : null;
+    let windowPatch;
+    if (isFinalCancel) {
+      const floor = Math.max(Date.now(), grantEndMs && grantEndMs > Date.now() ? grantEndMs : 0);
+      windowPatch = { accessUntilTs: Timestamp.fromMillis(floor) };
+    } else {
+      windowPatch = extendWindowPatch(user.accessUntilTs, periodEnd ? Date.parse(periodEnd) : null);
+    }
+
     const patch = {
       subscription,
       billingChannel: 'paddle',
       paddleCustomerId: sub.customer_id || '',
       paddleSubscriptionId: sub.id,
-      // Extend-only: canceled/past_due keep whatever window is already paid.
-      ...extendWindowPatch(user.accessUntilTs, periodEnd ? Date.parse(periodEnd) : null),
+      ...windowPatch,
     };
     tx.update(userRef, patch);
 
@@ -950,8 +1075,22 @@ async function applySubscriptionEvent(sub, eventType, occurredAt) {
         seatLimit: PLAN_SEATS[planCode],
         subscriptionStatus: status,
         currentPeriodEndsAt: periodEnd || orgSnap.data().currentPeriodEndsAt || null,
-        ...extendWindowPatch(orgSnap.data().accessUntilTs, periodEnd ? Date.parse(periodEnd) : null),
+        ...(isFinalCancel
+          ? { accessUntilTs: Timestamp.fromMillis(Date.now()) }
+          : extendWindowPatch(orgSnap.data().accessUntilTs, periodEnd ? Date.parse(periodEnd) : null)),
       });
+    }
+
+    // Free-grant overlap: a paying subscription arrived while a marketing
+    // grant window is still open. Auto-conversion is the designed outcome
+    // (subscription now leads); park a bookkeeping note for the admin.
+    if (eventType === 'subscription.activated' && grantEndMs && grantEndMs > Date.now()) {
+      tx.set(db.collection('paddleAdjustments').doc(`grant-overlap-${uid}`), {
+        kind: 'grant-overlap', uid, subscriptionId: sub.id,
+        grantEndsAt: user.grant.endsAt, planCode,
+        note: 'Paying subscription started during an active free grant — auto-converted; review for bookkeeping only.',
+        needsAdminReview: true, createdAt: nowIso(),
+      }, { merge: true });
     }
   });
 }
@@ -1060,6 +1199,151 @@ async function paddleWebhook(req, res) {
 }
 
 // ---------------------------------------------------------------------------
+// Subscription self-service + admin ops via the Paddle API (2026-08-03)
+// ---------------------------------------------------------------------------
+
+const PLAN_RANK = { professional: 1, team_3: 2, team_5: 3 };
+const TERM_RANK = { monthly: 1, six_months: 2, annual: 3 };
+const CHANGE_COOLDOWN_DAYS = 30;
+
+/**
+ * /cancelSubscription — the user's own IMMEDIATE cancellation. The client has
+ * shown the two-step warning (remaining paid time is forfeited, no refund).
+ * Paddle is the source of truth: we call its cancel API and let the
+ * subscription.canceled webhook write the final state; a local best-effort
+ * mark makes the UI honest right away (idempotent with the webhook).
+ */
+async function cancelSubscription(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const userRef = db.collection('users').doc(caller.uid);
+  const snap = await userRef.get();
+  if (!snap.exists) return sendErr(res, 404, 'no-profile');
+  const user = snap.data();
+  const subId = user.paddleSubscriptionId;
+  if (!subId || !user.subscription) return sendErr(res, 400, 'no-subscription');
+  if (user.subscription.status === 'canceled') return res.status(200).json({ ok: true, alreadyCanceled: true });
+
+  await paddleApi('POST', `/subscriptions/${subId}/cancel`, { effective_from: 'immediately' });
+
+  const grantEndMs = user.grant && user.grant.endsAt ? Date.parse(user.grant.endsAt) : null;
+  const floor = Math.max(Date.now(), grantEndMs && grantEndMs > Date.now() ? grantEndMs : 0);
+  await userRef.update({
+    'subscription.status': 'canceled',
+    accessUntilTs: Timestamp.fromMillis(floor),
+  }).catch(() => {});
+  if (user.orgId && user.orgRole === 'team_admin') {
+    await db.collection('organizations').doc(user.orgId).update({
+      subscriptionStatus: 'canceled', accessUntilTs: Timestamp.fromMillis(Date.now()),
+    }).catch(() => {});
+  }
+  return res.status(200).json({ ok: true });
+}
+
+/**
+ * /applyPlanChange — admin approves a scheduled change request. UPGRADE-ONLY
+ * (owner rule 2026-08-03): plan and term may each only move up, never down —
+ * mid-term shrinking creates credits/proration the operation cannot settle
+ * cleanly across five VAT regimes. Applied via the Paddle API with
+ * do_not_bill: the upgrade is effective immediately, nothing is charged for
+ * the remainder of the current period, and the next renewal bills the new
+ * price. custom_data is refreshed so it can never contradict the items.
+ * One change per 30 days per subscriber.
+ */
+async function applyPlanChange(req, res) {
+  const adminCaller = await verifyAdmin(req);
+  if (!adminCaller) return sendErr(res, 403, 'admin-only');
+  const requestId = req.body && req.body.requestId;
+  if (!requestId) return sendErr(res, 400, 'missing-requestId');
+
+  const reqRef = db.collection('subscriptionChangeRequests').doc(requestId);
+  const reqSnap = await reqRef.get();
+  if (!reqSnap.exists) return sendErr(res, 404, 'request-not-found');
+  const change = reqSnap.data();
+  if (change.status !== 'scheduled') return sendErr(res, 409, 'request-not-scheduled');
+
+  const userRef = db.collection('users').doc(change.userId);
+  const userSnap = await userRef.get();
+  if (!userSnap.exists) return sendErr(res, 404, 'user-not-found');
+  const user = userSnap.data();
+  const sub = user.subscription;
+  const subId = user.paddleSubscriptionId;
+  if (!sub || !subId || !['active', 'trialing'].includes(sub.status)) return sendErr(res, 409, 'no-active-subscription');
+
+  const curPlan = sub.planCode, curTerm = sub.billingTerm || 'monthly';
+  const newPlan = change.requestedPlanCode, newTerm = change.requestedBillingTerm || curTerm;
+  const planUp = (PLAN_RANK[newPlan] || 0) - (PLAN_RANK[curPlan] || 0);
+  const termUp = (TERM_RANK[newTerm] || 0) - (TERM_RANK[curTerm] || 0);
+  if (planUp < 0 || termUp < 0) return sendErr(res, 422, 'downgrade-not-allowed');
+  if (planUp === 0 && termUp === 0) return sendErr(res, 422, 'no-change');
+
+  const last = user.lastPlanChangeAt ? Date.parse(user.lastPlanChangeAt) : null;
+  if (last && Date.now() - last < CHANGE_COOLDOWN_DAYS * 86400000) return sendErr(res, 429, 'change-cooldown');
+
+  const priceId = priceIdFor(newPlan, newTerm);
+  if (!priceId) return sendErr(res, 422, 'unknown-price');
+
+  await paddleApi('PATCH', `/subscriptions/${subId}`, {
+    items: [{ price_id: priceId, quantity: 1 }],
+    proration_billing_mode: 'do_not_bill',
+    custom_data: {
+      userId: change.userId, planCode: newPlan, billingTerm: newTerm,
+      country: user.country || '', orgId: user.orgId || '',
+    },
+  });
+
+  await reqRef.update({ status: 'applied', appliedAt: nowIso(), appliedBy: adminCaller.uid });
+  await userRef.update({ lastPlanChangeAt: nowIso() }).catch(() => {});
+  // The subscription.updated webhook writes the new plan/seat state; the org
+  // seat limit follows through the same path.
+  return res.status(200).json({ ok: true, appliedPriceId: priceId });
+}
+
+/**
+ * /createDiscount — admin creates a REAL Paddle discount; the client keeps a
+ * bookkeeping copy in `promotions`. Paddle owns validity/redemption; nothing
+ * on our side computes prices.
+ */
+async function createDiscount(req, res) {
+  const adminCaller = await verifyAdmin(req);
+  if (!adminCaller) return sendErr(res, 403, 'admin-only');
+  const b = req.body || {};
+  if (!b.description || !b.type || !b.amount) return sendErr(res, 400, 'missing-fields');
+  if (!['percentage', 'flat'].includes(b.type)) return sendErr(res, 400, 'bad-type');
+
+  const restrict = Array.isArray(b.restrictToPlans) && b.restrictToPlans.length
+    ? b.restrictToPlans
+        .map((k) => { const [pl, tm] = String(k).split('/'); return priceIdFor(pl, tm); })
+        .filter(Boolean)
+    : null;
+
+  const payload = {
+    description: String(b.description).slice(0, 500),
+    type: b.type,
+    amount: String(b.amount),
+    ...(b.type === 'flat' ? { currency_code: 'EUR' } : {}),
+    ...(b.code ? { code: String(b.code).replace(/[^a-zA-Z0-9]/g, '').slice(0, 32).toUpperCase() } : {}),
+    enabled_for_checkout: b.enabledForCheckout !== false,
+    ...(b.recur ? { recur: true, maximum_recurring_intervals: b.maxRecurringIntervals ? Number(b.maxRecurringIntervals) : null } : {}),
+    ...(b.expiresAt ? { expires_at: new Date(b.expiresAt).toISOString() } : {}),
+    ...(b.usageLimit ? { usage_limit: Number(b.usageLimit) } : {}),
+    ...(restrict ? { restrict_to: restrict } : {}),
+  };
+  const created = await paddleApi('POST', '/discounts', payload);
+  return res.status(200).json({ ok: true, discount: { id: created.id, code: created.code || null, status: created.status } });
+}
+
+/** /archiveDiscount — retire a Paddle discount so it can no longer be used. */
+async function archiveDiscount(req, res) {
+  const adminCaller = await verifyAdmin(req);
+  if (!adminCaller) return sendErr(res, 403, 'admin-only');
+  const id = req.body && req.body.discountId;
+  if (!id) return sendErr(res, 400, 'missing-discountId');
+  await paddleApi('PATCH', `/discounts/${id}`, { status: 'archived' });
+  return res.status(200).json({ ok: true });
+}
+
+// ---------------------------------------------------------------------------
 // HTTP entry
 // ---------------------------------------------------------------------------
 functions.http('accountBilling', async (req, res) => {
@@ -1081,6 +1365,10 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/revokeOtherSessions')) return await revokeOtherSessions(req, res);
     if (path.endsWith('/signOutEverywhere')) return await signOutEverywhere(req, res);
     if (path.endsWith('/adminClearSessions')) return await adminClearSessions(req, res);
+    if (path.endsWith('/cancelSubscription')) return await cancelSubscription(req, res);
+    if (path.endsWith('/applyPlanChange')) return await applyPlanChange(req, res);
+    if (path.endsWith('/createDiscount')) return await createDiscount(req, res);
+    if (path.endsWith('/archiveDiscount')) return await archiveDiscount(req, res);
     return sendErr(res, 404, 'not-found');
   } catch (e) {
     console.error(`accountBilling ${path} error`, e);

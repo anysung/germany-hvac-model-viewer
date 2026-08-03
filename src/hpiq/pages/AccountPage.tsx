@@ -7,7 +7,7 @@ import { getSessionId, revokeSessionFn, revokeOtherSessionsFn, signOutEverywhere
 import { tsToMillis } from '../../config/entitlement';
 import { requestDeletion } from '../../services/adminService';
 import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
-import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn } from '../../services/billingFnService';
+import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn, cancelSubscriptionFn } from '../../services/billingFnService';
 import { accessInfo } from '../../config/entitlement';
 import {
   getMyOrg, seatsUsed, getMyChangeRequest, scheduleChange, cancelChange, leaveTeam,
@@ -18,7 +18,7 @@ import { tr } from '../i18n';
 import { Language, Organization, SubscriptionChangeRequest } from '../../types';
 import {
   SubPlanCode, BillingTerm, SUB_PLANS, SUB_PLAN_CODES, BILLING_TERMS,
-  formatEur, perMonth, perUserMonth, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct,
+  formatEur, perMonth, perUserMonth, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct, effectiveSubscription,
 } from '../../config/subscriptionPlans';
 import { FD, sectionLabel } from '../ui';
 import { shortDate } from '../model';
@@ -38,18 +38,56 @@ const pill = (bg: string, color: string): React.CSSProperties => ({
 });
 
 /**
+ * Two-step danger confirmation (owner spec 2026-08-03): destructive choices
+ * (immediate cancellation, account deletion) pass TWO explicit warnings —
+ * first the consequence (remaining paid time forfeited, no refund/recovery),
+ * then a final are-you-sure whose confirm button completes the action.
+ */
+const DangerStepModal: React.FC<{
+  title: string; body: string; confirmLabel: string; backLabel: string;
+  final?: boolean; busy?: boolean; onConfirm: () => void; onBack: () => void;
+}> = ({ title, body, confirmLabel, backLabel, final, busy, onConfirm, onBack }) => (
+  <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+    <div style={{ background: '#fff', borderRadius: 18, padding: '26px 26px 22px', maxWidth: 460, width: '100%', display: 'flex', flexDirection: 'column', gap: 12, boxShadow: '0 24px 60px rgba(0,0,0,.25)' }} data-testid={final ? 'danger-step-2' : 'danger-step-1'}>
+      <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 700, color: final ? '#b3261e' : '#1d1d1f' }}>{title}</span>
+      <span style={{ fontSize: 13.5, color: '#333', lineHeight: 1.65 }}>{body}</span>
+      <div style={{ display: 'flex', gap: 10, marginTop: 6, flexWrap: 'wrap' }}>
+        <span className="hp-press" onClick={busy ? undefined : onBack}
+          style={{ flex: 1, textAlign: 'center', border: '1px solid #d2d2d7', borderRadius: 999, padding: '11px 16px', fontSize: 13.5, fontWeight: 600, cursor: 'pointer', background: '#fff' }}
+          data-testid="danger-back">
+          {backLabel}
+        </span>
+        <span className="hp-press" onClick={busy ? undefined : onConfirm}
+          style={{ flex: 1, textAlign: 'center', borderRadius: 999, padding: '11px 16px', fontSize: 13.5, fontWeight: 700, cursor: 'pointer', background: final ? '#b3261e' : '#1d1d1f', color: '#fff', opacity: busy ? .6 : 1 }}
+          data-testid="danger-confirm">
+          {busy ? '…' : confirmLabel}
+        </span>
+      </div>
+    </div>
+  </div>
+);
+
+/**
  * Two-step plan picker: (1) who — Professional / Team 3 / Team 5,
  * (2) how long — monthly / 6 months / annual. Defaults: annual term,
  * Team 3 Annual highlighted as Most Popular.
  * mode 'checkout' opens Paddle (7-day trial on the price itself);
  * mode 'schedule' registers a renewal-time change instead.
  */
+const PLAN_ORDER: Record<SubPlanCode, number> = { professional: 1, team_3: 2, team_5: 3 };
+const TERM_ORDER: Record<BillingTerm, number> = { monthly: 1, six_months: 2, annual: 3 };
+
 const PlanPicker: React.FC<{
   app: HpApp;
   mode: 'checkout' | 'schedule';
   org?: Organization | null;
   onSchedule?: (plan: SubPlanCode, term: BillingTerm, keepUids?: string[]) => void;
-}> = ({ app, mode, org, onSchedule }) => {
+  /** Upgrade-only floor (schedule mode, owner rule 2026-08-03): plans/terms
+   *  BELOW the current ones are not selectable — mid-term shrinking is
+   *  impossible for tax/settlement reasons. */
+  minPlan?: SubPlanCode;
+  minTerm?: BillingTerm;
+}> = ({ app, mode, org, onSchedule, minPlan, minTerm }) => {
   const t = tr(app.lang);
   const s = t.sub;
   const [term, setTerm] = useState<BillingTerm>('annual');
@@ -64,7 +102,18 @@ const PlanPicker: React.FC<{
       openCheckout(app.user, plan, term).catch(() => app.notify(s.notConfigured));
       return;
     }
-    // Schedule mode: downgrades below the current member count need a keep-list.
+    // Schedule mode is UPGRADE-ONLY: both dimensions may only move up, and at
+    // least one must actually move.
+    if (minPlan && minTerm) {
+      const planUp = PLAN_ORDER[plan] - PLAN_ORDER[minPlan];
+      const termUp = TERM_ORDER[term] - TERM_ORDER[minTerm];
+      if (planUp < 0 || termUp < 0 || (planUp === 0 && termUp === 0)) {
+        app.notify(s.upgradeOnlyBlocked);
+        return;
+      }
+    }
+    // Downgrades below the current member count would need a keep-list —
+    // unreachable under upgrade-only, kept as a safety net.
     const members = org?.members ?? [];
     const targetSeats = SUB_PLANS[plan].seatLimit;
     if (members.length > targetSeats) {
@@ -85,6 +134,11 @@ const PlanPicker: React.FC<{
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {mode === 'schedule' && minPlan && (
+        <span style={{ fontSize: 12.5, color: '#9a6b00', background: '#fdf6e7', border: '1px solid #f0e2c0', borderRadius: 10, padding: '9px 13px', lineHeight: 1.55 }}>
+          {s.upgradeOnlyNote}
+        </span>
+      )}
       {/* Step 2 first visually: billing-term toggle (annual default).
           Three EQUAL segments, each centering its label + discount badge. The
           badge shows the real saving from the configured prices via
@@ -225,7 +279,7 @@ const SubscriptionSection: React.FC<{
   const s = t.sub;
   const { user } = app;
   const isPreview = user.id === 'preview';
-  const sub = user.subscription;
+  const sub = effectiveSubscription(user);   // paid (Paddle) wins; else active marketing grant
   const unlocked = !!sub && subscriptionUnlocked(sub.status, sub.currentPeriodEndsAt);
   const legacyPro = !sub && user.plan === 'premium';
   const [changeReq, setChangeReq] = useState<SubscriptionChangeRequest | null>(null);
@@ -239,7 +293,28 @@ const SubscriptionSection: React.FC<{
 
   const openBillingPortal = onBilling;
 
+  // Upgrade-only change requests (owner rule 2026-08-03): the picker calls
+  // doSchedule, which opens a CONSENT modal (immediate effect, no charge for
+  // the current period, no downgrades/shortening, one change per 30 days).
+  // Only after the explicit agreement is the request stored.
+  const [pendingChange, setPendingChange] = useState<{ plan: SubPlanCode; term: BillingTerm; keepUids?: string[] } | null>(null);
+  const [consentChecked, setConsentChecked] = useState(false);
+
+  const changeCooldownDays = (): number => {
+    const last = user.lastPlanChangeAt ? new Date(user.lastPlanChangeAt).getTime() : null;
+    if (!last) return 0;
+    const left = 30 - Math.floor((Date.now() - last) / 86400000);
+    return Math.max(0, left);
+  };
+
   const doSchedule = (plan: SubPlanCode, term: BillingTerm, keepUids?: string[]) => {
+    setConsentChecked(false);
+    setPendingChange({ plan, term, keepUids });
+  };
+
+  const confirmSchedule = () => {
+    if (!pendingChange || !consentChecked) return;
+    const { plan, term, keepUids } = pendingChange;
     scheduleChange(user, plan, term, keepUids)
       .then(() => {
         setChangeReq({
@@ -248,9 +323,31 @@ const SubscriptionSection: React.FC<{
           effectiveAt: sub?.currentPeriodEndsAt ?? null, status: 'scheduled', createdAt: new Date().toISOString(),
         });
         setScheduling(false);
+        setPendingChange(null);
         app.notify(s.scheduledOk);
       })
-      .catch(() => app.notify(s.inviteFailed));
+      .catch(() => { setPendingChange(null); app.notify(s.inviteFailed); });
+  };
+
+  // Immediate cancellation (owner spec 2026-08-03): two-step warning, then the
+  // billing function calls Paddle; remaining paid time is forfeited.
+  const [cxStep, setCxStep] = useState<0 | 1 | 2>(0);
+  const [cxBusy, setCxBusy] = useState(false);
+  const runCancel = async () => {
+    setCxBusy(true);
+    try {
+      const r = await cancelSubscriptionFn();
+      if (!r.ok) throw new Error(r.error || 'cancel-failed');
+      app.notify(s.cxDone);
+      setCxStep(0);
+      // Reflect locally right away (the webhook confirms server-side).
+      app.patchUser({
+        subscription: user.subscription ? { ...user.subscription, status: 'canceled' } : undefined,
+      });
+    } catch {
+      app.notify(s.cxFailed);
+      setCxStep(0);
+    } finally { setCxBusy(false); }
   };
 
   const fmt = (d?: string | null) => (d ? shortDate(d, t.locale) : '—');
@@ -314,8 +411,19 @@ const SubscriptionSection: React.FC<{
               {t.account.managePlan}
             </span>
             {!legacyPro && !changeReq && (
-              <span className="hp-press" onClick={() => setScheduling(v => !v)} style={{ border: '1px solid #d2d2d7', borderRadius: 999, padding: '10px 22px', fontSize: 13.5, background: scheduling ? '#1d1d1f' : '#fff', color: scheduling ? '#fff' : '#1d1d1f', cursor: 'pointer' }}>
+              <span className="hp-press" onClick={() => {
+                const left = changeCooldownDays();
+                if (left > 0) { app.notify(s.upgradeCooldown(left)); return; }
+                setScheduling(v => !v);
+              }} style={{ border: '1px solid #d2d2d7', borderRadius: 999, padding: '10px 22px', fontSize: 13.5, background: scheduling ? '#1d1d1f' : '#fff', color: scheduling ? '#fff' : '#1d1d1f', cursor: 'pointer' }}>
                 {s.changeAtRenewal}
+              </span>
+            )}
+            {!legacyPro && sub!.provider === 'paddle' && sub!.status !== 'canceled' && (
+              <span className="hp-press" onClick={() => setCxStep(1)}
+                style={{ border: '1px solid #e8c5be', color: '#b3261e', borderRadius: 999, padding: '10px 22px', fontSize: 13.5, background: '#fff', cursor: 'pointer' }}
+                data-testid="cancel-subscription">
+                {s.cxTitle}
               </span>
             )}
             {changeReq && (
@@ -333,10 +441,50 @@ const SubscriptionSection: React.FC<{
             <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <span style={{ fontSize: 13.5, fontWeight: 600 }}>{s.scheduleTitle}</span>
               <span style={{ fontSize: 12.5, color: '#7a7a7a' }}>{s.scheduleApply(fmt(sub!.currentPeriodEndsAt))}</span>
-              <PlanPicker app={app} mode="schedule" org={org} onSchedule={doSchedule} />
+              <PlanPicker app={app} mode="schedule" org={org} onSchedule={doSchedule}
+                minPlan={sub!.planCode} minTerm={sub!.billingTerm ?? 'monthly'} />
             </div>
           )}
         </div>
+
+        {/* Immediate-cancel double warning (owner spec 2026-08-03) */}
+        {cxStep === 1 && (
+          <DangerStepModal title={s.cxWarn1Title} body={s.cxWarn1Body}
+            confirmLabel={s.cxContinue} backLabel={s.cxBack}
+            onConfirm={() => setCxStep(2)} onBack={() => setCxStep(0)} />
+        )}
+        {cxStep === 2 && (
+          <DangerStepModal final busy={cxBusy} title={s.cxWarn2Title} body={s.cxWarn2Body}
+            confirmLabel={s.cxFinal} backLabel={s.cxBack}
+            onConfirm={runCancel} onBack={() => setCxStep(0)} />
+        )}
+
+        {/* Upgrade consent (upgrade-only, once / 30 days) */}
+        {pendingChange && (
+          <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+            <div style={{ background: '#fff', borderRadius: 18, padding: '26px 26px 22px', maxWidth: 480, width: '100%', display: 'flex', flexDirection: 'column', gap: 12 }} data-testid="upgrade-consent">
+              <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 700 }}>{s.upgradeConsentTitle}</span>
+              <span style={{ fontSize: 13, color: '#7a7a7a' }}>
+                {s.planNames[pendingChange.plan]} · {s.termNames[pendingChange.term]}
+              </span>
+              <span style={{ fontSize: 13.5, color: '#333', lineHeight: 1.65 }}>{s.upgradeConsentBody}</span>
+              <label style={{ display: 'flex', gap: 9, alignItems: 'flex-start', fontSize: 13, cursor: 'pointer' }}>
+                <input type="checkbox" checked={consentChecked} onChange={e => setConsentChecked(e.target.checked)} style={{ marginTop: 2 }} data-testid="upgrade-consent-check" />
+                <span>{s.upgradeConsentCheck}</span>
+              </label>
+              <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
+                <span className="hp-press" onClick={() => setPendingChange(null)} style={{ flex: 1, textAlign: 'center', border: '1px solid #d2d2d7', borderRadius: 999, padding: '11px 16px', fontSize: 13.5, fontWeight: 600, cursor: 'pointer' }}>
+                  {t.account.copyFailed ? s.cxBack : s.cxBack}
+                </span>
+                <span className="hp-press" onClick={consentChecked ? confirmSchedule : undefined}
+                  style={{ flex: 1, textAlign: 'center', borderRadius: 999, padding: '11px 16px', fontSize: 13.5, fontWeight: 700, cursor: consentChecked ? 'pointer' : 'not-allowed', background: consentChecked ? '#0066cc' : '#c7c7cc', color: '#fff' }}
+                  data-testid="upgrade-consent-confirm">
+                  {s.upgradeConfirm}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </>
     );
   }
@@ -536,7 +684,10 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
       .catch(() => app.notify(t.account.linkFailed));
   };
 
-  const deleteAccount = async () => {
+  const [delStep, setDelStep] = useState<0 | 1 | 2>(0);
+  const [delBusy, setDelBusy] = useState(false);
+
+  const deleteAccount = () => {
     if (isPreview) { app.notify(t.account.previewOnly); return; }
     // A team owner cannot walk away and strand their members — ownership
     // transfer goes through Support (New inquiry).
@@ -544,7 +695,11 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
       app.notify(t.account.delOwnerBlocked);
       return;
     }
-    if (!window.confirm(t.account.delConfirm)) return;
+    setDelStep(1);   // two-step warning (owner spec 2026-08-03)
+  };
+
+  const runDelete = async () => {
+    setDelBusy(true);
     try {
       if (TRIAL_FLOW_ENABLED) {
         // Server-side deletion: one Firestore transaction (registry retention,
@@ -561,9 +716,13 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
         await requestDeletion(user.id, 'Self-service request from Account page', displayName);
       }
       app.notify(t.account.delDone);
+      setDelStep(0);
       setTimeout(app.onLogout, 1800);
     } catch {
       app.notify(t.account.delFailed);
+    } finally {
+      setDelBusy(false);
+      setDelStep(0);
     }
   };
 
@@ -573,6 +732,16 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
         <span style={{ fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px' }}>{t.account.heroTitle}</span>
         <span style={{ fontSize: 17, color: '#7a7a7a', letterSpacing: '-0.374px' }}>{t.account.heroSub}</span>
       </div>
+      {delStep === 1 && (
+        <DangerStepModal title={t.account.del} body={t.account.delConfirm.replace(/\n\n/g, ' ')}
+          confirmLabel={t.sub.cxContinue} backLabel={t.sub.cxBack}
+          onConfirm={() => setDelStep(2)} onBack={() => setDelStep(0)} />
+      )}
+      {delStep === 2 && (
+        <DangerStepModal final busy={delBusy} title={t.sub.delWarn2Title} body={t.sub.delWarn2Body}
+          confirmLabel={t.sub.delFinal} backLabel={t.sub.cxBack}
+          onConfirm={runDelete} onBack={() => setDelStep(0)} />
+      )}
       <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 48px', display: 'flex', flexDirection: 'column', gap: 20, boxSizing: 'border-box' }}>
         {children}
       </div>

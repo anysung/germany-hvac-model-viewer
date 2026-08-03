@@ -20,7 +20,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import {
-  User, Organization, FreeAccessGrant, SubscriptionChangeRequest, UserSubscription, Promotion,
+  User, Organization, FreeAccessGrant, SubscriptionChangeRequest, UserSubscription, UserGrant, Promotion,
 } from '../types';
 import {
   SubPlanCode, BillingTerm, SUB_PLANS, TERM_MONTHS, isTeamPlan,
@@ -189,97 +189,11 @@ export async function joinOrgIfInvited(user: User): Promise<Organization | null>
   return joinOrg(snap.docs[0].id, user);
 }
 
-// ── Admin: assign / clear subscriptions (ops backstop + admin_grant channel) ──
-
-/**
- * Admin: put a user on a plan (creates the org for team plans). Used both as
- * the ops backstop before/alongside the Paddle webhook and for manual deals.
- */
-export async function adminAssignSubscription(
-  target: User,
-  plan: SubPlanCode,
-  term: BillingTerm,
-  opts: { provider?: 'paddle' | 'free_grant'; status?: UserSubscription['status']; periodEndsAt?: string; adminName?: string } = {},
-): Promise<void> {
-  const periodEnd = opts.periodEndsAt
-    ?? new Date(Date.now() + TERM_MONTHS[term] * 30.44 * 86400_000).toISOString();
-  const sub: UserSubscription = {
-    provider: opts.provider ?? 'paddle',
-    planCode: plan,
-    billingTerm: term,
-    status: opts.status ?? 'active',
-    seatLimit: SUB_PLANS[plan].seatLimit,
-    paidPeriodStartsAt: nowIso(),
-    currentPeriodEndsAt: periodEnd,
-    cancelAtPeriodEnd: false,
-  };
-  const update: Record<string, any> = {
-    subscription: sub,
-    billingChannel: opts.provider === 'free_grant' ? 'admin_grant' : 'paddle',
-    // Open the rules-facing access window to the period end (admin writes are
-    // the ops backstop when the webhook is late — the gate must follow).
-    accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
-  };
-
-  if (isTeamPlan(plan) && (plan === 'team_3' || plan === 'team_5')) {
-    // One org per owner; reuse if it exists so member seats survive plan renewals.
-    let orgId = target.orgId;
-    const existing = orgId ? await getOrg(orgId) : null;
-    if (existing && existing.ownerUid === target.id) {
-      await updateDoc(doc(db, ORGS, existing.id), {
-        planCode: plan,
-        seatLimit: SUB_PLANS[plan].seatLimit,
-        subscriptionStatus: sub.status,
-        currentPeriodEndsAt: periodEnd,
-        accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
-        // Backfill for organizations created before memberUids existed — the
-        // security rules read that list, so a missing one would break join/leave.
-        ...(existing.memberUids ? {} : membersPatch(existing.members)),
-      });
-    } else {
-      const ref = doc(collection(db, ORGS));
-      orgId = ref.id;
-      const org: Omit<Organization, 'id'> = {
-        name: target.companyName || '',
-        ownerUid: target.id,
-        ownerEmail: emailKey(target.email),
-        planCode: plan,
-        seatLimit: SUB_PLANS[plan].seatLimit,
-        subscriptionStatus: sub.status,
-        trialEndsAt: sub.trialEndsAt ?? null,
-        currentPeriodEndsAt: periodEnd,
-        accessUntilTs: Timestamp.fromDate(new Date(periodEnd)),
-        ...membersPatch([{ uid: target.id, email: emailKey(target.email), name: [target.firstName, target.lastName].filter(Boolean).join(' ') }]),
-        invitedEmails: [],
-        invitedAt: {},
-        // The team inherits the buyer's company profile; the owner can edit it later.
-        companyName: target.companyName || '',
-        companyType: target.companyType || '',
-        ...(target.companyTypeOther ? { companyTypeOther: target.companyTypeOther } : {}),
-        ...(target.companyCity ? { companyCity: target.companyCity } : {}),
-        ...(target.companyWebsite ? { companyWebsite: target.companyWebsite } : {}),
-        createdAt: nowIso(),
-      };
-      await setDoc(ref, org);
-    }
-    update.orgId = orgId;
-    update.orgRole = 'team_admin';
-  }
-
-  await updateDoc(doc(db, 'users', target.id), update);
-}
-
-/** Admin: end a subscription immediately (refund handling stays in Paddle).
- *  An EXPLICIT owner/admin stop is the one sanctioned way to close the access
- *  window early — payment-system ambiguity never does this automatically. */
-export async function adminClearSubscription(target: User): Promise<void> {
-  const update: Record<string, any> = { accessUntilTs: Timestamp.now() };
-  if (target.subscription) update['subscription.status'] = 'expired';
-  await updateDoc(doc(db, 'users', target.id), update);
-  if (target.orgId && target.orgRole === 'team_admin') {
-    await updateDoc(doc(db, ORGS, target.orgId), { subscriptionStatus: 'expired', accessUntilTs: Timestamp.now() });
-  }
-}
+// ── Admin subscription writes: REMOVED (owner decision 2026-08-03) ──────────
+// The paid `subscription` slot has exactly one writer — the Paddle webhook.
+// Admin tooling manages the GRANT layer (createGrant / revokeGrant below) and
+// applies approved upgrades through the billing function, which goes through
+// the Paddle API so the webhook remains the only writer.
 
 // ── Free-access grants (admin promotions) ───────────────────────────────────
 
@@ -352,17 +266,45 @@ export async function createGrant(
   await setDoc(doc(db, GRANTS, key), grant);
 
   if (existingUser) {
-    const sub: UserSubscription = {
-      provider: 'free_grant', planCode: plan, status: 'active',
-      seatLimit: SUB_PLANS[plan].seatLimit,
-      paidPeriodStartsAt: startsAt, currentPeriodEndsAt: endsAt,
-      cancelAtPeriodEnd: true,
+    // 2026-08-03 two-layer program: marketing grants live in user.grant —
+    // the `subscription` slot belongs exclusively to the Paddle webhook.
+    const g: UserGrant = {
+      source: 'free_grant', planCode: plan,
+      startsAt, endsAt, grantedBy, ...(note ? { note } : {}),
     };
     await updateDoc(doc(db, 'users', existingUser.id), {
       status: 'active', isActive: true,
-      subscription: sub, billingChannel: 'admin_grant',
+      grant: g,
       accessUntilTs: endsAtTs,
     });
+    // Team-plan grant: seats need an organization. Reuse an org the user
+    // already owns; otherwise create one (entitlement-layer org — Paddle
+    // never sees it, and a later paid checkout simply adopts it via orgId).
+    if (isTeamPlan(plan) && (plan === 'team_3' || plan === 'team_5')) {
+      const existingOrg = existingUser.orgId ? await getOrg(existingUser.orgId) : null;
+      if (existingOrg && existingOrg.ownerUid === existingUser.id) {
+        await updateDoc(doc(db, ORGS, existingOrg.id), {
+          planCode: plan, seatLimit: SUB_PLANS[plan].seatLimit,
+          subscriptionStatus: 'active', currentPeriodEndsAt: endsAt, accessUntilTs: endsAtTs,
+        });
+      } else if (!existingUser.orgId) {
+        const ref = doc(collection(db, ORGS));
+        await setDoc(ref, {
+          name: existingUser.companyName || '',
+          ownerUid: existingUser.id, ownerEmail: emailKey(existingUser.email),
+          planCode: plan, seatLimit: SUB_PLANS[plan].seatLimit,
+          subscriptionStatus: 'active', trialEndsAt: null,
+          currentPeriodEndsAt: endsAt, accessUntilTs: endsAtTs,
+          members: [{ uid: existingUser.id, email: emailKey(existingUser.email), name: [existingUser.firstName, existingUser.lastName].filter(Boolean).join(' ') }],
+          memberUids: [existingUser.id],
+          invitedEmails: [], invitedAt: {},
+          companyName: existingUser.companyName || '',
+          companyType: existingUser.companyType || '',
+          createdAt: nowIso(),
+        });
+        await updateDoc(doc(db, 'users', existingUser.id), { orgId: ref.id, orgRole: 'team_admin' });
+      }
+    }
   }
 }
 
@@ -373,9 +315,14 @@ export async function revokeGrant(email: string): Promise<void> {
   const grant = snap.data() as FreeAccessGrant;
   await updateDoc(doc(db, GRANTS, key), { revokedAt: nowIso(), endsAt: nowIso(), endsAtTs: Timestamp.now() });
   if (grant.redeemedByUid) {
-    // Explicit admin revocation — the sanctioned early close of the window.
+    // Explicit admin revocation closes the GRANT layer only. A paid Paddle
+    // subscription (webhook-owned) keeps its own window untouched.
+    const uSnap = await getDoc(doc(db, 'users', grant.redeemedByUid));
+    const u = uSnap.exists() ? (uSnap.data() as User) : null;
+    const paidEnd = u?.subscription?.currentPeriodEndsAt ? new Date(u.subscription.currentPeriodEndsAt).getTime() : null;
+    const floor = paidEnd && paidEnd > Date.now() ? Timestamp.fromMillis(paidEnd) : Timestamp.now();
     await updateDoc(doc(db, 'users', grant.redeemedByUid), {
-      'subscription.status': 'expired', accessUntilTs: Timestamp.now(),
+      grant: deleteField(), accessUntilTs: floor,
     });
   }
 }

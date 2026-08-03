@@ -4,7 +4,7 @@ import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disable
 import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
 import { adminClearSessions } from '../../services/opsService';
 import { COUNTRY_PROFILES } from '../../config/countryProfiles';
-import { adminAssignSubscription, adminClearSubscription } from '../../services/subscriptionService';
+import { createGrant, revokeGrant, emailKey } from '../../services/subscriptionService';
 import { User } from '../../types';
 import {
   SubPlanCode, BillingTerm, SUB_PLAN_CODES, BILLING_TERMS, SUB_PLAN_NAMES, TERM_NAMES, SUB_PLANS,
@@ -349,82 +349,101 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
   );
 };
 
-// ── Subscription admin panel (assign / end plans; ops backstop for Paddle) ──
+// ── Subscription panel: PAID = read-only (Paddle owns it) · GRANT = admin tool ──
+//
+// Owner decision 2026-08-03: the paid `subscription` slot has exactly ONE
+// writer — the Paddle webhook — so this panel never edits it (Firestore rules
+// also refuse). What admins DO manage here is the marketing/entitlement layer:
+// a free-access GRANT (temporary access, promotions, support goodwill),
+// which lives in `user.grant` and can never collide with Paddle data.
 
 const SubscriptionAdminPanel: React.FC<{ al: AdminLang; user: User; onChanged: () => void }> = ({ al, user, onChanged }) => {
   const A = ADMIN_I18N[al];
   const sub = user.subscription;
-  const [plan, setPlan] = useState<SubPlanCode>(sub?.planCode ?? 'professional');
-  const [term, setTerm] = useState<BillingTerm>(sub?.billingTerm ?? 'annual');
-  const [status, setStatus] = useState<'active' | 'trialing'>('active');
-  const [periodEnd, setPeriodEnd] = useState('');
+  const grant = user.grant;
+  const [plan, setPlan] = useState<SubPlanCode>('professional');
+  const [endDate, setEndDate] = useState('');
+  const [note, setNote] = useState('');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
 
-  const assign = async () => {
+  const flash = (m: string) => { setMsg(m); setTimeout(() => setMsg(''), 3500); };
+
+  const giveGrant = async () => {
     if (busy) return;
+    if (!endDate) { flash(A.sbGrantNeedsEnd); return; }
     setBusy(true);
     try {
-      await adminAssignSubscription(user, plan, term, {
-        status,
-        ...(periodEnd ? { periodEndsAt: new Date(periodEnd + 'T23:59:59Z').toISOString() } : {}),
-      });
-      setMsg(A.sbAssigned);
+      await createGrant(
+        user.email, plan,
+        new Date().toISOString(),
+        new Date(endDate + 'T23:59:59Z').toISOString(),
+        note || 'Admin temporary access', 'Admin', user, user.country || '',
+      );
+      flash(A.sbGrantGiven);
       onChanged();
-    } catch (e: any) { setMsg(String(e?.message ?? e)); }
-    finally { setBusy(false); setTimeout(() => setMsg(''), 2500); }
+    } catch (e: any) { flash(String(e?.message ?? e)); }
+    finally { setBusy(false); }
   };
 
-  const clear = async () => {
-    if (!confirm(A.sbClearConfirm)) return;
-    await adminClearSubscription(user);
-    setMsg(A.sbCleared);
-    onChanged();
+  const endGrant = async () => {
+    if (!confirm(A.sbGrantEndConfirm)) return;
+    setBusy(true);
+    try {
+      await revokeGrant(emailKey(user.email));
+      flash(A.sbGrantEnded);
+      onChanged();
+    } catch (e: any) { flash(String(e?.message ?? e)); }
+    finally { setBusy(false); }
   };
 
   const sel = 'w-full px-2.5 py-1.5 border rounded-lg text-sm bg-white outline-none focus:ring-2 focus:ring-blue-500';
 
   return (
     <div className="space-y-3 text-sm">
+      {/* Paid subscription — read-only mirror of Paddle */}
+      <div className="text-xs font-bold text-gray-500 uppercase">{A.sbPaidTitle}</div>
       {sub ? (
         <>
           <DetailRow label={A.sbPlan} value={`${SUB_PLAN_NAMES[sub.planCode]} (${SUB_PLANS[sub.planCode].seatLimit} ${A.sbSeats.toLowerCase()})`} />
           <DetailRow label={A.sbTerm} value={sub.billingTerm ? TERM_NAMES[sub.billingTerm] : '-'} />
           <DetailRow label={A.sbStatus} value={<SubBadge user={user} />} />
-          <DetailRow label={A.sbProvider} value={sub.provider} />
           <DetailRow label={A.sbPeriodEnd} value={sub.currentPeriodEndsAt?.slice(0, 10) || '-'} />
+          {sub.paddleSubscriptionId && <DetailRow label="Paddle" value={sub.paddleSubscriptionId} />}
           {user.orgId && <DetailRow label="Org" value={`${user.orgRole ?? '-'} · ${user.orgId.slice(0, 8)}…`} />}
+          <div className="text-[11px] text-gray-400 leading-snug">{A.sbPaidReadOnly}</div>
         </>
       ) : (
         <div className="text-gray-500">{A.sbNone}</div>
       )}
 
+      {/* Grant layer — the admin's own lever */}
       <div className="pt-3 border-t border-gray-100 space-y-2">
-        <div className="text-xs font-bold text-gray-500 uppercase">{A.sbAssignTitle}</div>
-        <div className="grid grid-cols-2 gap-2">
-          <select value={plan} onChange={e => setPlan(e.target.value as SubPlanCode)} className={sel}>
-            {SUB_PLAN_CODES.map(p => <option key={p} value={p}>{SUB_PLAN_NAMES[p]}</option>)}
-          </select>
-          <select value={term} onChange={e => setTerm(e.target.value as BillingTerm)} className={sel}>
-            {BILLING_TERMS.map(tm => <option key={tm} value={tm}>{TERM_NAMES[tm]}</option>)}
-          </select>
-          <select value={status} onChange={e => setStatus(e.target.value as 'active' | 'trialing')} className={sel}>
-            <option value="active">active</option>
-            <option value="trialing">trialing</option>
-          </select>
-          <input type="date" value={periodEnd} onChange={e => setPeriodEnd(e.target.value)} className={sel} title={A.sbPeriodEnd} />
-        </div>
-        <div className="text-[11px] text-gray-400 leading-snug">{A.sbTeamNote}</div>
-        <div className="flex gap-2">
-          <button onClick={assign} disabled={busy} className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg">
-            {A.sbAssign}
-          </button>
-          {sub && (
-            <button onClick={clear} className="px-4 py-1.5 border border-red-300 text-red-600 hover:bg-red-50 text-sm rounded-lg">
-              {A.sbClear}
+        <div className="text-xs font-bold text-gray-500 uppercase">{A.sbGrantTitle}</div>
+        {grant ? (
+          <>
+            <DetailRow label={A.sbPlan} value={SUB_PLAN_NAMES[grant.planCode]} />
+            <DetailRow label={A.sbPeriodEnd} value={grant.endsAt.slice(0, 10)} />
+            {grant.note && <DetailRow label={A.sbGrantNote} value={grant.note} />}
+            <button onClick={endGrant} disabled={busy} className="px-4 py-1.5 border border-red-300 text-red-600 hover:bg-red-50 text-sm rounded-lg">
+              {A.sbGrantEnd}
             </button>
-          )}
-        </div>
+          </>
+        ) : (
+          <>
+            <div className="text-[11px] text-gray-400 leading-snug">{A.sbGrantHint}</div>
+            <div className="grid grid-cols-2 gap-2">
+              <select value={plan} onChange={e => setPlan(e.target.value as SubPlanCode)} className={sel}>
+                {SUB_PLAN_CODES.map(pp => <option key={pp} value={pp}>{SUB_PLAN_NAMES[pp]}</option>)}
+              </select>
+              <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} className={sel} title={A.sbPeriodEnd} />
+            </div>
+            <input value={note} onChange={e => setNote(e.target.value)} placeholder={A.sbGrantNote} className={sel} />
+            <button onClick={giveGrant} disabled={busy} className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg">
+              {A.sbGrantGive}
+            </button>
+          </>
+        )}
         {msg && <div className="text-xs text-green-700 font-medium">{msg}</div>}
       </div>
     </div>

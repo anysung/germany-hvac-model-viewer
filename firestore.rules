@@ -147,7 +147,7 @@ service cloud.firestore {
         (
           grantRedemptionValid() &&
           request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['status', 'isActive', 'subscription', 'billingChannel', 'accessUntilTs']) &&
+            .hasOnly(['status', 'isActive', 'grant', 'accessUntilTs']) &&
           request.resource.data.status == 'active'
         ) ||
         // Team invite acceptance (join) and leaving a team. Membership itself is
@@ -164,7 +164,16 @@ service cloud.firestore {
         )
       );
 
-      allow read, write: if isAdmin();
+      allow read: if isAdmin();
+      allow create, delete: if isAdmin();
+      // Admin updates: everything EXCEPT the paid-subscription slot. The
+      // `subscription` field has exactly one writer — the Paddle webhook
+      // (Admin SDK, bypasses rules) — so admin tooling can never create a
+      // second source of truth (owner decision 2026-08-03). Marketing access
+      // goes through `grant`, which admins may write freely.
+      allow update: if isAdmin() &&
+        !request.resource.data.diff(resource.data).affectedKeys()
+          .hasAny(['subscription', 'paddleSubscriptionId', 'paddleCustomerId']);
     }
 
     // ── Subscription program ───────────────────────────────────────────────
@@ -182,11 +191,14 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/freeAccessGrants/$(request.auth.token.email)).data;
     }
     function grantRedemptionValid() {
+      // 2026-08-03: grants live in their OWN field (user.grant) — the
+      // `subscription` field belongs exclusively to the Paddle webhook, so a
+      // marketing grant and a paid subscription can never fight over one slot.
       return hasGrant() &&
              !('revokedAt' in grantData()) &&
-             request.resource.data.subscription.provider == 'free_grant' &&
-             request.resource.data.subscription.planCode == grantData().planCode &&
-             request.resource.data.subscription.currentPeriodEndsAt == grantData().endsAt &&
+             request.resource.data.grant.source == 'free_grant' &&
+             request.resource.data.grant.planCode == grantData().planCode &&
+             request.resource.data.grant.endsAt == grantData().endsAt &&
              // The access window may only be opened to the grant's own end
              // Timestamp (endsAtTs, admin-written) — never a free value.
              (!('accessUntilTs' in request.resource.data) ||

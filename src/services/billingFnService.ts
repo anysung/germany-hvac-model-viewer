@@ -38,6 +38,29 @@ async function call<T>(path: string, body: Record<string, unknown> = {}): Promis
   return res.json() as Promise<T>;
 }
 
+/** User's own IMMEDIATE cancellation (the UI has taken the double warning).
+ *  Paddle is called server-side; the webhook writes the final state. */
+export const cancelSubscriptionFn = (): Promise<{ ok: boolean; error?: string }> =>
+  call('cancelSubscription');
+
+/** Admin: apply an approved upgrade request via the Paddle API (upgrade-only,
+ *  do_not_bill — effective now, billed from the next renewal). */
+export const applyPlanChangeFn = (requestId: string): Promise<{ ok: boolean; error?: string }> =>
+  call('applyPlanChange', { requestId });
+
+/** Admin: create a REAL Paddle discount; returns its id + code. */
+export const createDiscountFn = (payload: {
+  description: string; type: 'percentage' | 'flat'; amount: string;
+  code?: string; enabledForCheckout?: boolean; recur?: boolean;
+  maxRecurringIntervals?: number; expiresAt?: string; usageLimit?: number;
+  restrictToPlans?: string[];
+}): Promise<{ ok: boolean; discount?: { id: string; code: string | null; status: string }; error?: string }> =>
+  call('createDiscount', payload);
+
+/** Admin: archive a Paddle discount (no further redemptions). */
+export const archiveDiscountFn = (discountId: string): Promise<{ ok: boolean; error?: string }> =>
+  call('archiveDiscount', { discountId });
+
 /** Activate the account (server checks Auth email verification + consents). */
 export const finalizeSignupFn = (): Promise<FinalizeResult> =>
   call<FinalizeResult>('finalizeSignup', {

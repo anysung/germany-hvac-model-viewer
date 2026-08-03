@@ -17,7 +17,7 @@ import { LEGAL_ROUTES, LegalDoc, MARKETING_EMAIL } from '../../config/legal';
 import { SupportCard, SignInMethodsCard } from '../pages/accountParts';
 import { LEGAL_NAV } from '../../legal/LegalPage';
 import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
-import { SubPlanCode, BillingTerm, BILLING_TERMS, SUB_PLANS, SUB_PLAN_CODES, formatEur, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct } from '../../config/subscriptionPlans';
+import { SubPlanCode, BillingTerm, BILLING_TERMS, SUB_PLANS, SUB_PLAN_CODES, formatEur, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct, effectiveSubscription } from '../../config/subscriptionPlans';
 import { FD, SignOutIcon, VideoExplainer, sectionLabel } from '../ui';
 import { GUIDE_VIDEO_ID } from '../market';
 import { BrandLogo, WavingFlag } from '../../components/BrandLogo';
@@ -551,7 +551,7 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
   const s = t.sub;
   const [supportOpen, setSupportOpen] = useState(false);
   const card: React.CSSProperties = { background: '#fff', border: '1px solid #e0e0e0', borderRadius: 14, padding: '15px 17px', display: 'flex', flexDirection: 'column', gap: 8 };
-  const sub = app.user.subscription;
+  const sub = effectiveSubscription(app.user);   // paid (Paddle) wins; else active marketing grant
   const unlocked = !!sub && subscriptionUnlocked(sub.status, sub.currentPeriodEndsAt);
   const isPro = unlocked || app.user.plan === 'premium';
   const isTeamMember = app.user.orgRole === 'member';

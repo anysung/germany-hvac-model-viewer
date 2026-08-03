@@ -346,6 +346,10 @@ export interface User {
   plan?: 'standard' | 'premium';
   /** 'paddle' is the web-billing channel (no app-store distribution). */
   billingChannel?: 'paddle' | 'admin_grant' | 'trial';
+  /** Marketing free access (entitlement layer) — see UserGrant. */
+  grant?: UserGrant;
+  /** Last applied plan change (upgrade) — one change per 30 days. */
+  lastPlanChangeAt?: string;
   industryInsightOverride?: boolean;
   // ── Paddle web billing (written server-side by the billing webhook) ────────
   paddleCustomerId?: string;
@@ -370,6 +374,23 @@ export interface User {
 
 // --- Subscription program (Professional / Team 3 / Team 5) ---
 // Plan/term/price definitions live in src/config/subscriptionPlans.ts.
+
+/**
+ * Marketing free-access grant — the ENTITLEMENT layer, deliberately separate
+ * from `subscription` (2026-08-03): `subscription` is written only by the
+ * Paddle webhook; `grant` only by admin tooling / self-redemption. Access is
+ * the later of the two windows, so a paid subscription arriving during a
+ * grant auto-converts with no conflict.
+ */
+export interface UserGrant {
+  source: 'free_grant';
+  planCode: 'professional' | 'team_3' | 'team_5';
+  startsAt: string;
+  /** ISO end of the granted window. */
+  endsAt: string;
+  grantedBy?: string;
+  note?: string;
+}
 
 export interface UserSubscription {
   /** 'paddle' = paid via Paddle; 'free_grant' = admin promotion (freeAccessGrants). */

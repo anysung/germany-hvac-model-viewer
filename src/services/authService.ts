@@ -28,7 +28,7 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { User, ActivityLog, UserSubscription } from '../types';
+import { User, ActivityLog, UserSubscription, UserGrant } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey } from './subscriptionService';
 import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
@@ -52,18 +52,19 @@ async function redeemFreeGrantIfAny(user: User): Promise<User | null> {
   try {
     const grant = await getValidGrant(user.email);
     if (!grant) return null;
-    const sub: UserSubscription = {
-      provider: 'free_grant',
+    // 2026-08-03: grants live in user.grant — the `subscription` slot belongs
+    // to the Paddle webhook alone. Rules validate the copy against the grant
+    // doc (planCode, endsAt, endsAtTs).
+    const g: UserGrant = {
+      source: 'free_grant',
       planCode: grant.planCode,
-      status: 'active',
-      seatLimit: SUB_PLANS[grant.planCode].seatLimit,
-      paidPeriodStartsAt: grant.startsAt,
-      currentPeriodEndsAt: grant.endsAt,   // must equal the grant's endsAt (rules)
-      cancelAtPeriodEnd: true,
+      startsAt: grant.startsAt,
+      endsAt: grant.endsAt,
+      ...(grant.grantedBy ? { grantedBy: grant.grantedBy } : {}),
     };
     await updateDoc(doc(db, 'users', user.id), {
       status: 'active', isActive: true,
-      subscription: sub, billingChannel: 'admin_grant',
+      grant: g,
       // Open the rules-facing window to the grant end. Rules validate this
       // equals the grant's own endsAtTs (older grants without the field simply
       // omit it — those accounts stay un-gated, which is the fail-open default).
@@ -73,7 +74,7 @@ async function redeemFreeGrantIfAny(user: User): Promise<User | null> {
       redeemedByUid: user.id, redeemedAt: new Date().toISOString(),
     }).catch(() => {});
     await logActivity(user.id, 'APPROVE_USER', `Free-access grant redeemed (${grant.planCode}, until ${grant.endsAt.slice(0, 10)})`, user.email, `${user.firstName} ${user.lastName}`);
-    return { ...user, status: 'active', isActive: true, subscription: sub, billingChannel: 'admin_grant' };
+    return { ...user, status: 'active', isActive: true, grant: g };
   } catch {
     return null;
   }

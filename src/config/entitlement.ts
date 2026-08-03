@@ -15,7 +15,7 @@
  */
 import { User, Organization, FirestoreTimestampLike } from '../types';
 import { isAdminRole } from '../services/accountCountry';
-import { subscriptionUnlocked } from './subscriptionPlans';
+import { subscriptionUnlocked, effectiveSubscription } from './subscriptionPlans';
 
 /** Firestore Timestamp / ISO string / epoch-ms → epoch ms, or null if unreadable. */
 export function tsToMillis(v: FirestoreTimestampLike | undefined): number | null {
@@ -66,7 +66,8 @@ export function accessInfo(user: User, org?: Organization | null, now = Date.now
 
   // Window open. Distinguish "free trial" (for the countdown banner) from a
   // real subscription: a subscription that unlocks means we are in paid use.
-  const subOk = !!user.subscription && subscriptionUnlocked(user.subscription.status, user.subscription.currentPeriodEndsAt);
+  const eff = effectiveSubscription(user);
+  const subOk = !!eff && subscriptionUnlocked(eff.status, eff.currentPeriodEndsAt);
   const orgPaid = !!org && (org.subscriptionStatus === 'active' || org.subscriptionStatus === 'past_due');
   const trialEnds = tsToMillis(user.trialEndsAt);
   if (!subOk && !orgPaid && trialEnds !== null && now < trialEnds) {

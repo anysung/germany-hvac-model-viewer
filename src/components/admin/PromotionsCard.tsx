@@ -6,19 +6,18 @@
  * the Paddle discount id they correspond to, so an operator can reconcile a
  * customer's discounted invoice against a known campaign months later.
  *
- * WHAT THIS IS NOT: it does not create, edit or delete anything in Paddle, and
- * it does not apply a discount at checkout. That boundary is deliberate:
- *   • Paddle is the merchant of record and a price/discount is IMMUTABLE once
- *     used, so those entities are created by a human in the Paddle dashboard —
- *     never generated from an admin form where a typo becomes permanent.
- *   • Nothing on the payment path reads these records, so a wrong entry here
- *     can misinform an operator but can never break a customer's checkout.
- * Auto-applying a campaign discount at checkout is the natural next step, but
- * it belongs after there are real subscribers to test it against — it would put
- * this data directly on the payment path.
+ * 2026-08-03 (owner decision): campaigns can now CREATE the real Paddle
+ * discount — through the billing function → Paddle API, never from the
+ * browser. Fill in type + amount and leave the dsc_ field empty: the server
+ * creates the discount and the returned id is recorded here. Paddle remains
+ * the only authority on validity and pricing; this registry stays bookkeeping
+ * (a wrong entry can misinform an operator but can never break a checkout).
+ * Discounts created in the Paddle dashboard can still be registered by
+ * pasting their dsc_ id.
  */
 import React, { useEffect, useState } from 'react';
 import { listPromotions, savePromotion, archivePromotion } from '../../services/subscriptionService';
+import { createDiscountFn, archiveDiscountFn, TRIAL_FLOW_ENABLED } from '../../services/billingFnService';
 import { Promotion } from '../../types';
 import { SUB_PLAN_CODES, SUB_PLAN_NAMES, SubPlanCode } from '../../config/subscriptionPlans';
 import { COUNTRY_PROFILES } from '../../config/countryProfiles';
@@ -39,6 +38,9 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
   const [plans, setPlans] = useState<string[]>([]);
   const [startsAt, setStartsAt] = useState(today);
   const [endsAt, setEndsAt] = useState('');
+  const [dType, setDType] = useState<'percentage' | 'flat'>('percentage');
+  const [amount, setAmount] = useState('');
+  const [recurN, setRecurN] = useState('');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState('');
 
@@ -61,9 +63,27 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
     if (busy) return;
     setBusy(true);
     try {
+      // No dsc_ pasted + an amount given → create the REAL discount in Paddle
+      // via the billing function (admin-authenticated, server-side API key).
+      let discountId = paddleId.trim() || undefined;
+      if (!discountId && amount.trim()) {
+        if (!TRIAL_FLOW_ENABLED) { flash(A.pmFnMissing); setBusy(false); return; }
+        const restrictToPlans = plans.length
+          ? plans.flatMap(pl => ['monthly', 'six_months', 'annual'].map(tm => `${pl}/${tm}`))
+          : undefined;
+        const r = await createDiscountFn({
+          description: description.trim(), type: dType, amount: amount.trim(),
+          code: c, enabledForCheckout: true,
+          ...(recurN.trim() ? { recur: true, maxRecurringIntervals: Number(recurN) } : {}),
+          expiresAt: new Date(endsAt + 'T23:59:59Z').toISOString(),
+          ...(restrictToPlans ? { restrictToPlans } : {}),
+        });
+        if (!r.ok || !r.discount) throw new Error(r.error || 'paddle-create-failed');
+        discountId = r.discount.id;
+      }
       await savePromotion({
         code: c,
-        paddleDiscountId: paddleId.trim() || undefined,
+        paddleDiscountId: discountId,
         description: description.trim(),
         markets, planCodes: plans,
         startsAt: new Date(startsAt + 'T00:00:00Z').toISOString(),
@@ -79,7 +99,13 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
 
   const archive = async (p: Promotion) => {
     if (!confirm(A.pmArchiveConfirm(p.code))) return;
-    try { await archivePromotion(p.code); flash(A.pmArchived); load(); }
+    try {
+      // Retire in Paddle too (best effort) so the code stops redeeming.
+      if (p.paddleDiscountId && TRIAL_FLOW_ENABLED) {
+        await archiveDiscountFn(p.paddleDiscountId).catch(() => {});
+      }
+      await archivePromotion(p.code); flash(A.pmArchived); load();
+    }
     catch (e: any) { flash(`${A.pmFailed} ${String(e?.message ?? e)}`); }
   };
 
@@ -100,6 +126,21 @@ export const PromotionsCard: React.FC<{ al: AdminLang }> = ({ al }) => {
         <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
           {A.pmPaddleId}
           <input value={paddleId} onChange={e => setPaddleId(e.target.value)} placeholder="dsc_…" className={`${inp} w-44 font-normal`} />
+        </label>
+        <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
+          {A.pmType}
+          <select value={dType} onChange={e => setDType(e.target.value as 'percentage' | 'flat')} className={`${inp} font-normal`}>
+            <option value="percentage">%</option>
+            <option value="flat">EUR</option>
+          </select>
+        </label>
+        <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
+          {A.pmAmount}
+          <input value={amount} onChange={e => setAmount(e.target.value.replace(/[^0-9.]/g, ''))} placeholder={dType === 'percentage' ? '20' : '1000 (=10€)'} className={`${inp} w-28 font-normal`} />
+        </label>
+        <label className="flex flex-col gap-1 text-xs font-bold text-gray-500">
+          {A.pmRecur}
+          <input value={recurN} onChange={e => setRecurN(e.target.value.replace(/[^0-9]/g, ''))} placeholder="1" className={`${inp} w-20 font-normal`} />
         </label>
         <label className="flex flex-col gap-1 text-xs font-bold text-gray-500 flex-grow min-w-[200px]">
           {A.pmDescription}

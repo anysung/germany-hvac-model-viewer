@@ -8,8 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { getUsers } from '../../services/authService';
 import {
   listGrants, createGrant, revokeGrant, listChangeRequests,
-  adminAssignSubscription,
 } from '../../services/subscriptionService';
+import { applyPlanChangeFn } from '../../services/billingFnService';
 import { collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { User, FreeAccessGrant, SubscriptionChangeRequest } from '../../types';
@@ -63,12 +63,19 @@ export const BillingPage: React.FC<{ al: AdminLang }> = ({ al }) => {
   const subs = users.filter(u => u.subscription);
   const count = (st: string) => subs.filter(u => u.subscription!.status === st).length;
 
+  // Approved upgrade requests go THROUGH the Paddle API (billing function):
+  // the server validates upgrade-only + 30-day cooldown, swaps the price with
+  // do_not_bill, and the webhook — the subscription slot's only writer —
+  // records the new state. Admin never touches user.subscription directly.
   const applyChange = async (req: SubscriptionChangeRequest) => {
-    const target = users.find(u => u.id === req.userId);
-    if (!target) return;
-    await adminAssignSubscription(target, req.requestedPlanCode, req.requestedBillingTerm, { status: 'active' });
-    await updateDoc(doc(db, 'subscriptionChangeRequests', req.id), { status: 'applied' });
-    flash(A.blApplied);
+    try {
+      const r = await applyPlanChangeFn(req.id);
+      if (!r.ok) throw new Error(r.error || 'apply-failed');
+      flash(A.blApplied);
+    } catch (e: any) {
+      const msg = String(e?.message ?? e);
+      flash(msg.includes('billing-fn-not-configured') ? A.blFnMissing : `${A.blApplyFailed} ${msg}`);
+    }
     load();
   };
 
