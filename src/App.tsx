@@ -763,8 +763,13 @@ const App: React.FC = () => {
   // Same copy in every country edition (DE/GB/FR), localized by the active UI
   // language. The date is display only — see src/config/registration.ts.
   if (currentView === 'SIGNUP' && !REGISTRATION_OPEN) {
+    // Full Record so a market added later cannot silently fall back to English
+    // — PL and IT did exactly that until 2026-08-03.
+    const DATE_LOCALES: Record<Language, string> = {
+      en: 'en-GB', de: 'de-DE', fr: 'fr-FR', pl: 'pl-PL', it: 'it-IT',
+    };
     const reopen = new Date(`${REGISTRATION_REOPEN_DATE}T00:00:00Z`).toLocaleDateString(
-      language === 'de' ? 'de-DE' : language === 'fr' ? 'fr-FR' : 'en-GB',
+      DATE_LOCALES[language],
       { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' },
     );
     return (

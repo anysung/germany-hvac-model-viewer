@@ -28,5 +28,8 @@ export const REGISTRATION_OPEN =
   REGISTRATION_FLAG ||
   (import.meta.env.DEV && import.meta.env.VITE_REGISTRATION_OPEN === 'true');
 
-/** Expected reopening date, shown to visitors. Informational only. */
-export const REGISTRATION_REOPEN_DATE = '2026-08-03';
+/** Expected reopening date, shown to visitors. Informational only.
+ *  Moved from 2026-08-03 on the owner's call (2026-08-03): subscription
+ *  billing setup is not finished, and reopening before checkout works would
+ *  hand new accounts a trial they cannot convert. */
+export const REGISTRATION_REOPEN_DATE = '2026-08-07';
