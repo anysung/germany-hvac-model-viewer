@@ -351,8 +351,12 @@ export const TeamManagementView: React.FC<{
 
   const used = seatsUsed(org);
   const free = org.seatLimit - used;
+  // `by` lets the invite screen name the person who sent the link. It travels in
+  // the URL because the invitee cannot read the organizations doc before signing
+  // in, and widening that read would expose every team's member list.
   const inviteLink = (email: string) =>
-    `${window.location.origin}/?invite=${encodeURIComponent(org.id)}&email=${encodeURIComponent(email)}`;
+    `${window.location.origin}/?invite=${encodeURIComponent(org.id)}&email=${encodeURIComponent(email)}`
+    + `&by=${encodeURIComponent(app.user.email)}`;
 
   const copy = (email: string) =>
     navigator.clipboard?.writeText(inviteLink(email))

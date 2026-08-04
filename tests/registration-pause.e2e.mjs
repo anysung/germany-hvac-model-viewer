@@ -25,17 +25,18 @@ const APPCHECK_DEBUG = readFileSync(`${SCRATCH}/appcheck-debug-token.txt`, 'utf8
 
 /** The localized notice each UI language must show. */
 const NOTICE = {
-  en: { title: 'Registration is temporarily unavailable', date: '24 July 2026' },
-  de: { title: 'Registrierung vorübergehend nicht möglich', date: '24. Juli 2026' },
-  fr: { title: 'Les inscriptions sont temporairement suspendues', date: '24 juillet 2026' },
-  pl: { title: 'Rejestracja jest tymczasowo niedostępna', date: '24 lipca 2026' },
+  en: { title: 'Registration is temporarily unavailable', date: '7 August 2026' },
+  de: { title: 'Registrierung vorübergehend nicht möglich', date: '7. August 2026' },
+  fr: { title: 'Les inscriptions sont temporairement suspendues', date: '7 août 2026' },
+  pl: { title: 'Rejestracja jest tymczasowo niedostępna', date: '7 sierpnia 2026' },
+  it: { title: 'Le registrazioni sono temporaneamente sospese', date: '7 agosto 2026' },
 };
 /** Languages the edition must be able to show it in. */
-const LANGS = { DE: ['en', 'de'], GB: ['en'], FR: ['fr'], PL: ['pl', 'en'] }[COUNTRY];
-const DEFAULT_LANG = COUNTRY === 'FR' ? 'fr' : COUNTRY === 'PL' ? 'pl' : 'en';
+const LANGS = { DE: ['en', 'de'], GB: ['en'], FR: ['fr'], PL: ['pl', 'en'], IT: ['it', 'en'] }[COUNTRY];
+const DEFAULT_LANG = COUNTRY === 'FR' ? 'fr' : COUNTRY === 'PL' ? 'pl' : COUNTRY === 'IT' ? 'it' : 'en';
 
-const SIGNUP_BTN = /Sign Up|Registrieren|Créer un compte|Zarejestruj się/i;
-const LOGIN_BTN = /Log In|Anmelden|Se connecter|Zaloguj się/i;
+const SIGNUP_BTN = /Sign Up|Registrieren|Créer un compte|Zarejestruj się|Registrati/i;
+const LOGIN_BTN = /Log In|Anmelden|Se connecter|Zaloguj się|Accedi/i;
 
 let passed = 0;
 let failed = 0;
@@ -82,6 +83,26 @@ for (const lang of LANGS) {
   const inputs = await page.locator('form input').count();
   const submit = await page.locator('button[type="submit"]').count();
   check(`[${lang}] registration form is NOT rendered`, inputs === 0 && submit === 0, `inputs: ${inputs}, submit: ${submit}`);
+}
+
+// ── 3b. Social is offered as a LOGIN method only ─────────────────────────
+// The pause used to be bypassable here: the notice's only button leads to the
+// login screen, whose Google/Apple buttons created a full account for an
+// unknown identity. Social no longer registers (authService.finishProviderSignIn),
+// and the screen says so before the click.
+await page.goto(BASE, { waitUntil: 'domcontentloaded' });
+await page.waitForTimeout(1500);
+await page.getByRole('button', { name: LOGIN_BTN }).first().click();
+await page.waitForTimeout(800);
+{
+  const google = page.getByRole('button', { name: /Google/i }).first();
+  check('login screen still offers Google sign-in', await google.isVisible());
+  const body = await page.locator('body').innerText();
+  check(
+    'social buttons are labelled as login-only (not a signup route)',
+    /already exist|bereits bestehende|déjà existants|istniejących|già esistenti/i.test(body),
+    body.slice(0, 200),
+  );
 }
 
 // ── 4. Existing approved member can still sign in ────────────────────────

@@ -8,7 +8,7 @@
  * Run: npm run test:rules
  */
 import { initializeTestEnvironment, assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
-import { doc, setDoc, getDoc, updateDoc, deleteField } from 'firebase/firestore';
+import { doc, setDoc, getDoc, getDocs, updateDoc, deleteField, collection, query, where } from 'firebase/firestore';
 import { readFileSync } from 'node:fs';
 
 const PROJECT_ID = 'heatpumpdb-rules-test';
@@ -317,6 +317,42 @@ await check('[consistency] a leave that keeps the caller in memberUids is reject
     members: [{ uid: OWNER.uid, email: OWNER.email, name: 'Owner' }],
     memberUids: [OWNER.uid, MEMBER.uid],
   }));
+});
+
+/* ── Team documents are not readable by other customers ──────────────────── */
+// A team doc holds the members' names and emails, the seat count and the
+// subscription state. `read` covers list as well as get, so before 2026-08-04
+// any signed-in customer could query the collection and take every team's
+// contact list. Members still need their own org for the plan name, the
+// admin's address and the inherited company profile.
+await seed();
+await check('[org read] a member reads their own team', async () => {
+  await assertSucceeds(getDoc(orgRef(as(MEMBER))));
+});
+await check('[org read] the team admin reads their own team', async () => {
+  await assertSucceeds(getDoc(orgRef(as(OWNER))));
+});
+await check('[org read] an invited (not yet joined) user reads the inviting team', async () => {
+  await assertSucceeds(getDoc(orgRef(as(INVITED))));
+});
+await check('[org read] an unrelated signed-in customer CANNOT read the team', async () => {
+  await assertFails(getDoc(orgRef(as(STRANGER))));
+});
+await check('[org read] an unrelated customer CANNOT list the organizations collection', async () => {
+  await assertFails(getDocs(collection(as(STRANGER), 'organizations')));
+});
+await check('[org read] "which org invited me" still works for the invited user', async () => {
+  const snap = await assertSucceeds(getDocs(query(
+    collection(as(INVITED), 'organizations'),
+    where('invitedEmails', 'array-contains', INVITED.email),
+  )));
+  if (snap.empty) throw new Error('the invitation query returned nothing');
+});
+await check('[org read] the invitation query cannot be aimed at somebody else', async () => {
+  await assertFails(getDocs(query(
+    collection(as(STRANGER), 'organizations'),
+    where('invitedEmails', 'array-contains', INVITED.email),
+  )));
 });
 
 await testEnv.cleanup();

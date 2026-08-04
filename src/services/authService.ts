@@ -30,7 +30,7 @@ import {
 import { auth, db } from '../firebase';
 import { User, ActivityLog, UserSubscription, UserGrant } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
-import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey } from './subscriptionService';
+import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey, getOrg } from './subscriptionService';
 import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
 import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
 import { compact } from '../utils/profile';
@@ -277,13 +277,22 @@ export const registerInvitedMember = async (
   const uid = cred.user?.uid;
   if (!uid) throw new Error('User ID missing');
 
+  // The member inherits the team's company profile — the invited form never asks
+  // for it, and leaving it blank is why invited seats showed an empty company in
+  // the admin list. Readable here because the account is already signed in; a
+  // failure is not fatal, the seat comes from the org either way.
+  const team = await getOrg(orgId).catch(() => null);
+
   const member: User = {
     id: uid,
     email: data.email,
     firstName: data.firstName,
     lastName: data.lastName,
-    companyName: '',
-    companyType: '',
+    companyName: team?.companyName ?? team?.name ?? '',
+    companyType: team?.companyType ?? '',
+    ...(team?.companyTypeOther ? { companyTypeOther: team.companyTypeOther } : {}),
+    ...(team?.companyCity ? { companyCity: team.companyCity } : {}),
+    ...(team?.companyWebsite ? { companyWebsite: team.companyWebsite } : {}),
     country: ACTIVE_COUNTRY.code,
     isActive: true,
     status: 'active',
@@ -456,14 +465,22 @@ export const unlinkSignInProvider = async (providerId: string): Promise<void> =>
 };
 
 // --- Social login (Google / Apple via Firebase popup) ---
-// First-time social sign-in behaves like registration: a pending profile is
-// created and the user is signed out until an admin approves — the same
-// approval gate as email/password registration. Returning users pass through
-// the same status checks as loginUser.
+// SOCIAL IS A LOGIN METHOD, NOT A REGISTRATION METHOD (owner decision,
+// 2026-08-04). This is a B2B service: the account IS the company email — team
+// seats, invoices and the once-per-email trial all hang off it, and there is
+// deliberately no way to change it afterwards (see updateMyProfile's field
+// whitelist). Signing up with a personal Google identity therefore produces an
+// account that cannot be corrected without deleting it, and deletion burns the
+// email's one free trial for a year. So an unknown provider identity is
+// REFUSED here and told to register with a company email first; Google/Apple
+// are then linked from the Account page, where the profile already exists.
+//
+// This also makes REGISTRATION_OPEN meaningful: email/password signup is now
+// the only path that creates an account, so the one flag closes all of them.
 export const loginWithProvider = async (
   providerName: 'google' | 'apple',
-  /** First-time social sign-ins are registrations: the caller shows the
-   *  account/data-use terms popup and resolves on consent (rejects on cancel). */
+  /** Unused since social registration was removed — kept so the redirect and
+   *  popup callers keep the same shape as the email flow. */
   confirmTerms?: () => Promise<void>,
 ): Promise<'active' | 'pending-created' | 'redirecting'> => {
   const provider =
@@ -531,48 +548,11 @@ const finishProviderSignIn = async (
       await logActivity(uid, 'LOGIN', `Owner logged in via ${providerLabel} (profile created)`, email, 'Christopher Sung');
       return 'active';
     }
-    // New social user → registration. Consent to the account/data-use terms
-    // is required before the profile is created (same gate as the signup form).
-    if (confirmTerms) {
-      try { await confirmTerms(); }
-      catch { await signOut(auth); throw new Error('terms-declined'); }
-    }
-    const display = fbUser.displayName || email.split('@')[0] || 'New User';
-    const [firstName, ...rest] = display.split(' ');
-    const newUser: User = {
-      id: uid, email,
-      firstName: firstName || 'New',
-      lastName: rest.join(' ') || '—',
-      companyType: 'individual',
-      companyName: '',
-      country: ACTIVE_COUNTRY.code,
-      isActive: false, status: 'pending',
-      registeredAt: new Date().toISOString(),
-      ...consentFields(),
-      role: 'user', plan: 'standard',
-    };
-    await setDoc(userDocRef, newUser);
-    // Free-access grant (admin promotion): activate immediately, stay signed in.
-    const redeemedNew = await redeemFreeGrantIfAny(newUser);
-    if (redeemedNew) {
-      if (TRIAL_FLOW_ENABLED) finalizeSignupFn().catch(() => {});
-      return 'active';
-    }
-    if (TRIAL_FLOW_ENABLED) {
-      // Social identities are provider-verified: the consent gate above ran,
-      // so the server can activate (and grant the one free trial) right away.
-      const fin = await tryFinalizeSignup();
-      if (fin.state === 'active') {
-        await logActivity(uid, 'LOGIN', `Social registration activated (${providerLabel}): ${email}`, email, display);
-        return 'active';
-      }
-      // Server refused (registry closed account etc.) — treat as not signed up.
-      await signOut(auth);
-      throw new Error(fin.state === 'error' ? fin.message : 'activation-failed');
-    }
+    // No profile → this provider identity was never registered. Social does not
+    // create accounts (see loginWithProvider). Sign the Firebase user back out
+    // so no orphan session survives, and let the caller explain how to join.
     await signOut(auth);
-    await logActivity(uid, 'REGISTER_PENDING', `Social registration pending (${providerLabel}): ${email}`, email, display);
-    return 'pending-created';
+    throw new Error('no-account');
   }
 
   let userData = {

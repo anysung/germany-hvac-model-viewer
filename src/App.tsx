@@ -216,6 +216,12 @@ const App: React.FC = () => {
   const inviteParams = new URLSearchParams(window.location.search);
   const inviteOrgId = inviteParams.get('invite') ?? '';
   const invitedEmail = (inviteParams.get('email') ?? '').trim().toLowerCase();
+  /** Who generated the link. Display only — the organizations doc cannot be read
+   *  before sign-in, and opening it up would expose every team's member list
+   *  (Firestore has no field-level read rules). The join itself is still proven
+   *  server-side against the org's invitedEmails, so a forged `by` changes the
+   *  wording and nothing else. */
+  const invitedBy = (inviteParams.get('by') ?? '').trim().toLowerCase();
   const isInvite = !!inviteOrgId && !!invitedEmail;
   // Account/data-use consent popup (signup gate) — resolves on agree.
   const [termsPrompt, setTermsPrompt] = useState<{ resolve: () => void; reject: () => void } | null>(null);
@@ -508,6 +514,8 @@ const App: React.FC = () => {
       // User closed/cancelled the popup — not an error worth alerting.
       if (err?.code === 'auth/popup-closed-by-user' || err?.code === 'auth/cancelled-popup-request') return;
       if (err?.message === 'terms-declined') { alert(t.termsDeclined); return; }
+      // Social is a login method only — an unknown identity is not a signup.
+      if (err?.message === 'no-account') { alert(t.socialNoAccount); return; }
       if (!routeAuthError(err)) alert(err.message);
     } finally {
       setIsLoading(false);
@@ -530,6 +538,7 @@ const App: React.FC = () => {
         // 'active' → onUserChange routes into the app; null → nothing pending.
       } catch (err: any) {
         if (err?.message === 'terms-declined') { alert(t.termsDeclined); return; }
+        if (err?.message === 'no-account') { alert(t.socialNoAccount); return; }
         if (!routeAuthError(err) && err?.message) alert(err.message);
       }
     })();
@@ -658,7 +667,13 @@ const App: React.FC = () => {
         {termsModal}
         <GlassCard className="w-full max-w-xl p-8 hp-fade-up" >
           <h2 className="text-2xl font-bold text-white mb-1" data-testid="invite-title">{t.invTitle}</h2>
-          <p className="text-white/50 text-sm mb-6">{t.invSub}</p>
+          <p className="text-white/50 text-sm mb-4">{t.invSub}</p>
+          {/* What the invitee cannot change — said once, up front, so it does not
+              come back later as a support ticket. */}
+          <div className="mb-6 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.06] px-4 py-3 text-[13px] leading-relaxed text-white/70" data-testid="invite-notice">
+            {invitedBy && <p className="text-white/85">{t.invFrom(invitedBy)}</p>}
+            <p className={invitedBy ? 'mt-1' : ''}>{t.invLocked}</p>
+          </div>
           <SignupForm t={t} language={language} isLoading={isLoading} invitedEmail={invitedEmail} onSubmit={handleInvitedSignup} />
           <LegalFooter language={language} dark />
         </GlassCard>
@@ -818,6 +833,9 @@ const App: React.FC = () => {
             <button type="button" onClick={() => handleSocialLogin('apple')} disabled={isLoading} className={socialBtn}>
               <AppleIcon /> {t.continueApple}
             </button>
+            {/* Social signs in, it does not sign up — say so before the click,
+                not in an error dialog afterwards. */}
+            <p className="text-xs text-white/35 text-center leading-relaxed">{t.socialLoginOnly}</p>
           </div>
           <p className="mt-5 text-center text-sm text-white/45">
             {t.authNoAccount}{' '}

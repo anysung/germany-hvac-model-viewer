@@ -254,7 +254,24 @@ service cloud.firestore {
     // by any signed-in account (invite lookup queries need it; contents are
     // seat emails only — all accounts are admin-approved professionals).
     match /organizations/{orgId} {
-      allow read: if isSignedIn() || isAdmin();
+      // A team is other customers' data: member names and emails, seat count,
+      // plan and subscription state. `read` covers list as well as get, so the
+      // old `isSignedIn()` let any logged-in customer query the whole collection
+      // and walk away with every team's contact list. Narrowed 2026-08-04.
+      //
+      // A member needs their OWN org only (plan name, admin's address, the
+      // company profile the team inherits) — entitlement itself is decided by
+      // orgWindowOpen() inside these rules, which reads server-side and does not
+      // depend on this permission at all.
+      allow get: if isAdmin() ||
+                    (isSignedIn() && request.auth.uid in resource.data.memberUids) ||
+                    (isSignedIn() && request.auth.token.email in resource.data.invitedEmails) ||
+                    (isSignedIn() && request.auth.uid == resource.data.ownerUid);
+      // The one query the app runs (subscriptionService.joinOrgIfInvited):
+      // "which org invited me?". Every document it can return must satisfy this,
+      // so the query can only ever see the caller's own invitations.
+      allow list: if isAdmin() ||
+                    (isSignedIn() && request.auth.token.email in resource.data.invitedEmails);
       allow create, delete: if isAdmin();
       allow update: if isAdmin() ||
         (

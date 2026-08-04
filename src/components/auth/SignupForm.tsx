@@ -168,7 +168,12 @@ export const SignupForm: React.FC<{
             style={invited ? { opacity: 0.75, cursor: 'not-allowed' } : undefined}
             data-testid="su-email"
           />
-          {invited && <p className="text-white/40 text-xs mt-1">{t.invEmailFixed}</p>}
+          {invited
+            ? <p className="text-white/40 text-xs mt-1">{t.invEmailFixed}</p>
+            /* Say what a wrong choice costs, not just what we prefer: the account
+               email is immutable by design, so the only fix is deleting the
+               account — which burns the email's one free trial for a year. */
+            : <p className="text-white/45 text-xs mt-1.5 leading-relaxed" data-testid="su-email-advice">{t.suEmailAdvice}</p>}
         </div>
         <div className="md:col-span-2">
           <label className={authLabel}>{t.password} *</label>
