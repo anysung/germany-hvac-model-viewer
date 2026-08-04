@@ -33,7 +33,12 @@ const ver = { terms: TERMS_VERSION, privacy: PRIVACY_VERSION };
  * are used verbatim. */
 type ImprintLabels = {
   title: string;
-  operator: string; owner: string; address: string; regNo: string;
+  /** Short inline label for the operator's personal name — shown in
+   *  parentheses under the address (owner 2026-08-04: the name must be
+   *  PRESENT and legible for the German Impressum, but carries no separate
+   *  heading; a side-business operator's name gets no more prominence than
+   *  the law requires). */
+  operator: string; ownerShort: string; address: string; regNo: string;
   contact: string; brand: string; payment: string;
   soleProp: string; emailLabel: string;
   brandSentence: string; paymentSentence: string;
@@ -45,8 +50,7 @@ function buildImprint(L: ImprintLabels): LegalDocContent {
     updated: ver.terms,
     sections: [
       { h: L.operator, p: [OPERATOR_NAME, L.soleProp] },
-      { h: L.owner, p: [OPERATOR_OWNER] },
-      { h: L.address, p: [...BUSINESS_ADDRESS_LINES] },
+      { h: L.address, p: [...BUSINESS_ADDRESS_LINES, `(${L.ownerShort}: ${OPERATOR_OWNER})`] },
       { h: L.regNo, p: [BUSINESS_REG_NUMBER] },
       { h: L.contact, p: [`${L.emailLabel} ${SUPPORT_EMAIL}`] },
       { h: L.brand, p: [L.brandSentence] },
@@ -64,15 +68,6 @@ const EN = {
     intro:
       `${SERVICE_NAME} is a web-based professional database service for the European heat-pump industry. This policy explains what we process when you use the service, and why. We collect the minimum needed to run a professional account.`,
     sections: [
-      {
-        h: 'Data Controller',
-        p: [
-          `${OPERATOR_NAME}, a sole proprietorship operated by ${OPERATOR_OWNER}, operates ${BRAND_TM} and is the controller for the personal data described in this policy.`,
-          'Registered business address:',
-          ...BUSINESS_ADDRESS_LINES,
-          `Email: ${SUPPORT_EMAIL}`,
-        ],
-      },
       {
         h: 'Account information we collect',
         p: [
@@ -143,6 +138,14 @@ const EN = {
         ],
       },
       {
+        h: 'Data Controller',
+        p: [
+          `${OPERATOR_NAME} operates ${BRAND_TM} and is the controller for the personal data described in this policy. Operator details are set out in the Legal Notice.`,
+          'Registered business address: Seongbuk-gu, Seoul, South Korea (Republic of Korea) — full address in the Legal Notice.',
+          `Email: ${SUPPORT_EMAIL}`,
+        ],
+      },
+      {
         h: 'Account deletion',
         p: [
           'You can request deletion at any time from the Account page. Deleting your HeatPump DataBase account does not cancel a subscription — billing must be cancelled separately through Manage billing.',
@@ -158,7 +161,7 @@ const EN = {
         h: 'International processing',
         p: [
           'Our providers may process data outside the EEA. Where that happens, transfers rely on the safeguards those providers offer (including EU Standard Contractual Clauses).',
-          'Our operator is established in the Republic of Korea and may process your personal data there. Such transfers of EEA and UK user data rely on appropriate safeguards recognised under EU and UK data-protection law — including the adequacy decisions for the Republic of Korea and, where applicable, Standard Contractual Clauses. You can request details of these safeguards using the contact below.',
+          'Our operator is established in South Korea (Republic of Korea) and may process your personal data there. Such transfers of EEA and UK user data rely on appropriate safeguards recognised under EU and UK data-protection law — including the adequacy decisions for the Republic of Korea and, where applicable, Standard Contractual Clauses. You can request details of these safeguards using the contact below.',
         ],
       },
       { h: 'Contact', p: [`Use New inquiry on the Account page, or email ${SUPPORT_EMAIL}.`] },
@@ -253,7 +256,7 @@ const EN = {
   imprint: buildImprint({
     title: 'Legal Notice',
     operator: 'Service Operator',
-    owner: 'Owner and Operator',
+    ownerShort: 'Operator',
     address: 'Registered Business Address',
     regNo: 'Business Registration Number',
     contact: 'Contact',
@@ -275,15 +278,6 @@ const DE = {
     intro:
       'HeatPump DataBase ist ein webbasierter, professioneller Datenbankdienst für die europäische Wärmepumpenbranche. Diese Erklärung beschreibt, welche Daten wir bei der Nutzung verarbeiten und warum. Wir erheben nur das Minimum, das für ein professionelles Konto erforderlich ist.',
     sections: [
-      {
-        h: 'Verantwortlicher',
-        p: [
-          `${OPERATOR_NAME}, ein von ${OPERATOR_OWNER} betriebenes Einzelunternehmen, betreibt ${BRAND_TM} und ist Verantwortlicher für die in dieser Erklärung beschriebenen personenbezogenen Daten.`,
-          'Eingetragene Geschäftsanschrift:',
-          ...BUSINESS_ADDRESS_LINES,
-          `E-Mail: ${SUPPORT_EMAIL}`,
-        ],
-      },
       {
         h: 'Kontodaten',
         p: [
@@ -344,6 +338,14 @@ const DE = {
         p: ['Konto- und Unternehmensdaten werden für die Dauer des Kontos gespeichert. Nach Löschung bewahren wir nur auf, was aus rechtlichen, buchhalterischen oder Nachweisgründen erforderlich ist; Abrechnungsunterlagen werden von Paddle für die gesetzlichen Fristen aufbewahrt.', 'Zur Verhinderung wiederholter kostenloser Testphasen und missbräuchlicher Nutzung speichern wir nach Kontolöschung für bis zu ein Jahr einen minimalen Eintrag der bei der Registrierung verwendeten E-Mail-Adresse (berechtigtes Interesse, Art. 6 Abs. 1 lit. f DSGVO). Er dient ausschließlich der Prüfung der Testphasen-Berechtigung und wird danach automatisch gelöscht.'],
       },
       {
+        h: 'Verantwortlicher',
+        p: [
+          `${OPERATOR_NAME} betreibt ${BRAND_TM} und ist Verantwortlicher für die in dieser Erklärung beschriebenen personenbezogenen Daten. Angaben zum Betreiber finden Sie im Impressum.`,
+          'Eingetragene Geschäftsanschrift: Seongbuk-gu, Seoul, Südkorea (Republik Korea) — vollständige Anschrift im Impressum.',
+          `E-Mail: ${SUPPORT_EMAIL}`,
+        ],
+      },
+      {
         h: 'Kontolöschung',
         p: ['Sie können die Löschung jederzeit auf der Kontoseite beantragen. Die Löschung Ihres HeatPump-Database-Kontos kündigt kein Abonnement — die Abrechnung muss separat über „Abrechnung verwalten“ gekündigt werden.'],
       },
@@ -355,7 +357,7 @@ const DE = {
         h: 'Internationale Verarbeitung',
         p: [
           'Unsere Dienstleister können Daten außerhalb des EWR verarbeiten. Übermittlungen stützen sich in diesem Fall auf die Garantien dieser Anbieter (u. a. EU-Standardvertragsklauseln).',
-          'Unser Betreiber hat seinen Sitz in der Republik Korea und kann Ihre personenbezogenen Daten dort verarbeiten. Solche Übermittlungen von Daten von Nutzern aus dem EWR und dem Vereinigten Königreich stützen sich auf geeignete Garantien nach EU- und UK-Datenschutzrecht — einschließlich der Angemessenheitsbeschlüsse für die Republik Korea und, soweit einschlägig, Standardvertragsklauseln. Einzelheiten zu diesen Garantien können Sie über den unten genannten Kontakt anfordern.',
+          'Unser Betreiber hat seinen Sitz in Südkorea (Republik Korea) und kann Ihre personenbezogenen Daten dort verarbeiten. Solche Übermittlungen von Daten von Nutzern aus dem EWR und dem Vereinigten Königreich stützen sich auf geeignete Garantien nach EU- und UK-Datenschutzrecht — einschließlich der Angemessenheitsbeschlüsse für die Republik Korea und, soweit einschlägig, Standardvertragsklauseln. Einzelheiten zu diesen Garantien können Sie über den unten genannten Kontakt anfordern.',
         ],
       },
       { h: 'Kontakt', p: [`Nutzen Sie „Neue Anfrage“ auf der Kontoseite oder schreiben Sie an ${SUPPORT_EMAIL}.`] },
@@ -448,7 +450,7 @@ const DE = {
   imprint: buildImprint({
     title: 'Impressum',
     operator: 'Diensteanbieter',
-    owner: 'Inhaber und Betreiber',
+    ownerShort: 'Inhaber',
     address: 'Eingetragene Geschäftsanschrift',
     regNo: 'Geschäftliche Registrierungsnummer',
     contact: 'Kontakt',
@@ -470,15 +472,6 @@ const FR = {
     intro:
       "HeatPump DataBase est un service de base de données professionnel sur le web, destiné à la filière européenne des pompes à chaleur. Cette politique explique quelles données nous traitons et pourquoi. Nous ne collectons que le minimum nécessaire au fonctionnement d'un compte professionnel.",
     sections: [
-      {
-        h: 'Responsable du traitement',
-        p: [
-          `${OPERATOR_NAME}, une entreprise individuelle exploitée par ${OPERATOR_OWNER}, exploite ${BRAND_TM} et est le responsable du traitement des données personnelles décrites dans la présente politique.`,
-          'Adresse professionnelle enregistrée :',
-          ...BUSINESS_ADDRESS_LINES,
-          `E-mail : ${SUPPORT_EMAIL}`,
-        ],
-      },
       {
         h: 'Données de compte',
         p: [
@@ -539,6 +532,14 @@ const FR = {
         p: ["Les données de compte et d'entreprise sont conservées pendant la durée de vie du compte. Après suppression, nous ne conservons que ce qui est requis à des fins légales, comptables ou probatoires ; les documents de facturation sont conservés par Paddle pendant les durées légales.", "Afin de prévenir l'utilisation répétée de l'essai gratuit et les usages abusifs du service, nous conservons un enregistrement minimal de l'adresse e-mail utilisée à l'inscription pendant un an au maximum après la suppression du compte (intérêt légitime, art. 6-1-f RGPD). Il sert uniquement à vérifier l'éligibilité à l'essai gratuit et est supprimé automatiquement à l'issue de cette période."],
       },
       {
+        h: 'Responsable du traitement',
+        p: [
+          `${OPERATOR_NAME} exploite ${BRAND_TM} et est le responsable du traitement des données personnelles décrites dans la présente politique. Les coordonnées de l'exploitant figurent dans les Mentions légales.`,
+          'Adresse professionnelle enregistrée : Seongbuk-gu, Séoul, Corée du Sud (République de Corée) — adresse complète dans les Mentions légales.',
+          `E-mail : ${SUPPORT_EMAIL}`,
+        ],
+      },
+      {
         h: 'Suppression du compte',
         p: ["Vous pouvez demander la suppression à tout moment depuis la page Compte. La suppression de votre compte HeatPump DataBase n'annule pas l'abonnement — la facturation doit être résiliée séparément via « Gérer la facturation »."],
       },
@@ -550,7 +551,7 @@ const FR = {
         h: 'Traitements internationaux',
         p: [
           "Nos prestataires peuvent traiter des données en dehors de l'EEE. Le cas échéant, les transferts s'appuient sur les garanties offertes par ces prestataires (notamment les clauses contractuelles types de l'UE).",
-          "Notre exploitant est établi en République de Corée et peut y traiter vos données personnelles. Ces transferts de données d'utilisateurs de l'EEE et du Royaume-Uni reposent sur des garanties appropriées reconnues par le droit de la protection des données de l'UE et du Royaume-Uni — notamment les décisions d'adéquation concernant la République de Corée et, le cas échéant, les clauses contractuelles types. Vous pouvez demander le détail de ces garanties via le contact ci-dessous.",
+          "Notre exploitant est établi en Corée du Sud (République de Corée) et peut y traiter vos données personnelles. Ces transferts de données d'utilisateurs de l'EEE et du Royaume-Uni reposent sur des garanties appropriées reconnues par le droit de la protection des données de l'UE et du Royaume-Uni — notamment les décisions d'adéquation concernant la République de Corée et, le cas échéant, les clauses contractuelles types. Vous pouvez demander le détail de ces garanties via le contact ci-dessous.",
         ],
       },
       { h: 'Contact', p: [`Utilisez « Nouvelle demande » sur la page Compte, ou écrivez à ${SUPPORT_EMAIL}.`] },
@@ -643,7 +644,7 @@ const FR = {
   imprint: buildImprint({
     title: 'Mentions légales',
     operator: "Exploitant du service",
-    owner: 'Propriétaire et exploitant',
+    ownerShort: 'Exploitant',
     address: 'Adresse professionnelle enregistrée',
     regNo: "Numéro d'enregistrement de l'entreprise",
     contact: 'Contact',
@@ -665,15 +666,6 @@ const PL = {
     intro:
       `${SERVICE_NAME} to internetowy, profesjonalny serwis bazodanowy dla europejskiej branży pomp ciepła. Niniejsza polityka wyjaśnia, jakie dane przetwarzamy podczas korzystania z serwisu i dlaczego. Zbieramy wyłącznie minimum niezbędne do prowadzenia konta profesjonalnego.`,
     sections: [
-      {
-        h: 'Administrator danych',
-        p: [
-          `${OPERATOR_NAME}, jednoosobowa działalność gospodarcza prowadzona przez ${OPERATOR_OWNER}, prowadzi ${BRAND_TM} i jest administratorem danych osobowych opisanych w niniejszej polityce.`,
-          'Zarejestrowany adres działalności:',
-          ...BUSINESS_ADDRESS_LINES,
-          `E-mail: ${SUPPORT_EMAIL}`,
-        ],
-      },
       {
         h: 'Zbierane dane konta',
         p: [
@@ -744,6 +736,14 @@ const PL = {
         ],
       },
       {
+        h: 'Administrator danych',
+        p: [
+          `${OPERATOR_NAME} prowadzi ${BRAND_TM} i jest administratorem danych osobowych opisanych w niniejszej polityce. Dane operatora znajdują się w Nocie prawnej.`,
+          'Zarejestrowany adres działalności: Seongbuk-gu, Seul, Korea Południowa (Republika Korei) — pełny adres w Nocie prawnej.',
+          `E-mail: ${SUPPORT_EMAIL}`,
+        ],
+      },
+      {
         h: 'Usunięcie konta',
         p: [
           'Usunięcia konta można zażądać w każdej chwili na stronie Konto. Usunięcie konta HeatPump DataBase nie anuluje subskrypcji — rozliczenia należy anulować osobno w sekcji „Zarządzaj rozliczeniami”.',
@@ -759,7 +759,7 @@ const PL = {
         h: 'Przetwarzanie międzynarodowe',
         p: [
           'Nasi dostawcy mogą przetwarzać dane poza EOG. W takim przypadku przekazywanie danych opiera się na zabezpieczeniach oferowanych przez tych dostawców (w tym na standardowych klauzulach umownych UE).',
-          'Nasz operator ma siedzibę w Republice Korei i może tam przetwarzać Państwa dane osobowe. Takie przekazywanie danych użytkowników z EOG i Wielkiej Brytanii opiera się na odpowiednich zabezpieczeniach uznanych w prawie ochrony danych UE i Wielkiej Brytanii — w tym na decyzjach stwierdzających odpowiedni stopień ochrony dla Republiki Korei oraz, w stosownych przypadkach, na standardowych klauzulach umownych. Szczegóły tych zabezpieczeń można uzyskać, korzystając z kontaktu podanego poniżej.',
+          'Nasz operator ma siedzibę w Korei Południowej (Republika Korei) i może tam przetwarzać Państwa dane osobowe. Takie przekazywanie danych użytkowników z EOG i Wielkiej Brytanii opiera się na odpowiednich zabezpieczeniach uznanych w prawie ochrony danych UE i Wielkiej Brytanii — w tym na decyzjach stwierdzających odpowiedni stopień ochrony dla Republiki Korei oraz, w stosownych przypadkach, na standardowych klauzulach umownych. Szczegóły tych zabezpieczeń można uzyskać, korzystając z kontaktu podanego poniżej.',
         ],
       },
       { h: 'Kontakt', p: [`Prosimy skorzystać z opcji „Nowe zapytanie” na stronie Konto lub napisać na adres ${SUPPORT_EMAIL}.`] },
@@ -854,7 +854,7 @@ const PL = {
   imprint: buildImprint({
     title: 'Informacje o usługodawcy',
     operator: 'Usługodawca',
-    owner: 'Właściciel i operator',
+    ownerShort: 'Właściciel',
     address: 'Zarejestrowany adres działalności',
     regNo: 'Numer rejestracyjny działalności',
     contact: 'Kontakt',
@@ -876,15 +876,6 @@ const IT = {
     intro:
       `${SERVICE_NAME} è un servizio di banca dati professionale via web per il settore europeo delle pompe di calore. La presente informativa spiega quali dati trattiamo quando utilizzate il servizio e perché. Raccogliamo solo il minimo necessario alla gestione di un account professionale.`,
     sections: [
-      {
-        h: 'Titolare del trattamento',
-        p: [
-          `${OPERATOR_NAME}, impresa individuale gestita da ${OPERATOR_OWNER}, gestisce ${BRAND_TM} ed è il titolare del trattamento dei dati personali descritti nella presente informativa.`,
-          'Indirizzo commerciale registrato:',
-          ...BUSINESS_ADDRESS_LINES,
-          `E-mail: ${SUPPORT_EMAIL}`,
-        ],
-      },
       {
         h: 'Dati dell’account che raccogliamo',
         p: [
@@ -955,6 +946,14 @@ const IT = {
         ],
       },
       {
+        h: 'Titolare del trattamento',
+        p: [
+          `${OPERATOR_NAME} gestisce ${BRAND_TM} ed è il titolare del trattamento dei dati personali descritti nella presente informativa. I dati del gestore sono riportati nelle Note legali.`,
+          'Indirizzo commerciale registrato: Seongbuk-gu, Seoul, Corea del Sud (Repubblica di Corea) — indirizzo completo nelle Note legali.',
+          `E-mail: ${SUPPORT_EMAIL}`,
+        ],
+      },
+      {
         h: 'Cancellazione dell’account',
         p: [
           'Potete richiedere la cancellazione in qualsiasi momento dalla pagina Account. La cancellazione dell’account HeatPump DataBase non annulla l’abbonamento — la fatturazione deve essere disdetta separatamente tramite «Gestisci fatturazione».',
@@ -970,7 +969,7 @@ const IT = {
         h: 'Trattamenti internazionali',
         p: [
           'I nostri fornitori possono trattare dati al di fuori del SEE. In tal caso i trasferimenti si basano sulle garanzie offerte da tali fornitori (comprese le clausole contrattuali standard dell’UE).',
-          'Il nostro operatore ha sede nella Repubblica di Corea e può trattarvi i vostri dati personali. Tali trasferimenti di dati degli utenti del SEE e del Regno Unito si basano su garanzie adeguate riconosciute dal diritto dell’UE e del Regno Unito in materia di protezione dei dati — comprese le decisioni di adeguatezza relative alla Repubblica di Corea e, ove applicabile, le clausole contrattuali standard. Potete richiedere i dettagli di tali garanzie utilizzando il contatto indicato di seguito.',
+          'Il nostro operatore ha sede in Corea del Sud (Repubblica di Corea) e può trattarvi i vostri dati personali. Tali trasferimenti di dati degli utenti del SEE e del Regno Unito si basano su garanzie adeguate riconosciute dal diritto dell’UE e del Regno Unito in materia di protezione dei dati — comprese le decisioni di adeguatezza relative alla Repubblica di Corea e, ove applicabile, le clausole contrattuali standard. Potete richiedere i dettagli di tali garanzie utilizzando il contatto indicato di seguito.',
         ],
       },
       { h: 'Contatto', p: [`Utilizzate «Nuova richiesta» sulla pagina Account oppure scrivete a ${SUPPORT_EMAIL}.`] },
@@ -1065,7 +1064,7 @@ const IT = {
   imprint: buildImprint({
     title: 'Note legali',
     operator: 'Gestore del servizio',
-    owner: 'Proprietario e gestore',
+    ownerShort: 'Titolare',
     address: 'Indirizzo commerciale registrato',
     regNo: 'Numero di registrazione dell’impresa',
     contact: 'Contatto',

@@ -35,7 +35,7 @@ export const BUSINESS_REG_NUMBER = '854-76-00547';
 export const BUSINESS_ADDRESS_LINES = [
   '1st Floor, 16-32, Seogyeong-ro 2-gil',
   'Seongbuk-gu, Seoul',
-  'Republic of Korea',
+  'South Korea (Republic of Korea)',   // 'South Korea' first — 'Republic of Korea' alone reads as the North to some visitors (owner 2026-08-04)
 ] as const;
 /** Payment merchant of record (Paddle legal entity). */
 export const PADDLE_ENTITY = 'Paddle.com Market Ltd';
@@ -48,7 +48,7 @@ export const MARKETING_EMAIL = 'marketing@heatpumpdb.eu';
 
 /** Bump when the wording changes materially; stamped on the profile at signup. */
 export const TERMS_VERSION = '2026-07-22';
-export const PRIVACY_VERSION = '2026-08-01';
+export const PRIVACY_VERSION = '2026-08-04';
 /**
  * Data-use consent (anti-extraction notice shown in the signup consent popup —
  * translations termsData). Bump when that wording changes materially; the
