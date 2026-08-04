@@ -338,20 +338,13 @@ export const NewsPage: React.FC<{ app: HpApp }> = ({ app }) => {
           )}
         </div>
 
-        {/* subscribe */}
-        <div style={{ background: '#f5f5f7', borderRadius: 18, padding: '26px 30px', display: 'flex', alignItems: 'center', gap: 20 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.news.subTitle}</span>
-            <span style={{ fontSize: 13.5, color: '#7a7a7a' }}>{t.news.subText}</span>
-          </div>
-          <span
-            className="hp-press"
-            onClick={() => app.notify(t.news.subscribeSoon)}
-            style={{ marginLeft: 'auto', background: '#0066cc', color: '#fff', borderRadius: 999, padding: '10px 22px', fontSize: 14, cursor: 'pointer', flex: 'none' }}
-          >
-            {t.news.subscribe}
-          </span>
-        </div>
+        {/* No newsletter sign-up here on purpose (owner, 2026-08-05). The button
+            used to promise a briefing we had no way to send: the project has no
+            mail infrastructure at all, and adding one is not a small task — an
+            EU list needs double opt-in, one-click unsubscribe and consent
+            records, and a badly-run send damages the domain reputation that
+            billing and team invitations also depend on. Revisit when the public
+            archive is actually drawing readers. */}
       </div>
     </div>
   );
