@@ -338,7 +338,11 @@ export const TeamManagementView: React.FC<{
   onBack: () => void;
   onChanged: (o: Organization) => void;
   onManageBilling: () => void;
-}> = ({ app, org, onBack, onChanged, onManageBilling }) => {
+  /** Phone shell: same features, rows wrap instead of sitting on one line
+   *  (owner 2026-08-04 — seat management is simple enough for a phone; the
+   *  documented mobile exclusions are the dense table surfaces, not this). */
+  compact?: boolean;
+}> = ({ app, org, onBack, onChanged, onManageBilling, compact }) => {
   const t = tr(app.lang);
   const isPreview = app.user.id === 'preview';
   const [invite, setInvite] = useState('');
@@ -406,7 +410,15 @@ export const TeamManagementView: React.FC<{
     } catch { app.notify(t.team.failed); }
   };
 
-  const row: React.CSSProperties = { display: 'flex', alignItems: 'center', gap: 10, padding: '11px 0', borderBottom: '1px solid #f0f0f0', fontSize: 13 };
+  const row: React.CSSProperties = {
+    display: 'flex', alignItems: 'center', gap: compact ? 7 : 10,
+    padding: '11px 0', borderBottom: '1px solid #f0f0f0', fontSize: 13,
+    ...(compact ? { flexWrap: 'wrap' } : {}),
+  };
+  /** On a phone the name takes the full first line; chips/actions wrap under it. */
+  const nameCell: React.CSSProperties = compact
+    ? { flex: '1 0 100%', minWidth: 0 }
+    : { flex: 1, minWidth: 0 };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }} data-testid="team-management">
@@ -447,7 +459,7 @@ export const TeamManagementView: React.FC<{
           const isOwner = m.uid === org.ownerUid;
           return (
             <div key={m.uid} style={row}>
-              <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={nameCell}>
                 <span style={{ fontWeight: 600, display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.name || m.email}</span>
                 <span style={{ color: '#9a9aa0', fontSize: 12 }}>{m.email}</span>
               </span>
@@ -471,7 +483,7 @@ export const TeamManagementView: React.FC<{
         </div>
         {(org.invitedEmails ?? []).map(email => (
           <div key={email} style={row}>
-            <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{email}</span>
+            <span style={{ ...nameCell, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{email}</span>
             <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>
               {org.invitedAt?.[email] ? t.team.invitedOn(shortDate(org.invitedAt[email], t.locale)) : ''}
             </span>

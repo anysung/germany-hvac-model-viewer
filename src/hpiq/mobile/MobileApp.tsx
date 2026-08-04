@@ -9,20 +9,22 @@
  *             detail panel.
  *   desktop — the full dense UI in HpiqApp.tsx (unchanged).
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HpApp, HpPage } from '../appState';
 import { tr } from '../i18n';
 import { UI_LANGUAGES, FUNDING_SOURCE_LINKS, MARKET_ICON_32 } from '../market';
 import { LEGAL_ROUTES, LegalDoc, MARKETING_EMAIL } from '../../config/legal';
-import { SupportCard, SignInMethodsCard } from '../pages/accountParts';
+import { SupportCard, SignInMethodsCard, TeamManagementView } from '../pages/accountParts';
 import { LEGAL_NAV } from '../../legal/LegalPage';
 import { openCheckout, checkoutConfigured } from '../../services/paddleService';
 import { TRIAL_FLOW_ENABLED, billingPortalFn } from '../../services/billingFnService';
+import { getMyOrg } from '../../services/subscriptionService';
+import { previewOrg } from '../devPreview';
 import { SubPlanCode, BillingTerm, BILLING_TERMS, SUB_PLANS, SUB_PLAN_CODES, formatEur, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct, effectiveSubscription } from '../../config/subscriptionPlans';
 import { FD, SignOutIcon, VideoExplainer, sectionLabel } from '../ui';
 import { GUIDE_VIDEO_ID } from '../market';
 import { BrandLogo, WavingFlag } from '../../components/BrandLogo';
-import { NewsItem, Language } from '../../types';
+import { NewsItem, Language, Organization } from '../../types';
 import type { Viewport } from '../useViewport';
 import { MobileFind, MobileProducts, MobileDetail } from './MobileCatalog';
 import { DataSheetDoc } from '../pages/DataSheetPage';
@@ -551,6 +553,16 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
   const t = tr(app.lang);
   const s = t.sub;
   const [supportOpen, setSupportOpen] = useState(false);
+  // Team seat management on the phone (owner 2026-08-04): the SAME component
+  // the desktop Account page uses, in compact layout — one workflow, one set
+  // of rules, nothing duplicated.
+  const [teamOpen, setTeamOpen] = useState(false);
+  const [org, setOrg] = useState<Organization | null>(null);
+  useEffect(() => {
+    if (app.user.id === 'preview') { setOrg(previewOrg(app.user)); return; }
+    if (app.user.orgId) getMyOrg(app.user).then(setOrg).catch(() => {});
+    else setOrg(null);
+  }, [app.user.id, app.user.orgId]);
   const card: React.CSSProperties = { background: '#fff', border: '1px solid #e0e0e0', borderRadius: 14, padding: '15px 17px', display: 'flex', flexDirection: 'column', gap: 8 };
   const sub = effectiveSubscription(app.user);   // paid (Paddle) wins; else active marketing grant
   const unlocked = !!sub && subscriptionUnlocked(sub.status, sub.currentPeriodEndsAt);
@@ -579,6 +591,23 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
     : sub.status === 'past_due' ? s.statusPastDue
     : sub.cancelAtPeriodEnd || sub.status === 'canceled' ? s.statusCanceled(fmtDate(sub.currentPeriodEndsAt))
     : s.statusActive(fmtDate(sub.currentPeriodEndsAt));
+
+  // Team subview — seat management (invite / cancel invite / remove member),
+  // reusing the desktop component in compact mode.
+  if (teamOpen && org && app.user.orgRole === 'team_admin') {
+    return (
+      <div style={{ padding: '18px 16px 24px' }}>
+        <TeamManagementView
+          app={app}
+          org={org}
+          compact
+          onBack={() => setTeamOpen(false)}
+          onChanged={setOrg}
+          onManageBilling={openBillingPortal}
+        />
+      </div>
+    );
+  }
 
   // Support subview — the SAME in-app inquiry workflow the desktop/tablet Account
   // page uses (shared SupportCard, one data model, one country-tagging path). No
@@ -611,6 +640,18 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
         </span>
         {statusLine && <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{statusLine}</span>}
         <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.5 }}>{t.account.planStoreNote}</span>
+        {/* Team admin: seat management is available here too (owner call
+            2026-08-04) — same component and rules as the desktop page. */}
+        {app.user.orgRole === 'team_admin' && org && (
+          <span
+            className="hp-press"
+            onClick={() => setTeamOpen(true)}
+            data-testid="m-team-manage"
+            style={{ marginTop: 2, textAlign: 'center', border: '1px solid #d2d2d7', borderRadius: 999, padding: '10px 0', fontSize: 13, background: '#fff', cursor: 'pointer', fontWeight: 600 }}
+          >
+            {t.team.manage} · {t.team.seats(org.members.length, org.seatLimit)}
+          </span>
+        )}
         {!isTeamMember && (
           <div style={{ display: 'flex', gap: 8, marginTop: 2 }}>
             <span className="hp-press" onClick={openBillingPortal} style={{ flex: 1, textAlign: 'center', border: '1px solid #d2d2d7', borderRadius: 999, padding: '10px 0', fontSize: 13, background: '#fff', cursor: 'pointer' }}>

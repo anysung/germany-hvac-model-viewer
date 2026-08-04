@@ -1065,21 +1065,56 @@ async function applySubscriptionEvent(sub, eventType, occurredAt) {
       paddleSubscriptionId: sub.id,
       ...windowPatch,
     };
+    // Team sync — MUST run before tx.update(userRef, patch): a new org adds
+    // orgId/orgRole to `patch`, and the SDK serializes the object at call
+    // time, so mutating it after the update would silently drop those fields.
+    // The admin's org mirrors status + window; members derive access from the
+    // org at rules level (no per-member fan-out to miss).
+    if (planCode === 'team_3' || planCode === 'team_5') {
+      if (orgSnap && orgSnap.exists) {
+        tx.update(orgSnap.ref, {
+          planCode,
+          seatLimit: PLAN_SEATS[planCode],
+          subscriptionStatus: status,
+          currentPeriodEndsAt: periodEnd || orgSnap.data().currentPeriodEndsAt || null,
+          ...(isFinalCancel
+            ? { accessUntilTs: Timestamp.fromMillis(Date.now()) }
+            : extendWindowPatch(orgSnap.data().accessUntilTs, periodEnd ? Date.parse(periodEnd) : null)),
+        });
+      } else if (!isFinalCancel && ['active', 'trialing'].includes(status) && !user.orgId) {
+        // Direct team-plan CHECKOUT (no pre-created team-trial org): the org
+        // must exist or the buyer gets a Team badge with no seat management —
+        // found 2026-08-04 when the E2E upgrade produced exactly that. Created
+        // here, in the same transaction as the subscription facts, so a team
+        // purchase is always self-sufficient regardless of the path taken.
+        const orgRef = db.collection('organizations').doc();
+        const email = emailKey(user.email || '');
+        const memberName = [user.firstName, user.lastName].filter(Boolean).join(' ');
+        tx.set(orgRef, {
+          name: user.companyName || '',
+          ownerUid: uid,
+          ownerEmail: email,
+          planCode,
+          seatLimit: PLAN_SEATS[planCode],
+          subscriptionStatus: status,
+          trialEndsAt: null,
+          currentPeriodEndsAt: periodEnd || null,
+          ...(periodEnd ? { accessUntilTs: Timestamp.fromMillis(Date.parse(periodEnd)) } : {}),
+          members: [{ uid, email, ...(memberName ? { name: memberName } : {}) }],
+          memberUids: [uid],
+          invitedEmails: [],
+          invitedAt: {},
+          companyName: user.companyName || '',
+          companyType: user.companyType || '',
+          createdAt: nowIso(),
+        });
+        patch.orgId = orgRef.id;
+        patch.orgRole = 'team_admin';
+      }
+    }
+
     tx.update(userRef, patch);
 
-    // Team sync: the admin's org mirrors status + window; members derive
-    // access from the org at rules level (no per-member fan-out to miss).
-    if (orgSnap && orgSnap.exists && (planCode === 'team_3' || planCode === 'team_5')) {
-      tx.update(orgSnap.ref, {
-        planCode,
-        seatLimit: PLAN_SEATS[planCode],
-        subscriptionStatus: status,
-        currentPeriodEndsAt: periodEnd || orgSnap.data().currentPeriodEndsAt || null,
-        ...(isFinalCancel
-          ? { accessUntilTs: Timestamp.fromMillis(Date.now()) }
-          : extendWindowPatch(orgSnap.data().accessUntilTs, periodEnd ? Date.parse(periodEnd) : null)),
-      });
-    }
 
     // Free-grant overlap: a paying subscription arrived while a marketing
     // grant window is still open. Auto-conversion is the designed outcome

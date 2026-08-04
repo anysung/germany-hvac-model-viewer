@@ -225,6 +225,31 @@ const App: React.FC = () => {
   // window is the org's). Loaded lazily; while null the check can only be
   // MORE permissive (fail-open), never lock anyone out.
   const [myOrg, setMyOrg] = useState<Organization | null>(null);
+
+  // After a completed Paddle checkout the profile changes SERVER-side (the
+  // webhook writes the subscription and, for team plans, creates the org).
+  // Poll the profile briefly until those facts land so the Account page
+  // updates itself — no reload, no "why is there no team section?".
+  useEffect(() => {
+    const onCompleted = () => {
+      let tries = 0;
+      const tick = async () => {
+        tries += 1;
+        try {
+          const fresh = await refetchSessionUser();
+          if (fresh) {
+            setCurrentUser(fresh);
+            if (fresh.subscription || fresh.orgId) return;   // facts arrived
+          }
+        } catch { /* transient — keep trying within the budget */ }
+        if (tries < 8) setTimeout(tick, 2500);
+      };
+      setTimeout(tick, 1500);
+    };
+    window.addEventListener('hpdb-checkout-completed', onCompleted);
+    return () => window.removeEventListener('hpdb-checkout-completed', onCompleted);
+  }, []);
+
   useEffect(() => {
     let alive = true;
     if (currentUser?.orgId) {

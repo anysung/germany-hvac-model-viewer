@@ -66,6 +66,17 @@ function loadPaddle(user?: User | null): Promise<any> {
           // Retain only loads on live accounts; an empty object is the
           // documented "no signed-in customer yet" value.
           pwCustomer: pwCustomerFor(user),
+          // A completed checkout changes the profile SERVER-side (webhook
+          // writes subscription, and creates the organization for team
+          // plans). onUserChange reads the profile once at sign-in, so
+          // without this the buyer would sit on a stale Account page —
+          // Team buyers saw a Team badge with no seat management until they
+          // reloaded (2026-08-04). The app listens and refetches.
+          eventCallback: (ev: any) => {
+            if (ev?.name === 'checkout.completed') {
+              window.dispatchEvent(new CustomEvent('hpdb-checkout-completed'));
+            }
+          },
         });
         resolve(window.Paddle);
       } catch (e) { reject(e); }
