@@ -100,7 +100,7 @@ await page.waitForTimeout(800);
   const body = await page.locator('body').innerText();
   check(
     'social buttons are labelled as login-only (not a signup route)',
-    /already exist|bereits bestehende|déjà existants|istniejących|già esistenti/i.test(body),
+    /Connect Google|vorher auf der Konto-Seite|Associez Google|połącz Google|Collega Google/i.test(body),
     body.slice(0, 200),
   );
 }

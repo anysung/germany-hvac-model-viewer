@@ -56,27 +56,21 @@ const FREE_SIGNUP_NOTE: Record<Language, string> = {
   it: 'Registrazione gratuita — 7 giorni di accesso completo, senza carta di credito.',
 };
 
-/** Link to the PUBLIC funding guide (/guide/, generated at build time).
- *  Crawlers only find a page that something links to — this is that link, and
- *  it doubles as a genuine entry point for visitors who arrive undecided. */
-const VIEW_GUIDE: Record<Language, string> = {
-  en: 'Heat pump funding guide',
-  de: 'Leitfaden zur Wärmepumpen-Förderung',
-  fr: 'Guide des aides pompe à chaleur',
-  pl: 'Przewodnik po dofinansowaniu pomp ciepła',
-  it: 'Guida agli incentivi per pompe di calore',
+/** The two public, indexable pages, labelled as signposts rather than as calls
+ *  to action — they must be crawlable links without pulling attention from Sign Up. */
+// Kept short on purpose: the two sit side by side and must survive a 390px
+// phone in every language (the row wraps rather than overflowing if one grows).
+const PUBLIC_GUIDE: Record<Language, string> = {
+  en: 'Funding Guide', de: 'Förder-Leitfaden', fr: 'Guide des aides',
+  pl: 'Przewodnik: dotacje', it: 'Guida incentivi',
 };
-
-/** Link to the PUBLIC news archive (/news/, generated from the committed
- *  snapshot). Fresh monthly content is the strongest recrawl signal we have,
- *  so it needs a real link, not only a sitemap entry. */
-const VIEW_NEWS: Record<Language, string> = {
-  en: 'Heat pump market news',
-  de: 'Nachrichten zum Wärmepumpenmarkt',
-  fr: 'Actualités du marché des pompes à chaleur',
-  pl: 'Aktualności z rynku pomp ciepła',
-  it: 'Notizie dal mercato delle pompe di calore',
+const PUBLIC_NEWS: Record<Language, string> = {
+  en: 'Market News', de: 'Marktnachrichten', fr: 'Actualités marché',
+  pl: 'Aktualności rynku', it: 'Notizie di mercato',
 };
+const publicPill =
+  'px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-white/50 '
+  + 'text-[13px] hover:text-white/80 hover:border-white/20 transition-colors whitespace-nowrap';
 
 const VIEW_PRICING: Record<Language, string> = {
   en: 'View plans & pricing',
@@ -748,21 +742,19 @@ const App: React.FC = () => {
             <p className="mt-4 text-center text-[13px] leading-relaxed text-emerald-200/90" data-testid="free-signup-note">
               {FREE_SIGNUP_NOTE[language]}
             </p>
-            {/* Public funding guide — a real, indexable page (see
-                scripts/build-public-guide.mjs). */}
-            <div className="mt-3 text-center flex flex-col gap-1">
-              <a href="/guide/" className="text-white/55 text-[13px] hover:text-white/80 transition-colors">
-                {VIEW_GUIDE[language]} ›
-              </a>
-              <a href="/news/" className="text-white/55 text-[13px] hover:text-white/80 transition-colors">
-                {VIEW_NEWS[language]} ›
-              </a>
-            </div>
             {/* Admin access + legal links are intentionally NOT on the landing
                 page — they live on the login/signup pages (header Admin button +
                 their footer). The legal PAGES stay public at /terms etc.; Paddle
                 needs them publicly reachable and linked, which the auth pages do. */}
           </GlassCard>
+          {/* Public, indexable pages (scripts/build-public-guide.mjs,
+              build-public-news.mjs). They sit OUTSIDE the entry card and stay
+              deliberately quiet: their job is to be a crawlable link, not to
+              compete with Sign Up. */}
+          <div className="mt-4 flex flex-wrap justify-center gap-2.5" data-testid="public-pages">
+            <a href="/guide/" className={publicPill}>{PUBLIC_GUIDE[language]}</a>
+            <a href="/news/" className={publicPill}>{PUBLIC_NEWS[language]}</a>
+          </div>
           </div>
         </div>
         </div>
@@ -806,8 +798,11 @@ const App: React.FC = () => {
         <GlassCard className="w-full max-w-md p-8 hp-fade-up">
           <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-4 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.loginTitle}</h2>
-          <p className="text-white/50 text-sm mb-5">{t.loginSub}</p>
-          <form onSubmit={handleLogin} className="space-y-5">
+          <p className="text-white/50 text-sm mb-4">{t.loginSub}</p>
+          {/* The form was generously spaced while everything below the divider
+              was crammed. Tightening the top by one step buys the room the
+              social block and the footer links needed to breathe. */}
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className={authLabel}>{t.email}</label>
               <input type="email" required autoComplete="email" className={authInput} value={loginEmail} onChange={e => setLoginEmail(e.target.value)} />
@@ -816,16 +811,19 @@ const App: React.FC = () => {
               <label className={authLabel}>{t.password}</label>
               <input type="password" required autoComplete="current-password" className={authInput} value={loginPass} onChange={e => setLoginPass(e.target.value)} />
             </div>
-            <div className="flex justify-end">
+            <div className="flex justify-end -mt-1">
               <button type="button" onClick={() => alert("Reset link sent to email.")} className="text-sm text-emerald-300/80 hover:text-emerald-200 transition-colors">{t.forgotPass}</button>
             </div>
             <button type="submit" disabled={isLoading} className={primaryBtn}>{isLoading ? t.loggingIn : t.loginTitle}</button>
           </form>
-          <div className="flex items-center gap-3 my-6">
+          <div className="flex items-center gap-3 mt-6 mb-4">
             <span className="flex-1 h-px bg-white/10" />
             <span className="text-xs text-white/40">{t.orContinueWith}</span>
             <span className="flex-1 h-px bg-white/10" />
           </div>
+          {/* Read this BEFORE reaching for a button, not after — social signs
+              you in, it does not sign you up. */}
+          <p className="mb-3 text-center text-xs text-white/40">{t.socialLoginOnly}</p>
           <div className="flex flex-col gap-3">
             <button type="button" onClick={() => handleSocialLogin('google')} disabled={isLoading} className={socialBtn}>
               <GoogleIcon /> {t.continueGoogle}
@@ -833,21 +831,17 @@ const App: React.FC = () => {
             <button type="button" onClick={() => handleSocialLogin('apple')} disabled={isLoading} className={socialBtn}>
               <AppleIcon /> {t.continueApple}
             </button>
-            {/* Social signs in, it does not sign up — say so before the click,
-                not in an error dialog afterwards. */}
-            <p className="text-xs text-white/35 text-center leading-relaxed">{t.socialLoginOnly}</p>
           </div>
-          <p className="mt-5 text-center text-sm text-white/45">
+          <p className="mt-7 text-center text-sm text-white/45">
             {t.authNoAccount}{' '}
             <button onClick={() => setCurrentView('SIGNUP')} className="text-emerald-300 font-semibold hover:text-emerald-200 transition-colors">{t.signup}</button>
           </p>
-          {/* Public plans & pricing (moved from the landing card, 2026-08-04) */}
-          <div className="mt-2 text-center flex flex-col gap-1">
+          {/* Public plans & pricing (moved from the landing card, 2026-08-04).
+              The guide/news links live on the landing page only — one signpost
+              per destination. */}
+          <div className="mt-3 text-center">
             <a href={PRICING_ROUTE} className="text-emerald-300/90 text-sm font-medium hover:text-emerald-200 transition-colors">
               {VIEW_PRICING[language]} ›
-            </a>
-            <a href="/guide/" className="text-white/45 text-[13px] hover:text-white/70 transition-colors">
-              {VIEW_GUIDE[language]} ›
             </a>
           </div>
           <LegalFooter language={language} dark />
