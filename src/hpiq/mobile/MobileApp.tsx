@@ -556,7 +556,7 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
   const unlocked = !!sub && subscriptionUnlocked(sub.status, sub.currentPeriodEndsAt);
   const isPro = unlocked || app.user.plan === 'premium';
   const isTeamMember = app.user.orgRole === 'member';
-  const [term, setTerm] = useState<BillingTerm>('annual');
+  const [term, setTerm] = useState<BillingTerm>('monthly');
   const startCheckout = (plan: SubPlanCode) => {
     if (!checkoutConfigured(plan, term)) { app.notify(s.notConfigured); return; }
     openCheckout(app.user, plan, term).catch(() => app.notify(s.notConfigured));
@@ -661,7 +661,7 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
               row 3 full-width CTA: nothing wraps, nothing shifts between
               plans, the popular pick is marked instead of implied. */}
           {SUB_PLAN_CODES.map(code => {
-            const popular = code === 'team_3' && term === 'annual';
+            const popular = code === 'team_3' && term === 'monthly';   // owner call 2026-08-04: monthly first — annual sticker price scared first-time visitors
             return (
               <div key={code} style={{ position: 'relative', border: popular ? '2px solid #0066cc' : '1px solid #e0e0e0', borderRadius: 12, padding: '13px 14px 12px', display: 'flex', flexDirection: 'column', gap: 9 }}>
                 {popular && (

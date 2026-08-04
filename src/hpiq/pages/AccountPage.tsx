@@ -90,7 +90,7 @@ const PlanPicker: React.FC<{
 }> = ({ app, mode, org, onSchedule, minPlan, minTerm }) => {
   const t = tr(app.lang);
   const s = t.sub;
-  const [term, setTerm] = useState<BillingTerm>('annual');
+  const [term, setTerm] = useState<BillingTerm>('monthly');
   const [pendingDowngrade, setPendingDowngrade] = useState<SubPlanCode | null>(null);
   const [keepUids, setKeepUids] = useState<string[]>([]);
   const isPreview = app.user.id === 'preview';
@@ -178,7 +178,7 @@ const PlanPicker: React.FC<{
         {SUB_PLAN_CODES.map(code => {
           const plan = SUB_PLANS[code];
           const price = plan.prices[term];
-          const popular = code === 'team_3' && term === 'annual';
+          const popular = code === 'team_3' && term === 'monthly';   // owner call 2026-08-04: monthly first — annual sticker price scared first-time visitors
           const team = isTeamPlan(code);
           return (
             <div

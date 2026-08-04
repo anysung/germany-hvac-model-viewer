@@ -44,7 +44,7 @@ export const PublicPricingPage: React.FC<{
 }> = ({ language, setLanguage }) => {
   const t = tr(language);
   const s = t.sub;
-  const [term, setTerm] = useState<BillingTerm>('annual');
+  const [term, setTerm] = useState<BillingTerm>('monthly');
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', color: '#1d1d1f', display: 'flex', flexDirection: 'column' }}>
@@ -109,7 +109,7 @@ export const PublicPricingPage: React.FC<{
           {SUB_PLAN_CODES.map(code => {
             const plan = SUB_PLANS[code];
             const price = plan.prices[term];
-            const popular = code === 'team_3' && term === 'annual';
+            const popular = code === 'team_3' && term === 'monthly';   // owner call 2026-08-04: monthly first — annual sticker price scared first-time visitors
             const team = isTeamPlan(code);
             return (
               <div
