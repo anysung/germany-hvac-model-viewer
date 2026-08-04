@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:de": "vite build && node scripts/build-public-guide.mjs DE dist",
-    "build:uk": "VITE_COUNTRY_CODE=GB vite build --outDir dist-uk && node scripts/build-public-guide.mjs GB dist-uk",
-    "build:fr": "VITE_COUNTRY_CODE=FR vite build --outDir dist-fr && node scripts/build-public-guide.mjs FR dist-fr",
-    "build:pl": "VITE_COUNTRY_CODE=PL vite build --outDir dist-pl && node scripts/build-public-guide.mjs PL dist-pl",
-    "build:it": "VITE_COUNTRY_CODE=IT vite build --outDir dist-it && node scripts/build-public-guide.mjs IT dist-it",
+    "build:de": "vite build && node scripts/build-public-guide.mjs DE dist && node scripts/build-public-news.mjs DE dist",
+    "build:uk": "VITE_COUNTRY_CODE=GB vite build --outDir dist-uk && node scripts/build-public-guide.mjs GB dist-uk && node scripts/build-public-news.mjs GB dist-uk",
+    "build:fr": "VITE_COUNTRY_CODE=FR vite build --outDir dist-fr && node scripts/build-public-guide.mjs FR dist-fr && node scripts/build-public-news.mjs FR dist-fr",
+    "build:pl": "VITE_COUNTRY_CODE=PL vite build --outDir dist-pl && node scripts/build-public-guide.mjs PL dist-pl && node scripts/build-public-news.mjs PL dist-pl",
+    "build:it": "VITE_COUNTRY_CODE=IT vite build --outDir dist-it && node scripts/build-public-guide.mjs IT dist-it && node scripts/build-public-news.mjs IT dist-it",
     "build:admin": "VITE_APP_MODE=admin vite build --outDir dist-admin",
     "deploy:de": "npm run build:de && firebase deploy --only hosting:de",
     "deploy:uk": "npm run build:uk && firebase deploy --only hosting:uk",
@@ -41,7 +41,8 @@
     "test:routing": "node tests/inquiry-routing.contract.mjs",
     "test:account:mobile": "bash tests/run-account-mobile-e2e.sh",
     "build:hub": "node scripts/build-hub-landing.mjs",
-    "deploy:eu": "npm run build:hub && firebase deploy --only hosting:eu"
+    "deploy:eu": "npm run build:hub && firebase deploy --only hosting:eu",
+    "news:export": "node scripts/export-news-public.mjs"
   },
   "dependencies": {
     "@google/genai": "*",

@@ -69,7 +69,7 @@ check('the desktop Account page imports SupportCard from accountParts',
   /import\s*\{[^}]*\bSupportCard\b[^}]*\}\s*from\s*'\.\/accountParts'/.test(desktop));
 const mobile = read('src/hpiq/mobile/MobileApp.tsx');
 check('the phone shell imports the SAME SupportCard from accountParts',
-  /import\s*\{\s*SupportCard\s*\}\s*from\s*'\.\.\/pages\/accountParts'/.test(mobile));
+  /import\s*\{[^}]*\bSupportCard\b[^}]*\}\s*from\s*'\.\.\/pages\/accountParts'/.test(mobile));
 check('the phone shell no longer references SUPPORT_EMAIL (no mailto support)',
   !/SUPPORT_EMAIL/.test(mobile));
 check('the phone Support action opens the in-app inquiry (setSupportOpen), not a mailto',

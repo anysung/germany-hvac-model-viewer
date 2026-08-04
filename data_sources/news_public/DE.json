@@ -1,0 +1,90 @@
+{
+  "market": "DE",
+  "generatedAt": "2026-08-04T13:13:22.745Z",
+  "items": [
+    {
+      "id": "news-20260802-de-001",
+      "date": "2026-08-02T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Deutschland passt Wärmepumpen-Förderung an: Neue Konditionen für KfW 458 Programm ab 21. Juli",
+      "summary": "Die Bundesregierung hat die Förderbedingungen des KfW-Programms 458 „Heizungsförderung für Privatpersonen – Wohngebäude“ mit Wirkung zum 21. Juli 2026 umfassend angepasst. Die Reform umfasst überarbeitete förderfähige Kosten, eine geänderte Bonusstruktur und einen neuen Familienzuschlag, während der Effizienzbonus entfällt.",
+      "body": "Ab dem 21. Juli 2026 sind die Förderbedingungen des KfW-Programms 458, welches als zentraler Bestandteil der Bundesförderung für effiziente Gebäude (BEG) für Einzelmaßnahmen (BEG EM) gilt, umfassend angepasst worden. Der Basiszuschuss beträgt weiterhin 30 Prozent der förderfähigen Kosten für den Einbau klimafreundlicher Heizsysteme, wie von der KfW und Finanzdienstleistern mitgeteilt wurde.\n\nDie maximalen förderfähigen Kosten für die erste Wohneinheit wurden von 30.000 Euro auf 28.000 Euro gesenkt. Dieser Höchstbetrag wird ab dem 1. Februar 2027 alle sechs Monate um weitere 750 Euro reduziert. Diese schrittweise Reduzierung soll Anreize für frühzeitige Investitionen in erneuerbare Heiztechnologien schaffen.\n\nAuch die Bonuskomponenten wurden überarbeitet. Der Klimageschwindigkeitsbonus wurde von 20 Prozent auf 16 Prozent reduziert und sinkt ebenfalls ab dem 1. Februar 2027 halbjährlich um weitere 4 Prozentpunkte. Gleichzeitig wurden der Effizienzbonus und der Emissionsminderungszuschlag vollständig gestrichen.\n\nFür selbstnutzende Eigentümer wurde der Einkommensbonus neu gestaffelt. Er beträgt nun 40 Prozent bei einem zu versteuernden Haushaltseinkommen von bis zu 30.000 Euro, 30 Prozent bis zu 40.000 Euro und 10 Prozent bis zu 50.000 Euro. Zusätzlich wurde ein neuer Familienzuschlag von 10.000 Euro für Haushalte mit mindestens einem minderjährigen Kind eingeführt, der bis zu einem Einkommen von 40.000 Euro gilt. Der maximale Gesamtzuschuss bleibt bei 70 Prozent der förderfähigen Kosten, gedeckelt bei 22.400 Euro für die erste Wohneinheit unter optimalen Voraussetzungen.\n\nAntragsteller müssen vor Beginn des Vorhabens eine „Bestätigung zum Antrag“ (BzA) von einem zertifizierten Energieeffizienz-Experten oder Fachunternehmen einholen und einen Lieferungs- oder Leistungsvertrag mit einer aufschiebenden oder auflösenden Bedingung abschließen. Die Antragstellung erfolgt anschließend über das Kundenportal „Meine KfW“. Während die KfW-Zusage schnell erfolgen kann (Minuten bis acht Wochen), kann die Auszahlung nach Einreichung des Verwendungsnachweises (BnD) zwischen einem und drei Monaten, bei hohen Beträgen oder Komplikationen auch sechs bis zwölf Monate dauern. Insgesamt sollten Antragsteller realistisch mit einer Bearbeitungszeit von vier bis acht Monaten bis zur Auszahlung rechnen.",
+      "imageUrl": "/news-images/de-policy-01.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "sources": [
+        {
+          "title": "BEG (Bundesförderung für effiziente Gebäude): Das gilt 2026 - Thermondo",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIC1HLezPmCTtVL7y98mNf6XECSXMGXkyFgEfIfxLWmXqJV5xM47uN4hj62g2KTjjCNNu9pKQtJs1oYw1ahslC0r3soX2tEyY1vxPR4jxal3BPGdT0f5lc1Hf2zrn4DC4QFKc1I3VVB9c6TXmlvkebuhYD7HcUOa2qA_RqHFsuHHKINPLb2RZ65tHFuCIVTg=="
+        },
+        {
+          "title": "Wärmepumpen-Förderung 2026: Zuschüsse, Kredite und Steuerbonus - ADAC",
+          "url": "https://www.adac.de/rund-ums-haus/energie/versorgung/waermepumpe-foerderung/"
+        },
+        {
+          "title": "Heizungsförderung für Privatpersonen – Wohngebäude (458) - KfW",
+          "url": "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-(458)/"
+        },
+        {
+          "title": "Wärmepumpen-Markt 2026: 299.000 verkauft 2025, Prognose 332.500 - EMA Energiewelt",
+          "url": "https://ema-energiewelt.de/wissen/waermepumpen-markt-2026-bwp-absatz-prognose"
+        }
+      ]
+    },
+    {
+      "id": "news-20260802-de-002",
+      "date": "2026-08-02T00:00:00Z",
+      "category": "MARKET",
+      "title": "Deutscher Wärmepumpenmarkt erholt sich 2025 stark und prognostiziert weiteres Wachstum inmitten politischer Veränderungen",
+      "summary": "Nach einem herausfordernden Jahr 2024 verzeichnete der deutsche Wärmepumpenmarkt 2025 eine kräftige Erholung mit einem Absatzanstieg von 55 Prozent. Die Technologie ist nun das meistverkaufte Heizsystem und treibt optimistische Prognosen für 2026 voran, wobei ein nachhaltiges Wachstum von stabilen politischen Rahmenbedingungen abhängt.",
+      "body": "Der deutsche Wärmepumpenmarkt verzeichnete im Jahr 2025 eine deutliche Erholung, wobei rund 299.000 Heizungswärmepumpen verkauft wurden, was einem Anstieg von 55 Prozent gegenüber dem Vorjahr entspricht. Diese Erholung macht 2025 zum zweitbesten Absatzjahr nach dem Rekordjahr 2023, basierend auf den vom Bundesverband Wärmepumpe (BWP) und Statista veröffentlichten Daten. Dieser Aufschwung führte dazu, dass Wärmepumpen mit einem Anteil von 48 Prozent am gesamten Heizungsmarkt zum meistverkauften Heizsystem in Deutschland avancierten.\n\nLuft-Wasser-Wärmepumpen dominieren weiterhin den Markt und machten 2025 95 Prozent der Gesamtverkäufe aus. Die positive Entwicklung wird maßgeblich auf die Stabilisierung der Förderbedingungen, eine erhöhte Planungssicherheit für Hausbesitzer und die steigenden CO2-Kosten für fossile Brennstoffe zurückgeführt. Der Markt hatte 2024 aufgrund politischer Unsicherheiten einen Rückgang erlebt.\n\nFür 2026 prognostiziert der BWP weiteres Wachstum mit einem erwarteten Absatz von rund 332.500 Einheiten im Basisszenario und potenziell bis zu 410.000 in einem optimistischen Szenario. Das ehrgeizige Ziel der Bundesregierung, jährlich 600.000 Wärmepumpen zu installieren, erfordert jedoch trotz der Erholung im Jahr 2025 weiterhin eine erhebliche Steigerung der Installationsraten.\n\nBis Ende 2025 waren in Deutschland rund 1,9 Millionen Wärmepumpen in Betrieb, eine Zahl, die Anfang Mai 2026 voraussichtlich zwei Millionen überschritten hat, was einen strukturellen Wandel im Wärmemarkt anzeigt, so vdiv.de. Branchenvertreter, darunter Dr. Martin Sabel, Geschäftsführer des BWP, betonen jedoch, dass das Erreichen und Halten dieser Ziele verlässliche politische Rahmenbedingungen, eine starke Fachkräftebasis und ein verbessertes Strom-Gas-Preisverhältnis, einschließlich einer Senkung der Stromsteuer, voraussetzen.",
+      "imageUrl": "/news-images/common-market-03.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "sources": [
+        {
+          "title": "Infografik: Wie entwickelt sich der Absatz von Wärmepumpen? - Statista",
+          "url": "https://de.statista.com/infografik/31632/absatz-von-heizungswaermepumpen-in-deutschland/"
+        },
+        {
+          "title": "Wärmepumpen-Markt 2026: 299.000 verkauft 2025, Prognose 332.500 - EMA Energiewelt",
+          "url": "https://ema-energiewelt.de/wissen/waermepumpen-markt-2026-bwp-absatz-prognose"
+        },
+        {
+          "title": "Branchenstudie 2026 - Bundesverband Wärmepumpe",
+          "url": "https://www.waermepumpe.de/fileadmin/user_upload/2026-03-30_BWP-Branchenstudie_2026_final.pdf"
+        },
+        {
+          "title": "Über 50 Prozent im Plus: Wärmepumpen-Absatz steigt 2025 deutlich | BWP",
+          "url": "https://www.waermepumpe.de/presse/news/details/ueber-50-prozent-im-plus-waermepumpen-absatz-steigt-2025-deutlich/"
+        }
+      ]
+    },
+    {
+      "id": "news-20260802-de-003",
+      "date": "2026-08-02T00:00:00Z",
+      "category": "TECHNOLOGY",
+      "title": "Strengere Schallgrenzwerte und natürliche Kältemittel treiben Innovationen bei deutschen Wärmepumpen voran",
+      "summary": "Der deutsche Wärmepumpensektor durchläuft 2026 bedeutende technologische Veränderungen, die durch neue, strengere Schall-Emissionsanforderungen für die Förderfähigkeit und einen wachsenden Branchenfokus auf natürliche Kältemittel wie R290 (Propan) für verbesserte Umweltverträglichkeit und regulatorische Konformität bestimmt werden.",
+      "body": "Seit dem 1. Januar 2026 müssen Luft-Wasser-Wärmepumpen, die eine Bundesförderung im Rahmen der Bundesförderung für effiziente Gebäude (BEG) beantragen, deutlich verschärfte Anforderungen an die Geräuschemissionen erfüllen. Die neue Regelung schreibt vor, dass die Schallemissionen der Außeneinheit mindestens 10 dB unter den Grenzwerten der EU-Ökodesign-Verordnung Nr. 813/2013 liegen müssen, eine erhebliche Verschärfung gegenüber der früheren Anforderung von 5 dB. Diese bereits in der BEG-EM-Richtlinie vom 21. Dezember 2023 verankerte Änderung gilt ohne Übergangsfrist für alle neuen Förderanträge ab 2026 und macht den Nachweis besonders niedriger Schallleistungspegel für Hersteller und Installateure entscheidend.\n\nGleichzeitig beobachtet der deutsche Wärmepumpenmarkt einen starken Trend hin zu natürlichen Kältemitteln, insbesondere Propan (R290). Propan wird aufgrund seines extrem niedrigen Global Warming Potential (GWP) von nur 3 bevorzugt, was im deutlichen Gegensatz zu synthetischen F-Gasen wie R32 mit einem GWP von 675 steht. Dies macht R290 zu einer nahezu klimaneutralen Option, die langfristige regulatorische Sicherheit bietet.\n\nRegulatorische Entwicklungen beschleunigen diesen Wandel: Ab dem 1. Januar 2027 sind Monoblock-Wärmepumpen bis 50 kW und Split-Geräte bis 12 kW nur noch förderfähig, wenn sie Kältemittel mit einem GWP unter 150 verwenden. Dies etabliert R290 faktisch als Standard für diese weit verbreiteten Kategorien.\n\nHersteller reagieren aktiv auf diese technologischen und regulatorischen Anforderungen. Unternehmen wie Weishaupt und alpha innotec stellen neue R290-Modelle vor, die nicht nur auf hohe Effizienz und vielfältige Anwendungen, einschließlich Mehrfamilienhäuser, ausgelegt sind, sondern auch über fortschrittliche Geräuschreduzierungsmerkmale wie optimierte Lüftertechnologie, Schwingungsentkopplung und schallgedämmte Gehäuse verfügen. Diese Innovationen sind entscheidend, um sowohl die strengen Lärmanforderungen als auch die sich entwickelnden Umweltstandards zu erfüllen.",
+      "imageUrl": "/news-images/common-tech-03.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "sources": [
+        {
+          "title": "Neue Schallanforderungen für Wärmepumpen in 2026 - Zewotherm",
+          "url": "https://zewotherm.com/de/unternehmen/aktuelles/news/schallschutzverordnung.html"
+        },
+        {
+          "title": "Ab 2026 neue Geräuschemissionsauflagen für Wärmepumpen-Förderung",
+          "url": "https://kkpeters.de/ab-2026-neue-geraeuschemissionsauflagen-fuer-waermepumpen-foerderung/"
+        },
+        {
+          "title": "Strengere Schallvorgaben für Luft/Wasser-Wärmepumpen - SHK BW",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFgPE0GqANxd-LUZeW8EjBXWjEk0a2bQOqjaqAfQ0GrHqmB1bxa7lweZ6CAyn53B7QFb0rQmQmS0VCxSl0BCYYEuLX8XLRySjjA0Tc7V8PQqOKavWch6fXgTPnLoEOy_aCirxn3dceQygThlt15qcj31bmHKcgX_vrJPeSEzya7bHpKeLd90ZMUJstD4bz7mlzs3fQVo0FuuHfQig=="
+        },
+        {
+          "title": "Propan-Wärmepumpe (R290) 2026: Kosten, Modelle & 1 m Abstand | reduco.ai",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzZxTwakoDAZ-yb5PjFV6QbfvBF9TXcLf6YdGXHbV7pANF-xHUJ8U6nH1-NW9gTAhynhLkEy3Skqu3_7zmuvvS4fpfCBdvF9_sd4deNXCm5Gss-EsyQ1usHGmdLlmEUEoveEl6_Ci3CmKHZFKpho0UrQ=="
+        }
+      ]
+    }
+  ]
+}

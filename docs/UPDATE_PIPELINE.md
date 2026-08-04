@@ -92,6 +92,27 @@ npm aliases: `npm run update:all` / `npm run update:all:deploy`.
 - **News is independent**: the Cloud Function handles `countries/<code>`
   news/policies on its own schedule; no coupling with this pipeline.
 
+### 4a. Publishing the news archive (after each news cycle)
+
+The public news pages (`/news/`, `/news/<id>.html`) are generated at BUILD time
+from a committed snapshot — the build never reads Firestore, so a credential or
+network problem can never block a release. After the Cloud Function has run
+(1st, 03:00) the snapshot has to be refreshed, otherwise the new articles exist
+only inside the app:
+
+```
+node scripts/export-news-public.mjs        # all markets → data_sources/news_public/<cc>.json
+git add data_sources/news_public && git commit
+npm run build:de && npm run deploy:de      # …and the other four markets
+```
+
+`build-public-news.mjs` runs automatically inside every `build:<market>` (after
+`build-public-guide.mjs`, because it rewrites `sitemap.xml` with the full URL
+set). The exporter keeps the previous snapshot if a fetch returns nothing, and
+drops articles under 600 characters — a thin page is worse than no page. The
+snapshot in git is also the review point: an article can be removed from the
+JSON instead of unpublishing a live page.
+
 ## 5. Adding a country (expansion checklist)
 
 1. `scripts/<source>/…` fetch/parse/match/build scripts (copy the ofgem or fr

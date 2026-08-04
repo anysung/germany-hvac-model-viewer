@@ -67,6 +67,17 @@ const VIEW_GUIDE: Record<Language, string> = {
   it: 'Guida agli incentivi per pompe di calore',
 };
 
+/** Link to the PUBLIC news archive (/news/, generated from the committed
+ *  snapshot). Fresh monthly content is the strongest recrawl signal we have,
+ *  so it needs a real link, not only a sitemap entry. */
+const VIEW_NEWS: Record<Language, string> = {
+  en: 'Heat pump market news',
+  de: 'Nachrichten zum Wärmepumpenmarkt',
+  fr: 'Actualités du marché des pompes à chaleur',
+  pl: 'Aktualności z rynku pomp ciepła',
+  it: 'Notizie dal mercato delle pompe di calore',
+};
+
 const VIEW_PRICING: Record<Language, string> = {
   en: 'View plans & pricing',
   de: 'Tarife & Preise ansehen',
@@ -724,9 +735,12 @@ const App: React.FC = () => {
             </p>
             {/* Public funding guide — a real, indexable page (see
                 scripts/build-public-guide.mjs). */}
-            <div className="mt-3 text-center">
+            <div className="mt-3 text-center flex flex-col gap-1">
               <a href="/guide/" className="text-white/55 text-[13px] hover:text-white/80 transition-colors">
                 {VIEW_GUIDE[language]} ›
+              </a>
+              <a href="/news/" className="text-white/55 text-[13px] hover:text-white/80 transition-colors">
+                {VIEW_NEWS[language]} ›
               </a>
             </div>
             {/* Admin access + legal links are intentionally NOT on the landing
