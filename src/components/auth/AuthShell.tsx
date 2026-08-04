@@ -475,12 +475,61 @@ const LanguagePill: React.FC<{ language: Language; setLanguage: (l: Language) =>
 
 /* ── Shell ───────────────────────────────────────────────────────────────── */
 
+/** Official channels of the same organisation (mirrored in the JSON-LD
+ *  `sameAs`, so search engines read them as one identity). */
+export const SOCIAL_LINKS = {
+  linkedin: 'https://www.linkedin.com/company/heatpumpdb/',
+  youtube: 'https://www.youtube.com/@heatpumpdb',
+};
+
+const LinkedInIcon: React.FC<{ className?: string }> = ({ className = 'w-[18px] h-[18px]' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2.05 3.76-2.05C21.4 8.65 22 11.1 22 14.3V21h-4v-5.9c0-1.4-.03-3.2-1.95-3.2-1.96 0-2.26 1.53-2.26 3.1V21h-4V9Z" />
+  </svg>
+);
+
+const YouTubeIcon: React.FC<{ className?: string }> = ({ className = 'w-[20px] h-[20px]' }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M23.5 6.9a3 3 0 0 0-2.1-2.1C19.5 4.3 12 4.3 12 4.3s-7.5 0-9.4.5A3 3 0 0 0 .5 6.9C0 8.8 0 12 0 12s0 3.2.5 5.1a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.2 24 12 24 12s0-3.2-.5-5.1ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z" />
+  </svg>
+);
+
+/**
+ * Official channels, header right — a new B2B brand with no reviews yet needs
+ * some evidence it is a real company, and these are it. Deliberately quiet and
+ * deliberately in a new tab: the signal works by existing, and a visitor who
+ * clicks must not lose the page they were about to sign up on.
+ */
+const SocialLinks: React.FC = () => (
+  <div className="flex items-center gap-1">
+    {[
+      { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
+      { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: YouTubeIcon },
+    ].map(({ href, label, Icon }) => (
+      <a
+        key={label}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        title={label}
+        className="p-2 rounded-full text-white/40 hover:text-white/85 hover:bg-white/[0.07] transition-colors"
+      >
+        <Icon />
+      </a>
+    ))}
+  </div>
+);
+
 export const AuthShell: React.FC<{
   t: any;
   language: Language;
   setLanguage: (l: Language) => void;
   children: React.ReactNode;
-}> = ({ t, language, setLanguage, children }) => (
+  /** Landing and login only. On the signup form, the invite screen or the
+   *  pause notice, an outbound link is a way to lose someone mid-task. */
+  showSocial?: boolean;
+}> = ({ t, language, setLanguage, children, showSocial }) => (
   <div
     className="min-h-screen relative overflow-hidden text-white font-sans flex flex-col"
     style={{ background: `radial-gradient(120% 100% at 30% 20%, ${BG.baseMid} 0%, ${BG.base} 55%, ${BG.baseDeep} 100%)` }}
@@ -501,7 +550,10 @@ export const AuthShell: React.FC<{
         <Wordmark />
         <MarketBadge t={t} />
       </div>
-      <LanguagePill language={language} setLanguage={setLanguage} />
+      <div className="flex items-center gap-3 md:gap-5">
+        {showSocial && <SocialLinks />}
+        <LanguagePill language={language} setLanguage={setLanguage} />
+      </div>
     </header>
 
     {/* items-start + small top padding keeps content high so the bottom

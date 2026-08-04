@@ -160,6 +160,21 @@ for (const cc of codes) {
   }
 }
 
+// The news function re-reports a running story across months, so the same
+// headline can appear twice. Publishing it twice looks like a bot with a stuck
+// feed — keep the newest telling and drop the rest.
+const seen = new Set();
+const deduped = [];
+for (const q of [...queue].sort((a, b) => String(b.date).localeCompare(String(a.date)))) {
+  const key = `${q.market}::${q.headline.toLowerCase()}`;
+  if (seen.has(key)) { rmSync(join(OUT, q.folder), { recursive: true, force: true }); continue; }
+  seen.add(key);
+  deduped.push(q);
+}
+const dropped = queue.length - deduped.length;
+queue.length = 0;
+queue.push(...deduped);
+
 /**
  * Posting order. Two rules, both about not looking like a bot:
  *  - newest first, because funding news decays;
@@ -178,6 +193,32 @@ while (pool.length) {
   pool.splice(i, 1);
 }
 
+/**
+ * Launch batch — what to publish when the page is still empty.
+ * A page with one post reads as abandoned, and with zero followers there is no
+ * feed audience for the posts to compete over, so the usual "two a week" only
+ * starts applying once somebody is actually following. Two per market: the
+ * newest funding story (the most shared kind) and the newest market story (the
+ * one that says we cover the whole continent).
+ */
+const launch = [];
+for (const cc of Object.keys(MARKETS)) {
+  const mine = queue.filter((q) => q.market === cc);
+  for (const cat of ['FUNDING', 'MARKET']) {
+    const pick = mine.find((q) => String(q.category).toUpperCase() === cat && !launch.includes(q));
+    if (pick) launch.push(pick);
+  }
+}
+// Interleave so the first ten posts read as European coverage, not five pairs.
+const launchOrdered = [];
+for (let round = 0; round < 2; round++) {
+  for (const cc of Object.keys(MARKETS)) {
+    const forCc = launch.filter((q) => q.market === cc);
+    if (forCc[round]) launchOrdered.push(forCc[round]);
+  }
+}
+writeFileSync(join(OUT, 'launch-batch.json'), JSON.stringify(launchOrdered, null, 2) + '\n');
+
 const lines = [
   '# LinkedIn posting queue — HeatPump Database Europe',
   '#',
@@ -192,7 +233,9 @@ const lines = [
 ];
 writeFileSync(join(OUT, 'QUEUE.md'), lines.join('\n') + '\n');
 
-console.log(`\nlinkedin_posts/  ${built} packages` + (noImage ? `  (${noImage} without an image)` : ''));
+console.log(`\nlinkedin_posts/  ${queue.length} packages` + (noImage ? `  (${noImage} without an image)` : '')
+  + (dropped ? `  · ${dropped} repeated headline(s) dropped` : ''));
+console.log(`launch batch: ${launchOrdered.length} posts — see linkedin_posts/launch-batch.json`);
 console.log(`queue: ${ordered.length} posts, markets interleaved — see linkedin_posts/QUEUE.md\n`);
 for (const cc of codes) {
   const n = queue.filter((q) => q.market === cc).length;

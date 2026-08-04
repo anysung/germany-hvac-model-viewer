@@ -182,7 +182,14 @@ const articleLd = {
   inLanguage: M.hreflang,
   description: M.desc,
   author: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
-  publisher: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'HeatPump DataBase (Europe)',
+    sameAs: [
+      'https://www.linkedin.com/company/heatpumpdb/',
+      'https://www.youtube.com/@heatpumpdb',
+    ],
+  },
   dateModified: new Date().toISOString().slice(0, 10),
   mainEntityOfPage: `${M.host}/guide/`,
 };

@@ -44,7 +44,8 @@
     "deploy:eu": "npm run build:hub && firebase deploy --only hosting:eu",
     "news:export": "node scripts/export-news-public.mjs",
     "test:signup-paths": "node tests/signup-paths.contract.mjs",
-    "linkedin:build": "node scripts/build-linkedin-posts.mjs"
+    "linkedin:build": "node scripts/build-linkedin-posts.mjs",
+    "linkedin": "node scripts/linkedin-post.mjs"
   },
   "dependencies": {
     "@google/genai": "*",

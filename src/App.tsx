@@ -677,7 +677,7 @@ const App: React.FC = () => {
 
   if (currentView === 'LANDING') {
     return (
-      <AuthShell t={t} language={language} setLanguage={setLanguage}>
+      <AuthShell t={t} language={language} setLanguage={setLanguage} showSocial>
         <div className="w-full flex flex-col items-center gap-10">
         {sessionNoticeEl}
         <div className="w-full max-w-6xl grid lg:grid-cols-[1.15fr_0.85fr] gap-12 lg:gap-16 items-center">
@@ -791,7 +791,7 @@ const App: React.FC = () => {
       );
     }
     return (
-      <AuthShell t={t} language={language} setLanguage={setLanguage}>
+      <AuthShell t={t} language={language} setLanguage={setLanguage} showSocial>
         {termsModal}
         <div className="w-full flex flex-col items-center">
         {sessionNoticeEl}

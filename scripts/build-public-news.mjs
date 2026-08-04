@@ -202,7 +202,14 @@ for (const a of items) {
     datePublished: a.date,
     dateModified: a.date,
     author: { '@type': 'Organization', name: a.author },
-    publisher: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'HeatPump DataBase (Europe)',
+      sameAs: [
+        'https://www.linkedin.com/company/heatpumpdb/',
+        'https://www.youtube.com/@heatpumpdb',
+      ],
+    },
     mainEntityOfPage: `${M.host}/news/${slug(a.id)}.html`,
     ...(a.imageUrl ? { image: `${M.host}${a.imageUrl}` } : {}),
   }, {

@@ -110,7 +110,18 @@ function jsonLd(m: (typeof MARKET_HTML)[string]): string {
     operatingSystem: 'Web',
     inLanguage: m.lang,
     offers: { '@type': 'Offer', category: 'subscription' },
-    publisher: { '@type': 'Organization', name: 'HeatPump DB', url: m.canonical },
+    publisher: {
+      '@type': 'Organization',
+      name: 'HeatPump DB',
+      url: m.canonical,
+      // Verified channels of the same organisation. `sameAs` is how a search
+      // engine learns that the site, the LinkedIn page and the YouTube channel
+      // are one entity rather than three similarly-named ones.
+      sameAs: [
+        'https://www.linkedin.com/company/heatpumpdb/',
+        'https://www.youtube.com/@heatpumpdb',
+      ],
+    },
   };
   return `    <script type="application/ld+json">${JSON.stringify(data)}</script>`;
 }
