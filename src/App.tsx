@@ -56,6 +56,17 @@ const FREE_SIGNUP_NOTE: Record<Language, string> = {
   it: 'Registrazione gratuita — 7 giorni di accesso completo, senza carta di credito.',
 };
 
+/** Link to the PUBLIC funding guide (/guide/, generated at build time).
+ *  Crawlers only find a page that something links to — this is that link, and
+ *  it doubles as a genuine entry point for visitors who arrive undecided. */
+const VIEW_GUIDE: Record<Language, string> = {
+  en: 'Heat pump funding guide',
+  de: 'Leitfaden zur Wärmepumpen-Förderung',
+  fr: 'Guide des aides pompe à chaleur',
+  pl: 'Przewodnik po dofinansowaniu pomp ciepła',
+  it: 'Guida agli incentivi per pompe di calore',
+};
+
 const VIEW_PRICING: Record<Language, string> = {
   en: 'View plans & pricing',
   de: 'Tarife & Preise ansehen',
@@ -711,6 +722,13 @@ const App: React.FC = () => {
             <p className="mt-4 text-center text-[13px] leading-relaxed text-emerald-200/90" data-testid="free-signup-note">
               {FREE_SIGNUP_NOTE[language]}
             </p>
+            {/* Public funding guide — a real, indexable page (see
+                scripts/build-public-guide.mjs). */}
+            <div className="mt-3 text-center">
+              <a href="/guide/" className="text-white/55 text-[13px] hover:text-white/80 transition-colors">
+                {VIEW_GUIDE[language]} ›
+              </a>
+            </div>
             {/* Admin access + legal links are intentionally NOT on the landing
                 page — they live on the login/signup pages (header Admin button +
                 their footer). The legal PAGES stay public at /terms etc.; Paddle
@@ -792,9 +810,12 @@ const App: React.FC = () => {
             <button onClick={() => setCurrentView('SIGNUP')} className="text-emerald-300 font-semibold hover:text-emerald-200 transition-colors">{t.signup}</button>
           </p>
           {/* Public plans & pricing (moved from the landing card, 2026-08-04) */}
-          <div className="mt-2 text-center">
+          <div className="mt-2 text-center flex flex-col gap-1">
             <a href={PRICING_ROUTE} className="text-emerald-300/90 text-sm font-medium hover:text-emerald-200 transition-colors">
               {VIEW_PRICING[language]} ›
+            </a>
+            <a href="/guide/" className="text-white/45 text-[13px] hover:text-white/70 transition-colors">
+              {VIEW_GUIDE[language]} ›
             </a>
           </div>
           <LegalFooter language={language} dark />
