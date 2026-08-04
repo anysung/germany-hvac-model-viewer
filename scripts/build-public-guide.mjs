@@ -58,6 +58,7 @@ const MARKETS = {
     ctaBtn: 'Kostenlos registrieren',
     backLabel: 'Zur Wärmepumpen-Datenbank',
     sourceNote: 'Redaktioneller Leitfaden, keine Rechts- oder Förderberatung. Maßgeblich sind BAFA, KfW und die geltenden Förderrichtlinien.',
+    modelsLabel: 'Wärmepumpen-Modelle nachschlagen (öffentliche Übersicht)',
   },
   GB: {
     lang: 'en', hreflang: 'en-GB', host: 'https://www.heatpumpdb.uk',
@@ -72,6 +73,7 @@ const MARKETS = {
     ctaBtn: 'Join free',
     backLabel: 'To the heat pump database',
     sourceNote: 'Editorial guidance, not legal or grant advice. Ofgem, MCS and the current scheme rules prevail.',
+    modelsLabel: 'Look up heat pump models (public index)',
   },
   FR: {
     lang: 'fr', hreflang: 'fr-FR', host: 'https://www.heatpumpdb.fr',
@@ -86,6 +88,7 @@ const MARKETS = {
     ctaBtn: 'Inscription gratuite',
     backLabel: 'Vers la base de données',
     sourceNote: "Guide éditorial, ni conseil juridique ni décision d'aide. Les sources officielles prévalent.",
+    modelsLabel: 'Consulter des modèles de pompes à chaleur (index public)',
   },
   PL: {
     lang: 'pl', hreflang: 'pl-PL', host: 'https://www.heatpumpdb.pl',
@@ -100,6 +103,7 @@ const MARKETS = {
     ctaBtn: 'Dołącz za darmo',
     backLabel: 'Do bazy pomp ciepła',
     sourceNote: 'Przewodnik redakcyjny, nie porada prawna ani dotycząca dotacji. Rozstrzygające są źródła oficjalne.',
+    modelsLabel: 'Sprawdź modele pomp ciepła (indeks publiczny)',
   },
   IT: {
     lang: 'it', hreflang: 'it-IT', host: 'https://www.heatpumpdb.it',
@@ -114,6 +118,7 @@ const MARKETS = {
     ctaBtn: 'Registrati gratis',
     backLabel: 'Al database delle pompe di calore',
     sourceNote: 'Guida redazionale, non consulenza legale né sugli incentivi. Prevalgono le fonti ufficiali.',
+    modelsLabel: 'Consulta i modelli di pompe di calore (indice pubblico)',
   },
 };
 
@@ -252,6 +257,9 @@ ${faqList(G.tabPro || 'FAQ', faqsPro)}
     <h2>${esc(M.ctaTitle)}</h2>
     <p>${esc(M.ctaBody)}</p>
     <a class="btn" href="/">${esc(M.ctaBtn)} ›</a>
+    <p style="margin-top:14px;font-size:13.5px">
+      <a href="https://www.heatpumpdb.eu/models/">${esc(M.modelsLabel)} ›</a>
+    </p>
   </div>
 
   <footer>

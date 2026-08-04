@@ -603,7 +603,12 @@ const idxBody = `
 <h1>Heat pump model index</h1>
 <div class="mfr">${models.length} selected models from the European catalogue · basic reference data only</div>
 ${ctaBlock}
-<span class="snap"><a href="/models/methodology.html">How this data is compiled</a></span>
+<span class="snap"><a href="/models/methodology.html">How this data is compiled</a> · Funding guides:
+  <a href="https://www.heatpumpdb.de/guide/">Germany</a> ·
+  <a href="https://www.heatpumpdb.uk/guide/">UK</a> ·
+  <a href="https://www.heatpumpdb.fr/guide/">France</a> ·
+  <a href="https://www.heatpumpdb.pl/guide/">Poland</a> ·
+  <a href="https://www.heatpumpdb.it/guide/">Italy</a></span>
 ${groups.map(g => `<div class="rel"><h3>${g.mfr} (${g.items.length})</h3><ul class="idx">${g.items.map(m =>
   `<li><a href="/models/${m.slug}.html">${m.model}</a> <small>· ${m.kw} kW · ${m.cls}</small></li>`).join('')}</ul></div>`).join('')}`;
 writeFileSync(join(OUT, 'models', 'index.html'),
