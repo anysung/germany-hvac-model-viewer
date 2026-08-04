@@ -16,7 +16,8 @@ import { UI_LANGUAGES, FUNDING_SOURCE_LINKS, MARKET_ICON_32 } from '../market';
 import { LEGAL_ROUTES, LegalDoc, MARKETING_EMAIL } from '../../config/legal';
 import { SupportCard, SignInMethodsCard } from '../pages/accountParts';
 import { LEGAL_NAV } from '../../legal/LegalPage';
-import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
+import { openCheckout, checkoutConfigured } from '../../services/paddleService';
+import { TRIAL_FLOW_ENABLED, billingPortalFn } from '../../services/billingFnService';
 import { SubPlanCode, BillingTerm, BILLING_TERMS, SUB_PLANS, SUB_PLAN_CODES, formatEur, isTeamPlan, subscriptionUnlocked, sharedTermDiscountPct, effectiveSubscription } from '../../config/subscriptionPlans';
 import { FD, SignOutIcon, VideoExplainer, sectionLabel } from '../ui';
 import { GUIDE_VIDEO_ID } from '../market';
@@ -561,9 +562,14 @@ const MobileAccount: React.FC<{ app: HpApp }> = ({ app }) => {
     openCheckout(app.user, plan, term).catch(() => app.notify(s.notConfigured));
   };
   const openBillingPortal = () => {
-    const url = portalUrlFor(app.user);
-    if (url) window.open(url, '_blank', 'noopener');
-    else app.notify(t.account.managePlanSoon);
+    if (app.user.id === 'preview') { app.notify(t.account.previewOnly); return; }
+    if (!TRIAL_FLOW_ENABLED || !app.user.paddleCustomerId) { app.notify(t.account.managePlanSoon); return; }
+    billingPortalFn()
+      .then(r => {
+        if (r.ok && r.url) window.open(r.url, '_blank', 'noopener');
+        else app.notify(t.account.managePlanSoon);
+      })
+      .catch(() => app.notify(t.account.managePlanSoon));
   };
   const fmtDate = (d?: string | null) => (d ? new Date(d).toLocaleDateString(t.locale, { day: 'numeric', month: 'short', year: 'numeric' }) : '—');
   const planLabel = sub ? `${s.planNames[sub.planCode]}${sub.billingTerm ? ` · ${s.termNames[sub.billingTerm]}` : ''}` : t.account.planBadge;

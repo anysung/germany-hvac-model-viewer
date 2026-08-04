@@ -1241,6 +1241,29 @@ async function cancelSubscription(req, res) {
 }
 
 /**
+ * /billingPortal — mint a Paddle customer-portal session for the signed-in
+ * subscriber and return its authenticated URL. Portal links carry temporary
+ * tokens and must never be stored (Paddle docs), so this happens on every
+ * click. The portal is where customers manage payment methods, download
+ * invoices and stop the next renewal (period-end cancellation).
+ * Requires the API key permission "Customer portal session (Write)".
+ */
+async function billingPortal(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const snap = await db.collection('users').doc(caller.uid).get();
+  if (!snap.exists) return sendErr(res, 404, 'no-profile');
+  const user = snap.data();
+  const ctm = user.paddleCustomerId;
+  if (!ctm) return sendErr(res, 400, 'no-paddle-customer');
+  const body = user.paddleSubscriptionId ? { subscription_ids: [user.paddleSubscriptionId] } : {};
+  const session = await paddleApi('POST', `/customers/${ctm}/portal-sessions`, body);
+  const url = session && session.urls && session.urls.general && session.urls.general.overview;
+  if (!url) return sendErr(res, 502, 'portal-url-missing');
+  return res.status(200).json({ ok: true, url });
+}
+
+/**
  * /applyPlanChange — admin approves a scheduled change request. UPGRADE-ONLY
  * (owner rule 2026-08-03): plan and term may each only move up, never down —
  * mid-term shrinking creates credits/proration the operation cannot settle
@@ -1366,6 +1389,7 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/signOutEverywhere')) return await signOutEverywhere(req, res);
     if (path.endsWith('/adminClearSessions')) return await adminClearSessions(req, res);
     if (path.endsWith('/cancelSubscription')) return await cancelSubscription(req, res);
+    if (path.endsWith('/billingPortal')) return await billingPortal(req, res);
     if (path.endsWith('/applyPlanChange')) return await applyPlanChange(req, res);
     if (path.endsWith('/createDiscount')) return await createDiscount(req, res);
     if (path.endsWith('/archiveDiscount')) return await archiveDiscount(req, res);

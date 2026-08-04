@@ -6,8 +6,8 @@ import { auth, db } from '../../firebase';
 import { getSessionId, revokeSessionFn, revokeOtherSessionsFn, signOutEverywhereFn } from '../../services/sessionService';
 import { tsToMillis } from '../../config/entitlement';
 import { requestDeletion } from '../../services/adminService';
-import { openCheckout, portalUrlFor, checkoutConfigured } from '../../services/paddleService';
-import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn, cancelSubscriptionFn } from '../../services/billingFnService';
+import { openCheckout, checkoutConfigured } from '../../services/paddleService';
+import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn, cancelSubscriptionFn, billingPortalFn } from '../../services/billingFnService';
 import { accessInfo } from '../../config/entitlement';
 import {
   getMyOrg, seatsUsed, getMyChangeRequest, scheduleChange, cancelChange, leaveTeam,
@@ -670,11 +670,18 @@ export const AccountPage: React.FC<{ app: HpApp }> = ({ app }) => {
   const isOwner = user.orgRole === 'team_admin' && !!org;
   const isMember = user.orgRole === 'member' && !!org;
 
+  // Paddle customer portal (payment method, invoices, stop-next-renewal).
+  // Portal URLs carry temporary auth tokens, so a session is minted
+  // server-side on EVERY click — never stored (Paddle requirement).
   const openBillingPortal = () => {
     if (isPreview) { app.notify(t.account.previewOnly); return; }
-    const url = portalUrlFor(user);
-    if (url) window.open(url, '_blank', 'noopener');
-    else app.notify(t.account.managePlanSoon);
+    if (!TRIAL_FLOW_ENABLED || !user.paddleCustomerId) { app.notify(t.account.managePlanSoon); return; }
+    billingPortalFn()
+      .then(r => {
+        if (r.ok && r.url) window.open(r.url, '_blank', 'noopener');
+        else app.notify(t.account.managePlanSoon);
+      })
+      .catch(() => app.notify(t.account.managePlanSoon));
   };
 
   const sendSetupLink = () => {

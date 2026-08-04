@@ -38,6 +38,11 @@ async function call<T>(path: string, body: Record<string, unknown> = {}): Promis
   return res.json() as Promise<T>;
 }
 
+/** Mint a Paddle customer-portal session (payment method, invoices,
+ *  period-end cancellation). URL is temporary — fetched on every click. */
+export const billingPortalFn = (): Promise<{ ok: boolean; url?: string; error?: string }> =>
+  call('billingPortal');
+
 /** User's own IMMEDIATE cancellation (the UI has taken the double warning).
  *  Paddle is called server-side; the webhook writes the final state. */
 export const cancelSubscriptionFn = (): Promise<{ ok: boolean; error?: string }> =>
