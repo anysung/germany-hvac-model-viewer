@@ -17,7 +17,7 @@ import { tr } from '../i18n';
 import { FD, sectionLabel } from '../ui';
 import { shortDate } from '../model';
 import { Organization, SupportTicket, TicketCategory, User } from '../../types';
-import { createTicket, getMyTickets, userReply } from '../../services/supportService';
+import { createTicket, getMyTickets, userReply, deleteMyTicket } from '../../services/supportService';
 import { COMPANY_TYPES, COMPANY_TYPE_OTHER_MAX, normalizeCompanyType } from '../../config/companyTypes';
 import { LEGAL_ROUTES, LegalDoc } from '../../config/legal';
 import { LEGAL_NAV } from '../../legal/LegalPage';
@@ -773,6 +773,7 @@ export const SupportCard: React.FC<{ app: HpApp; embedded?: boolean }> = ({ app,
               onClick={() => setOpenId(expanded ? null : tk.id)}
               style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', cursor: 'pointer', background: expanded ? '#f5f5f7' : '#fff' }}
             >
+              <span style={{ fontSize: 10, color: '#7a7a7a', transform: expanded ? 'rotate(90deg)' : 'none', transition: 'transform .15s' }}>▶</span>
               <span style={{ fontSize: 13, fontWeight: 600, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{tk.subject}</span>
               {statusChip(tk.status, t.account.tkStatus[tk.status])}
               <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{shortDate(tk.updatedAt, t.locale)}</span>
@@ -796,6 +797,22 @@ export const SupportCard: React.FC<{ app: HpApp; embedded?: boolean }> = ({ app,
                     </span>
                   </div>
                 )}
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 2 }}>
+                  <span
+                    className="hp-press"
+                    data-testid="support-delete"
+                    onClick={() => {
+                      if (isPreview) { app.notify(t.account.previewOnly); return; }
+                      if (!window.confirm(t.account.tkDeleteConfirm)) return;
+                      deleteMyTicket(tk.id)
+                        .then(() => { app.notify(t.account.tkDeleted); setOpenId(null); refresh(); })
+                        .catch(() => app.notify(t.account.tkFailed));
+                    }}
+                    style={{ fontSize: 11.5, color: '#c0392b', border: '1px solid #e8c5be', borderRadius: 999, padding: '5px 14px', cursor: 'pointer' }}
+                  >
+                    {t.account.tkDelete}
+                  </span>
+                </div>
               </div>
             )}
           </div>

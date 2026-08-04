@@ -45,12 +45,22 @@ export async function createTicket(
   return ref.id;
 }
 
+/** Member deletes a past inquiry from their own view. SOFT delete: the doc
+ *  stays for the admin inbox/audit; the member's list simply hides it. */
+export async function deleteMyTicket(ticketId: string): Promise<void> {
+  await updateDoc(doc(db, TICKETS, ticketId), { userDeletedAt: new Date().toISOString() });
+}
+
 export async function getMyTickets(userId: string): Promise<SupportTicket[]> {
   try {
     const q = query(collection(db, TICKETS), where('userId', '==', userId));
     const snap = await getDocs(q);
     const list = snap.docs.map(d => ({ id: d.id, ...d.data() }) as SupportTicket);
-    return list.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+    // User-deleted tickets disappear from the member's view only — the admin
+    // inbox keeps the full history (support conversations are ops records).
+    return list
+      .filter(tk => !(tk as any).userDeletedAt)
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   } catch (e) {
     console.error('getMyTickets error', e);
     return [];

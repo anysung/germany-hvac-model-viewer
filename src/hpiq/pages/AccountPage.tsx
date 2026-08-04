@@ -558,8 +558,14 @@ const SessionsCard: React.FC<{ app: HpApp }> = ({ app }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
+  // Show only sessions the SERVER considers active (same 10-minute lastSeenAt
+  // window the limit enforcement uses — docs/CONCURRENT_SESSIONS.md). Idle
+  // docs from closed browsers/old logins stay out of sight; "Sign out other
+  // devices" still revokes them server-side regardless of what is listed.
+  const ACTIVE_WINDOW_MS = 10 * 60 * 1000;
   const alive = sessions
     .filter(x => !x.revokedAt)
+    .filter(x => x.id === mySid || (tsToMillis(x.lastSeenAt) ?? 0) > Date.now() - ACTIVE_WINDOW_MS)
     .sort((a, b) => (tsToMillis(b.lastSeenAt) ?? 0) - (tsToMillis(a.lastSeenAt) ?? 0));
 
   const fmtSeen = (v: any) => {

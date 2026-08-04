@@ -45,6 +45,17 @@ type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'VERIFY_E
 
 /** Landing-page link to the public pricing page. Typed as a full Record so a new
  *  UI language cannot silently fall back to English (the IT edition did — 03f92c0). */
+/** Landing conversion line (owner 2026-08-04): first-time visitors must see
+ *  that signing up is free and card-less BEFORE choosing a button — the
+ *  industry-standard trust phrase is "no credit card required". */
+const FREE_SIGNUP_NOTE: Record<Language, string> = {
+  en: 'Free to join — 7 days of full access, no credit card required.',
+  de: 'Kostenlos registrieren — 7 Tage voller Zugang, keine Kreditkarte erforderlich.',
+  fr: 'Inscription gratuite — 7 jours d’accès complet, sans carte bancaire.',
+  pl: 'Dołącz za darmo — 7 dni pełnego dostępu, bez karty płatniczej.',
+  it: 'Registrazione gratuita — 7 giorni di accesso completo, senza carta di credito.',
+};
+
 const VIEW_PRICING: Record<Language, string> = {
   en: 'View plans & pricing',
   de: 'Tarife & Preise ansehen',
@@ -669,12 +680,12 @@ const App: React.FC = () => {
               <button onClick={() => setCurrentView('SIGNUP')} className={primaryBtn}>{t.signup}</button>
               <button onClick={() => setCurrentView('LOGIN')} className={ghostBtn}>{t.login}</button>
             </div>
-            {/* Public, read-only plans & pricing (no login required to view) */}
-            <div className="mt-4 text-center">
-              <a href={PRICING_ROUTE} className="text-emerald-300/90 text-sm font-medium hover:text-emerald-200 transition-colors">
-                {VIEW_PRICING[language]} ›
-              </a>
-            </div>
+            {/* Conversion note (owner 2026-08-04): free + card-less signup is
+                the strongest first-visit signal — the pricing link moved to
+                the login page footer to make room. */}
+            <p className="mt-4 text-center text-[13px] leading-relaxed text-emerald-200/90" data-testid="free-signup-note">
+              {FREE_SIGNUP_NOTE[language]}
+            </p>
             {/* Admin access + legal links are intentionally NOT on the landing
                 page — they live on the login/signup pages (header Admin button +
                 their footer). The legal PAGES stay public at /terms etc.; Paddle
@@ -721,9 +732,9 @@ const App: React.FC = () => {
         <div className="w-full flex flex-col items-center">
         {sessionNoticeEl}
         <GlassCard className="w-full max-w-md p-8 hp-fade-up">
-          <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-6 transition-colors">← {t.back}</button>
+          <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-4 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.loginTitle}</h2>
-          <p className="text-white/50 text-sm mb-7">{t.loginSub}</p>
+          <p className="text-white/50 text-sm mb-5">{t.loginSub}</p>
           <form onSubmit={handleLogin} className="space-y-5">
             <div>
               <label className={authLabel}>{t.email}</label>
@@ -751,10 +762,16 @@ const App: React.FC = () => {
               <AppleIcon /> {t.continueApple}
             </button>
           </div>
-          <p className="mt-6 text-center text-sm text-white/45">
+          <p className="mt-5 text-center text-sm text-white/45">
             {t.authNoAccount}{' '}
             <button onClick={() => setCurrentView('SIGNUP')} className="text-emerald-300 font-semibold hover:text-emerald-200 transition-colors">{t.signup}</button>
           </p>
+          {/* Public plans & pricing (moved from the landing card, 2026-08-04) */}
+          <div className="mt-2 text-center">
+            <a href={PRICING_ROUTE} className="text-emerald-300/90 text-sm font-medium hover:text-emerald-200 transition-colors">
+              {VIEW_PRICING[language]} ›
+            </a>
+          </div>
           <LegalFooter language={language} dark />
         </GlassCard>
         </div>
