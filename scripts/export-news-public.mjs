@@ -69,6 +69,11 @@ for (const cc of codes) {
       title: pick(f, 'title'),
       summary: pick(f, 'summary'),
       body: pick(f, 'body'),
+      // The English original every article is written from, kept alongside the
+      // localized copy so off-site distribution (build-linkedin-posts.mjs) can
+      // speak one language without a second translation pass.
+      titleEn: val(f.title) ?? '',
+      summaryEn: val(f.summary) ?? '',
       imageUrl: val(f.imageUrl) ?? '',
       author: val(f.author) ?? 'HeatPump DataBase (Europe)',
       sources: (f.sources?.arrayValue?.values ?? [])

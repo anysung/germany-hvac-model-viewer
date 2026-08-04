@@ -113,6 +113,17 @@ drops articles under 600 characters — a thin page is worse than no page. The
 snapshot in git is also the review point: an article can be removed from the
 JSON instead of unpublishing a live page.
 
+Off-site distribution runs from the same snapshot:
+
+```
+npm run linkedin:build        # → linkedin_posts/ (gitignored)
+```
+
+One folder per article — English post body, the article link for the first
+comment, and the image converted to JPEG (LinkedIn rejects WebP).
+`linkedin_posts/QUEUE.md` gives the posting order: newest first, never the same
+market twice in a row. Two or three posts a week, not a burst.
+
 ## 5. Adding a country (expansion checklist)
 
 1. `scripts/<source>/…` fetch/parse/match/build scripts (copy the ofgem or fr

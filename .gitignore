@@ -100,3 +100,6 @@ feasibility_tests/**/evidence-*/
 __pycache__/
 .venv/
 google_cloud_function_billing/canary-records.json
+
+# Generated LinkedIn post packages (rebuild with scripts/build-linkedin-posts.mjs)
+linkedin_posts/
