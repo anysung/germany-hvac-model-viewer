@@ -429,10 +429,23 @@ const SpacetimeField: React.FC = () => (
 
 /** Dynamic brand lockup + waving market flag — instantly reads as this country's build.
  *  Admin build shows no flag: the ops console spans every market. */
+/**
+ * The `height` props are the no-CSS fallback; the classes are what actually
+ * sizes these. Both marks render an <svg> whose width/height attributes CSS
+ * overrides, so `h-* w-auto` scales them without touching the components — a
+ * fixed 40px logo plus a 36px flag is 300px of a 390px phone header, which is
+ * how the language switch ended up off-screen.
+ */
 const Wordmark: React.FC = () => (
-  <span className="inline-flex items-center gap-4 select-none">
-    <BrandLogo height={40} theme="dark" />
-    {!IS_ADMIN_BUILD && <WavingFlag height={36} />}
+  <span className="inline-flex items-center gap-2 sm:gap-4 select-none flex-none">
+    <BrandLogo height={40} theme="dark" className="h-[26px] sm:h-9 md:h-10 w-auto" />
+    {/* Below ~380px there is not room for wordmark + flag + social + language
+        switch, and something has to go. The flag goes: the market is already
+        implied by the domain and the language, whereas the wordmark is the
+        brand. Hiding it beats letting flexbox squash both. */}
+    {!IS_ADMIN_BUILD && (
+      <WavingFlag height={36} className="hidden min-[380px]:inline-block h-[22px] sm:h-8 md:h-9 w-auto" />
+    )}
   </span>
 );
 
@@ -445,9 +458,12 @@ const MarketBadge: React.FC<{ t: any }> = ({ t }) =>
       Ops Console · All markets
     </span>
   ) : (
-  <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur text-xs font-medium text-white/80">
-    <span className="text-sm leading-none">{flagEmoji(ACTIVE_COUNTRY.code)}</span>
-    {t.authMarketLabel}: {ACTIVE_COUNTRY.name} · {ACTIVE_COUNTRY.subsidyTabLabel}
+  <span className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/15 bg-white/5 backdrop-blur text-xs font-medium text-white/80 min-w-0">
+    <span className="text-sm leading-none flex-none">{flagEmoji(ACTIVE_COUNTRY.code)}</span>
+    {/* The only elastic thing in the header. Market labels differ wildly in
+        length (FR "MaPrimeRénov' / CEE", PL "Czyste Powietrze / ZUM"), and
+        without this the badge pushed the brand mark until it squashed. */}
+    <span className="truncate">{t.authMarketLabel}: {ACTIVE_COUNTRY.name} · {ACTIVE_COUNTRY.subsidyTabLabel}</span>
   </span>
 );
 
@@ -457,12 +473,12 @@ const LanguagePill: React.FC<{ language: Language; setLanguage: (l: Language) =>
 }) => (
   // Single-language editions (e.g. GB) render no pill at all.
   UI_LANGUAGES.length < 2 ? null : (
-  <div className="flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur p-1 text-xs font-semibold">
+  <div className="flex items-center rounded-full border border-white/15 bg-white/5 backdrop-blur p-0.5 sm:p-1 text-[11px] sm:text-xs font-semibold flex-none">
     {UI_LANGUAGES.map(l => (
       <button
         key={l}
         onClick={() => setLanguage(l)}
-        className={`px-3 py-1.5 rounded-full transition-colors ${
+        className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full transition-colors ${
           language === l ? 'bg-white text-gray-900' : 'text-white/60 hover:text-white'
         }`}
       >
@@ -501,7 +517,7 @@ const YouTubeIcon: React.FC<{ className?: string }> = ({ className = 'w-[20px] h
  * clicks must not lose the page they were about to sign up on.
  */
 const SocialLinks: React.FC = () => (
-  <div className="flex items-center gap-1">
+  <div className="flex items-center gap-0.5 sm:gap-1 flex-none">
     {[
       { href: SOCIAL_LINKS.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
       { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: YouTubeIcon },
@@ -513,7 +529,7 @@ const SocialLinks: React.FC = () => (
         rel="noopener noreferrer"
         aria-label={label}
         title={label}
-        className="p-2 rounded-full text-white/40 hover:text-white/85 hover:bg-white/[0.07] transition-colors"
+        className="p-1.5 sm:p-2 rounded-full text-white/40 hover:text-white/85 hover:bg-white/[0.07] transition-colors"
       >
         <Icon />
       </a>
@@ -545,12 +561,12 @@ export const AuthShell: React.FC<{
       <CommercialInstallScene />
     </div>
 
-    <header className="relative z-20 flex items-center justify-between gap-4 px-6 md:px-10 py-5">
-      <div className="flex items-center gap-4">
+    <header className="relative z-20 flex items-center justify-between gap-2 sm:gap-4 px-4 sm:px-6 md:px-10 py-4 sm:py-5">
+      <div className="flex items-center gap-2 sm:gap-4 min-w-0">
         <Wordmark />
         <MarketBadge t={t} />
       </div>
-      <div className="flex items-center gap-3 md:gap-5">
+      <div className="flex items-center gap-2 sm:gap-3 md:gap-5 flex-none">
         {showSocial && <SocialLinks />}
         <LanguagePill language={language} setLanguage={setLanguage} />
       </div>

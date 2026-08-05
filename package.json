@@ -30,7 +30,7 @@
     "test:signup": "bash tests/run-signup-account-e2e.sh",
     "test:segmentation": "node tests/segmentation.unit.mjs",
     "test:products": "bash tests/run-products-e2e.sh",
-    "test": "npm run test:segmentation && npm run test:architecture && npm run test:listing && npm run test:matching && npm run test:zum && npm run test:gse && npm run test:routing && npm run test:signup-paths && npm run test:rules && npm run test:rules:storage && npm run test:rules:country && npm run test:account-country && npm run test:products && npm run test:account && npm run test:account:mobile && npm run test:registration && npm run test:signup",
+    "test": "npm run test:segmentation && npm run test:architecture && npm run test:listing && npm run test:matching && npm run test:zum && npm run test:gse && npm run test:routing && npm run test:signup-paths && npm run test:rules && npm run test:rules:storage && npm run test:rules:country && npm run test:account-country && npm run test:products && npm run test:account && npm run test:header && npm run test:account:mobile && npm run test:registration && npm run test:signup",
     "test:matching": "node tests/pel-matching.unit.mjs",
     "test:zum": "node tests/zum-matching.unit.mjs",
     "test:gse": "node tests/gse-matching.unit.mjs",
@@ -45,7 +45,8 @@
     "news:export": "node scripts/export-news-public.mjs",
     "test:signup-paths": "node tests/signup-paths.contract.mjs",
     "linkedin:build": "node scripts/build-linkedin-posts.mjs",
-    "linkedin": "node scripts/linkedin-post.mjs"
+    "linkedin": "node scripts/linkedin-post.mjs",
+    "test:header": "bash tests/run-header-fit-e2e.sh"
   },
   "dependencies": {
     "@google/genai": "*",
