@@ -26,7 +26,9 @@ set -e
 PROJECT_ID="gen-lang-client-0324244302"
 REGION="europe-west1"
 FUNCTION_NAME="accountBilling"
-RUNTIME="nodejs20"
+# nodejs20 is decommissioned by Cloud Functions on 2026-10-30 —
+# both live functions were moved to 22 on 2026-08-06.
+RUNTIME="nodejs22"
 
 PADDLE_WEBHOOK_SECRET="${PADDLE_WEBHOOK_SECRET:-}"
 ALLOWED_ORIGINS="${ALLOWED_ORIGINS:-}"

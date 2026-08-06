@@ -7,7 +7,7 @@
 # ⚠ READ BEFORE RUNNING (hardened after the 2026-08-01 incident)
 #   1. For a routine CODE deploy, DO NOT use this script. Use:
 #        gcloud functions deploy autoUpdateDatabase --region=us-central1 --gen2 \
-#          --source=. --runtime=nodejs20 --trigger-http --entry-point=autoUpdateDatabase
+#          --source=. --runtime=nodejs22 --trigger-http --entry-point=autoUpdateDatabase
 #      A plain deploy PRESERVES the live env vars; this script OVERWRITES them,
 #      so running it without the real secrets exported silently breaks the
 #      pipeline (wrong GEMINI_API_KEY / SECRET_KEY).
@@ -28,7 +28,9 @@ set -e
 PROJECT_ID="gen-lang-client-0324244302"
 REGION="us-central1"
 FUNCTION_NAME="autoUpdateDatabase"
-RUNTIME="nodejs20"
+# nodejs20 is decommissioned by Cloud Functions on 2026-10-30 —
+# both live functions were moved to 22 on 2026-08-06.
+RUNTIME="nodejs22"
 
 # Secret values — set these as environment variables before running this script
 # or replace the placeholders below
