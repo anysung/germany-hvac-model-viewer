@@ -22,6 +22,7 @@
  * Out:  demo_video/<MARKET>/*.webm  (gitignored)
  */
 import { chromium } from 'playwright';
+import { execFileSync } from 'node:child_process';
 import { mkdirSync, rmSync, existsSync, readdirSync, renameSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -246,6 +247,25 @@ await context.close();
 await browser.close();
 
 // Playwright names videos by an internal id — rename to something meaningful.
+const base = `demo-${MARKET.toLowerCase()}`;
 const files = readdirSync(OUT).filter((f) => f.endsWith('.webm'));
-for (const f of files) renameSync(join(OUT, f), join(OUT, `demo-${MARKET.toLowerCase()}.webm`));
-console.log(`\n→ demo_video/${MARKET}/demo-${MARKET.toLowerCase()}.webm\n`);
+for (const f of files) renameSync(join(OUT, f), join(OUT, `${base}.webm`));
+console.log(`\n→ demo_video/${MARKET}/${base}.webm`);
+
+// Chromium only records webm, and video editors largely refuse it — CapCut,
+// iMovie and Resolve all want H.264. Convert if ffmpeg is around; the webm is
+// kept as the master, since re-encoding a re-encode loses quality twice.
+try {
+  execFileSync('ffmpeg', [
+    '-y', '-i', join(OUT, `${base}.webm`),
+    '-c:v', 'libx264', '-preset', 'slow', '-crf', '19',
+    // yuv420p + even dimensions: what QuickTime, LinkedIn and YouTube all
+    // require. A stream they cannot decode looks like a corrupt upload.
+    '-pix_fmt', 'yuv420p', '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2',
+    '-movflags', '+faststart', '-an',
+    join(OUT, `${base}.mp4`),
+  ], { stdio: 'ignore' });
+  console.log(`→ demo_video/${MARKET}/${base}.mp4  (edit this one)\n`);
+} catch {
+  console.log('   (ffmpeg not found — webm only; `brew install ffmpeg` for mp4)\n');
+}
