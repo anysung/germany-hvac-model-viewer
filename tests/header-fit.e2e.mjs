@@ -42,6 +42,11 @@ console.log(`\nHeader fit — ${COUNTRY} edition (${BASE})\n`);
 for (const width of WIDTHS) {
   const page = await (await browser.newContext({ viewport: { width, height: 800 } })).newPage();
   await page.goto(BASE, { waitUntil: 'domcontentloaded' });
+  // Two waits, both needed: the selector wait absorbs the dev server's cold
+  // compile (a fixed sleep once read "header does not exist" on a page that
+  // had not painted yet), and the settle wait lets the entrance animations
+  // finish — measuring mid-fade reports transitional geometry as an overflow.
+  await page.waitForSelector('header', { timeout: 20000 }).catch(() => {});
   await page.waitForTimeout(2000);
 
   // Landing, then login — the two screens that carry the social links, i.e.
