@@ -268,7 +268,7 @@ ${faqList(G.tabPro || 'FAQ', faqsPro)}
   <div class="cta">
     <h2>${esc(M.ctaTitle)}</h2>
     <p>${esc(M.ctaBody)}</p>
-    <a class="btn" href="/">${esc(M.ctaBtn)} ›</a>
+    <a class="btn" href="/?ref=guide">${esc(M.ctaBtn)} ›</a>
     <p style="margin-top:14px;font-size:13.5px">
       <a href="/news/">${esc(M.newsLabel)} ›</a><br>
       <a href="https://www.heatpumpdb.eu/models/">${esc(M.modelsLabel)} ›</a>

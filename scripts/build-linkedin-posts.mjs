@@ -131,7 +131,7 @@ for (const cc of codes) {
 
     writeFileSync(join(dir, 'post.txt'), buildPost(a, M) + '\n');
     writeFileSync(join(dir, 'comment.txt'),
-      `Full article: ${M.host}/news/${slug(a.id)}.html\n`);
+      `Full article: ${M.host}/news/${slug(a.id)}.html?ref=li\n`);
 
     // LinkedIn does not accept WebP uploads — convert. sips ships with macOS;
     // a missing image is reported, never silently skipped (a post without one
@@ -151,7 +151,7 @@ for (const cc of codes) {
     const meta = {
       market: cc, id: a.id, date: a.date, category: a.category,
       headline: clean(a.titleEn || a.title),
-      articleUrl: `${M.host}/news/${slug(a.id)}.html`,
+      articleUrl: `${M.host}/news/${slug(a.id)}.html?ref=li`,
       image,
     };
     writeFileSync(join(dir, 'meta.json'), JSON.stringify(meta, null, 2) + '\n');

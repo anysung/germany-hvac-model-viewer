@@ -11,6 +11,7 @@ import { OverviewPage } from './admin/OverviewPage';
 import { InboxPage } from './admin/InboxPage';
 import { MembersPage } from './admin/MembersPage';
 import { BillingPage } from './admin/BillingPage';
+import { MarketingPage } from './admin/MarketingPage';
 import { DataPage } from './admin/DataPage';
 import { AuditPage } from './admin/AuditPage';
 
@@ -160,6 +161,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         {activePage === 'inbox' && <InboxPage al={al} />}
         {activePage === 'members' && <MembersPage al={al} />}
         {activePage === 'data' && <DataPage al={al} products={cachedDatabase} lastUpdated={lastUpdated} />}
+        {activePage === 'marketing' && <MarketingPage al={al} />}
         {activePage === 'audit' && <AuditPage al={al} />}
       </main>
     </div>

@@ -28,6 +28,10 @@ import { translations } from './translations';
 import { DEFAULT_LANGUAGE, COUNTRY_SITES } from './hpiq/market';
 import { PUBLIC_ENV } from './config/env';
 import { REGISTRATION_OPEN, REGISTRATION_REOPEN_DATE } from './config/registration';
+import { captureSignupRef } from './services/signupRef';
+
+// Attribution: catch ?ref= before any routing can strip it.
+captureSignupRef();
 import { legalDocForPath, PRICING_ROUTE } from './config/legal';
 import { LegalPage, LegalFooter } from './legal/LegalPage';
 import { PublicPricingPage } from './pricing/PublicPricingPage';

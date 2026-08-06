@@ -35,6 +35,7 @@ import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
 import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
 import { compact } from '../utils/profile';
 import { TRIAL_FLOW_ENABLED, finalizeSignupFn } from './billingFnService';
+import { pendingSignupRef } from './signupRef';
 
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
 
@@ -231,6 +232,9 @@ export const registerUser = async (data: SignupData): Promise<RegisterResult> =>
       companyTypeOther: data.companyTypeOther,
       companyCity: data.companyCity,
       companyWebsite: data.companyWebsite,
+      // Which channel brought them (see services/signupRef.ts) — the admin
+      // Marketing page counts these per channel.
+      signupRef: pendingSignupRef(),
     }),
     ...(data.marketingConsent ? { marketingConsent: true } : {}),
   } as User;

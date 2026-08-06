@@ -319,6 +319,8 @@ export interface User {
   isActive: boolean;
   status?: 'pending' | 'active' | 'suspended' | 'rejected' | 'disabled' | 'deletion_requested' | 'deleted' | 'archived';
   registeredAt: string;
+  /** Marketing channel that brought the signup (services/signupRef.ts). */
+  signupRef?: string;
   /** ISO timestamp of consent to the Terms of Use + Privacy Policy at signup. */
   termsAcceptedAt?: string;
   /** Versions consented to (config/legal.ts). Minimal consent record — no history log. */

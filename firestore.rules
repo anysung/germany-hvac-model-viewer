@@ -208,6 +208,15 @@ service cloud.firestore {
 
     // Free-use registrations (email as doc id, lowercase). Admin writes;
     // the matching user may read + stamp redemption on their own grant.
+    // Marketing ops (admin console Marketing page): follower counts and the
+    // posting log. Internal bookkeeping — customers never read or write these.
+    match /marketingOps/{docId} {
+      allow read, write: if isAdmin();
+    }
+    match /marketingLog/{entryId} {
+      allow read, write: if isAdmin();
+    }
+
     match /freeAccessGrants/{email} {
       allow read: if isAdmin() || (isSignedIn() && request.auth.token.email == email);
       allow update: if isSignedIn() && request.auth.token.email == email &&

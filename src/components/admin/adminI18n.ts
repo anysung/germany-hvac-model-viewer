@@ -243,6 +243,33 @@ const EN = {
   cCancel: 'Cancel',
   cNever: 'Never',
   cLoading: 'Loading…',
+  menuMarketing: 'Marketing',
+  // ── Marketing page ──
+  mk: {
+    title: 'Marketing',
+    subtitle: 'Signups per channel are automatic (?ref= links); only followers and the posting log are hand-entered.',
+    refTitle: 'Signups by acquisition channel',
+    refHint: 'Counted from the signupRef field stamped at registration. Links: LinkedIn comments ?ref=li · news CTA ?ref=news · guide CTA ?ref=guide · YouTube descriptions ?ref=yt.',
+    refTotal: 'All accounts',
+    refNone: 'No ref',
+    refNoneNote: (n: number) => `${n} account(s) arrived without a ref — direct visits, or signups from before tracking went live (2026-08-06).`,
+    followersTitle: 'Channel followers',
+    followersHint: 'The two numbers no machine can fetch for us. Update once a month — trend matters, precision does not.',
+    save: 'Save',
+    savedAt: 'Saved',
+    checklistTitle: 'Monthly rhythm (after the news cycle, 1st–2nd)',
+    checklistHint: 'The same steps as docs/UPDATE_PIPELINE.md §4a — in order.',
+    step1: 'Verify the news Cloud Function ran (new articles in the app).',
+    step2: 'Run: node scripts/export-news-public.mjs → commit the snapshot.',
+    step3: 'Rebuild + deploy the five sites (news pages + sitemaps update).',
+    step4: 'Run: npm run linkedin:build → load the week\'s posts into the scheduler.',
+    step5: 'Enter follower counts below; check Search Console for the five sites.',
+    logTitle: 'Posting log',
+    logHint: 'What went out where — LinkedIn gives us no API at this size, so this list is the only record a future you can consult.',
+    logPlaceholder: 'e.g. Launch batch #3 — MaPrimeRénov article',
+    logAdd: 'Add',
+    logEmpty: 'Nothing logged yet.',
+  },
 };
 
 const KO: typeof EN = {
@@ -462,7 +489,36 @@ const KO: typeof EN = {
   cCancel: '취소',
   cNever: '없음',
   cLoading: '불러오는 중…',
+  menuMarketing: '마케팅',
+  mk: {
+    title: '마케팅',
+    subtitle: '채널별 가입 수는 자동 집계(?ref= 링크)됩니다. 손으로 입력하는 것은 팔로워 수와 발행 로그뿐입니다.',
+    refTitle: '유입 채널별 가입',
+    refHint: '가입 시 프로필에 기록되는 signupRef 필드 기준. 링크: LinkedIn 댓글 ?ref=li · 뉴스 CTA ?ref=news · 가이드 CTA ?ref=guide · YouTube 설명 ?ref=yt.',
+    refTotal: '전체 계정',
+    refNone: 'ref 없음',
+    refNoneNote: (n: number) => `${n}개 계정은 ref 없이 가입 — 직접 방문이거나 계측 도입(2026-08-06) 이전 가입입니다.`,
+    followersTitle: '채널 팔로워',
+    followersHint: '기계가 대신 읽어올 수 없는 두 숫자입니다. 월 1회면 충분합니다 — 중요한 것은 추세이지 정밀도가 아닙니다.',
+    save: '저장',
+    savedAt: '저장',
+    checklistTitle: '월간 리듬 (뉴스 사이클 후, 1~2일)',
+    checklistHint: 'docs/UPDATE_PIPELINE.md §4a와 같은 순서입니다.',
+    step1: '뉴스 Cloud Function 실행 확인 (앱에 새 기사).',
+    step2: 'node scripts/export-news-public.mjs 실행 → 스냅샷 커밋.',
+    step3: '5개 사이트 재빌드+배포 (뉴스 페이지·사이트맵 갱신).',
+    step4: 'npm run linkedin:build 실행 → 이번 주 게시물을 예약 도구에 적재.',
+    step5: '아래에 팔로워 수 입력, 5개 사이트 Search Console 확인.',
+    logTitle: '발행 로그',
+    logHint: '무엇을 어디에 올렸는지 — LinkedIn API가 없어 이 목록이 유일한 기록입니다.',
+    logPlaceholder: '예: 런치 배치 #3 — MaPrimeRénov 기사',
+    logAdd: '추가',
+    logEmpty: '아직 기록이 없습니다.',
+  },
 };
 
 export const ADMIN_I18N: Record<AdminLang, typeof EN> = { en: EN, ko: KO };
+
+/** Dictionary accessor for pages that take `al` as a prop. */
+export const adminT = (al: AdminLang) => ADMIN_I18N[al];
 export type AdminStrings = typeof EN;

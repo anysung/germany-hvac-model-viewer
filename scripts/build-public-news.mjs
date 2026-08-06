@@ -183,6 +183,18 @@ ${body}
     <p style="margin-top:8px">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™</p>
   </footer>
 </div>
+<script>
+  // Attribution pass-through: a visitor arriving from a channel link
+  // (?ref=li on a LinkedIn comment) must hand that channel on to the app CTA,
+  // or every conversion would be credited to "news" regardless of source.
+  (function () {
+    var ref = new URLSearchParams(location.search).get('ref');
+    if (!ref) return;
+    document.querySelectorAll('a[href^="/?ref="], a[href="/"]').forEach(function (a) {
+      a.href = '/?ref=' + encodeURIComponent(ref.toLowerCase().slice(0, 24));
+    });
+  })();
+</script>
 </body>
 </html>
 `;
@@ -241,7 +253,7 @@ for (const a of items) {
   <div class="cta">
     <h2>${esc(cta.h)}</h2>
     <p>${esc(cta.p)}</p>
-    <a class="btn" href="/">${esc(cta.b)} ›</a>
+    <a class="btn" href="/?ref=news">${esc(cta.b)} ›</a>
   </div>`;
   writeFileSync(join(OUT_DIR, 'news', `${slug(a.id)}.html`), shell({
     title: a.title, desc: a.summary || a.title,
@@ -272,7 +284,7 @@ const indexBody = `
   <div class="cta">
     <h2>${esc(M.ctaPro.h)}</h2>
     <p>${esc(M.ctaPro.p)}</p>
-    <a class="btn" href="/">${esc(M.ctaPro.b)} ›</a>
+    <a class="btn" href="/?ref=news">${esc(M.ctaPro.b)} ›</a>
   </div>`;
 writeFileSync(join(OUT_DIR, 'news', 'index.html'), shell({
   title: M.archiveTitle, desc: M.archiveDesc, canonical: '/news/', ld: indexLd, body: indexBody,
