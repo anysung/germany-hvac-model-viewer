@@ -103,3 +103,6 @@ google_cloud_function_billing/canary-records.json
 
 # Generated LinkedIn post packages (rebuild with scripts/build-linkedin-posts.mjs)
 linkedin_posts/
+
+# Generated demo recordings (rebuild with scripts/record-demo.mjs)
+demo_video/
