@@ -1,23 +1,18 @@
 /**
  * Registration availability — one shared flag for every country edition.
  *
- * New-user registration is PAUSED (Jul 2026) while the European expansion review
- * runs. DE, GB and FR are the same build with a different VITE_COUNTRY_CODE, so
- * this single flag covers all three; there is deliberately no per-country switch.
+ * REOPENED 2026-08-06 (launch): the 7-day in-app trial flow is live — email
+ * signup → verification → finalizeSignup activates and starts the trial.
+ * The pause (Jul 2026, European expansion review) is over; the paused-notice
+ * branch in App.tsx stays in the code so any future pause is this one flag
+ * again.
  *
- * SCOPE — this is a UI pause, and only that. While it is closed, the Sign Up
- * entry stays visible but opens a maintenance notice instead of the form, so a
- * normal user cannot complete registration through the app. It is not a security
- * control: Firebase Auth and the Firestore rules are untouched, so registration
- * remains technically possible for anyone calling the APIs directly.
- *
- * TO REOPEN: set REGISTRATION_OPEN = true here, rebuild, deploy. Nothing reopens
- * on its own — REOPEN_DATE below is display copy that no code compares against
- * the clock.
+ * SCOPE — this is a UI switch, and only that. Closing it hides the form but is
+ * not a security control: Firebase Auth and the Firestore rules are untouched.
  */
 
 /** The one switch. false = the signup form is not offered, in any edition. */
-const REGISTRATION_FLAG = false;
+const REGISTRATION_FLAG = true;
 
 /**
  * Dev/e2e may open the form to exercise the reopened flow (VITE_REGISTRATION_OPEN=true).

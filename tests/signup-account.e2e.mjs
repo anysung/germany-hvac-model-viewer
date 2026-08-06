@@ -22,8 +22,8 @@ const APPCHECK = readFileSync(`${SECRETS}/appcheck-debug-token.txt`, 'utf8').tri
 const USER = 'e2e-verify@heatpumpdb.de';
 
 const LANG = { DE: 'en', GB: 'en', FR: 'fr' }[COUNTRY];
-const SIGNUP_BTN = /Sign Up|Registrieren|Créer un compte|Zarejestruj się/i;
-const LOGIN_BTN = /Log In|Anmelden|Se connecter/i;
+const SIGNUP_BTN = /Sign Up|Registrieren|Créer un compte|Zarejestruj się|Registrati/i;
+const LOGIN_BTN = /Log In|Anmelden|Se connecter|Zaloguj się|Accedi/i;
 
 let passed = 0, failed = 0;
 const check = (name, ok, detail = '') => {
@@ -97,7 +97,7 @@ check('invalid website is rejected', await page.locator('[data-testid="su-error"
 check('Terms link on signup', (await page.locator('[data-testid="su-terms-link"]').getAttribute('href')) === '/terms');
 check('Privacy link on signup', (await page.locator('[data-testid="su-privacy-link"]').getAttribute('href')) === '/privacy');
 check('CTA reads "continue to plan selection"',
-  /plan selection|Tarifauswahl|choix de la formule/i.test(await page.locator('[data-testid="su-submit"]').innerText()));
+  /plan selection|Tarifauswahl|choix de la formule|wyboru planu|scelta del piano/i.test(await page.locator('[data-testid="su-submit"]').innerText()));
 
 /* ── 2. PUBLIC POLICY PAGES (no login; Paddle-review business identity) ────── */
 // Every legal page is public over the same domain, shows the brand and the one
@@ -118,7 +118,7 @@ for (const [path, id] of [['/privacy', 'legal-privacy'], ['/terms', 'legal-terms
   await p2.waitForTimeout(900);
   check(`${path} opens without a login`, await p2.locator(`[data-testid="${id}"]`).isVisible().catch(() => false));
   const text = await p2.locator('body').innerText();
-  check(`${path} shows "HeatPump Database (Europe)"`, text.includes('HeatPump Database (Europe)'));
+  check(`${path} shows "HeatPump DataBase (Europe)"`, text.includes('HeatPump DataBase (Europe)'));
   check(`${path} shows support@heatpumpdb.eu`, text.includes('support@heatpumpdb.eu'));
   // The business registration number is sensitive: Legal Notice only.
   check(`${path} shows the registration number only on the Legal Notice`,
@@ -135,20 +135,27 @@ const imp = await ctx.newPage();
 await imp.goto(`${BASE.replace(/\/$/, '')}/imprint`, { waitUntil: 'domcontentloaded' });
 await imp.waitForTimeout(700);
 const impText = await imp.locator('[data-testid="legal-imprint"]').innerText();
-check('/imprint has the seven Legal Notice sections', (await imp.locator('[data-testid="legal-imprint"] section').count()) === 7);
+// Six sections since 2026-08-04: "Owner and Operator" is no longer its own
+// section — the owner's name appears only as "(Operator: …)" inside the
+// address block (owner decision: minimise personal exposure).
+check('/imprint has the six Legal Notice sections', (await imp.locator('[data-testid="legal-imprint"] section').count()) === 6);
 for (const fact of [
   'A Company', 'Yong Soo Sung', '854-76-00547',
   '1st Floor, 16-32, Seogyeong-ro 2-gil', 'Seongbuk-gu, Seoul', 'Republic of Korea',
-  'support@heatpumpdb.eu', 'Paddle.com Market Ltd', 'HeatPump Database (Europe)™',
+  'support@heatpumpdb.eu', 'Paddle.com Market Ltd', 'HeatPump DataBase (Europe)™',
 ]) {
   check(`/imprint shows "${fact}"`, impText.includes(fact));
 }
 // Terms name the operator and point to the Legal Notice; Privacy names the controller.
 const termsText = await (async () => { const t = await ctx.newPage(); await t.goto(`${BASE.replace(/\/$/, '')}/terms`, { waitUntil: 'domcontentloaded' }); await t.waitForTimeout(600); const x = await t.locator('body').innerText(); await t.close(); return x; })();
 check('/terms identifies A Company as operator', /A Company/.test(termsText));
-check('/terms links to / references the Legal Notice', /Legal Notice|Impressum|Mentions légales/i.test(termsText));
+check('/terms links to / references the Legal Notice', /Legal Notice|Impressum|Mentions légales|Informacj\w* o usługodawcy|Note legali/i.test(termsText));
 const privText = await (async () => { const t = await ctx.newPage(); await t.goto(`${BASE.replace(/\/$/, '')}/privacy`, { waitUntil: 'domcontentloaded' }); await t.waitForTimeout(600); const x = await t.locator('body').innerText(); await t.close(); return x; })();
-check('/privacy names the data controller (A Company / owner)', /A Company/.test(privText) && /Yong Soo Sung/.test(privText));
+// The 2026-08-04 minimisation moved the owner's name OUT of Privacy — the
+// controller is named as the company, personal details live in the Legal
+// Notice only. The name reappearing here would be the regression.
+check('/privacy names A Company as controller, without the owner name',
+  /A Company/.test(privText) && !/Yong Soo Sung/.test(privText));
 check('/privacy does NOT claim A Company is EU-established',
   !/(established|incorporated|registered)\s+(in\s+)?(the\s+)?(EU|European Union)/i.test(privText));
 await imp.close();
@@ -164,19 +171,28 @@ await page.click('button[type="submit"]');
 await page.waitForTimeout(14000);
 check('existing user still logs in', (await page.locator('[class*="hp-gnav"]').count()) > 0);
 
-await page.locator('[title="Account"]').first().click();
+// The onboarding-tour invite opens over everything on a fresh profile (every
+// Playwright context is one) and intercepts pointer events — dismiss it with
+// "snooze today" before touching the nav.
+const tourInvite = page.locator('[data-testid="tour-today"]');
+if (await tourInvite.count()) { await tourInvite.click(); await page.waitForTimeout(400); }
+// data-testid, not title: the title attribute is localized (DE "Konto",
+// IT "Account", PL "Konto") and a language-dependent locator dies per edition.
+await page.locator('[data-testid="nav-account"]').first().click();
 await page.waitForTimeout(3000);
 const acc = await page.locator('body').innerText();
 check('"Use on the web" section is gone', !/Use on the web|Im Web nutzen|Utiliser sur le web/i.test(acc));
 check('no "Copy link" / "Email me the link" buttons', !/Copy link|Link kopieren|Email me the link|M’envoyer le lien/i.test(acc));
-check('Company profile card shown', /Company profile|Unternehmensprofil|Profil de l’entreprise/i.test(acc));
+check('Company profile card shown', /Company profile|Unternehmensprofil|Profil de l’entreprise|Profil firmy|Profilo aziendale/i.test(acc));
 check('Job Role row removed from Account', !/Job Role|Funktion:/i.test(acc));
 check('policy links on Account', (await page.locator('[data-testid="policy-privacy"]').count()) > 0);
-check('New inquiry still available', /New inquiry|Neue Anfrage|Nouvelle demande/i.test(acc));
-check('support@heatpumpdb.eu shown on Account', (await page.locator('[data-testid="support-email"]').innerText()) === 'support@heatpumpdb.eu');
-check('"A Company" appears on Account only in the Disclaimer', (acc.match(/A Company/g) || []).length === 1 && /protected database|geschützte Datenbank|base de données protégée/i.test(acc));
-check('Email & password card still there', /Email & password|E-Mail & Passwort|E-mail & mot de passe/i.test(acc));
-check('App language card still there', /App language|App-Sprache|Langue de l’application/i.test(acc));
+check('New inquiry still available', /New inquiry|Neue Anfrage|Nouvelle demande|Nowe zgłoszenie|Nuova richiesta/i.test(acc));
+// Support became in-app-only (2026-08-04 support redesign): no mailto address
+// on the Account page — the entry point is the New-inquiry control instead.
+check('in-app support entry present (no mailto)', (await page.locator('[data-testid="support-new-inquiry"]').count()) > 0);
+check('"A Company" appears on Account only in the Disclaimer', (acc.match(/A Company/g) || []).length === 1 && /protected database|geschützte Datenbank|base de données protégée|bazą danych chronioną|banca dati protetta/i.test(acc));
+check('Email & password card still there', /Email & password|E-Mail & Passwort|E-mail & mot de passe|E-mail i hasło|E-mail e password/i.test(acc));
+check('App language card still there', /App language|App-Sprache|Langue de l’application|Język aplikacji|Lingua dell’app/i.test(acc));
 check('Delete account still there', (await page.locator('[data-testid="delete-account"]').count()) > 0);
 check('profile edit is available', (await page.locator('[data-testid="edit-company"]').count()) > 0);
 check('no team card for a professional', (await page.locator('[data-testid="manage-team"]').count()) === 0);
@@ -185,10 +201,11 @@ check('no team card for a professional', (await page.locator('[data-testid="mana
 const owner = await ctx.newPage();
 await owner.goto(`${BASE}?preview=hpiq&as=owner`, { waitUntil: 'domcontentloaded' });
 await owner.waitForTimeout(3000);
-await owner.locator('[title="Account"]').first().click();
+{ const ti = owner.locator('[data-testid="tour-today"]'); if (await ti.count()) { await ti.click(); await owner.waitForTimeout(400); } }
+await owner.locator('[data-testid="nav-account"]').first().click();
 await owner.waitForTimeout(1200);
 check('[owner] Team management card visible', await owner.locator('[data-testid="manage-team"]').isVisible());
-check('[owner] seats shown as "2 of 3 seats used"', /2 (of|von|sièges sur) 3/i.test(await owner.locator('[data-testid="team-seats"]').innerText()));
+check('[owner] seats shown as "2 of 3 seats used"', /2 (of|von|di) 3|2 sièges sur 3|Zajęte miejsca: 2 z 3/i.test(await owner.locator('[data-testid="team-seats"]').innerText()));
 check('[owner] pending invitation count shown', /1/.test(await owner.locator('[data-testid="team-pending"]').innerText()));
 
 await owner.locator('[data-testid="manage-team"]').click();
@@ -202,7 +219,7 @@ check('[owner] remove-member action for a member', (await owner.locator('[data-t
 check('[owner] owner cannot remove themselves (only 1 remove button for 2 members)', (await owner.locator('[data-testid="remove-member"]').count()) === 1);
 check('[owner] seat limit enforced: no invite box when full', (await owner.locator('[data-testid="no-seats"]').count()) === 1);
 check('[owner] company settings editable', (await owner.locator('[data-testid="edit-org-company"]').count()) === 1);
-check('[owner] ownership-transfer guidance points at Support', /New inquiry|Neue Anfrage|Nouvelle demande/i.test(tm));
+check('[owner] ownership-transfer guidance points at Support', /New inquiry|Neue Anfrage|Nouvelle demande|Nowe zgłoszenie|Nuova richiesta/i.test(tm));
 await owner.locator('[data-testid="team-back"]').click();
 await owner.waitForTimeout(600);
 check('[owner] back returns to the account', (await owner.locator('[data-testid="team-management"]').count()) === 0);
@@ -212,17 +229,18 @@ await owner.close();
 const member = await ctx.newPage();
 await member.goto(`${BASE}?preview=hpiq&as=member`, { waitUntil: 'domcontentloaded' });
 await member.waitForTimeout(3000);
-await member.locator('[title="Account"]').first().click();
+{ const ti = member.locator('[data-testid="tour-today"]'); if (await ti.count()) { await ti.click(); await member.waitForTimeout(400); } }
+await member.locator('[data-testid="nav-account"]').first().click();
 await member.waitForTimeout(1200);
 const mem = await member.locator('body').innerText();
-check('[member] "Your team" card shown', /Your team|Ihr Team|Votre équipe/i.test(mem));
+check('[member] "Your team" card shown', /Your team|Ihr Team|Votre équipe|Twój zespół|Il tuo team/i.test(mem));
 check('[member] team info is read-only (no manage button)', (await member.locator('[data-testid="manage-team"]').count()) === 0);
 check('[member] no invite controls', (await member.locator('[data-testid="invite-email"]').count()) === 0);
 check('[member] no member-removal controls', (await member.locator('[data-testid="remove-member"]').count()) === 0);
-check('[member] company info marked as managed by the admin', /Managed by your team administrator|Wird von Ihrem Team-Administrator|Géré par votre administrateur/i.test(mem));
+check('[member] company info marked as managed by the admin', /Managed by your team administrator|Wird von Ihrem Team-Administrator|Géré par votre administrateur|Zarządzane przez administratora|Gestito dall’amministratore/i.test(mem));
 check('[member] Leave team available', await member.locator('[data-testid="leave-team"]').isVisible());
 check('[member] Delete account is separate from Leave team', (await member.locator('[data-testid="delete-account"]').count()) === 1);
-check('[member] personal profile card shown', /Personal profile|Persönliches Profil|Profil personnel/i.test(mem));
+check('[member] personal profile card shown', /Personal profile|Persönliches Profil|Profil personnel|Profil osobisty|Profilo personale/i.test(mem));
 await member.close();
 
 await browser.close();

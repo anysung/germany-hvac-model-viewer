@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Registration-pause e2e across every country edition (DE, GB, FR).
+# Registration-OPEN e2e across every country edition (registration reopened 2026-08-06).
 # Starts a dev server per edition, runs the Playwright checks, tears it down.
 #
 # Needs two secrets, NOT in the repo — point HPDB_TEST_SECRETS at the directory
@@ -20,13 +20,13 @@ for cc in DE GB FR PL IT; do
     VITE_COUNTRY_CODE="$cc" npx vite --port "$PORT" >"/tmp/vite-reg-$cc.log" 2>&1 &
   fi
   sleep 9
-  node tests/registration-pause.e2e.mjs "$cc" "$PORT" || failed=1
+  node tests/registration-open.e2e.mjs "$cc" "$PORT" || failed=1
 done
 pkill -f "vite --port $PORT" 2>/dev/null
 
 if [ "$failed" -eq 0 ]; then
-  echo "registration pause: all editions GREEN"
+  echo "registration open: all editions GREEN"
 else
-  echo "registration pause: FAILURES — see above" >&2
+  echo "registration open: FAILURES — see above" >&2
 fi
 exit "$failed"
