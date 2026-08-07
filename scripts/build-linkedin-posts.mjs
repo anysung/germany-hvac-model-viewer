@@ -131,7 +131,9 @@ for (const cc of codes) {
 
     writeFileSync(join(dir, 'post.txt'), buildPost(a, M) + '\n');
     writeFileSync(join(dir, 'comment.txt'),
-      `Full article: ${M.host}/news/${slug(a.id)}.html?ref=li\n`);
+      // No https:// on purpose: LinkedIn rewrites URLs longer than ~26 chars into
+      // anonymous lnkd.in links; the bare domain stays readable AND clickable.
+      `Full article: ${M.host.replace('https://', '')}/news/${slug(a.id)}.html?ref=li\n`);
 
     // LinkedIn does not accept WebP uploads — convert. sips ships with macOS;
     // a missing image is reported, never silently skipped (a post without one
