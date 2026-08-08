@@ -211,6 +211,7 @@ const HTML = `<!doctype html>
 <meta property="og:description" content="One database, five markets. Every listed heat pump — searchable, comparable, printable.">
 <meta property="og:url" content="https://www.heatpumpdb.eu/">
 <meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
@@ -482,6 +483,7 @@ const pageShell = (title, desc, canonicalPath, body, ld) => `<!doctype html>
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="https://www.heatpumpdb.eu${canonicalPath}">
+<link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
@@ -640,8 +642,11 @@ writeFileSync(join(OUT, 'index.html'), HTML);
    market's icons at public/icons/eu-<size>.png (owner convention call,
    2026-08-01); masters in brand-assets/ (…appicon-navy*). Composed from
    brandSvg arc geometry + BRAND_COLORS — never hand-drawn. */
+// favicon.ico is not decoration: Google's favicon fetcher checks the /favicon.ico
+// fallback, and the hub 404ing there is why the Search Console property kept
+// showing a stale icon (found 2026-08-08).
 for (const [src, dst] of [['eu-48.png', 'appicon-48.png'], ['eu-192.png', 'appicon-192.png'],
-  ['eu-180.png', 'appicon-180.png'], ['eu-512.png', 'appicon-512.png']]) {
+  ['eu-180.png', 'appicon-180.png'], ['eu-512.png', 'appicon-512.png'], ['eu.ico', 'favicon.ico']]) {
   copyFileSync(join(ROOT, 'public/icons', src), join(OUT, dst));
 }
 console.log(`hub-landing/ 생성 완료 — index ${(HTML.length / 1024).toFixed(0)}kB · 모델 페이지 ${models.length}개 (${[...new Set(models.map(m => m.mfr))].length}개 제조사, 스냅샷 ${snapshotDate})`);
