@@ -332,9 +332,17 @@ feed.sort((a, b) => String(b.date).localeCompare(String(a.date)));
 mkdirSync(join(OUT_DIR, 'market-trends', 'img'), { recursive: true });
 const { copyFileSync } = await import('node:fs');
 for (const c of feed) {
-  const src = join(ROOT, 'data_sources', 'market_trends', 'images', c.image);
-  if (existsSync(src)) copyFileSync(src, join(OUT_DIR, 'market-trends', 'img', c.image));
+  for (const f of [c.image, c.image.replace(/\.webp$/, '.jpg')]) {
+    const src = join(ROOT, 'data_sources', 'market_trends', 'images', f);
+    if (existsSync(src)) copyFileSync(src, join(OUT_DIR, 'market-trends', 'img', f));
+  }
 }
+/** og:image must be JPEG: LinkedIn's link scraper does not render WebP
+ *  previews, and the share preview is the whole point of these pages. */
+const ogImg = (c) => {
+  const jpg = c.image.replace(/\.webp$/, '.jpg');
+  return existsSync(join(ROOT, 'data_sources', 'market_trends', 'images', jpg)) ? jpg : c.image;
+};
 
 const FMT = new Intl.DateTimeFormat(HREFLANG[MARKET], { day: 'numeric', month: 'long', year: 'numeric' });
 const fmtDate = (d) => { try { return FMT.format(new Date(d + 'T00:00:00Z')); } catch { return d; } };
@@ -345,7 +353,7 @@ for (const c of feed) {
   const cardLd = {
     '@context': 'https://schema.org', '@type': 'Article',
     headline: c.title, datePublished: c.date, inLanguage: HREFLANG[MARKET],
-    image: `${host}/market-trends/img/${c.image}`,
+    image: `${host}/market-trends/img/${ogImg(c)}`,
     mainEntityOfPage: `${host}/market-trends/${c.slug}.html`,
     publisher: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
   };
@@ -358,7 +366,7 @@ for (const c of feed) {
 <link rel="canonical" href="${host}/market-trends/${c.slug}.html">
 <meta property="og:title" content="${esc(c.title)}">
 <meta property="og:description" content="${esc(c.excerpt ?? '')}">
-<meta property="og:image" content="${host}/market-trends/img/${c.image}">
+<meta property="og:image" content="${host}/market-trends/img/${ogImg(c)}">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/${MARKET === 'GB' ? 'uk' : MARKET.toLowerCase()}-32.png">
 <script type="application/ld+json">${JSON.stringify(cardLd)}</script>
