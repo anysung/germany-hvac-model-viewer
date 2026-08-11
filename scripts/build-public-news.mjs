@@ -296,7 +296,13 @@ const today = new Date().toISOString().slice(0, 10);
 const urls = [
   { loc: `${M.host}/`, freq: 'weekly' },
   { loc: `${M.host}/guide/`, freq: 'monthly' },
-  { loc: `${M.host}/market-trends/`, freq: 'monthly' },
+  { loc: `${M.host}/market-trends/`, freq: 'weekly' },
+  // Market & Trends card pages — the trends builder owns the pages; the
+  // sitemap lives here, so list them from the same committed store.
+  ...(existsSync(join(ROOT, 'data_sources', 'market_trends', `${MARKET}.json`))
+    ? JSON.parse(readFileSync(join(ROOT, 'data_sources', 'market_trends', `${MARKET}.json`), 'utf8'))
+        .map((c) => ({ loc: `${M.host}/market-trends/${c.slug}.html`, lastmod: c.date, freq: 'yearly' }))
+    : []),
   { loc: `${M.host}/news/`, freq: 'weekly' },
   ...items.map((a) => ({ loc: `${M.host}/news/${slug(a.id)}.html`, freq: 'yearly', lastmod: String(a.date).slice(0, 10) })),
   { loc: `${M.host}/pricing`, freq: 'monthly' },

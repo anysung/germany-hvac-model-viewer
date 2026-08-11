@@ -1,9 +1,14 @@
 #!/usr/bin/env node
 /**
- * build-market-trends.mjs — the public "Market & Trends" page, one per market
- * (owner spec, 2026-08-11): short menu name, search-friendly H1, uniform URL
- * /market-trends/ across all five sites, card-based body that accumulates
- * infographics over time.
+ * build-market-trends.mjs — the public "Market & Trends" FEED, one per market
+ * (owner spec, 2026-08-11): the owner ships 2-3 infographic cards per market
+ * per month; each card gets its own page (/market-trends/<slug>.html) with a
+ * market-language write-up, and the index lists them newest-first. Card pages
+ * carry og:image so a LinkedIn share shows the infographic itself — the pages
+ * ARE the social-marketing landing targets (?ref=li on shared links).
+ *
+ * Content store: data_sources/market_trends/<CC>.json + images/ (committed —
+ * the review point, same philosophy as the news snapshot).
  *
  * THE FIRST INFOGRAPHIC IS OURS TO PROVE. External sales statistics would need
  * sourcing we cannot verify page-by-page; the catalogue is our own data and
@@ -274,6 +279,14 @@ ${alternates}
   .crumb{font-size:13.5px;color:#0066cc;text-decoration:none}
   h1{font-size:31px;letter-spacing:-.6px;line-height:1.2;margin:14px 0 8px}
   .lede{color:#555;font-size:16.5px;margin:0 0 26px;max-width:700px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-bottom:8px}
+  .cardlink{border:1px solid #e0e0e0;border-radius:18px;overflow:hidden;text-decoration:none;color:inherit;background:#fff;display:flex;flex-direction:column;transition:box-shadow .15s}
+  .cardlink:hover{box-shadow:0 8px 28px rgba(0,0,0,.1)}
+  .cardlink img{width:100%;height:auto;display:block}
+  .ct{padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+  .cd{font-size:12px;color:#7a7a7a} .cn{font-size:15.5px;font-weight:600;line-height:1.3}
+  .ce{font-size:13px;color:#555}
+  .live{margin-top:34px} .liveh{font-size:19px;margin:0 0 12px}
   .roadmap{margin-top:34px;border:1px solid #e0e0e0;border-radius:18px;padding:22px 26px}
   .roadmap h2{font-size:17px;margin:0 0 10px}
   .roadmap li{margin:7px 0;color:#444;font-size:14.5px}
@@ -291,12 +304,9 @@ ${alternates}
   <h1>${esc(M.h1)}</h1>
   <p class="lede">${esc(M.sub)}</p>
 
-  ${svg}
+  __GRID__
 
-  <div class="roadmap">
-    <h2>${esc(M.coming)}</h2>
-    <ul>${M.roadmap.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
-  </div>
+  <div class="live"><h2 class="liveh">${esc(M.infographicTitle)}</h2>__LIVECARD__</div>
 
   <div class="cta">
     <h2>${esc(M.cta.h)}</h2>
@@ -314,6 +324,89 @@ ${alternates}
 </html>
 `;
 
+/* ── The card feed (owner-shipped infographics + market-language articles) ── */
+const feedFile = join(ROOT, 'data_sources', 'market_trends', `${MARKET}.json`);
+const feed = existsSync(feedFile) ? JSON.parse(readFileSync(feedFile, 'utf8')) : [];
+feed.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+
+mkdirSync(join(OUT_DIR, 'market-trends', 'img'), { recursive: true });
+const { copyFileSync } = await import('node:fs');
+for (const c of feed) {
+  const src = join(ROOT, 'data_sources', 'market_trends', 'images', c.image);
+  if (existsSync(src)) copyFileSync(src, join(OUT_DIR, 'market-trends', 'img', c.image));
+}
+
+const FMT = new Intl.DateTimeFormat(HREFLANG[MARKET], { day: 'numeric', month: 'long', year: 'numeric' });
+const fmtDate = (d) => { try { return FMT.format(new Date(d + 'T00:00:00Z')); } catch { return d; } };
+
+/* Card detail pages — the social landing targets. og:image is the card PNG
+   itself, absolute URL, so a LinkedIn share previews the infographic. */
+for (const c of feed) {
+  const cardLd = {
+    '@context': 'https://schema.org', '@type': 'Article',
+    headline: c.title, datePublished: c.date, inLanguage: HREFLANG[MARKET],
+    image: `${host}/market-trends/img/${c.image}`,
+    mainEntityOfPage: `${host}/market-trends/${c.slug}.html`,
+    publisher: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
+  };
+  const cardHtml = `<!doctype html>
+<html lang="${M.lang}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(c.title)} | HeatPump Database</title>
+<meta name="description" content="${esc(c.excerpt ?? c.title)}">
+<link rel="canonical" href="${host}/market-trends/${c.slug}.html">
+<meta property="og:title" content="${esc(c.title)}">
+<meta property="og:description" content="${esc(c.excerpt ?? '')}">
+<meta property="og:image" content="${host}/market-trends/img/${c.image}">
+<meta property="og:type" content="article">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/${MARKET === 'GB' ? 'uk' : MARKET.toLowerCase()}-32.png">
+<script type="application/ld+json">${JSON.stringify(cardLd)}</script>
+<style>
+  *{box-sizing:border-box} body{margin:0;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;color:#1d1d1f;background:#fff}
+  .wrap{max-width:820px;margin:0 auto;padding:34px 20px 60px}
+  .crumb{font-size:13.5px;color:#0066cc;text-decoration:none}
+  h1{font-size:28px;letter-spacing:-.5px;line-height:1.25;margin:14px 0 6px}
+  .meta{color:#7a7a7a;font-size:13.5px;margin:0 0 20px}
+  .card-img{width:100%;height:auto;border-radius:18px;display:block;margin-bottom:26px}
+  .body p{margin:0 0 15px;font-size:16px;color:#2a2a2c}
+  .src{margin-top:18px;font-size:12.5px;color:#7a7a7a;border-top:1px solid #f0f0f0;padding-top:12px}
+  .cta{margin-top:30px;background:#f5f5f7;border-radius:18px;padding:24px 28px}
+  .cta h2{margin:0 0 6px;font-size:18px} .cta p{margin:0 0 13px;color:#555;font-size:14px}
+  .btn{display:inline-block;background:#0066cc;color:#fff;border-radius:999px;padding:10px 24px;font-size:14px;text-decoration:none;font-weight:600}
+</style>
+</head>
+<body><div class="wrap">
+  <a class="crumb" href="/market-trends/">← ${esc(M.h1)}</a>
+  <h1>${esc(c.title)}</h1>
+  <p class="meta">${esc(fmtDate(c.date))} · HeatPump DB</p>
+  <img class="card-img" src="/market-trends/img/${c.image}" alt="${esc(c.title)}">
+  <div class="body">${(c.body ?? []).map((p) => `<p>${esc(p)}</p>`).join('')}</div>
+  ${c.sourceNote ? `<p class="src">${esc(c.sourceNote)}</p>` : ''}
+  <div class="cta"><h2>${esc(M.cta.h)}</h2><p>${esc(M.cta.p)}</p>
+    <a class="btn" href="/?ref=trends">${esc(M.cta.b)} ›</a></div>
+</div></body></html>
+`;
+  writeFileSync(join(OUT_DIR, 'market-trends', `${c.slug}.html`), cardHtml);
+}
+
+/* Index: the card grid (newest first), then the standing live-data infographic. */
+const grid = feed.length ? `
+  <div class="grid">
+    ${feed.map((c) => `
+    <a class="cardlink" href="/market-trends/${c.slug}.html">
+      <img src="/market-trends/img/${c.image}" alt="${esc(c.title)}" loading="lazy">
+      <div class="ct"><span class="cd">${esc(fmtDate(c.date))}</span>
+        <span class="cn">${esc(c.title)}</span>
+        ${c.excerpt ? `<span class="ce">${esc(c.excerpt)}</span>` : ''}</div>
+    </a>`).join('')}
+  </div>` : `
+  <div class="roadmap"><h2>${esc(M.coming)}</h2>
+    <ul>${M.roadmap.map((r) => `<li>${esc(r)}</li>`).join('')}</ul></div>`;
+
+const indexHtml = html
+  .replace('__GRID__', grid)
+  .replace('__LIVECARD__', svg);
 mkdirSync(join(OUT_DIR, 'market-trends'), { recursive: true });
-writeFileSync(join(OUT_DIR, 'market-trends', 'index.html'), html);
+writeFileSync(join(OUT_DIR, 'market-trends', 'index.html'), indexHtml);
 console.log(`market-trends (${MARKET}): ${nf(all.length)} models · R290 ${pct(nR290)}% · SCOP med ${scopMed.toFixed(2)} · quiet ${Math.round((quiet / noises.length) * 100)}%`);
