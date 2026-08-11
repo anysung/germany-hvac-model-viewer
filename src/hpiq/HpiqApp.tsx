@@ -2,7 +2,7 @@
  * HeatPump DB — app shell (global nav, page routing, footer).
  * Implements the approved design in design_handoff_heatpumpiq/ pixel-faithfully.
  */
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import './hpiq.css';
 import { HeatPumpDatabase, Language, User } from '../types';
@@ -92,6 +92,77 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   const [faqOpen, setFaqOpen] = useState(0);
   const [notice, setNotice] = useState<string | null>(null);
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  /* ── Global nav fit ──────────────────────────────────────────────────────
+     How many destinations actually fit this window, in this language. The row
+     itself is flex:1 with a fixed share of the bar, so hiding items never
+     changes the space available — the measurement cannot oscillate. */
+  const navRowRef = useRef<HTMLDivElement>(null);
+  const navSizerRef = useRef<HTMLDivElement>(null);
+  const navMoreRef = useRef<HTMLSpanElement>(null);
+  const [navVisible, setNavVisible] = useState(NAV_IDS.length);
+  const [navMenu, setNavMenu] = useState(false);
+  const [navMenuLeft, setNavMenuLeft] = useState(0);
+
+  /** Width the collapsed button actually occupies. It is measured, not assumed:
+   *  it renders as "•••" most of the time but wears the active page's NAME when
+   *  the current page is one of the collapsed ones, and a guessed constant
+   *  under-reserved by a few pixels — enough to clip the last item. */
+  const navMoreW = useRef(72);
+
+  const computeNavFit = React.useCallback(() => {
+    const GAP = 5;
+    const row = navRowRef.current, sizer = navSizerRef.current;
+    if (!row || !sizer) return;
+    const widths = Array.from(sizer.children).map(el => el.getBoundingClientRect().width);
+    const avail = row.clientWidth;
+    let used = 0, n = 0;
+    for (const w of widths) {
+      const next = used + (n ? GAP : 0) + w;
+      if (next > avail) break;
+      used = next; n++;
+    }
+    // Everything fits: no button needed. Otherwise make room for it.
+    if (n < widths.length) {
+      while (n > 0 && used + GAP + navMoreW.current > avail) { used -= widths[n - 1] + GAP; n--; }
+    }
+    setNavVisible(n);
+  }, []);
+
+  useLayoutEffect(() => {
+    computeNavFit();
+    const ro = new ResizeObserver(computeNavFit);
+    if (navRowRef.current) ro.observe(navRowRef.current);
+    if (navSizerRef.current) ro.observe(navSizerRef.current);
+    return () => ro.disconnect();
+  }, [language, computeNavFit]);
+
+  // Feed the button's real width back into the fit, once per change in it.
+  useLayoutEffect(() => {
+    const w = navMoreRef.current?.getBoundingClientRect().width;
+    if (w && Math.abs(w - navMoreW.current) > 2) { navMoreW.current = w; computeNavFit(); }
+  });
+
+  // Close the overflow menu on any outside click (never on the button itself,
+  // which toggles) and whenever the page changes.
+  useEffect(() => {
+    if (!navMenu) return;
+    setNavMenuLeft(navMoreRef.current?.getBoundingClientRect().left ?? 0);
+    const close = (e: MouseEvent) => {
+      if (!navRowRef.current?.contains(e.target as Node)) setNavMenu(false);
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, [navMenu]);
+  useEffect(() => { setNavMenu(false); }, [page]);
+
+  const navOverflowActive = NAV_IDS.slice(navVisible).includes(page as Exclude<HpPage, 'account'>);
+  const navLinkStyle = (active: boolean): React.CSSProperties => ({
+    padding: '8px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
+    ...(active
+      ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' }
+      : { color: 'rgba(255,255,255,.65)' }),
+  });
 
   const notify = (msg: string) => {
     setNotice(msg);
@@ -390,26 +461,83 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
           <BrandLogo height={30} theme="dark" />
           <WavingFlag height={26} className="waving-flag" />
         </span>
-        <div className="hp-gnav-links" style={{ display: 'flex', gap: 5, fontSize: 14 }}>
-          {NAV_IDS.map(id => {
-            const active = page === id;
-            return (
-              <span
+        <div ref={navRowRef} className="hp-gnav-links" style={{ display: 'flex', gap: 5, fontSize: 14, position: 'relative' }}>
+          {NAV_IDS.slice(0, navVisible).map(id => (
+            <span
+              key={id}
+              className={page === id ? undefined : 'hp-navlink'}
+              onClick={() => setPage(id)}
+              style={navLinkStyle(page === id)}
+            >
+              {t.nav[id]}
+            </span>
+          ))}
+
+          {/* Overflow menu — the eight destinations do not fit every window in
+              every language (Polish and French labels are the longest), and a
+              row that merely scrolls hides whichever page happens to be last.
+              What does not fit collapses into this menu instead, and when the
+              CURRENT page is one of them the button wears its name so the user
+              still sees where they are. */}
+          {navVisible < NAV_IDS.length && (
+            <span
+              ref={navMoreRef}
+              className={navOverflowActive ? undefined : 'hp-navlink'}
+              onClick={() => setNavMenu(v => !v)}
+              data-testid="nav-more"
+              style={{ ...navLinkStyle(navOverflowActive), display: 'inline-flex', alignItems: 'center', gap: 6 }}
+            >
+              {navOverflowActive ? t.nav[page as Exclude<HpPage, 'account'>] : '•••'}
+              <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            </span>
+          )}
+
+          {/* Off-screen twin of the full row: it inherits the same CSS (so its
+              widths follow the responsive padding/font steps) and is what the
+              fit calculation measures. Measuring the REAL row instead would
+              mean hiding items to learn whether they fit — which changes the
+              answer while asking the question. */}
+          <div
+            ref={navSizerRef}
+            aria-hidden
+            className="hp-gnav-links"
+            style={{ position: 'absolute', left: 0, top: 0, display: 'flex', gap: 5, fontSize: 14, visibility: 'hidden', pointerEvents: 'none', overflow: 'visible' }}
+          >
+            {/* Measured in the ACTIVE weight (600) on purpose: the selected item
+                renders bold, so measuring the lighter weight under-reserves by a
+                few pixels and clips the last item. Over-reserving is harmless. */}
+            {NAV_IDS.map(id => <span key={id} style={navLinkStyle(true)}>{t.nav[id]}</span>)}
+          </div>
+        </div>
+
+        {/* The overflow panel is `fixed`, not absolute inside the row: the row
+            clips its own overflow (so the full set never flashes wider than the
+            bar on first paint), and a clipped dropdown would be unusable. */}
+        {navMenu && navVisible < NAV_IDS.length && (
+          <div
+            style={{
+              position: 'fixed', top: 60, left: navMenuLeft, minWidth: 200,
+              background: '#1d1d1f', border: '1px solid rgba(255,255,255,.16)', borderRadius: 14,
+              padding: 6, boxShadow: '0 12px 32px rgba(0,0,0,.45)', zIndex: 60,
+            }}
+          >
+            {NAV_IDS.slice(navVisible).map(id => (
+              <div
                 key={id}
-                className={active ? undefined : 'hp-navlink'}
-                onClick={() => setPage(id)}
+                className="hp-navlink"
+                onClick={() => { setPage(id); setNavMenu(false); }}
                 style={{
-                  padding: '8px 14px', borderRadius: 999, cursor: 'pointer',
-                  ...(active
+                  padding: '9px 13px', borderRadius: 9, cursor: 'pointer', fontSize: 13.5, whiteSpace: 'nowrap',
+                  ...(page === id
                     ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' }
-                    : { color: 'rgba(255,255,255,.65)' }),
+                    : { color: 'rgba(255,255,255,.72)' }),
                 }}
               >
                 {t.nav[id]}
-              </span>
-            );
-          })}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 14, fontSize: 13, color: 'rgba(255,255,255,.75)', flex: 'none' }}>
           {UI_LANGUAGES.length > 1 && (
             <div style={{ display: 'flex', border: '1px solid rgba(255,255,255,.3)', borderRadius: 999, overflow: 'hidden', fontSize: 12.5 }}>
@@ -451,7 +579,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
             data-testid="nav-account"
           >
             <AccountIcon />
-            {t.nav.account}
+            <span className="hp-btn-label">{t.nav.account}</span>
           </span>
           <span
             className="hp-press"
@@ -460,7 +588,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
             style={{ display: 'inline-flex', alignItems: 'center', gap: 6, border: '1px solid rgba(255,255,255,.3)', borderRadius: 999, padding: '6px 14px', fontSize: 12.5, color: 'rgba(255,255,255,.85)', cursor: 'pointer', whiteSpace: 'nowrap', flex: 'none' }}
           >
             <SignOutIcon />
-            {t.nav.signOut}
+            <span className="hp-btn-label">{t.nav.signOut}</span>
           </span>
         </div>
       </div>

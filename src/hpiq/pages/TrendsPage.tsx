@@ -15,6 +15,8 @@
  */
 import React, { useEffect, useState } from 'react';
 import { HpApp } from '../appState';
+import { tr } from '../i18n';
+import { FD } from '../ui';
 
 /** The article text in one language. The infographic is NOT part of this:
  *  the card image ships in the market language and is never translated
@@ -38,6 +40,8 @@ interface TrendsFeed {
   sub: string;
   h1En: string;
   subEn: string;
+  pill: string;
+  pillEn: string;
   coming: string;
   roadmap: string[];
   items: TrendsCard[];
@@ -45,6 +49,20 @@ interface TrendsFeed {
 
 const PAGE: React.CSSProperties = {
   height: 'calc(100vh - 60px)', overflowY: 'auto', background: '#fff',
+};
+
+/** Page title, typed exactly as the News page types "Market intelligence." —
+ *  same family, size and weight, so a page name reads as a page name and not
+ *  as the first line of the article. (Do not fold these into the `font`
+ *  shorthand: `font: 700 34px/1.15 inherit` is invalid CSS and the browser
+ *  drops the whole declaration, which is how this page shipped looking like
+ *  body text.) */
+const PAGE_TITLE: React.CSSProperties = {
+  fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px', color: '#1d1d1f',
+};
+const PILL: React.CSSProperties = {
+  fontSize: 12.5, color: '#7a7a7a', border: '1px solid #e0e0e0', borderRadius: 999,
+  padding: '4px 13px', whiteSpace: 'nowrap',
 };
 
 export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
@@ -56,8 +74,16 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
    *  same card in the other language instead of freezing the first one. */
   const en = app.lang === 'en';
   const textOf = (c: TrendsCard): TrendsText => (en && c.en ? c.en : c);
-  const heading = feed ? (en ? feed.h1En || feed.h1 : feed.h1) : 'Market & Trends';
+  /**
+   * In the app the title is the PAGE NAME — the same words as the nav item —
+   * so it reads as a destination, exactly like News. The long market headline
+   * ("Wärmepumpen-Markt Deutschland: Zahlen & Trends") belongs to the public
+   * page, where it is the SEO H1; repeating it here only buried the page name
+   * in a two-line sentence.
+   */
+  const pageName = tr(app.lang).nav.trends;
   const subhead = feed ? (en ? feed.subEn || feed.sub : feed.sub) : '';
+  const pill = feed ? (en ? feed.pillEn || feed.pill : feed.pill) : '';
 
   useEffect(() => {
     let alive = true;
@@ -79,33 +105,39 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
     const v = textOf(open);
     return (
       <div style={PAGE}>
-        <div style={{ maxWidth: 760, margin: '0 auto', padding: '34px 22px 80px' }}>
-          <span
-            className="hp-press"
-            onClick={() => setOpenSlug(null)}
-            style={{ color: '#0066cc', fontSize: 14, cursor: 'pointer', fontWeight: 500 }}
-          >
-            ← {heading}
-          </span>
-          <h1 style={{ font: '700 32px/1.2 inherit', letterSpacing: '-.5px', margin: '18px 0 8px', color: '#1d1d1f' }}>
-            {v.title}
-          </h1>
-          <div style={{ color: '#6e6e73', fontSize: 14, marginBottom: 22 }}>
-            {fmtDate(open.date)} · HeatPump DB
+        <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '40px 48px 56px', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginBottom: 22 }}>
+            <span style={PAGE_TITLE}>{pageName}</span>
+            {pill && <span style={PILL}>{pill}</span>}
           </div>
-          <img
-            src={open.image}
-            alt={v.title}
-            style={{ width: '100%', borderRadius: 18, display: 'block', marginBottom: 26 }}
-          />
-          {v.body.map((p, i) => (
-            <p key={i} style={{ fontSize: 16.5, lineHeight: 1.7, color: '#2a2a2c', margin: '0 0 15px' }}>{p}</p>
-          ))}
-          {v.sourceNote && (
-            <p style={{ fontSize: 13, color: '#86868b', borderTop: '1px solid #e8e8ed', paddingTop: 14, marginTop: 24 }}>
-              {v.sourceNote}
-            </p>
-          )}
+          <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 18, padding: '30px 40px 38px', maxWidth: 820 }}>
+            <span
+              className="hp-press"
+              onClick={() => setOpenSlug(null)}
+              style={{ color: '#0066cc', fontSize: 13.5, cursor: 'pointer', fontWeight: 500 }}
+            >
+              ← {pageName}
+            </span>
+            <h1 style={{ fontFamily: FD, fontSize: 28, fontWeight: 600, lineHeight: 1.25, letterSpacing: '-0.3px', margin: '14px 0 6px', color: '#1d1d1f' }}>
+              {v.title}
+            </h1>
+            <div style={{ color: '#7a7a7a', fontSize: 13.5, marginBottom: 22 }}>
+              {fmtDate(open.date)} · HeatPump DB
+            </div>
+            <img
+              src={open.image}
+              alt={v.title}
+              style={{ width: '100%', borderRadius: 18, display: 'block', marginBottom: 26 }}
+            />
+            {v.body.map((p, i) => (
+              <p key={i} style={{ fontSize: 16, lineHeight: 1.7, color: '#2a2a2c', margin: '0 0 15px' }}>{p}</p>
+            ))}
+            {v.sourceNote && (
+              <p style={{ fontSize: 12.5, color: '#7a7a7a', borderTop: '1px solid #f0f0f0', paddingTop: 14, marginTop: 22 }}>
+                {v.sourceNote}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -114,11 +146,12 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   /* ── Feed grid ── */
   return (
     <div style={PAGE}>
-      <div style={{ maxWidth: 1060, margin: '0 auto', padding: '40px 22px 80px' }}>
-        <h1 style={{ font: '700 34px/1.15 inherit', letterSpacing: '-.5px', margin: '0 0 8px', color: '#1d1d1f' }}>
-          {heading}
-        </h1>
-        {subhead && <p style={{ color: '#6e6e73', fontSize: 16, margin: '0 0 34px', maxWidth: 680 }}>{subhead}</p>}
+      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '40px 48px 56px', boxSizing: 'border-box' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+          <span style={PAGE_TITLE}>{pageName}</span>
+          {pill && <span style={PILL}>{pill}</span>}
+        </div>
+        {subhead && <p style={{ color: '#6e6e73', fontSize: 15.5, margin: '10px 0 30px', maxWidth: 720 }}>{subhead}</p>}
 
         {feed && feed.items.length > 0 ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>

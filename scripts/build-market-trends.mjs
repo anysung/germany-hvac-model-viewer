@@ -380,6 +380,15 @@ const EN_HEAD = {
   IT: { h1: 'Italian Heat Pump Market: Data & Trends',
         sub: "Key market data, policy developments and visual insights on Italy's heat pump transition." },
 }[MARKET];
+
+/* Page pill beside the in-app title — the News page sets this pattern. */
+const PILL = {
+  DE: { local: 'Infografik-Karten · monatlich aktualisiert', en: 'Infographic cards · updated monthly' },
+  GB: { local: 'Infographic cards · updated monthly', en: 'Infographic cards · updated monthly' },
+  FR: { local: 'Cartes infographiques · mise à jour mensuelle', en: 'Infographic cards · updated monthly' },
+  PL: { local: 'Karty infograficzne · aktualizacja miesięczna', en: 'Infographic cards · updated monthly' },
+  IT: { local: 'Schede infografiche · aggiornamento mensile', en: 'Infographic cards · updated monthly' },
+}[MARKET];
 const EN_FMT = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 const fmtDateEn = (d) => { try { return EN_FMT.format(new Date(d + 'T00:00:00Z')); } catch { return d; } };
 
@@ -496,6 +505,7 @@ writeFileSync(join(OUT_DIR, 'market-trends', 'index.html'), indexHtml);
 writeFileSync(join(OUT_DIR, 'market-trends', 'feed.json'), JSON.stringify({
   h1: M.h1, sub: M.sub, coming: M.coming, roadmap: M.roadmap,
   h1En: EN_HEAD.h1, subEn: EN_HEAD.sub,
+  pill: PILL.local, pillEn: PILL.en,
   items: feed.map((c) => ({
     slug: c.slug, date: c.date, title: c.title, excerpt: c.excerpt ?? '',
     image: `/market-trends/img/${c.image}`, body: c.body ?? [],

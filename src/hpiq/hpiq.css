@@ -139,6 +139,30 @@
 }
 
 
+/* ── Global nav: labels never wrap ───────────────────────────────────────
+   With eight destinations, a 1400px laptop broke "Produkt finden" onto two
+   lines inside a 60px bar. Labels stay on one line at every width and the row
+   scrolls if it genuinely runs out of room — the same rule the tablet block
+   below applies, just no longer conditional on being narrow. */
+.hp-gnav-links { flex: 1 1 auto; min-width: 0; overflow-x: clip; scrollbar-width: none; }
+.hp-gnav-links::-webkit-scrollbar { display: none; }
+.hp-gnav-links > span { white-space: nowrap; }
+
+/* Laptops: the eight destinations need ~900px, which only a ≥1600px window
+   grants outright. Rather than let the row scroll (a clipped first label reads
+   as breakage), give the width back in the order it costs least: first the
+   nav's own padding, then the two right-hand button LABELS — their icons stay,
+   so nothing becomes unreachable. Below 1100px the tablet block takes over and
+   the row scrolls, which is the honest fallback at that size. */
+@media screen and (max-width: 1600px) {
+  .hp-gnav { gap: 16px !important; padding: 0 18px !important; }
+  .hp-gnav-links > span { padding: 8px 8px !important; font-size: 13.5px; }
+}
+@media screen and (max-width: 1440px) {
+  .hp-gnav-links > span { padding: 8px 7px !important; font-size: 13px; }
+  .hp-gnav .hp-btn-label { display: none; }
+}
+
 /* ── Tablet tolerance (700–1099px, SCREEN ONLY): the FULL desktop UI runs
    here — compress the global nav and let wide content pan instead of
    clipping. `screen` is load-bearing: print pages are ~794px wide (A4), so an
