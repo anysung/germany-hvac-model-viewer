@@ -417,4 +417,15 @@ const indexHtml = html
   .replace('__LIVECARD__', svg);
 mkdirSync(join(OUT_DIR, 'market-trends'), { recursive: true });
 writeFileSync(join(OUT_DIR, 'market-trends', 'index.html'), indexHtml);
+
+/* feed.json — the in-app Trends page (global nav, next to News) renders the
+   same feed natively, so members read cards without leaving the app. */
+writeFileSync(join(OUT_DIR, 'market-trends', 'feed.json'), JSON.stringify({
+  h1: M.h1, sub: M.sub, coming: M.coming, roadmap: M.roadmap,
+  items: feed.map((c) => ({
+    slug: c.slug, date: c.date, title: c.title, excerpt: c.excerpt ?? '',
+    image: `/market-trends/img/${c.image}`, body: c.body ?? [],
+    sourceNote: c.sourceNote ?? '',
+  })),
+}) + '\n');
 console.log(`market-trends (${MARKET}): ${nf(all.length)} models · R290 ${pct(nR290)}% · SCOP med ${scopMed.toFixed(2)} · quiet ${Math.round((quiet / noises.length) * 100)}%`);

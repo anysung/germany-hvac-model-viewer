@@ -33,6 +33,7 @@ import { DataSheetPage, DataSheetDoc } from './pages/DataSheetPage';
 import { BafaPage } from './pages/BafaPage';
 import { GuidePage } from './pages/GuidePage';
 import { NewsPage } from './pages/NewsPage';
+import { TrendsPage } from './pages/TrendsPage';
 import { AccountPage } from './pages/AccountPage';
 
 interface Props {
@@ -50,7 +51,7 @@ interface Props {
   sessionGraceUntil?: number | null;
 }
 
-const NAV_IDS: Exclude<HpPage, 'account'>[] = ['find', 'products', 'label', 'datasheet', 'bafa', 'guide', 'news'];
+const NAV_IDS: Exclude<HpPage, 'account'>[] = ['find', 'products', 'label', 'datasheet', 'bafa', 'guide', 'news', 'trends'];
 
 
 export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage, sessionGraceUntil }) => {
@@ -475,6 +476,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
       {page === 'bafa' && <BafaPage app={app} />}
       {page === 'guide' && <GuidePage app={app} />}
       {page === 'news' && <NewsPage app={app} />}
+      {page === 'trends' && <TrendsPage app={app} />}
       {page === 'account' && <AccountPage app={app} />}
 
       {/* ============ Toast ============ */}
