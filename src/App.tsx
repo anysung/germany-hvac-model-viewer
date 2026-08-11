@@ -72,6 +72,11 @@ const PUBLIC_NEWS: Record<Language, string> = {
   en: 'Market News', de: 'Marktnachrichten', fr: 'Actualités marché',
   pl: 'Aktualności rynku', it: 'Notizie di mercato',
 };
+/** Menu names exactly as the owner specified (2026-08-11). */
+const PUBLIC_TRENDS: Record<Language, string> = {
+  en: 'Market & Trends', de: 'Markt & Trends', fr: 'Marché & Tendances',
+  pl: 'Rynek i Trendy', it: 'Mercato & Trend',
+};
 const publicPill =
   'px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] text-white/50 '
   + 'text-[13px] hover:text-white/80 hover:border-white/20 transition-colors whitespace-nowrap';
@@ -758,6 +763,7 @@ const App: React.FC = () => {
           <div className="mt-4 flex flex-wrap justify-center gap-2.5" data-testid="public-pages">
             <a href="/guide/" className={publicPill}>{PUBLIC_GUIDE[language]}</a>
             <a href="/news/" className={publicPill}>{PUBLIC_NEWS[language]}</a>
+            <a href="/market-trends/" className={publicPill}>{PUBLIC_TRENDS[language]}</a>
           </div>
           </div>
         </div>

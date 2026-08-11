@@ -18,7 +18,7 @@ const KEY = 'hp_signup_ref';
 
 /** The channels we actually use. An open vocabulary invites typos that split
  *  one channel into five rows ("li", "LI", "linkedIn"…). */
-const KNOWN = new Set(['li', 'yt', 'news', 'guide', 'seo', 'other']);
+const KNOWN = new Set(['li', 'yt', 'news', 'guide', 'trends', 'seo', 'other']);
 
 /** Call once on boot, before any routing. Idempotent; never throws. */
 export function captureSignupRef(): void {

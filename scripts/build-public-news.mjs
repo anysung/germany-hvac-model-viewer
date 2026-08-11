@@ -296,6 +296,7 @@ const today = new Date().toISOString().slice(0, 10);
 const urls = [
   { loc: `${M.host}/`, freq: 'weekly' },
   { loc: `${M.host}/guide/`, freq: 'monthly' },
+  { loc: `${M.host}/market-trends/`, freq: 'monthly' },
   { loc: `${M.host}/news/`, freq: 'weekly' },
   ...items.map((a) => ({ loc: `${M.host}/news/${slug(a.id)}.html`, freq: 'yearly', lastmod: String(a.date).slice(0, 10) })),
   { loc: `${M.host}/pricing`, freq: 'monthly' },
