@@ -1,0 +1,56 @@
+{
+  "country": "IT",
+  "countryLabel": "Italia",
+  "month": "AGOSTO 2026",
+  "motif": "clock",
+  "titleSize": 44,
+  "title": ["Il 2026 è l'ultimo anno", "delle aliquote piene"],
+  "sub": "Dal 2027 le detrazioni scendono. Conto Termico 3.0 ed Ecobonus restano ai livelli attuali solo fino al 31 dicembre 2026.",
+  "sections": [
+    {
+      "type": "hero",
+      "icon": "clock",
+      "pre": "entro il",
+      "big": "31.12.2026",
+      "post": "",
+      "caption": ["lavori conclusi e documentazione presentata", "per assicurarsi le aliquote attuali"],
+      "side": { "value": "fino al 65 %", "label": "Conto Termico 3.0" }
+    },
+    [
+      {
+        "type": "compare",
+        "flex": 1.05,
+        "icon": "percent",
+        "title": "Ecobonus: 2026 e dal 2027",
+        "columns": [
+          { "head": "2026", "rows": [ { "label": "Prima casa", "value": "50 %" }, { "label": "Altri immobili", "value": "36 %" } ] },
+          { "head": "DAL 2027", "rows": [ { "label": "Prima casa", "value": "36 %" }, { "label": "Altri immobili", "value": "30 %" } ] }
+        ],
+        "foot": "Spesa massima 30.000 € per pompa di calore, recupero in dieci quote annuali."
+      },
+      {
+        "type": "list",
+        "flex": 1,
+        "icon": "coins",
+        "title": "Conto Termico 3.0",
+        "rows": [
+          { "icon": "check", "label": "Contributo erogato dal GSE", "value": "65 %" },
+          { "icon": "factory", "label": "PA: scuole e ospedali, comuni < 15.000 ab.", "value": "100 %" },
+          { "icon": "clock", "label": "Pagamento in un'unica soluzione", "value": "≤ 15.000 €" }
+        ],
+        "note": { "icon": "doc", "title": "Catalogo apparecchi pre-qualificati", "text": "dal 15 aprile 2026", "suffix": "— conformità tecnica validata in anticipo" }
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "In sintesi",
+      "icon": "hp-unit",
+      "lines": [
+        "Chi decide nel 2026 lavora con le aliquote più alte previste dal quadro attuale.",
+        "Il contributo diretto del GSE resta più rapido della detrazione decennale:",
+        "conta quanto riconosce il Conto Termico, non solo il prezzo dell'apparecchio."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Italy Editorial Team"
+}

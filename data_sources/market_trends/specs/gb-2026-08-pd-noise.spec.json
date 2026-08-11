@@ -1,0 +1,59 @@
+{
+  "country": "GB",
+  "countryLabel": "United Kingdom",
+  "month": "AUGUST 2026",
+  "motif": "sound",
+  "titleSize": 44,
+  "title": ["Siting rules relaxed —", "the noise limit decides the job"],
+  "sub": "Permitted development finally allows the unit where it belongs. From 28 May 2026 the calculation that gets it approved is MCS 020(a).",
+  "sections": [
+    {
+      "type": "hero",
+      "icon": "sound",
+      "pre": "",
+      "big": "37 dB(A)",
+      "post": "",
+      "caption": ["at 1 m from the neighbour's nearest", "habitable-room window — tightened from 42 dB(A)"],
+      "side": { "value": "MCS 020(a)", "label": "the only accepted method" }
+    },
+    [
+      {
+        "type": "table",
+        "flex": 1.2,
+        "icon": "ruler",
+        "title": "What was relaxed on site",
+        "colFrom": "BEFORE",
+        "colTo": "PERMITTED DEVELOPMENT NOW",
+        "rows": [
+          { "label": "Distance to the boundary", "from": "min. 1 m", "to": "no limit" },
+          { "label": "Outdoor unit size (houses)", "from": "0.6 m³", "to": "1.5 m³" },
+          { "label": "Units on a detached house", "from": "1", "to": "up to 2" },
+          { "label": "Air-to-air heat pumps", "from": "excluded", "to": "covered" }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "What the assessment requires",
+        "rows": [
+          { "label": "Sound POWER level of the unit — not sound pressure" },
+          { "label": "Reflective surfaces and siting are accounted for" },
+          { "label": "Six-year workmanship warranty under the new MCS scheme" },
+          { "label": "Above 37 dB(A): a full planning application is needed", "no": true }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "In short",
+      "icon": "hp-unit",
+      "lines": [
+        "Where the unit may go is now a question of acoustics, not tape measures.",
+        "Sound power on the data sheet decides whether a job stays permitted",
+        "development — which makes it a specification decision, not a site one."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB UK Editorial Team"
+}

@@ -1,0 +1,54 @@
+{
+  "country": "FR",
+  "countryLabel": "France",
+  "month": "AOÛT 2026",
+  "motif": "stamp",
+  "titleSize": 43,
+  "title": ["Réforme RGE :", "contrôles renforcés, sanctions graduées"],
+  "sub": "Le label qui conditionne MaPrimeRénov' et les CEE devient plus difficile à obtenir — et plus facile à perdre.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        { "value": "26 juillet 2026", "label": "Entrée en vigueur de la 1re phase", "note": "arrêté publié le 26 juin 2026" },
+        { "value": "4 ans", "label": "Historique des sinistres analysé", "note": "systématiquement, à chaque audit" },
+        { "value": "24 mois", "label": "Suspension possible du label", "accent": 2, "note": "retrait en cas de manquements répétés" }
+      ]
+    },
+    [
+      {
+        "type": "timeline",
+        "flex": 1.3,
+        "icon": "calendar",
+        "title": "Les deux étapes de la réforme",
+        "steps": [
+          { "date": "26 JUIN 2026", "text": "Publication de l'arrêté fixant le nouveau cadre de qualification." },
+          { "date": "26 JUILLET 2026", "text": "Examen renforcé : assurances, références de chantiers, contrôles d'exécution et cohérence devis / factures / travaux réalisés." },
+          { "date": "1er MARS 2027", "text": "L'expérience est reconnue par une « attestation chantier » — mais une preuve technique reste exigible pour les PAC.", "future": true }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "shield",
+        "title": "Ce que vérifient les audits",
+        "rows": [
+          { "label": "Examen documentaire pour toutes les entreprises" },
+          { "label": "Visite sur site au-delà de", "value": "10 chantiers / an" },
+          { "label": "Retrait automatique après deux rapports de contrôle défavorables", "no": true }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "À retenir",
+      "icon": "hp-unit",
+      "lines": [
+        "La réforme ne change pas le montant des aides : elle change qui peut les faire obtenir.",
+        "Pour le client final, vérifier la qualification RGE en cours de validité devient",
+        "le premier geste du projet — avant même le choix de l'équipement."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB France Editorial Team"
+}

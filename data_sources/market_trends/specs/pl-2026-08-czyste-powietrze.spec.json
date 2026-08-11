@@ -1,0 +1,78 @@
+{
+  "country": "PL",
+  "countryLabel": "Polska",
+  "month": "SIERPIEŃ 2026",
+  "motif": "house",
+  "titleSize": 43,
+  "title": [
+    "Czyste Powietrze po zmianach:",
+    "łatwiej o dotację od 20 lipca 2026"
+  ],
+  "sub": "Krótszy wymagany okres własności, wyższe stawki na termomodernizację i więcej czasu na realizację inwestycji.",
+  "sections": [
+    {
+      "type": "hero",
+      "icon": "coins",
+      "pre": "do",
+      "big": "83 000 zł",
+      "post": "dotacji",
+      "caption": [
+        "maksymalna kwota na termomodernizację",
+        "w najwyższym poziomie wsparcia — bez zmian"
+      ],
+      "side": {
+        "value": "+10 %",
+        "label": "na ocieplenie i stolarkę"
+      }
+    },
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "3 lata → 1 rok",
+          "label": "Wymagany okres własności",
+          "note": "w wybranych przypadkach"
+        },
+        {
+          "value": "120 → 180 dni",
+          "label": "Czas na zakończenie inwestycji",
+          "note": "przy prefinansowaniu"
+        },
+        {
+          "value": "+1 200 zł",
+          "label": "Bonus za audyt energetyczny",
+          "accent": 2,
+          "note": "audyt obowiązkowy od 31.03.2026"
+        }
+      ]
+    },
+    {
+      "type": "checks",
+      "icon": "plug",
+      "title": "Co jeszcze warto wiedzieć",
+      "rows": [
+        {
+          "label": "Wyższe o 10% dotacje na ocieplenie ścian, wymianę okien, drzwi i bram garażowych"
+        },
+        {
+          "label": "Dłuższy termin obejmuje też umowy podpisane po 31 marca 2025 r. — po aneksowaniu"
+        },
+        {
+          "label": "Po 2026 roku program nie wesprze ogrzewania elektrycznego innego niż pompa ciepła",
+          "no": true
+        }
+      ]
+    },
+    {
+      "type": "fazit",
+      "title": "Wniosek",
+      "icon": "hp-unit",
+      "lines": [
+        "Zmiany nie podnoszą maksymalnej dotacji — obniżają próg wejścia do programu.",
+        "Kierunek pozostaje ten sam: w ogrzewaniu elektrycznym program",
+        "będzie wspierał wyłącznie pompy ciepła."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Poland Editorial Team"
+}

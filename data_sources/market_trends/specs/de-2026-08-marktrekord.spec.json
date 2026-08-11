@@ -1,0 +1,58 @@
+{
+  "country": "DE",
+  "countryLabel": "Deutschland",
+  "month": "AUGUST 2026",
+  "motif": "chart",
+  "titleSize": 44,
+  "title": ["Wärmepumpe ist das meistverkaufte", "Heizsystem Deutschlands"],
+  "sub": "299.000 verkaufte Heizungswärmepumpen 2025 — plus 55 Prozent. Der Markt ist zurück, das Regierungsziel bleibt weit entfernt.",
+  "sections": [
+    {
+      "type": "hero",
+      "icon": "trend",
+      "pre": "2025:",
+      "big": "+55 %",
+      "post": "Absatz",
+      "caption": ["299.000 verkaufte Heizungswärmepumpen —", "48 % Anteil am gesamten Heizungsmarkt"],
+      "side": { "value": "1,9 Mio.", "label": "Bestand Ende 2025" }
+    },
+    [
+      {
+        "type": "bars",
+        "flex": 1.25,
+        "icon": "chart",
+        "title": "Absatz und Prognose",
+        "items": [
+          { "label": "2025 (Ist)", "value": "299.000", "v": 299000, "hi": true },
+          { "label": "2026 Basis", "value": "332.500", "v": 332500 },
+          { "label": "2026 optimistisch", "value": "410.000", "v": 410000, "dashed": true },
+          { "label": "Regierungsziel/Jahr", "value": "600.000", "v": 600000, "dashed": true }
+        ],
+        "foot": "Prognose: Bundesverband Wärmepumpe (BWP)"
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "hp-unit",
+        "title": "Was den Markt trägt",
+        "rows": [
+          { "label": "Luft/Wasser dominiert:", "value": "95 % der Verkäufe" },
+          { "label": "Bestand überschritt im Mai 2026", "value": "2 Mio." },
+          { "label": "Stabilere Förderbedingungen, mehr Planungssicherheit" },
+          { "label": "Offen: Strom-Gas-Preisverhältnis und Fachkräftebasis", "no": true }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Kurzfazit",
+      "icon": "house",
+      "lines": [
+        "2025 war das zweitbeste Absatzjahr nach dem Rekordjahr 2023.",
+        "Für das Ziel von 600.000 Anlagen pro Jahr müssten sich die",
+        "Installationsraten gegenüber heute noch einmal verdoppeln."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Germany Editorial Team"
+}

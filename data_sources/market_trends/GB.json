@@ -1,16 +1,30 @@
 [
- {
-  "slug": "2026-07-bus-9000",
-  "date": "2026-07-21",
-  "title": "Boiler Upgrade Scheme rises to £9,000 for oil and LPG homes",
-  "image": "gb-2026-07-bus-9000.webp",
-  "excerpt": "From 21 July 2026 the BUS pays up to £9,000 when off-gas-grid homes heated with oil or LPG switch to a heat pump.",
-  "body": [
-   "From 21 July 2026 the Boiler Upgrade Scheme (BUS) offers a higher grant of £9,000 for a specific group of homes: properties not connected to the gas grid that currently heat with oil or LPG and switch to a heat pump. The standard £7,500 grant for air-to-water and ground-source heat pumps remains in place.",
-   "A new £2,500 support category for residential air-to-air heat pumps has also been added — a notable widening of the scheme beyond hydronic systems.",
-   "The policy signal matters as much as the number. The UK is turning its attention to the segment that is hardest to move: rural, off-gas-grid housing. These homes face volatile heating-oil prices and have strong heat pump potential, but the upfront installation cost has been the barrier — and £9,000 is aimed squarely at it.",
-   "For installers and manufacturers, the oil/LPG-to-heat-pump conversion market is becoming a segment in its own right, and one worth building offers around."
-  ],
-  "sourceNote": "Figures as published for the Boiler Upgrade Scheme; eligibility is determined by the official bodies (DESNZ/Ofgem). As of July 2026."
- }
+  {
+    "slug": "2026-08-permitted-development",
+    "date": "2026-08-12",
+    "image": "gb-2026-08-permitted-development.webp",
+    "title": "Siting rules relaxed — now the noise limit decides the job",
+    "excerpt": "Permitted development finally allows the unit where it belongs. From 28 May 2026 an MCS 020(a) calculation at 37 dB(A) decides whether it stays permitted development.",
+    "body": [
+      "Permitted development rights for air source heat pumps in England were substantially eased with effect from 29 May 2025. The one-metre boundary restriction is gone, the maximum outdoor unit size for houses rose from 0.6 m³ to 1.5 m³, detached houses may have up to two units, and air-to-air heat pumps are covered for the first time.",
+      "The condition that now governs the whole regime is noise. Since 28 May 2026, MCS 020(a) is the only accepted noise assessment in England: the installer must show by calculation that the predicted level does not exceed 37 dB(A) one metre from the nearest habitable-room window of a neighbouring property — tightened from the previous 42 dB(A).",
+      "The method matters as much as the number. MCS 020(a) works from the unit's sound POWER level rather than sound pressure and accounts for reflective surfaces and siting. Where the calculation cannot meet 37 dB(A), the job leaves permitted development and needs a full planning application.",
+      "In parallel, MCS itself has been through its biggest overhaul in two decades, rolling out across 2025 and 2026, with more weight on on-site quality and a six-year workmanship warranty. For specifiers the practical consequence is simple: sound power on the data sheet has become a planning variable, not a comfort footnote."
+    ],
+    "sourceNote": "Rules as published for permitted development in England and MCS 020(a); planning decisions rest with the local authority. As of August 2026."
+  },
+  {
+    "slug": "2026-07-bus-9000",
+    "date": "2026-07-21",
+    "title": "Boiler Upgrade Scheme rises to £9,000 for oil and LPG homes",
+    "image": "gb-2026-07-bus-9000.webp",
+    "excerpt": "From 21 July 2026 the BUS pays up to £9,000 when off-gas-grid homes heated with oil or LPG switch to a heat pump.",
+    "body": [
+      "From 21 July 2026 the Boiler Upgrade Scheme (BUS) offers a higher grant of £9,000 for a specific group of homes: properties not connected to the gas grid that currently heat with oil or LPG and switch to a heat pump. The standard £7,500 grant for air-to-water and ground-source heat pumps remains in place.",
+      "A new £2,500 support category for residential air-to-air heat pumps has also been added — a notable widening of the scheme beyond hydronic systems.",
+      "The policy signal matters as much as the number. The UK is turning its attention to the segment that is hardest to move: rural, off-gas-grid housing. These homes face volatile heating-oil prices and have strong heat pump potential, but the upfront installation cost has been the barrier — and £9,000 is aimed squarely at it.",
+      "For installers and manufacturers, the oil/LPG-to-heat-pump conversion market is becoming a segment in its own right, and one worth building offers around."
+    ],
+    "sourceNote": "Figures as published for the Boiler Upgrade Scheme; eligibility is determined by the official bodies (DESNZ/Ofgem). As of July 2026."
+  }
 ]
