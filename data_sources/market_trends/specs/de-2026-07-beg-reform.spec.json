@@ -1,0 +1,53 @@
+{
+  "country": "DE",
+  "countryLabel": "Deutschland",
+  "month": "JULI 2026",
+  "lang": "de",
+  "motif": "house",
+  "title": ["BEG-Reform für Wärmepumpen", "ab 21. Juli 2026"],
+  "sub": "Die Wärmepumpenförderung bleibt wichtig – aber die Struktur wird sozial gezielter.",
+  "hero": {
+    "icon": "euro-hand",
+    "pre": "Bis zu",
+    "big": "80 %",
+    "post": "Förderung",
+    "caption": ["für selbstnutzende Eigentümer", "mit niedrigem Einkommen"]
+  },
+  "leftPanel": {
+    "icon": "scales",
+    "title": "Was ändert sich?",
+    "colFrom": "BISHER",
+    "colTo": "NEU AB 21.07.2026",
+    "rows": [
+      { "label": "Förderhöchstbetrag", "from": "30.000 €", "to": "28.000 €" },
+      { "label": "Klimageschwindigkeitsbonus", "from": "20 %", "to": "16 %" },
+      { "label": "Effizienzbonus", "from": "5 %", "to": "entfällt" },
+      { "label": "Einkommensbonus neu", "from": "–", "to": "40 % / 30 % / 10 %" }
+    ]
+  },
+  "rightPanel": {
+    "icon": "people",
+    "title": "Wer profitiert?",
+    "rows": [
+      { "icon": "person", "label": "Haushalte bis 30.000 €:", "value": "+40 %" },
+      { "icon": "person-2", "label": "Haushalte bis 40.000 €:", "value": "+30 %" },
+      { "icon": "person-3", "label": "Haushalte bis 50.000 €:", "value": "+10 %" }
+    ],
+    "note": {
+      "icon": "gift",
+      "title": "Familienzuschlag:",
+      "text": "+10.000 €",
+      "suffix": "Einkommensgrenze"
+    }
+  },
+  "kurzfazit": {
+    "title": "Kurzfazit",
+    "icon": "hp-unit",
+    "lines": [
+      "Wärmepumpen bleiben zentral gefördert.",
+      "Die Reform verlagert den Fokus von Technikboni",
+      "hin zu einkommensabhängiger Unterstützung."
+    ]
+  },
+  "footer": "HeatPump DB Germany Editorial Team"
+}
