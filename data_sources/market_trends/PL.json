@@ -1,16 +1,25 @@
 [
- {
-  "slug": "2026-07-moje-cieplo",
-  "date": "2026-07-31",
-  "title": "Moje Ciepło: dopłaty do pomp ciepła w nowych domach do końca 2026 roku",
-  "image": "pl-2026-07-moje-cieplo.webp",
-  "excerpt": "Program Moje Ciepło nadal wspiera pompy ciepła w nowych domach jednorodzinnych — do 30% kosztów, a z Kartą Dużej Rodziny do 45%.",
-  "body": [
-   "W lipcu najważniejszym punktem odniesienia dla polskiego rynku nie jest nowy program, lecz ciągłość istniejącego: Moje Ciepło — program wsparcia pomp ciepła w nowych domach jednorodzinnych — działa nadal, do końca 2026 roku.",
-   "Dofinansowanie wynosi co do zasady do 30% kosztów kwalifikowanych projektu, a posiadacze Karty Dużej Rodziny mogą otrzymać do 45%. Maksymalne kwoty na urządzenie: gruntowa pompa ciepła — do 21 000 zł, pompa powietrze-woda — do 7 000 zł, centralna pompa powietrze-powietrze — do 7 000 zł.",
-   "Wnioski można składać do 31 grudnia 2026 r. lub do wyczerpania budżetu.",
-   "Sens programu wykracza poza samą dopłatę. Moje Ciepło kieruje rynek nowych domów tak, aby ogrzewanie oparte na paliwach kopalnych w ogóle nie było instalowane — pompa ciepła staje się domyślną opcją grzewczą w nowym budownictwie. To właśnie ten segment, obok modernizacji istniejących budynków, ma dla polskiego rynku kluczowe znaczenie."
-  ],
-  "sourceNote": "Kwoty i warunki określa NFOŚiGW — decydują oficjalne zasady programu. Stan: lipiec 2026."
- }
+  {
+    "slug": "2026-07-moje-cieplo",
+    "date": "2026-07-31",
+    "title": "Moje Ciepło: dopłaty do pomp ciepła w nowych domach do końca 2026 roku",
+    "image": "pl-2026-07-moje-cieplo.webp",
+    "excerpt": "Program Moje Ciepło nadal wspiera pompy ciepła w nowych domach jednorodzinnych — do 30% kosztów, a z Kartą Dużej Rodziny do 45%.",
+    "body": [
+      "W lipcu najważniejszym punktem odniesienia dla polskiego rynku nie jest nowy program, lecz ciągłość istniejącego: Moje Ciepło — program wsparcia pomp ciepła w nowych domach jednorodzinnych — działa nadal, do końca 2026 roku.",
+      "Dofinansowanie wynosi co do zasady do 30% kosztów kwalifikowanych projektu, a posiadacze Karty Dużej Rodziny mogą otrzymać do 45%. Maksymalne kwoty na urządzenie: gruntowa pompa ciepła — do 21 000 zł, pompa powietrze-woda — do 7 000 zł, centralna pompa powietrze-powietrze — do 7 000 zł.",
+      "Wnioski można składać do 31 grudnia 2026 r. lub do wyczerpania budżetu.",
+      "Sens programu wykracza poza samą dopłatę. Moje Ciepło kieruje rynek nowych domów tak, aby ogrzewanie oparte na paliwach kopalnych w ogóle nie było instalowane — pompa ciepła staje się domyślną opcją grzewczą w nowym budownictwie. To właśnie ten segment, obok modernizacji istniejących budynków, ma dla polskiego rynku kluczowe znaczenie."
+    ],
+    "sourceNote": "Kwoty i warunki określa NFOŚiGW — decydują oficjalne zasady programu. Stan: lipiec 2026.",
+    "titleEn": "Moje Ciepło: heat pump grants for new homes run to the end of 2026",
+    "excerptEn": "The Moje Ciepło programme continues to support heat pumps in new detached houses — up to 30% of costs, or 45% with a Large Family Card.",
+    "bodyEn": [
+      "In July, the most important reference point for the Polish market is not a new programme but the continuity of an existing one: Moje Ciepło — the support programme for heat pumps in new detached houses — remains in operation until the end of 2026.",
+      "As a rule the grant covers up to 30% of the project's eligible costs, and holders of the Large Family Card (Karta Dużej Rodziny) can receive up to 45%. Maximum amounts per appliance: ground-source heat pump — up to PLN 21,000; air-to-water heat pump — up to PLN 7,000; central air-to-air heat pump — up to PLN 7,000.",
+      "Applications can be submitted until 31 December 2026, or until the budget is exhausted.",
+      "The purpose of the programme goes beyond the grant itself. Moje Ciepło steers the new-build market so that fossil-fuel heating is not installed in the first place — the heat pump becomes the default heating option in new construction. That segment, alongside the retrofit of existing buildings, is precisely what matters most for the Polish market."
+    ],
+    "sourceNoteEn": "Amounts and conditions are set by NFOŚiGW — the official programme rules prevail. As of July 2026."
+  }
 ]

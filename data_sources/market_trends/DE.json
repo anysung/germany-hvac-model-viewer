@@ -1,16 +1,25 @@
 [
- {
-  "slug": "2026-07-beg-reform",
-  "date": "2026-07-21",
-  "title": "BEG-Reform für Wärmepumpen ab 21. Juli 2026",
-  "image": "de-2026-07-beg-reform.webp",
-  "excerpt": "Die Förderung bleibt zentral — aber der Schwerpunkt verlagert sich von Technik-Boni hin zu einkommensabhängiger Unterstützung.",
-  "body": [
-   "Zum 21. Juli 2026 ändert sich die Struktur der Wärmepumpen-Förderung in der Bundesförderung für effiziente Gebäude (BEG). Entscheidend ist: Die Förderung wird nicht zurückgefahren und verschwindet nicht — ihr Schwerpunkt wandert von Boni für die Technik hin zu einer sozial gezielteren, einkommensabhängigen Unterstützung.",
-   "Konkret sinkt der förderfähige Kostenrahmen für das erste Wohnhaus von 30.000 € auf 28.000 €. Der Klimageschwindigkeitsbonus wird von 20 % auf 16 % reduziert, und der bisherige Effizienzbonus von 5 % entfällt.",
-   "Neu ist ein gestaffelter Einkommensbonus: Haushalte mit einem zu versteuernden Einkommen bis 30.000 € erhalten zusätzlich 40 %, bis 40.000 € noch 30 % und bis 50.000 € noch 10 %. Hinzu kommt ein Familienzuschlag von +10.000 € auf die Einkommensgrenze. Für selbstnutzende Eigentümer mit niedrigem Einkommen sind damit in der Summe bis zu 80 % Förderung möglich.",
-   "Für Fachbetriebe bedeutet die Reform vor allem eines: Die Beratung wird wichtiger. Nicht mehr allein die Produkteffizienz entscheidet über die optimale Förderung, sondern die Kombination aus Einkommen, Familiensituation und Gesamtkosten der Installation."
-  ],
-  "sourceNote": "Alle Angaben ohne Gewähr — maßgeblich sind die offiziellen Förderbedingungen von KfW und BAFA. Stand: Juli 2026."
- }
+  {
+    "slug": "2026-07-beg-reform",
+    "date": "2026-07-21",
+    "title": "BEG-Reform für Wärmepumpen ab 21. Juli 2026",
+    "image": "de-2026-07-beg-reform.webp",
+    "excerpt": "Die Förderung bleibt zentral — aber der Schwerpunkt verlagert sich von Technik-Boni hin zu einkommensabhängiger Unterstützung.",
+    "body": [
+      "Zum 21. Juli 2026 ändert sich die Struktur der Wärmepumpen-Förderung in der Bundesförderung für effiziente Gebäude (BEG). Entscheidend ist: Die Förderung wird nicht zurückgefahren und verschwindet nicht — ihr Schwerpunkt wandert von Boni für die Technik hin zu einer sozial gezielteren, einkommensabhängigen Unterstützung.",
+      "Konkret sinkt der förderfähige Kostenrahmen für das erste Wohnhaus von 30.000 € auf 28.000 €. Der Klimageschwindigkeitsbonus wird von 20 % auf 16 % reduziert, und der bisherige Effizienzbonus von 5 % entfällt.",
+      "Neu ist ein gestaffelter Einkommensbonus: Haushalte mit einem zu versteuernden Einkommen bis 30.000 € erhalten zusätzlich 40 %, bis 40.000 € noch 30 % und bis 50.000 € noch 10 %. Hinzu kommt ein Familienzuschlag von +10.000 € auf die Einkommensgrenze. Für selbstnutzende Eigentümer mit niedrigem Einkommen sind damit in der Summe bis zu 80 % Förderung möglich.",
+      "Für Fachbetriebe bedeutet die Reform vor allem eines: Die Beratung wird wichtiger. Nicht mehr allein die Produkteffizienz entscheidet über die optimale Förderung, sondern die Kombination aus Einkommen, Familiensituation und Gesamtkosten der Installation."
+    ],
+    "sourceNote": "Alle Angaben ohne Gewähr — maßgeblich sind die offiziellen Förderbedingungen von KfW und BAFA. Stand: Juli 2026.",
+    "titleEn": "BEG reform for heat pumps from 21 July 2026",
+    "excerptEn": "Funding stays central — but the emphasis shifts from technology bonuses to income-related support.",
+    "bodyEn": [
+      "On 21 July 2026 the structure of heat pump funding under Germany's Federal Funding for Efficient Buildings (BEG) changes. The decisive point: funding is not being wound down and is not disappearing — its emphasis moves from bonuses for the technology toward socially targeted, income-related support.",
+      "In concrete terms, the eligible cost ceiling for the first residential building falls from €30,000 to €28,000. The climate speed bonus is reduced from 20% to 16%, and the previous efficiency bonus of 5% is discontinued.",
+      "New is a tiered income bonus: households with taxable income up to €30,000 receive an additional 40%, up to €40,000 a further 30%, and up to €50,000 a further 10%. On top of this comes a family supplement of +€10,000 on the income threshold. For owner-occupiers on a low income, this makes a total of up to 80% funding possible.",
+      "For trade businesses, the reform means one thing above all: advice becomes more important. Product efficiency alone no longer determines the optimal funding — it is the combination of income, family situation and the total cost of the installation."
+    ],
+    "sourceNoteEn": "All figures without warranty — the official funding conditions of KfW and BAFA prevail. As of July 2026."
+  }
 ]

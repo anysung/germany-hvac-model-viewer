@@ -347,25 +347,90 @@ const ogImg = (c) => {
 const FMT = new Intl.DateTimeFormat(HREFLANG[MARKET], { day: 'numeric', month: 'long', year: 'numeric' });
 const fmtDate = (d) => { try { return FMT.format(new Date(d + 'T00:00:00Z')); } catch { return d; } };
 
+/**
+ * English twin of every card page (owner 2026-08-11).
+ * The infographic itself is NOT translated — it ships in the market language,
+ * by design. The article text does get an English version, because the
+ * LinkedIn audience these pages are written for reads English: a share link
+ * that drops an English reader onto a German page loses the reader, and that
+ * share is the entire purpose of the card page.
+ * GB is skipped — its market language already IS English.
+ */
+const EN_UI = {
+  back: 'Market & Trends',
+  cta: {
+    h: 'The data behind the numbers',
+    p: 'Every model with SCOP, sound power, refrigerant and local listing status — join free, 7 days of full access.',
+    b: 'Join free',
+  },
+};
+const HAS_EN = MARKET !== 'GB';
+
+/* English heading for the in-app EN view. The PUBLIC index page stays in the
+   market language — that page is the market's SEO surface, and a German
+   search result with an English heading serves nobody. */
+const EN_HEAD = {
+  DE: { h1: 'German Heat Pump Market: Data & Trends',
+        sub: "Key figures, policy developments and visual insights on Germany's heat pump transition." },
+  GB: { h1: M.h1, sub: M.sub },
+  FR: { h1: 'French Heat Pump Market: Data & Trends',
+        sub: "Key market data, policy developments and visual insights on France's heat pump transition." },
+  PL: { h1: 'Polish Heat Pump Market: Data & Trends',
+        sub: "Key market data, policy developments and visual insights on Poland's heat pump transition." },
+  IT: { h1: 'Italian Heat Pump Market: Data & Trends',
+        sub: "Key market data, policy developments and visual insights on Italy's heat pump transition." },
+}[MARKET];
+const EN_FMT = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+const fmtDateEn = (d) => { try { return EN_FMT.format(new Date(d + 'T00:00:00Z')); } catch { return d; } };
+
+/** The English fields, falling back to the market-language ones so a card that
+ *  has not been translated yet still renders (never an empty page). */
+const enOf = (c) => ({
+  title: c.titleEn ?? c.title,
+  excerpt: c.excerptEn ?? c.excerpt ?? '',
+  body: c.bodyEn ?? c.body ?? [],
+  sourceNote: c.sourceNoteEn ?? c.sourceNote ?? '',
+});
+
 /* Card detail pages — the social landing targets. og:image is the card PNG
    itself, absolute URL, so a LinkedIn share previews the infographic. */
-for (const c of feed) {
+function renderCard(c, english) {
+  const v = english ? enOf(c) : { title: c.title, excerpt: c.excerpt ?? '', body: c.body ?? [], sourceNote: c.sourceNote ?? '' };
+  const file = english ? `${c.slug}.en.html` : `${c.slug}.html`;
+  const selfUrl = `${host}/market-trends/${file}`;
+  const lang = english ? 'en' : M.lang;
+  const ui = english ? EN_UI : { back: M.h1, cta: M.cta };
+  const date = english ? fmtDateEn(c.date) : fmtDate(c.date);
+
   const cardLd = {
     '@context': 'https://schema.org', '@type': 'Article',
-    headline: c.title, datePublished: c.date, inLanguage: HREFLANG[MARKET],
+    headline: v.title, datePublished: c.date, inLanguage: english ? 'en' : HREFLANG[MARKET],
     image: `${host}/market-trends/img/${ogImg(c)}`,
-    mainEntityOfPage: `${host}/market-trends/${c.slug}.html`,
+    mainEntityOfPage: selfUrl,
     publisher: { '@type': 'Organization', name: 'HeatPump DataBase (Europe)' },
   };
-  const cardHtml = `<!doctype html>
-<html lang="${M.lang}">
+
+  // Reciprocal hreflang on both variants: same infographic, two article
+  // languages — declared, so neither reads as duplicated content.
+  const alternates = HAS_EN ? `
+<link rel="alternate" hreflang="${HREFLANG[MARKET]}" href="${host}/market-trends/${c.slug}.html">
+<link rel="alternate" hreflang="en" href="${host}/market-trends/${c.slug}.en.html">` : '';
+
+  const toggle = HAS_EN ? `
+  <div class="langs">
+    <a class="${english ? '' : 'on'}" href="/market-trends/${c.slug}.html">${M.lang.toUpperCase()}</a>
+    <a class="${english ? 'on' : ''}" href="/market-trends/${c.slug}.en.html">EN</a>
+  </div>` : '';
+
+  return `<!doctype html>
+<html lang="${lang}">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${esc(c.title)} | HeatPump Database</title>
-<meta name="description" content="${esc(c.excerpt ?? c.title)}">
-<link rel="canonical" href="${host}/market-trends/${c.slug}.html">
-<meta property="og:title" content="${esc(c.title)}">
-<meta property="og:description" content="${esc(c.excerpt ?? '')}">
+<title>${esc(v.title)} | HeatPump Database</title>
+<meta name="description" content="${esc(v.excerpt || v.title)}">
+<link rel="canonical" href="${selfUrl}">${alternates}
+<meta property="og:title" content="${esc(v.title)}">
+<meta property="og:description" content="${esc(v.excerpt)}">
 <meta property="og:image" content="${host}/market-trends/img/${ogImg(c)}">
 <meta property="og:type" content="article">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/${MARKET === 'GB' ? 'uk' : MARKET.toLowerCase()}-32.png">
@@ -373,7 +438,11 @@ for (const c of feed) {
 <style>
   *{box-sizing:border-box} body{margin:0;font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;color:#1d1d1f;background:#fff}
   .wrap{max-width:820px;margin:0 auto;padding:34px 20px 60px}
+  .top{display:flex;align-items:center;gap:14px}
   .crumb{font-size:13.5px;color:#0066cc;text-decoration:none}
+  .langs{margin-left:auto;display:flex;border:1px solid #d8d8dd;border-radius:999px;overflow:hidden;font-size:12px}
+  .langs a{padding:5px 12px;color:#6e6e73;text-decoration:none}
+  .langs a.on{background:#1d1d1f;color:#fff;font-weight:600}
   h1{font-size:28px;letter-spacing:-.5px;line-height:1.25;margin:14px 0 6px}
   .meta{color:#7a7a7a;font-size:13.5px;margin:0 0 20px}
   .card-img{width:100%;height:auto;border-radius:18px;display:block;margin-bottom:26px}
@@ -385,17 +454,21 @@ for (const c of feed) {
 </style>
 </head>
 <body><div class="wrap">
-  <a class="crumb" href="/market-trends/">← ${esc(M.h1)}</a>
-  <h1>${esc(c.title)}</h1>
-  <p class="meta">${esc(fmtDate(c.date))} · HeatPump DB</p>
-  <img class="card-img" src="/market-trends/img/${c.image}" alt="${esc(c.title)}">
-  <div class="body">${(c.body ?? []).map((p) => `<p>${esc(p)}</p>`).join('')}</div>
-  ${c.sourceNote ? `<p class="src">${esc(c.sourceNote)}</p>` : ''}
-  <div class="cta"><h2>${esc(M.cta.h)}</h2><p>${esc(M.cta.p)}</p>
-    <a class="btn" href="/?ref=trends">${esc(M.cta.b)} ›</a></div>
+  <div class="top"><a class="crumb" href="/market-trends/">← ${esc(ui.back)}</a>${toggle}</div>
+  <h1>${esc(v.title)}</h1>
+  <p class="meta">${esc(date)} · HeatPump DB</p>
+  <img class="card-img" src="/market-trends/img/${c.image}" alt="${esc(v.title)}">
+  <div class="body">${v.body.map((p) => `<p>${esc(p)}</p>`).join('')}</div>
+  ${v.sourceNote ? `<p class="src">${esc(v.sourceNote)}</p>` : ''}
+  <div class="cta"><h2>${esc(ui.cta.h)}</h2><p>${esc(ui.cta.p)}</p>
+    <a class="btn" href="/?ref=trends">${esc(ui.cta.b)} ›</a></div>
 </div></body></html>
 `;
-  writeFileSync(join(OUT_DIR, 'market-trends', `${c.slug}.html`), cardHtml);
+}
+
+for (const c of feed) {
+  writeFileSync(join(OUT_DIR, 'market-trends', `${c.slug}.html`), renderCard(c, false));
+  if (HAS_EN) writeFileSync(join(OUT_DIR, 'market-trends', `${c.slug}.en.html`), renderCard(c, true));
 }
 
 /* Index: the card grid (newest first), then the standing live-data infographic. */
@@ -422,10 +495,14 @@ writeFileSync(join(OUT_DIR, 'market-trends', 'index.html'), indexHtml);
    same feed natively, so members read cards without leaving the app. */
 writeFileSync(join(OUT_DIR, 'market-trends', 'feed.json'), JSON.stringify({
   h1: M.h1, sub: M.sub, coming: M.coming, roadmap: M.roadmap,
+  h1En: EN_HEAD.h1, subEn: EN_HEAD.sub,
   items: feed.map((c) => ({
     slug: c.slug, date: c.date, title: c.title, excerpt: c.excerpt ?? '',
     image: `/market-trends/img/${c.image}`, body: c.body ?? [],
     sourceNote: c.sourceNote ?? '',
+    // The English article travels with the card: the app's EN toggle switches
+    // the text, never the infographic (which stays in the market language).
+    en: enOf(c),
   })),
 }) + '\n');
 console.log(`market-trends (${MARKET}): ${nf(all.length)} models · R290 ${pct(nR290)}% · SCOP med ${scopMed.toFixed(2)} · quiet ${Math.round((quiet / noises.length) * 100)}%`);
