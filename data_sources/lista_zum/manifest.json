@@ -6,5 +6,16 @@
   "acquisition": "scripts/pl/fetch-zum.mjs — public grid + public detail pages only; NO attachment downloads; >=1.5s between requests; honest User-Agent; curl transport (host serves an incomplete TLS chain; verification is never disabled).",
   "terms_status": "The site publishes no data-reuse licence. IOŚ-PIB's IP notice restricts commercial use of its LOGO/NAME/GRAPHIC MARK — never render their logo or presentation material. Factual field values are used with source attribution ('Lista ZUM' named as the official list, verification dates shown). Formal reuse confirmation via the Open Data Act (11.08.2021) remains an open owner-level item.",
   "programs": "Mandatory for heat-pump grants under Czyste Powietrze for invoices from 2024-06-14 (from 2026-07-20: status counts at the advance-invoice date). Also serves Ciepłe Mieszkanie. Moje Ciepło has no ZUM requirement.",
-  "snapshot_layout": "raw/YYYY-MM/{grid/*.html, detail/<ZUM-ID>.html, grid-rows.json, _meta.json} -> parsed/YYYY-MM/zum-normalized.json -> matching/YYYY-MM/canonical-zum-overlay.json (all gitignored); committed state: zum-match-history.json"
+  "snapshot_layout": "raw/YYYY-MM/{grid/*.html, detail/<ZUM-ID>.html, grid-rows.json, _meta.json} -> parsed/YYYY-MM/zum-normalized.json -> matching/YYYY-MM/canonical-zum-overlay.json (all gitignored); committed state: zum-match-history.json",
+  "known_master_seeds": {
+    "2026-07": {
+      "total_entries": 3102,
+      "in_latest": 3102,
+      "absent_from_latest": 0,
+      "snapshots_covered": [
+        "2026-07"
+      ],
+      "generated_at": "2026-08-12T00:12:56.574Z"
+    }
+  }
 }

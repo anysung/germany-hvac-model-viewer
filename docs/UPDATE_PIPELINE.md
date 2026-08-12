@@ -46,6 +46,7 @@
 |---|---|---|
 | Self-accumulating master seed | `build-master-seed.mjs` | Cleaning `parsed/`/`raw/` folders from disk silently dropping products (happened 2026-07-12: 289 June-only products lost; recovered via hosting-release rollback) |
 | fetched-at index | `data_sources/bafa/fetched-at-index.json` | Cleaned raw folders breaking `bafa_snapshot_fetched_at` provenance |
+| **Registry seeds (PL, IT)** | `build-zum-master-seed.mjs`, `build-gse-master-seed.mjs` (shared `scripts/lib/registry-master-seed.mjs`) | The same silent-loss failure in the two markets that PUBLISH registry-native records (PL `ZUM_REGISTRY`, IT `GSE_CATALOGUE`). Their builders read one parsed snapshot, so a partial fetch, a withdrawn PDF or a cleaned folder deleted those products from the catalogue. The seed unions every snapshot and every previous seed; entries the newest snapshot lacks stay published with `in_latest: false`, which the builders render as "verification required" — never "listed", never "not listed". Added 2026-08-12 after an owner review asked why PL/IT raw snapshots were treated as disposable |
 | Builder validations | every `build-app-products-*` | Field-shape drift, price-key reintroduction, provenance gaps, duplicate ids |
 | Freshness check | orchestrator | Deploying stale datasets after a silently skipped step |
 | **Shrink guard** | orchestrator | Any catalogue count dropping below the live datasets (read from `gs://heatpumpdb-datasets` via gcloud, minus 1 canary/file); intentional reductions need `--allow-shrink` |

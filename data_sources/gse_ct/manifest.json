@@ -6,5 +6,16 @@
   "acquisition": "scripts/it/fetch-gse.mjs — three public PDF catalogues at stable URLs (Acrobat prints of GSE's internal Excel files; replaced in place on update, ETag/Last-Modified recorded); 1.5s politeness between files; parsed with pdftotext -layout (poppler) by scripts/it/parse-gse.mjs.",
   "terms_status": "The catalogue pages and PDFs declare no reuse licence; GSE is an Italian public body (PSI/open-data defaults, d.lgs. 36/2006). Facts-only use with source attribution and snapshot dates; never render GSE logos or presentation material. The catalogue publishes no per-row identifier — our gse_entry_key is an internal deterministic key and is never displayed as an official id.",
   "programs": "Conto Termico 3.0 (DM 07.08.2025, operational from 25.12.2025; catalogues published 15.04.2026): appliances in the pre-qualified catalogue get the simplified application path with reduced documentation. Catalogue listing is NOT a strict prerequisite and never implies incentive entitlement (applicant/building/intervention rules apply) — the app claims no eligibility.",
-  "snapshot_layout": "raw/YYYY-MM/{IIIA.pdf, IIIB.pdf, IIIE.pdf, _meta.json} -> parsed/YYYY-MM/gse-normalized.json -> matching/YYYY-MM/{canonical-gse-overlay.json, canonical-gse-review.json} (all gitignored); committed state: gse-match-history.json"
+  "snapshot_layout": "raw/YYYY-MM/{IIIA.pdf, IIIB.pdf, IIIE.pdf, _meta.json} -> parsed/YYYY-MM/gse-normalized.json -> matching/YYYY-MM/{canonical-gse-overlay.json, canonical-gse-review.json} (all gitignored); committed state: gse-match-history.json",
+  "known_master_seeds": {
+    "2026-07": {
+      "total_entries": 10268,
+      "in_latest": 10268,
+      "absent_from_latest": 0,
+      "snapshots_covered": [
+        "2026-07"
+      ],
+      "generated_at": "2026-08-12T00:13:55.344Z"
+    }
+  }
 }

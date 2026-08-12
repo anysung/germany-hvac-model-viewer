@@ -122,6 +122,9 @@ const PIPELINES = {
       // product source (same rule as the Ofgem PEL).
       { name: 'fetch Lista ZUM (grid + details)', cmd: 'node scripts/pl/fetch-zum.mjs', when: 'fetch' },
       { name: 'parse Lista ZUM', cmd: 'node scripts/pl/parse-zum.mjs', when: 'fetch' },
+      // Accumulate BEFORE the build: the PL extension records are published from
+      // the seed, so a partial fetch must never shrink the catalogue (2026-08-12).
+      { name: 'accumulate ZUM master seed', cmd: 'node scripts/pl/build-zum-master-seed.mjs' },
       { name: 'match canonical → Lista ZUM (listing overlay)', cmd: 'node scripts/pl/match-canonical-to-zum.mjs', optional: true },
       { name: 'build PL app datasets', cmd: 'node scripts/pl/build-app-products-pl.mjs' },
     ],
@@ -135,6 +138,7 @@ const PIPELINES = {
       // overlay, never a product source (same rule as the Ofgem PEL).
       { name: 'fetch GSE Conto Termico catalogues', cmd: 'node scripts/it/fetch-gse.mjs', when: 'fetch' },
       { name: 'parse GSE catalogues', cmd: 'node scripts/it/parse-gse.mjs', when: 'fetch' },
+      { name: 'accumulate GSE master seed', cmd: 'node scripts/it/build-gse-master-seed.mjs' },
       { name: 'match canonical → GSE catalogue (listing overlay)', cmd: 'node scripts/it/match-canonical-to-gse.mjs', optional: true },
       { name: 'build IT app datasets', cmd: 'node scripts/it/build-app-products-it.mjs' },
     ],

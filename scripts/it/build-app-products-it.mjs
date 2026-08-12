@@ -153,10 +153,29 @@ const residential = deResidential.items.map(toItItem);
 const commercial = deCommercial.items.map(toItItem);
 
 /* ── IT-market GSE-native layer (in-scope, no canonical counterpart) ─────── */
-const parsedSnapshot = newestSnapshot('data_sources/gse_ct/parsed');
-const gseParsed = parsedSnapshot
-  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/gse_ct/parsed', parsedSnapshot, 'gse-normalized.json'), 'utf8'))
+/* The GSE master seed, not one parsed snapshot: these records exist ONLY
+   because the catalogue published them, so a failed fetch or a cleaned folder
+   used to delete products from the Italian catalogue silently (the 2026-07-12
+   German regression; IT had no guard until 2026-08-12). `seed.in_latest` keeps
+   the listing claim honest — absent entries stay published, never as "listed".
+   Falls back to the parsed snapshot when no seed is built. */
+const seedSnapshot = newestSnapshot('data_sources/gse_ct/master_seed');
+const gseSeed = seedSnapshot
+  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/gse_ct/master_seed', seedSnapshot, 'gse-master-seed.json'), 'utf8'))
   : null;
+const parsedSnapshot = newestSnapshot('data_sources/gse_ct/parsed');
+const gseParsed = gseSeed ?? (parsedSnapshot
+  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/gse_ct/parsed', parsedSnapshot, 'gse-normalized.json'), 'utf8'))
+  : null);
+if (gseSeed) {
+  console.log(`GSE master seed: ${gseSeed.meta.total_entries} entries`
+    + ` (in latest ${gseSeed.meta.in_latest}, absent ${gseSeed.meta.absent_from_latest}`
+    + ` — absent entries publish as verification_required)`);
+  if (gseSeed.meta.suspect_partial_fetch) {
+    console.error('⚠️  GSE: latest catalogue covers <70% of the seed — suspected partial parse.'
+      + ' Products are preserved; check the fetch before shipping.');
+  }
+}
 const reviewPath = overlaySnapshot
   ? resolve(ROOT, 'data_sources/gse_ct/matching', overlaySnapshot, 'canonical-gse-review.json')
   : null;
@@ -222,6 +241,8 @@ for (const z of gseParsed?.entries ?? []) {
   if (confirmedKeys.has(z.gse_entry_key)) { nativeStats.blocked_confirmed++; continue; }
   if (reviewKeys.has(z.gse_entry_key)) { nativeStats.blocked_review++; continue; }
 
+  // Seedless fallback: without a seed every entry came from the newest snapshot.
+  const inLatest = z.seed ? z.seed.in_latest === true : true;
   const temps = assignTemps(z);
   const kws = gseKws(z);
   const declaredMax = kws.length ? Math.max(...kws) : null;
@@ -264,17 +285,21 @@ for (const z of gseParsed?.entries ?? []) {
     gse_temp_assignment: temps.mode,
     source_snapshot_generated_at: gseParsed.meta.generated_at,
     // Listing block: the record IS a catalogue entry.
-    gse_match_status: 'confirmed',
-    gse_entry_key: z.gse_entry_key,
+    /* A record the newest catalogue did not contain keeps its specification but
+       loses the listing claim: anything other than 'confirmed' renders as
+       "Verifica catalogo GSE richiesta" (src/hpiq/listing.ts). It never becomes
+       "not in the catalogue" — absence in OUR parse is a fact about our parse. */
+    gse_match_status: inLatest ? 'confirmed' : 'review_required',
+    gse_entry_key: inLatest ? z.gse_entry_key : null,
     gse_catalogue: z.catalogue,
     gse_brand: z.brand,
     gse_model: z.model,
     gse_match_method: 'gse_native',
     gse_match_confidence: 'high',
     gse_snapshot: parsedSnapshot,
-    gse_snapshot_fetched_at: gseParsed.meta.fetched_at,
+    gse_snapshot_fetched_at: gseParsed.meta.latest_snapshot_fetched_at ?? gseParsed.meta.fetched_at,
     gse_first_matched_at: gseParsed.meta.fetched_at,
-    gse_last_confirmed_at: generatedAt,
+    gse_last_confirmed_at: inLatest ? generatedAt : (z.seed?.last_seen ?? null),
   });
 
   const elig = gseNativeEligibility(candidate);

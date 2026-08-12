@@ -95,6 +95,13 @@ see `docs/UPDATE_PIPELINE.md` for the graph, schedule (monthly, 2nd, 03:00
 Europe/Berlin, attended) and the country-expansion checklist.
 `build-master-seed` is SELF-ACCUMULATING: it unions previous master seeds so
 cleaning parsed/raw folders never drops products (regression 2026-07-12).
+**PL and IT have the same guard since 2026-08-12** (`scripts/pl/build-zum-master-seed.mjs`,
+`scripts/it/build-gse-master-seed.mjs`, shared `scripts/lib/registry-master-seed.mjs`):
+they publish registry-native records, so their builders read the SEED, not one
+parsed snapshot. An entry absent from the newest snapshot keeps its specification
+but drops to `review_required` — verification required, id hidden; never "listed",
+never "not listed". Do NOT delete `lista_zum/`/`gse_ct/` raw+parsed on the
+assumption that gitignored means disposable — keep at least the newest seed.
 
 `scripts/bafa/`: `fetch-bafa-raw` → `parse-bafa-raw` → `build-master-seed` →
 `build-app-products-from-master-seed` (auto-selects newest `data_sources/bafa/master_seed/YYYY-MM/`).

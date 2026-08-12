@@ -73,11 +73,36 @@ console.log(overlayFile
   ? `ZUM overlay: ${overlayByBafaId.size} products carry listing state (snapshot ${overlaySnapshot})`
   : 'ZUM overlay: none (all products will show verification_required)');
 
-/* ── Parsed ZUM snapshot (for the PL-market extension) ───────────────────── */
-const parsedSnapshot = newestSnapshot('data_sources/lista_zum/parsed');
-const zumParsed = parsedSnapshot
-  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/lista_zum/parsed', parsedSnapshot, 'zum-normalized.json'), 'utf8'))
+/* ── ZUM master seed (for the PL-market extension) ────────────────────────
+   The seed, not the newest parsed snapshot: these records exist ONLY because
+   the registry published them, so reading one fetch meant a failed fetch or a
+   cleaned snapshot folder silently deleted products from the catalogue (the
+   2026-07-12 German regression, which PL had no guard against until
+   2026-08-12). The seed unions every snapshot and every previous seed.
+   `seed.in_latest` is what keeps the listing claim honest below — a product
+   the newest snapshot did not contain is still published, but never as
+   "listed". Falls back to the parsed snapshot so a checkout without a built
+   seed still works. */
+const seedSnapshot = newestSnapshot('data_sources/lista_zum/master_seed');
+const zumSeed = seedSnapshot
+  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/lista_zum/master_seed', seedSnapshot, 'zum-master-seed.json'), 'utf8'))
   : null;
+const parsedSnapshot = newestSnapshot('data_sources/lista_zum/parsed');
+const zumParsed = zumSeed ?? (parsedSnapshot
+  ? JSON.parse(readFileSync(resolve(ROOT, 'data_sources/lista_zum/parsed', parsedSnapshot, 'zum-normalized.json'), 'utf8'))
+  : null);
+if (zumSeed) {
+  console.log(`ZUM master seed: ${zumSeed.meta.total_entries} entries`
+    + ` (in latest ${zumSeed.meta.in_latest}, absent ${zumSeed.meta.absent_from_latest}`
+    + ` — absent entries publish as verification_required)`);
+  if (zumSeed.meta.suspect_partial_fetch) {
+    console.error('⚠️  ZUM: latest snapshot covers <70% of the seed — suspected partial fetch.'
+      + ' Products are preserved; check the fetch before shipping.');
+  }
+} else if (zumParsed) {
+  console.log('ZUM: no master seed on disk — falling back to the parsed snapshot'
+    + ' (run scripts/pl/build-zum-master-seed.mjs to enable accumulation)');
+}
 
 const generatedAt = new Date().toISOString();
 
@@ -209,10 +234,12 @@ const reviewIds = blockedIds;
 const releasableIds = new Set(reviewRows.filter(r => r.releasable === true).map(r => r.zum_id)
   .filter(id => id && !blockedIds.has(id)));
 
-const extensionStats = { candidates: 0, alreadyConfirmed: 0, eprelInCanonical: 0, inReviewQueue: 0, ineligible: 0, added: 0, byReason: {} };
+const extensionStats = { candidates: 0, alreadyConfirmed: 0, eprelInCanonical: 0, inReviewQueue: 0, ineligible: 0, added: 0, carriedNotInLatest: 0, byReason: {} };
 const extension = [];
 
 for (const z of zumParsed?.entries ?? []) {
+  // Seedless fallback: without a seed every entry came from the newest snapshot.
+  const inLatest = z.seed ? z.seed.in_latest === true : true;
   if (confirmedZumIds.has(z.zum_id)) { extensionStats.alreadyConfirmed++; continue; }
   // If the registry's EPREL number already exists in the canonical catalogue,
   // this device IS (a variant of) a canonical product — an ambiguity for the
@@ -264,18 +291,30 @@ for (const z of zumParsed?.entries ?? []) {
     bafa_reference_id: null,
     bafa_reference_model: null,
     bafa_reference_match_type: null,
-    source_snapshot_generated_at: zumParsed.meta.generated_at,
-    zum_match_status: 'confirmed',
-    zum_id: z.zum_id,
+    source_snapshot_generated_at: zumParsed.meta.latest_snapshot_generated_at ?? zumParsed.meta.generated_at,
+    /**
+     * A record the newest snapshot did not contain keeps its specification but
+     * loses the listing claim: 'review_required' renders as "Weryfikacja ZUM
+     * wymagana" and hides the ZUM id (src/hpiq/listing.ts). It never becomes
+     * "not on the list" — absence in OUR fetch is a fact about our fetch, and
+     * only a market that owns its registry may state a removal.
+     */
+    zum_match_status: inLatest ? 'confirmed' : 'review_required',
+    // The published id follows the listing claim: it appears only where the
+    // status is 'confirmed' (invariant enforced below). Traceability survives
+    // regardless — source_id is `PL-<zum id>`.
+    zum_id: inLatest ? z.zum_id : null,
     zum_product_name: z.product_name ?? null,
     zum_category: z.category,
     zum_class_55c: z.class_55 ?? z.single_class ?? null,
     zum_match_method: 'zum_native',
-    zum_match_confidence: 'high',
+    zum_match_confidence: inLatest ? 'high' : 'medium',
     zum_snapshot: parsedSnapshot,
-    zum_snapshot_fetched_at: zumParsed.meta.generated_at,
+    zum_snapshot_fetched_at: zumParsed.meta.latest_snapshot_generated_at ?? zumParsed.meta.generated_at,
     zum_first_matched_at: z.added_at ?? null,
-    zum_last_confirmed_at: generatedAt,
+    // Only a product the NEWEST snapshot contained may carry today's date as
+    // its confirmation; for the rest this stays the month we last saw it.
+    zum_last_confirmed_at: inLatest ? generatedAt : (z.seed?.last_seen ?? null),
   });
 
   // THE SAME eligibility rule as every market — no weaker Poland standard.
@@ -287,6 +326,7 @@ for (const z of zumParsed?.entries ?? []) {
   }
   extension.push(candidate);
   extensionStats.added++;
+  if (!inLatest) extensionStats.carriedNotInLatest++;
 }
 
 // Extension-internal dedupe: distinct ZUM ids can carry the same physical
@@ -482,5 +522,7 @@ console.log(`  released from review (secondary-overlap only): ${extensionStats.r
   + ` | EPREL-enriched natives: ${extension.filter(x => x.performance_source === 'ZUM_EPREL').length}`
   + ` | duplicate drops: ${extensionStats.duplicateModel ?? 0} model + ${extensionStats.duplicateEprel ?? 0} eprel`);
 if (extensionStats.ineligible) console.log('  ineligible reasons:', JSON.stringify(extensionStats.byReason));
+if (extensionStats.carriedNotInLatest) console.log(`  carried from the seed, absent from the latest snapshot: `
+  + `${extensionStats.carriedNotInLatest} (published with verification_required, ZUM id hidden)`);
 console.log(`Field count:              ${fieldCount} ✓   No price keys ✓   PL provenance ✓   listing integrity ✓`);
 console.log('──────────────────────────────────────────────────────────');

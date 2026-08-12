@@ -81,6 +81,10 @@ data_manifests/candidate.json
 data_sources/lista_zum/raw/20*/
 data_sources/lista_zum/parsed/20*/
 data_sources/lista_zum/matching/20*/
+# Self-accumulating seed (rebuilt from snapshots + previous seeds; manifest.json
+# records what existed). Keeping ONE seed on disk is what lets snapshot folders
+# be cleaned without losing products — see docs/UPDATE_PIPELINE.md.
+data_sources/lista_zum/master_seed/20*/
 
 # GSE Conto Termico raw snapshots, parsed output, and matching artifacts
 # (rebuilt by scripts/it/; monthly refresh)
@@ -88,6 +92,7 @@ data_sources/lista_zum/matching/20*/
 data_sources/gse_ct/raw/20*/
 data_sources/gse_ct/parsed/20*/
 data_sources/gse_ct/matching/20*/
+data_sources/gse_ct/master_seed/20*/
 
 # Feasibility-research workspaces (inactive PoC tooling; keep scripts + README,
 # never their downloaded caches or generated outputs)
