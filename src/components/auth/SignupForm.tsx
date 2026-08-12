@@ -103,7 +103,32 @@ export const SignupForm: React.FC<{
 }> = ({ t, language, isLoading, invitedEmail, onSubmit }) => {
   const invited = !!invitedEmail;
   const [v, setV] = useState<SignupFormValues>({ ...empty, email: invitedEmail ?? '' });
+  const [emailConfirm, setEmailConfirm] = useState('');
   const [error, setError] = useState('');
+
+  /**
+   * The account email can never be changed (it IS the identity), and a typo is
+   * therefore not a correctable mistake — the verification mail simply never
+   * arrives and the person has to start over, usually without telling us. Two
+   * guards, because they catch different mistakes: re-entry catches a slip,
+   * and the domain suggestion catches a habit (typing gmial.com twice is not
+   * a slip, and neither is pasting the same wrong address into both fields).
+   */
+  const domainHint = (() => {
+    const at = trim(v.email).toLowerCase().split('@');
+    if (at.length !== 2 || !at[1]) return null;
+    const fix: Record<string, string> = {
+      'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gmail.co': 'gmail.com',
+      'gmali.com': 'gmail.com', 'gmail.con': 'gmail.com', 'gnail.com': 'gmail.com',
+      'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com', 'hotmil.com': 'hotmail.com',
+      'outlok.com': 'outlook.com', 'outllok.com': 'outlook.com', 'outloo.com': 'outlook.com',
+      'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'yhaoo.com': 'yahoo.com',
+      'iclod.com': 'icloud.com', 'icloud.co': 'icloud.com',
+      'web.de.com': 'web.de', 'gmx.de.com': 'gmx.de', 'wanadoo.f': 'wanadoo.fr',
+    };
+    const better = fix[at[1]];
+    return better ? `${at[0]}@${better}` : null;
+  })();
 
   const set = (patch: Partial<SignupFormValues>) => setV(prev => ({ ...prev, ...patch }));
   const isOther = v.companyType === 'other';
@@ -115,6 +140,8 @@ export const SignupForm: React.FC<{
 
     if (!trim(v.firstName) || !trim(v.lastName) || !email || !v.password) return setError(t.suErrRequired);
     if (!isValidEmail(email)) return setError(t.suErrEmail);
+    // Invited members do not retype: their address is fixed by the invitation.
+    if (!invited && trim(emailConfirm).toLowerCase() !== email.toLowerCase()) return setError(t.suErrEmailMatch);
     if (!invited) {
       if (!trim(v.companyName) || !v.companyType) return setError(t.suErrRequired);
       if (isOther && !trim(v.companyTypeOther)) return setError(t.suErrOther);
@@ -174,7 +201,35 @@ export const SignupForm: React.FC<{
                email is immutable by design, so the only fix is deleting the
                account — which burns the email's one free trial for a year. */
             : <p className="text-white/45 text-xs mt-1.5 leading-relaxed" data-testid="su-email-advice">{t.suEmailAdvice}</p>}
+          {!invited && domainHint && (
+            <button
+              type="button"
+              onClick={() => { set({ email: domainHint }); setEmailConfirm(''); }}
+              className="text-amber-300/90 hover:text-amber-200 text-xs mt-1.5 underline text-left"
+              data-testid="su-email-hint"
+            >
+              {t.suEmailDidYouMean(domainHint)}
+            </button>
+          )}
         </div>
+        {!invited && (
+          <div className="md:col-span-2">
+            <label className={authLabel}>{t.suEmailConfirm} *</label>
+            <input
+              type="email"
+              autoComplete="off"
+              /* Pasting the first field defeats the point of retyping it. */
+              onPaste={e => e.preventDefault()}
+              className={authInput}
+              value={emailConfirm}
+              onChange={e => setEmailConfirm(e.target.value)}
+              data-testid="su-email-confirm"
+            />
+            {emailConfirm && trim(v.email) && trim(emailConfirm).toLowerCase() !== trim(v.email).toLowerCase() && (
+              <p className="text-amber-300/90 text-xs mt-1.5" data-testid="su-email-mismatch">{t.suErrEmailMatch}</p>
+            )}
+          </div>
+        )}
         <div className="md:col-span-2">
           <label className={authLabel}>{t.password} *</label>
           <input type="password" autoComplete="new-password" className={authInput} value={v.password} onChange={e => set({ password: e.target.value })} data-testid="su-password" />

@@ -449,6 +449,53 @@ const App: React.FC = () => {
     }
   };
 
+  /**
+   * VERIFY_EMAIL screen: detect the click without being asked.
+   *
+   * The mail is opened in another tab — or another device — so this screen has
+   * no idea anything happened, and a person looking at an unchanged "check your
+   * email" page reasonably concludes it failed. The cheap check is the Auth
+   * record itself (reload() is a token refresh, not a function call); only when
+   * it flips to verified do we spend a finalizeSignup call. Polling backs off
+   * after two minutes and pauses while the tab is hidden, so an abandoned tab
+   * costs nothing.
+   */
+  useEffect(() => {
+    if (currentView !== 'VERIFY_EMAIL') return;
+    let stop = false;
+    const started = Date.now();
+
+    const check = async () => {
+      if (stop || document.hidden || !auth.currentUser) return;
+      try {
+        await auth.currentUser.reload();
+        if (!auth.currentUser?.emailVerified) return;
+        const fin = await tryFinalizeSignup();
+        if (!stop && fin.state === 'active') { setCurrentUser(fin.user); setCurrentView('APP'); }
+      } catch { /* offline or token refresh failed — the next tick retries */ }
+    };
+
+    const tick = () => {
+      if (stop) return;
+      const elapsed = Date.now() - started;
+      if (elapsed > 20 * 60 * 1000) return;            // give up after 20 minutes
+      void check();
+      timer = setTimeout(tick, elapsed > 2 * 60 * 1000 ? 20000 : 5000);
+    };
+    let timer = setTimeout(tick, 3000);
+
+    // Returning to the tab is the strongest signal that the mail was just read.
+    const onWake = () => { if (!document.hidden) void check(); };
+    document.addEventListener('visibilitychange', onWake);
+    window.addEventListener('focus', onWake);
+    return () => {
+      stop = true; clearTimeout(timer);
+      document.removeEventListener('visibilitychange', onWake);
+      window.removeEventListener('focus', onWake);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentView]);
+
   /** VERIFY_EMAIL screen: user says they clicked the link — ask the server. */
   const handleVerifyCheck = async () => {
     setIsLoading(true);
@@ -771,6 +818,11 @@ const App: React.FC = () => {
       </AuthShell>
     );
   }
+  // The verification link can land on a device that never had the session (the
+  // mail was opened on a phone). Say the verification worked, so signing in
+  // does not read as "it did not take".
+  const justVerified = new URLSearchParams(window.location.search).get('verified') === '1';
+
   if (currentView === 'LOGIN') {
     // Operations console (heatpumpdb-hub): its own EN|KO sign-in, no country
     // chrome, no social/sign-up — the console is admin-only.
@@ -809,6 +861,14 @@ const App: React.FC = () => {
           <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-4 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.loginTitle}</h2>
           <p className="text-white/50 text-sm mb-4">{t.loginSub}</p>
+          {justVerified && (
+            <div
+              className="mb-4 rounded-xl border border-emerald-400/25 bg-emerald-400/10 p-3 text-sm text-emerald-200"
+              data-testid="login-verified-notice"
+            >
+              {(t as any).verifiedSignIn}
+            </div>
+          )}
           {/* The form was generously spaced while everything below the divider
               was crammed. Tightening the top by one step buys the room the
               social block and the footer links needed to breathe. */}

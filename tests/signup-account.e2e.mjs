@@ -74,9 +74,13 @@ check('"Other" reveals the detail field', await page.locator('[data-testid="su-c
 
 // Validation: consent is required
 const fill = async () => {
+  const probe = `probe-${Date.now()}@example.com`;
   await page.fill('[data-testid="su-first"]', 'Test');
   await page.fill('[data-testid="su-last"]', 'User');
-  await page.fill('[data-testid="su-email"]', `probe-${Date.now()}@example.com`);
+  await page.fill('[data-testid="su-email"]', probe);
+  // Re-entry is required: the account email is immutable, so a typo is not a
+  // correctable mistake (2026-08-13).
+  await page.fill('[data-testid="su-email-confirm"]', probe);
   await page.fill('[data-testid="su-password"]', 'Sup3rSecret!');
   await page.fill('[data-testid="su-company-name"]', 'Probe GmbH');
   await page.selectOption('[data-testid="su-company-type"]', 'installer');
@@ -85,6 +89,22 @@ await fill();
 await page.click('[data-testid="su-submit"]');
 await page.waitForTimeout(400);
 check('terms acceptance is required', await page.locator('[data-testid="su-error"]').isVisible());
+
+// Validation: the two email fields must agree, and a typo'd domain is offered a fix
+await fill();
+await page.fill('[data-testid="su-email-confirm"]', 'someone-else@example.com');
+await page.check('[data-testid="su-consent"]');
+await page.click('[data-testid="su-submit"]');
+await page.waitForTimeout(400);
+check('mismatched confirmation email is rejected', await page.locator('[data-testid="su-error"]').isVisible());
+
+await page.fill('[data-testid="su-email"]', 'someone@gmial.com');
+await page.waitForTimeout(250);
+check('a mistyped domain is offered a correction', await page.locator('[data-testid="su-email-hint"]').isVisible());
+await page.locator('[data-testid="su-email-hint"]').click();
+await page.waitForTimeout(250);
+check('accepting the correction rewrites the address',
+  (await page.inputValue('[data-testid="su-email"]')) === 'someone@gmail.com');
 
 // Validation: website format
 await page.check('[data-testid="su-consent"]');

@@ -159,6 +159,23 @@ export const refetchSessionUser = async (): Promise<User | null> => {
  * payload and the emailRegistry history. Returns the refreshed profile on
  * activation, or the blocking reason.
  */
+/**
+ * Where the verification link comes back to.
+ *
+ * Without this, Firebase's own action page is the end of the journey: an
+ * unbranded English "your email has been verified" screen with no way back to
+ * the site, on whichever device opened the mail. The account then sits
+ * unactivated until the person happens to return — one real signup took 21
+ * hours to activate that way (2026-08-11). Sending them back to their own
+ * market's origin means the app finalizes on load and drops them straight in.
+ * The `verified=1` marker only drives the message shown when the link is
+ * opened on a device with no session; activation itself is server-checked.
+ */
+const verificationReturn = () => ({
+  url: `${window.location.origin}/?verified=1`,
+  handleCodeInApp: false,
+});
+
 export const tryFinalizeSignup = async (): Promise<
   { state: 'active'; user: User; trial: boolean } | { state: 'unverified' } | { state: 'error'; message: string }
 > => {
@@ -184,7 +201,7 @@ export const tryFinalizeSignup = async (): Promise<
 export const resendVerificationEmail = async (): Promise<void> => {
   const fbUser = auth.currentUser;
   if (!fbUser) throw new Error('unauthenticated');
-  await sendEmailVerification(fbUser);
+  await sendEmailVerification(fbUser, verificationReturn());
 };
 
 export type RegisterResult =
@@ -252,7 +269,8 @@ export const registerUser = async (data: SignupData): Promise<RegisterResult> =>
 
   if (TRIAL_FLOW_ENABLED) {
     // New flow: verification mail, session kept open for the verify screen.
-    await sendEmailVerification(userCredential.user).catch(e => console.error('verification mail failed', e));
+    await sendEmailVerification(userCredential.user, verificationReturn())
+      .catch(e => console.error('verification mail failed', e));
     await logActivity(uid, 'REGISTER_PENDING', `Registration awaiting email verification: ${data.email}`, data.email, `${data.firstName} ${data.lastName}`);
     return { state: 'verify-email' };
   }
