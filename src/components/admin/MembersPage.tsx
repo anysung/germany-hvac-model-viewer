@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
+import { TRIAL_FLOW_ENABLED } from '../../services/billingFnService';
 import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
 import { adminClearSessions } from '../../services/opsService';
 import { COUNTRY_PROFILES } from '../../config/countryProfiles';
@@ -136,9 +137,11 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
 
       {/* Pending notice */}
       {pendingCount > 0 && (
-        <div className="mb-4 flex items-center gap-3 bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
-          <span className="text-xl">⚠️</span>
-          <span><strong>{A.mbPendingNotice(pendingCount)}</strong></span>
+        <div className={`mb-4 flex items-center gap-3 border rounded-lg p-3 text-sm ${TRIAL_FLOW_ENABLED
+          ? 'bg-blue-50 border-blue-200 text-blue-900'   // nothing to do — informational
+          : 'bg-yellow-50 border-yellow-200 text-yellow-800'}`}>
+          <span className="text-xl">{TRIAL_FLOW_ENABLED ? 'ℹ️' : '⚠️'}</span>
+          <span>{TRIAL_FLOW_ENABLED ? A.mbVerifyNotice(pendingCount) : <strong>{A.mbPendingNotice(pendingCount)}</strong>}</span>
         </div>
       )}
 

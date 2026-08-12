@@ -86,6 +86,13 @@ const EN = {
   mbAllTypes: 'All company types',
   mbAllMarkets: 'All markets',
   mbPendingNotice: (n: number) => `${n} pending application${n > 1 ? 's' : ''} awaiting approval.`,
+  /** Trial flow: nobody is waiting for the admin. An account sits at
+   *  'pending' only until the USER confirms their email, after which the
+   *  server activates it and starts the trial. Saying "awaiting approval"
+   *  here sent the owner looking for a switch that does not exist. */
+  mbVerifyNotice: (n: number) => `${n} account${n > 1 ? 's' : ''} not yet email-verified. `
+    + `They activate automatically once the user confirms the address — no approval needed. `
+    + `Approve manually only to override (e.g. the verification mail never arrived).`,
   mbExport: 'Export Excel',
   mbApprove: '✓ Approve',
   mbReject: '✗ Reject',
@@ -337,6 +344,9 @@ const KO: typeof EN = {
   mbAllTypes: '모든 회사 유형',
   mbAllMarkets: '모든 마켓',
   mbPendingNotice: (n: number) => `승인 대기 중인 가입 신청 ${n}건이 있습니다.`,
+  mbVerifyNotice: (n: number) => `이메일 인증을 마치지 않은 계정 ${n}건. `
+    + `사용자가 인증하면 자동으로 활성화되며 승인은 필요하지 않습니다. `
+    + `수동 승인은 예외 처리용입니다(예: 인증 메일이 도착하지 않은 경우).`,
   mbExport: '엑셀 내보내기',
   mbApprove: '✓ 승인',
   mbReject: '✗ 거절',
