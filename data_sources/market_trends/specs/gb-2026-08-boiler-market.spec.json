@@ -1,0 +1,50 @@
+{
+  "country": "GB",
+  "countryLabel": "United Kingdom",
+  "month": "AUGUST 2026",
+  "motif": "chart",
+  "titleSize": 43,
+  "title": ["Boiler sales fell by a fifth —", "heat pumps took 7 % of the market"],
+  "sub": "1,450,900 domestic boilers and 110,353 heat pumps were sold into the UK market in 2025. Heat pump volumes have more than doubled since 2021; boilers still outsell them 13 to 1.",
+  "sections": [
+    {
+      "type": "series",
+      "icon": "chart",
+      "title": "Sales into the market: boilers and heat pumps",
+      "legend": { "hp": "of which heat pumps", "total": "boilers + heat pumps" },
+      "items": [
+        { "label": "2021", "total": 1933799, "hp": 47699, "totalLabel": "1,933,799", "shareLabel": "2.5 %" },
+        { "label": "2022", "total": 1828061, "hp": 61061, "totalLabel": "1,828,061", "shareLabel": "3.3 %" },
+        { "label": "2023", "total": 1644206, "hp": 62906, "totalLabel": "1,644,206", "shareLabel": "3.8 %" },
+        { "label": "2024", "total": 1525973, "hp": 87573, "totalLabel": "1,525,973", "shareLabel": "5.7 %" },
+        { "label": "2025", "total": 1561253, "hp": 110353, "totalLabel": "1,561,253", "shareLabel": "7.1 %" }
+      ],
+      "foot": "Boilers: EHI Heating Market Reports 2023–2025 · Heat pumps: HPA UK factory-gate sales, hydronic (excludes air-to-air) · totals and shares: HeatPump DB calculation"
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1.15,
+        "icon": "doc",
+        "title": "Three counts, three answers for 2025",
+        "rows": [
+          { "label": "Sold into the market (HPA):", "value": "110,353" },
+          { "label": "MCS certified installations:", "value": "61,246" },
+          { "label": "The UK has no installation census for boilers — sales are the only like-for-like basis", "no": true }
+        ]
+      },
+      {
+        "type": "list",
+        "flex": 1,
+        "icon": "trend",
+        "title": "What the targets require",
+        "rows": [
+          { "icon": "house", "label": "Warm Homes Plan, per year by 2030", "value": "450,000" },
+          { "icon": "calendar", "label": "CCC milestone for 2027", "value": "158,587" }
+        ],
+        "note": { "icon": "cross", "title": "Q1 2026 ran the other way", "text": "−22 %", "suffix": "— retrofit installations vs Q1 2025 (DESNZ)" }
+      }
+    ]
+  ],
+  "footer": "HeatPump DB UK Editorial Team"
+}

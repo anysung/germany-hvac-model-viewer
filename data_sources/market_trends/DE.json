@@ -1,5 +1,28 @@
 [
   {
+    "slug": "2026-08-heizungsmarkt",
+    "date": "2026-08-13",
+    "image": "de-2026-08-heizungsmarkt.webp",
+    "title": "Fast jede zweite neue Heizung ist eine Wärmepumpe",
+    "excerpt": "627.000 Wärmeerzeuger 2025 — der niedrigste Absatz seit 15 Jahren. 299.000 davon waren Wärmepumpen.",
+    "body": [
+      "Der deutsche Heizungsmarkt ist 2025 auf 627.000 abgesetzte Wärmeerzeuger gefallen, den niedrigsten Stand seit 15 Jahren. Im selben Jahr stieg der Wärmepumpen-Absatz um 55 Prozent auf 299.000 Geräte — fast die Hälfte des gesamten Marktes. Zum Vergleich: 2021 lag der Anteil bei 16,6 Prozent.",
+      "Die Reihe zeigt zwei Bewegungen gleichzeitig. Der Gesamtmarkt schwoll 2023 auf 1.308.500 Geräte an — ein Vorzieheffekt vor der Heizungsgesetz-Debatte — und halbierte sich danach fast. Die Wärmepumpe hat diesen Einbruch zwar mitgemacht (2024: 193.000), sich aber schneller erholt. Der steigende Anteil ist damit zum Teil ein Nenner-Effekt: Gas fiel 2025 um 33 Prozent auf 276.500 Geräte, Öl um 74 Prozent auf 22.500.",
+      "Für die Einordnung sind zwei Punkte wichtig. Erstens handelt es sich um Absatzzahlen an Großhandel und Fachhandwerk, nicht um Installationszahlen — eine bundesweite Installationsstatistik veröffentlicht in Deutschland niemand. Zweitens sind Trinkwasser-Wärmepumpen (49.500 Geräte, +20 Prozent) in diesen Zahlen nicht enthalten.",
+      "Der Jahresauftakt 2026 setzt den Trend fort: Im ersten Halbjahr wurden 194.500 Wärmepumpen abgesetzt, 40 Prozent mehr als im Vorjahreszeitraum, bei einem Marktanteil von rund 55 Prozent. Die BWP-Branchenstudie 2026 erwartet im Basisszenario 332.500 Wärmepumpen für 2026 und 369.500 für 2027."
+    ],
+    "sourceNote": "Absatzzahlen: BDH-Absatzstatistik (31.01.2026) und BDH/BWP-Wärmepumpengrafik (01/2026), Halbjahreszahlen vom 11.08.2026. Prognose: BWP-Branchenstudie 2026 (30.03.2026), Basisszenario. Anteile: eigene Berechnung aus den veröffentlichten Werten. Alle Angaben ohne Gewähr.",
+    "titleEn": "Nearly every second new heating system in Germany is a heat pump",
+    "excerptEn": "627,000 heat generators in 2025 — the lowest sales in 15 years. 299,000 of them were heat pumps.",
+    "bodyEn": [
+      "Germany's heating market fell to 627,000 heat generators sold in 2025, the lowest level in 15 years. In the same year heat pump sales rose 55 per cent to 299,000 units — close to half the entire market. For comparison, the share stood at 16.6 per cent in 2021.",
+      "The series shows two movements at once. The total market swelled to 1,308,500 units in 2023, a pull-forward ahead of the heating-law debate, then almost halved. Heat pumps fell with it (193,000 in 2024) but recovered faster. The rising share is therefore partly a denominator effect: gas fell 33 per cent to 276,500 units in 2025 and oil 74 per cent to 22,500.",
+      "Two points matter for reading these figures. First, they are sales to wholesalers and installers, not installations — no body publishes a national installation count for Germany. Second, domestic hot water heat pumps (49,500 units, up 20 per cent) are not included.",
+      "2026 has continued the trend: 194,500 heat pumps were sold in the first half, 40 per cent more than a year earlier, at a market share of roughly 55 per cent. The BWP industry study 2026 expects 332,500 heat pumps in its base case for 2026 and 369,500 for 2027."
+    ],
+    "sourceNoteEn": "Sales figures: BDH sales statistics (31 Jan 2026) and the BDH/BWP heat pump chart (Jan 2026); half-year figures 11 Aug 2026. Forecast: BWP industry study 2026 (30 Mar 2026), base scenario. Shares: our own calculation from the published values. All figures without warranty."
+  },
+  {
     "slug": "2026-08-marktrekord",
     "date": "2026-08-12",
     "image": "de-2026-08-marktrekord.webp",

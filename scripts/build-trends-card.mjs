@@ -138,6 +138,20 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .bl { color: rgba(255,255,255,.55); font-size: 15px; text-align: center; }
   .bfoot { margin-top: 12px; color: rgba(255,255,255,.42); font-size: 14.5px; }
 
+/* series */
+  .lgnd { display: flex; gap: 20px; font-size: 15px; color: rgba(255,255,255,.6); margin-bottom: 6px; }
+  .lgnd span { display: inline-flex; align-items: center; gap: 7px; }
+  .lgnd i { width: 13px; height: 13px; border-radius: 3px; display: inline-block; }
+  .sbars { display: flex; gap: 16px; align-items: flex-end; flex: 1; padding-top: 10px; min-height: 250px; }
+  .sbar { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%;
+    justify-content: flex-end; gap: 7px; }
+  .sbar .sv { font-size: 18px; font-weight: 700; color: #fff; white-space: nowrap; }
+  .scol { width: 100%; max-width: 86px; border-radius: 9px 9px 3px 3px; background: rgba(255,255,255,.2);
+    display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+  .shp { width: 100%; border-radius: 0 0 3px 3px; box-shadow: 0 -1px 0 rgba(255,255,255,.55); min-height: 3px; }
+  .sbar .sl { color: rgba(255,255,255,.55); font-size: 15px; }
+  .sbar .ss { font-size: 17px; font-weight: 800; }
+
   /* table */
   .cols { display: flex; justify-content: flex-end; font-size: 13px; letter-spacing: 1.4px; margin-bottom: 6px; }
   .cols .c1 { color: rgba(255,255,255,.4); width: 120px; text-align: center; }

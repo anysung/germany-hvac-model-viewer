@@ -1,5 +1,19 @@
 [
   {
+    "slug": "2026-08-boiler-market",
+    "date": "2026-08-13",
+    "image": "gb-2026-08-boiler-market.webp",
+    "title": "Boiler sales fell by a fifth — heat pumps took 7% of the market",
+    "excerpt": "1,450,900 domestic boilers and 110,353 heat pumps were sold into the UK market in 2025. Boilers still outsell heat pumps 13 to 1.",
+    "body": [
+      "The UK sold 1,450,900 domestic boilers in 2025 — down from 1,886,100 in 2021 — while heat pump sales more than doubled over the same period, from 47,699 to 110,353 units. Heat pumps accounted for 7.1 per cent of boiler-plus-heat-pump sales, against 2.5 per cent four years earlier.",
+      "Both series are sales into the market rather than completed jobs. The boiler figures come from the European Heating Industry's annual Heating Market Reports; the heat pump figures are the Heat Pump Association's UK factory-gate sales, hydronic only, which exclude air-to-air units.",
+      "The distinction matters because the UK publishes three different heat pump counts for the same year, and they do not agree. For 2025: 110,353 sold into the market, 61,246 MCS-certified installations, and 53,265 retrofit installations in the DESNZ statistics. Each is correct on its own basis. There is no installation census for boilers at all, which is why sales are the only like-for-like comparison available.",
+      "Against the targets, the gap is the story. The Warm Homes Plan sets more than 450,000 heat pump installations a year by 2030, and the Climate Change Committee's pathway needs 158,587 retrofit installations in 2027. Retrofit installations in the first quarter of 2026 were 22 per cent lower than a year earlier."
+    ],
+    "sourceNote": "Boilers: EHI Heating Market Reports 2023–2025. Heat pumps sold: Heat Pump Association UK (26 Mar 2026). Installations: MCS (Feb 2026) and DESNZ heat pump deployment statistics, official statistics in development (11 Jun 2026). Targets: DESNZ Warm Homes Plan (21 Jan 2026) and CCC 2026 progress report. Totals and shares are our own calculation from the published figures."
+  },
+  {
     "slug": "2026-08-permitted-development",
     "date": "2026-08-12",
     "image": "gb-2026-08-permitted-development.webp",

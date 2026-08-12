@@ -1,5 +1,28 @@
 [
   {
+    "slug": "2026-08-rynek-grzewczy",
+    "date": "2026-08-13",
+    "image": "pl-2026-08-rynek-grzewczy.webp",
+    "title": "Pompy ciepła to już niemal jedna trzecia rynku grzewczego",
+    "excerpt": "178 610 pomp ciepła sprzedanych w 2025 r. — 32,1% rynku liczącego 556 370 urządzeń.",
+    "body": [
+      "W 2025 roku w Polsce sprzedano 178 610 pomp ciepła, co odpowiada 32,1% rynku urządzeń grzewczych liczącego 556 370 sztuk. Kotły gazowe to 236 710 urządzeń, kotły na paliwa stałe — 129 900.",
+      "Rynek pomp ciepła rośnie drugi rok z rzędu po głębokim załamaniu. Po rekordowym 2022 roku (249 760 szt.) sprzedaż spadła w 2023 r. do 158 480, by odbić do 163 460 w 2024 i 178 610 w 2025 roku.",
+      "Trzeba wiedzieć, co te liczby obejmują. SPIUG podaje sprzedaż do kanału dystrybucji, a nie liczbę instalacji, i wlicza pompy powietrze-powietrze oraz do ciepłej wody użytkowej. PORT PC liczy węziej — tylko urządzenia do ogrzewania budynków — i dla 2025 roku podaje około 87 tysięcy sztuk. Obie liczby są poprawne na swojej podstawie; nie należy ich zestawiać. Dane o kotłach na paliwa stałe SPIUG oznacza jako szacunkowe.",
+      "Na 2026 rok PORT PC podaje wstępną prognozę wzrostu o 10–15% dla pomp powietrze-woda do centralnego ogrzewania i o 15–25% dla gruntowych. Pierwsze półrocze 2026 roku potwierdza kierunek: sprzedaż pomp do ogrzewania budynków wzrosła o 18%. Żadna z organizacji nie publikuje prognozy liczbowej na 2027 rok."
+    ],
+    "sourceNote": "Dane: SPIUG, Report: Market of heating appliances in Poland 2025 (Warszawa, 07.07.2026), rys. 11, 13 i 38. Prognoza i ujęcie węższe: PORT PC (12.03.2026 i 06.08.2026). Podane wielkości to sprzedaż do kanału dystrybucji, nie liczba instalacji.",
+    "titleEn": "Heat pumps are now almost a third of Poland's heating market",
+    "excerptEn": "178,610 heat pumps sold in 2025 — 32.1% of a market of 556,370 appliances.",
+    "bodyEn": [
+      "Poland sold 178,610 heat pumps in 2025, equal to 32.1 per cent of a heating appliance market of 556,370 units. Gas boilers accounted for 236,710 units and solid-fuel boilers for 129,900.",
+      "The heat pump market has now grown for two consecutive years after a deep collapse. Following the record year of 2022 (249,760 units), sales fell to 158,480 in 2023, then recovered to 163,460 in 2024 and 178,610 in 2025.",
+      "It matters what these figures include. SPIUG reports sales into the distribution channel rather than installations, and counts air-to-air and domestic hot water heat pumps. PORT PC counts more narrowly — space-heating units only — and puts 2025 at roughly 87,000. Both are correct on their own basis and should not be placed side by side. SPIUG marks its solid-fuel boiler data as estimates.",
+      "For 2026 PORT PC gives a preliminary forecast of 10–15 per cent growth for air-to-water space-heating units and 15–25 per cent for ground-source. The first half of 2026 confirms the direction: sales of space-heating heat pumps rose 18 per cent. No organisation publishes a numerical forecast for 2027."
+    ],
+    "sourceNoteEn": "Data: SPIUG, Report: Market of heating appliances in Poland 2025 (Warsaw, 7 Jul 2026), figures 11, 13 and 38. Forecast and the narrower basis: PORT PC (12 Mar 2026 and 6 Aug 2026). The volumes are sales into the distribution channel, not installations."
+  },
+  {
     "slug": "2026-08-czyste-powietrze",
     "date": "2026-08-12",
     "image": "pl-2026-08-czyste-powietrze.webp",

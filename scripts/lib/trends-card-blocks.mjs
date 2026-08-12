@@ -55,6 +55,7 @@ export const IC = (name, color, size = 44) => {
     window: `<rect x="4" y="4" width="16" height="16" rx="1.4"/><path d="M12 4v16M4 12h16"/>`,
     key: `<circle cx="8" cy="12" r="4"/><path d="M12 12h9M17.5 12v3.5M20 12v2.5"/>`,
     factory: `<path d="M3 20V11l5 3V11l5 3V6.5h3.5L18 14l3 1.5V20z"/><path d="M3 20h18"/>`,
+    snow: `<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/><path d="m10 5 2-2 2 2M10 19l2 2 2-2M4.9 9.9 4.2 7.5 6.6 6.8M17.4 17.2l2.4-.7-.7-2.4M6.6 17.2l-2.4-.7.7-2.4M19.1 9.9l.7-2.4-2.4-.7"/>`,
     percent: `<circle cx="8" cy="8.5" r="2.6"/><circle cx="16" cy="15.5" r="2.6"/><path d="M17.5 6 6.5 18"/>`,
     plug: `<path d="M9 3v5M15 3v5"/><path d="M6.5 8h11v3a5.5 5.5 0 0 1-11 0z"/><path d="M12 16.5V21"/>`,
   }[name] ?? `<circle cx="12" cy="12" r="8"/>`;
@@ -106,6 +107,39 @@ const bars = (b, T) => {
           <span class="bv" style="color:${i.hi ? T.a : 'rgba(255,255,255,.7)'}">${esc(i.value)}</span>
           <span class="bcol" style="height:${h}%;background:${c}${i.dashed ? ';border:1.5px dashed ' + T.a + ';background:transparent' : ''}"></span>
           <span class="bl">${esc(i.label)}</span>
+        </div>`;
+      }).join('')}
+    </div>
+    ${b.foot ? `<div class="bfoot">${esc(b.foot)}</div>` : ''}`, T);
+};
+
+/**
+ * series — years on the x-axis, each column the market total with the heat
+ * pump portion filled inside it, and the share printed under the year.
+ * One column carries both numbers because the story IS the ratio: two separate
+ * charts make the reader do the division themselves.
+ * A `provisional` year is drawn hollow — a figure that may still move should
+ * not look as settled as one that cannot.
+ */
+const series = (b, T) => {
+  const max = Math.max(...b.items.map((i) => i.total ?? 0));
+  return panel(`
+    ${head(b.icon, b.title, T)}
+    ${b.legend ? `<div class="lgnd">
+      <span><i style="background:${T.a}"></i>${esc(b.legend.hp)}</span>
+      <span><i style="background:rgba(255,255,255,.2)"></i>${esc(b.legend.total)}</span>
+    </div>` : ''}
+    <div class="sbars">
+      ${b.items.map((i) => {
+        const th = max ? Math.round((i.total / max) * 100) : 0;
+        const hh = i.total ? Math.round((i.hp / i.total) * 100) : 0;
+        return `<div class="sbar">
+          <span class="sv">${esc(i.totalLabel ?? '')}</span>
+          <span class="scol" style="height:${th}%;${i.provisional ? `border:1.5px dashed rgba(255,255,255,.35);background:transparent` : ''}">
+            <span class="shp" style="height:${hh}%;background:${T.a}${i.provisional ? ';opacity:.55' : ''}"></span>
+          </span>
+          <span class="sl">${esc(i.label)}${i.provisional ? '*' : ''}</span>
+          <span class="ss" style="color:${T.a}">${esc(i.shareLabel ?? '')}</span>
         </div>`;
       }).join('')}
     </div>
@@ -174,7 +208,7 @@ const fazit = (b, T) => `
     ${b.icon ? `<span class="fmotif">${IC(b.icon, T.a, 108)}</span>` : ''}
   </div>`;
 
-const RENDER = { hero, stats, bars, table, list, checks, timeline, compare, fazit };
+const RENDER = { hero, stats, bars, series, table, list, checks, timeline, compare, fazit };
 
 /** Render one section: either a single block or a row of blocks side by side. */
 export function renderSection(section, T) {

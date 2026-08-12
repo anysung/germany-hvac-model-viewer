@@ -1,5 +1,28 @@
 [
   {
+    "slug": "2026-08-marche-chauffage",
+    "date": "2026-08-13",
+    "image": "fr-2026-08-marche-chauffage.webp",
+    "title": "Le marché du chauffage a fondu de 40 % — la PAC gagne surtout par le dénominateur",
+    "excerpt": "613 460 générateurs hydrauliques vendus en 2025 contre 1 018 840 en 2021. La part de la PAC monte, mais les volumes air/eau reculent.",
+    "body": [
+      "Le marché français des générateurs hydrauliques est passé de 1 018 840 unités en 2021 à 613 460 en 2025, soit une contraction de 40 %. Sur la même période, la part des pompes à chaleur (air/eau et géothermie) est passée de 26,5 % à 29,6 %.",
+      "Cette progression mérite une lecture prudente : elle vient d'abord du dénominateur. Les ventes de PAC air/eau ont culminé à 355 473 unités en 2022, puis sont retombées à 182 685 en 2024 (−40 %) et 179 377 en 2025 (−1,8 %). Autrement dit, 2025 marque un plancher plutôt qu'une reprise. Les chaudières gaz et fioul, elles, représentent encore 422 000 unités — soit 2,4 fois le volume air/eau.",
+      "Le graphique exclut volontairement les PAC air/air : 803 661 unités extérieures en 2025. Uniclima attribue la reprise du second semestre aux 27 jours de canicule de l'année, ce qui en fait largement un achat de rafraîchissement plutôt qu'une solution de chauffage — les mélanger ferait passer la part des PAC de 29,6 % à près de 70 %.",
+      "Côté horizon, il faut distinguer objectifs et prévisions. L'État vise un million de PAC produites en France par an d'ici fin 2027 : c'est un objectif industriel de production, pas de ventes. L'AFPAC vise un parc de 8,8 millions de PAC résidentielles en 2030. Uniclima, de son côté, ne publie aucune prévision chiffrée pour 2026."
+    ],
+    "sourceNote": "Composants publiés par Uniclima, dossier de presse Bilan 2025 (05.02.2026), données PAC issues de PAC&Clim'Info ; totaux et parts : calcul HeatPump DB. Objectif de production : DGE / ministère de l'Économie (15.04.2024). Objectif de parc : AFPAC (février 2026). Uniclima révise ses séries d'une année sur l'autre : les valeurs ci-dessus sont celles du millésime 2026.",
+    "titleEn": "France's heating market shrank 40% — the heat pump gains mostly on the denominator",
+    "excerptEn": "613,460 hydronic generators sold in 2025 against 1,018,840 in 2021. The heat pump share rises while air-to-water volumes fall.",
+    "bodyEn": [
+      "The French hydronic generator market fell from 1,018,840 units in 2021 to 613,460 in 2025, a contraction of 40 per cent. Over the same period the heat pump share (air-to-water plus ground source) rose from 26.5 to 29.6 per cent.",
+      "That rise deserves a careful reading, because it comes mainly from the denominator. Air-to-water sales peaked at 355,473 units in 2022, then fell to 182,685 in 2024 (−40 per cent) and 179,377 in 2025 (−1.8 per cent). In other words, 2025 is a floor rather than a recovery. Gas and oil boilers still account for 422,000 units — 2.4 times the air-to-water volume.",
+      "The chart deliberately excludes air-to-air heat pumps: 803,661 outdoor units in 2025. Uniclima attributes the second-half rebound to the year's 27 heatwave days, which makes it largely a cooling purchase rather than a heating solution — including them would lift the heat pump share from 29.6 per cent to nearly 70 per cent.",
+      "On the outlook, targets and forecasts must be kept apart. The French state aims for one million heat pumps produced in France per year by the end of 2027 — an industrial production target, not a sales forecast. AFPAC targets a residential fleet of 8.8 million heat pumps by 2030. Uniclima itself publishes no numerical forecast for 2026."
+    ],
+    "sourceNoteEn": "Components published by Uniclima, Bilan 2025 press dossier (5 Feb 2026), heat pump data from PAC&Clim'Info; totals and shares: HeatPump DB calculation. Production target: DGE / Ministry of the Economy (15 Apr 2024). Fleet target: AFPAC (Feb 2026). Uniclima restates its series between vintages; the figures above are the 2026 vintage."
+  },
+  {
     "slug": "2026-08-rge-reforme",
     "date": "2026-08-12",
     "image": "fr-2026-08-rge-reforme.webp",

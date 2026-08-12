@@ -1,0 +1,60 @@
+{
+  "country": "PL",
+  "countryLabel": "Polska",
+  "month": "SIERPIEŃ 2026",
+  "motif": "chart",
+  "titleSize": 42,
+  "title": ["Pompy ciepła to już niemal", "jedna trzecia rynku grzewczego"],
+  "sub": "178 610 pomp ciepła sprzedanych w 2025 r. — 32,1% rynku liczącego 556 370 urządzeń. Po załamaniu z 2023 r. rynek rośnie drugi rok z rzędu.",
+  "sections": [
+    {
+      "type": "bars",
+      "icon": "chart",
+      "title": "Sprzedaż pomp ciepła (szt.)",
+      "items": [
+        { "label": "2021", "value": "109 180", "v": 109180 },
+        { "label": "2022", "value": "249 760", "v": 249760 },
+        { "label": "2023", "value": "158 480", "v": 158480 },
+        { "label": "2024", "value": "163 460", "v": 163460 },
+        { "label": "2025", "value": "178 610", "v": 178610, "hi": true }
+      ],
+      "foot": "SPIUG, Report: Market of heating appliances in Poland 2025 (07.07.2026), rys. 38 — dane obejmują pompy powietrze-powietrze i do c.w.u."
+    },
+    [
+      {
+        "type": "list",
+        "flex": 1.1,
+        "icon": "house",
+        "title": "Rynek 2025 według technologii",
+        "rows": [
+          { "icon": "plug", "label": "Kotły gazowe", "value": "236 710" },
+          { "icon": "hp-unit", "label": "Pompy ciepła", "value": "178 610" },
+          { "icon": "factory", "label": "Kotły na paliwa stałe*", "value": "129 900" }
+        ],
+        "note": { "icon": "percent", "title": "Udział pomp ciepła", "text": "32,1 %", "suffix": "— z 556 370 urządzeń (SPIUG, rys. 11 i 13)" }
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "Jak czytać te liczby",
+        "rows": [
+          { "label": "Sprzedaż do kanału dystrybucji, nie liczba instalacji" },
+          { "label": "PORT PC liczy inaczej — bez powietrze-powietrze: ok. 87 tys. w 2025 r." },
+          { "label": "* dane o kotłach na paliwa stałe SPIUG podaje jako szacunkowe", "no": true }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Prognoza na 2026",
+      "icon": "trend",
+      "lines": [
+        "PORT PC: wstępnie +10–15% dla pomp powietrze-woda do c.o. i +15–25% dla gruntowych.",
+        "I półrocze 2026 potwierdza kierunek — sprzedaż pomp do ogrzewania wzrosła o 18%.",
+        "Żadna organizacja nie publikuje prognozy liczbowej na 2027 rok."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Poland Editorial Team"
+}

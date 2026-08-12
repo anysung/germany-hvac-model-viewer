@@ -1,0 +1,53 @@
+{
+  "country": "IT",
+  "countryLabel": "Italia",
+  "month": "AGOSTO 2026",
+  "motif": "chart",
+  "titleSize": 42,
+  "title": ["Caldaie murali: −15,7 % in un anno,", "oltre 140.000 unità in meno"],
+  "sub": "Il 2025 è il primo anno pieno senza incentivi per le caldaie a combustibile fossile. L'Italia però non pubblica un totale di mercato: ecco cosa si può dire con i dati delle associazioni.",
+  "sections": [
+    {
+      "type": "compare",
+      "icon": "percent",
+      "title": "Vendite Assotermica (anno pieno)",
+      "columns": [
+        { "head": "2024", "rows": [
+          { "label": "Caldaie murali", "value": "911.899" },
+          { "label": "Caldaie a basamento", "value": "8.342" },
+          { "label": "Scaldacqua in pompa di calore", "value": "23.516" } ] },
+        { "head": "2025", "rows": [
+          { "label": "Caldaie murali", "value": "769.090" },
+          { "label": "Caldaie a basamento", "value": "6.340" },
+          { "label": "Scaldacqua in pompa di calore", "value": "22.916" } ] }
+      ],
+      "foot": "Assotermica (ANIMA Confindustria), comunicato del 24.03.2026 — rilevazione a panel costante"
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1.1,
+        "icon": "doc",
+        "title": "Perché manca la quota delle pompe di calore",
+        "rows": [
+          { "label": "Assotermica pubblica le caldaie, Assoclima solo variazioni percentuali" },
+          { "label": "EHPA conta anche l'aria-aria: 423.000 unità in Italia nel 2025" },
+          { "label": "Nessuna delle tre pubblica una quota di mercato delle pompe di calore", "no": true }
+        ]
+      },
+      {
+        "type": "list",
+        "flex": 1,
+        "icon": "trend",
+        "title": "Direzione 2025 (Assoclima)",
+        "rows": [
+          { "icon": "hp-unit", "label": "PdC idroniche ≤ 10 kW (volumi)", "value": "−4,4 %" },
+          { "icon": "factory", "label": "PdC idroniche 18–50 kW (volumi)", "value": "+11,6 %" },
+          { "icon": "snow", "label": "Monosplit aria-aria (volumi)", "value": "+16 %" }
+        ],
+        "note": { "icon": "calendar", "title": "Prospettive 2026", "text": "nessuna previsione numerica", "suffix": "— né Assotermica né Assoclima ne pubblicano una" }
+      }
+    ]
+  ],
+  "footer": "HeatPump DB Italy Editorial Team"
+}

@@ -1,5 +1,28 @@
 [
   {
+    "slug": "2026-08-mercato-caldaie",
+    "date": "2026-08-13",
+    "image": "it-2026-08-mercato-caldaie.webp",
+    "title": "Caldaie murali: −15,7% in un anno, oltre 140.000 unità in meno",
+    "excerpt": "Il 2025 è il primo anno pieno senza incentivi per le caldaie a combustibile fossile. L'Italia non pubblica però un totale di mercato.",
+    "body": [
+      "Nel 2025 le vendite di caldaie murali in Italia sono scese a 769.090 unità, contro 911.899 nel 2024: −15,7%, oltre 140.000 unità in meno. Anche le caldaie a basamento calano (da 8.342 a 6.340) e gli scaldacqua in pompa di calore passano da 23.516 a 22.916.",
+      "La causa più credibile è normativa: la Legge di Bilancio 2025 ha escluso le caldaie a combustibile fossile autonome da Ecobonus e Bonus Casa, e il 2025 è il primo anno pieno senza quel sostegno.",
+      "Sul fronte pompe di calore il quadro italiano è meno leggibile di quanto ci si aspetterebbe, e vale la pena dirlo apertamente: Assotermica pubblica i volumi delle caldaie, Assoclima pubblica solo variazioni percentuali a panel costante, ed EHPA conta anche l'aria-aria (423.000 unità in Italia nel 2025). Nessuna delle tre pubblica una quota di mercato delle pompe di calore, e sommare basi diverse la gonfierebbe di diverse volte. Per questo la quota non compare su questa scheda.",
+      "La direzione del 2025 secondo Assoclima: pompe di calore idroniche fino a 10 kW in calo del 4,4% a volume, fascia 18–50 kW in crescita dell'11,6%, monosplit aria-aria +16%. Assoclima attribuisce il calo residenziale alla ristrutturazione degli incentivi e all'attesa del Conto Termico 3.0. Per il 2026 né Assotermica né Assoclima pubblicano una previsione numerica."
+    ],
+    "sourceNote": "Dati: Assotermica (ANIMA Confindustria), comunicato del 24.03.2026, rilevazione a panel costante; Assoclima, comunicato del 25.03.2026; EHPA, dati di mercato 2026. Le percentuali Assotermica sono a panel costante mentre i valori assoluti sono totali: i due dati non sempre si dividono esattamente.",
+    "titleEn": "Italy's wall-hung boilers: −15.7% in a year, over 140,000 units fewer",
+    "excerptEn": "2025 was the first full year without incentives for fossil-fuel boilers. Italy publishes no consolidated heating market total.",
+    "bodyEn": [
+      "Wall-hung boiler sales in Italy fell to 769,090 units in 2025 from 911,899 in 2024: −15.7 per cent, more than 140,000 units fewer. Floor-standing boilers also declined (8,342 to 6,340) and heat pump water heaters went from 23,516 to 22,916.",
+      "The most credible cause is regulatory: the 2025 Budget Law removed standalone fossil-fuel boilers from Ecobonus and Bonus Casa eligibility, and 2025 is the first full year without that support.",
+      "On heat pumps the Italian picture is less legible than one would expect, and it is worth saying so plainly: Assotermica publishes boiler volumes, Assoclima publishes only percentage changes at constant panel, and EHPA counts air-to-air as well (423,000 units in Italy in 2025). None of the three publishes a heat pump market share, and adding different bases together would inflate it several times over. That is why no share appears on this card.",
+      "The direction of 2025 according to Assoclima: hydronic heat pumps up to 10 kW down 4.4 per cent by volume, the 18–50 kW band up 11.6 per cent, and air-to-air monosplit units up 16 per cent. Assoclima attributes the residential dip to the restructuring of incentives and buyers waiting for Conto Termico 3.0. For 2026 neither Assotermica nor Assoclima publishes a numerical forecast."
+    ],
+    "sourceNoteEn": "Data: Assotermica (ANIMA Confindustria) release of 24 Mar 2026, survey at constant panel; Assoclima release of 25 Mar 2026; EHPA market data 2026. Assotermica's percentages are at constant panel while the absolute values are totals, so the two do not always divide exactly."
+  },
+  {
     "slug": "2026-08-scadenza-2027",
     "date": "2026-08-12",
     "image": "it-2026-08-scadenza-2027.webp",

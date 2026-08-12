@@ -1,0 +1,50 @@
+{
+  "country": "FR",
+  "countryLabel": "France",
+  "month": "AOÛT 2026",
+  "motif": "chart",
+  "titleSize": 42,
+  "title": ["Le marché du chauffage a fondu de 40 %", "— la PAC gagne surtout par le dénominateur"],
+  "sub": "613 460 générateurs hydrauliques vendus en 2025 contre 1 018 840 en 2021. La part de la PAC monte, mais les volumes air/eau, eux, reculent.",
+  "sections": [
+    {
+      "type": "series",
+      "icon": "chart",
+      "title": "Ventes de générateurs (hors air/air) et part des PAC",
+      "legend": { "hp": "dont PAC air/eau + géothermie", "total": "générateurs hydrauliques" },
+      "items": [
+        { "label": "2021", "total": 1018840, "hp": 269940, "totalLabel": "1 018 840", "shareLabel": "26,5 %" },
+        { "label": "2022", "total": 908425, "hp": 358445, "totalLabel": "908 425", "shareLabel": "39,5 %" },
+        { "label": "2023", "total": 716701, "hp": 310051, "totalLabel": "716 701", "shareLabel": "43,3 %" },
+        { "label": "2024", "total": 639594, "hp": 185364, "totalLabel": "639 594", "shareLabel": "29,0 %" },
+        { "label": "2025", "total": 613460, "hp": 181890, "totalLabel": "613 460", "shareLabel": "29,6 %" }
+      ],
+      "foot": "Composants publiés par Uniclima (bilan 2025, 05.02.2026 · PAC : PAC&Clim'Info) — totaux et parts : calcul HeatPump DB"
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1.15,
+        "icon": "doc",
+        "title": "Ce que le graphique n'inclut pas",
+        "rows": [
+          { "label": "PAC air/air 2025 :", "value": "803 661 unités ext." },
+          { "label": "Marché largement tiré par le rafraîchissement — 27 jours de canicule en 2025" },
+          { "label": "Chaudières gaz/fioul 2025 : 422 000, soit encore 2,4 fois le volume air/eau", "no": true }
+        ]
+      },
+      {
+        "type": "list",
+        "flex": 1,
+        "icon": "trend",
+        "title": "Objectifs affichés",
+        "rows": [
+          { "icon": "factory", "label": "PAC produites en France / an (DGE, 2027)", "value": "1 M" },
+          { "icon": "house", "label": "Parc résidentiel visé (AFPAC, 2030)", "value": "8,8 M" }
+        ],
+        "note": { "icon": "cross", "title": "Ce ne sont pas des prévisions de ventes", "text": "objectif de production", "suffix": "— Uniclima ne publie aucune prévision chiffrée pour 2026" }
+      }
+    ]
+  ],
+  "footer": "HeatPump DB France Editorial Team"
+}

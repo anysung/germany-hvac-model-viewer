@@ -1,0 +1,50 @@
+{
+  "country": "DE",
+  "countryLabel": "Deutschland",
+  "month": "AUGUST 2026",
+  "motif": "chart",
+  "titleSize": 43,
+  "title": ["Fast jede zweite neue Heizung", "ist eine Wärmepumpe"],
+  "sub": "627.000 Wärmeerzeuger wurden 2025 an den Fachhandel abgesetzt — der niedrigste Stand seit 15 Jahren. 299.000 davon waren Wärmepumpen.",
+  "sections": [
+    {
+      "type": "series",
+      "icon": "chart",
+      "title": "Absatz Wärmeerzeuger und Wärmepumpen-Anteil",
+      "legend": { "hp": "davon Wärmepumpen", "total": "Wärmeerzeuger gesamt" },
+      "items": [
+        { "label": "2021", "total": 929000, "hp": 154000, "totalLabel": "929.000", "shareLabel": "16,6 %" },
+        { "label": "2022", "total": 980000, "hp": 236000, "totalLabel": "980.000", "shareLabel": "24,1 %" },
+        { "label": "2023", "total": 1308500, "hp": 356000, "totalLabel": "1.308.500", "shareLabel": "27,2 %" },
+        { "label": "2024", "total": 712500, "hp": 193000, "totalLabel": "712.500", "shareLabel": "27,1 %" },
+        { "label": "2025", "total": 627000, "hp": 299000, "totalLabel": "627.000", "shareLabel": "47,7 %" }
+      ],
+      "foot": "Quelle: BDH-Absatzstatistik (31.01.2026) · Wärmepumpen: BDH/BWP (01/2026) · Anteile: eigene Berechnung"
+    },
+    [
+      {
+        "type": "compare",
+        "flex": 1,
+        "icon": "trend",
+        "title": "Prognose (BWP, Szenario „BAU“)",
+        "columns": [
+          { "head": "2026", "rows": [ { "label": "Wärmepumpen", "value": "332.500" }, { "label": "Anteil", "value": "47 %" } ] },
+          { "head": "2027", "rows": [ { "label": "Wärmepumpen", "value": "369.500" }, { "label": "Anteil", "value": "48 %" } ] }
+        ],
+        "foot": "BWP-Branchenstudie 2026 (30.03.2026), Basisszenario"
+      },
+      {
+        "type": "checks",
+        "flex": 1.05,
+        "icon": "doc",
+        "title": "Zur Einordnung",
+        "rows": [
+          { "label": "Absatz an Großhandel und Fachhandwerk — keine Installationszahlen" },
+          { "label": "1. Halbjahr 2026:", "value": "194.500 Wärmepumpen (+40 %)" },
+          { "label": "Trinkwasser-Wärmepumpen (49.500) sind hier nicht enthalten", "no": true }
+        ]
+      }
+    ]
+  ],
+  "footer": "HeatPump DB Germany Editorial Team"
+}
