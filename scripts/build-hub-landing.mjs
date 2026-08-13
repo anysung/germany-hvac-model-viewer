@@ -356,6 +356,7 @@ const HTML = `<!doctype html>
   <footer>
     <div>${MARKETS.map(m => `<a href="${m.url}">${m.host}</a>`).join(' · ')}</div>
     <div><a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a> · <a href="/models/">Model index</a></div>
+    <div><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund-policy/">Refunds</a> · <a href="/imprint/">Legal Notice</a></div>
     <div class="legal">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · <span data-i18n="legal">${I18N.en.legal}</span></div>
   </footer>
 
