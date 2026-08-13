@@ -92,7 +92,7 @@ const FEAT_ICONS = ['⚡', '⚖️', '📄', '🏷️', '💶', '📰'];
 const I18N = {
   en: {
     h1a: 'Every listed heat pump in Europe.', h1b: 'One database.',
-    sub: 'Registry-based technical data for installers and professionals — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.',
+    sub: 'HeatPump DB is the registry-based heat pump database for installers and professionals in five European markets — searchable in seconds, comparable side-by-side, printable as quote-ready data sheets. Refreshed with every monthly update.',
     featLabel: 'Key features',
     features: ['Instant model search', 'Compare 4 side-by-side', 'Print-ready data sheets', 'EU energy label sheets', 'Funding tracked monthly', 'Market news briefings'],
     sect: 'Choose your market', models: 'models', open: 'Open',
@@ -108,7 +108,7 @@ const I18N = {
   },
   de: {
     h1a: 'Jede gelistete Wärmepumpe in Europa.', h1b: 'Eine Datenbank.',
-    sub: 'Registerbasierte technische Daten für Fachhandwerk und Profis — in Sekunden durchsuchbar, direkt vergleichbar, als angebotsfertige Datenblätter druckbar. Aktualisiert mit jedem Monats-Update.',
+    sub: 'HeatPump DB ist die registerbasierte Wärmepumpen-Datenbank für Fachhandwerk und Profis in fünf europäischen Märkten — in Sekunden durchsuchbar, direkt vergleichbar, als angebotsfertige Datenblätter druckbar. Aktualisiert mit jedem Monats-Update.',
     featLabel: 'Kernfunktionen',
     features: ['Sofortige Modellsuche', '4 Modelle im Vergleich', 'Druckfertige Datenblätter', 'EU-Energielabel-Blätter', 'Förderung monatlich verfolgt', 'Markt-News-Briefings'],
     sect: 'Wählen Sie Ihren Markt', models: 'Modelle', open: 'Öffnen:',
@@ -124,7 +124,7 @@ const I18N = {
   },
   fr: {
     h1a: 'Toutes les pompes à chaleur référencées en Europe.', h1b: 'Une seule base.',
-    sub: 'Données techniques issues des registres pour installateurs et professionnels — recherche en quelques secondes, comparaison côte à côte, fiches techniques prêtes pour le devis. Actualisées à chaque mise à jour mensuelle.',
+    sub: 'HeatPump DB est la base de données de pompes à chaleur issue des registres, pour les installateurs et les professionnels de cinq marchés européens — recherche en quelques secondes, comparaison côte à côte, fiches techniques prêtes pour le devis. Actualisées à chaque mise à jour mensuelle.',
     featLabel: 'Fonctions clés',
     features: ['Recherche instantanée', 'Comparer 4 modèles', 'Fiches techniques prêtes à imprimer', 'Fiches étiquette énergie UE', 'Aides suivies chaque mois', 'Briefings marché'],
     sect: 'Choisissez votre marché', models: 'modèles', open: 'Ouvrir :',
@@ -140,7 +140,7 @@ const I18N = {
   },
   pl: {
     h1a: 'Każda pompa ciepła z europejskich rejestrów.', h1b: 'Jedna baza.',
-    sub: 'Dane techniczne oparte na rejestrach dla instalatorów i profesjonalistów — wyszukiwanie w sekundy, porównanie obok siebie, karty danych gotowe do oferty. Odświeżane przy każdej comiesięcznej aktualizacji.',
+    sub: 'HeatPump DB to oparta na rejestrach baza pomp ciepła dla instalatorów i profesjonalistów z pięciu rynków europejskich — wyszukiwanie w sekundy, porównanie obok siebie, karty danych gotowe do oferty. Odświeżane przy każdej comiesięcznej aktualizacji.',
     featLabel: 'Kluczowe funkcje',
     features: ['Błyskawiczna wyszukiwarka', 'Porównanie 4 modeli', 'Karty danych do druku', 'Karty etykiety energetycznej UE', 'Dotacje śledzone co miesiąc', 'Briefingi rynkowe'],
     sect: 'Wybierz swój rynek', models: 'modeli', open: 'Otwórz:',
@@ -156,7 +156,7 @@ const I18N = {
   },
   it: {
     h1a: 'Ogni pompa di calore censita in Europa.', h1b: 'Un unico database.',
-    sub: 'Dati tecnici basati sui registri per installatori e professionisti — ricerca in pochi secondi, confronto affiancato, schede tecniche pronte per il preventivo. Aggiornati a ogni aggiornamento mensile.',
+    sub: 'HeatPump DB è il database delle pompe di calore basato sui registri per installatori e professionisti di cinque mercati europei — ricerca in pochi secondi, confronto affiancato, schede tecniche pronte per il preventivo. Aggiornati a ogni aggiornamento mensile.',
     featLabel: 'Funzioni chiave',
     features: ['Ricerca istantanea', 'Confronto di 4 modelli', 'Schede tecniche pronte da stampare', 'Schede etichetta energetica UE', 'Incentivi seguiti ogni mese', 'Briefing di mercato'],
     sect: 'Scegli il tuo mercato', models: 'modelli', open: 'Apri:',
@@ -238,6 +238,12 @@ const HTML = `<!doctype html>
   header { padding:clamp(48px,9vh,92px) 0 clamp(30px,5vh,52px); text-align:center; }
   .logo { width:min(300px,66vw); height:auto; margin:0 auto 30px; display:block; }
   h1 { font-size:clamp(30px,5.4vw,52px); font-weight:700; letter-spacing:-.025em; line-height:1.12; }
+  /* The product name belongs IN the h1. Google's OAuth branding check reads the
+     h1 as the application name and rejected the page because it found only the
+     tagline there (2026-08-13); more to the point, a visitor landing from a
+     consent screen should see the same name they just approved. */
+  h1 .brandline { display:block; font-size:clamp(10.5px,1.2vw,12.5px); font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--mut); opacity:.75; margin-bottom:14px; }
   h1 .grad { background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .sub { max-width:640px; margin:18px auto 0; color:var(--mut); font-size:clamp(14.5px,1.7vw,17px); line-height:1.65; }
   /* Living logo — identical animation source to the app header (index.css). */
@@ -332,7 +338,7 @@ const HTML = `<!doctype html>
     </div>
     <header>
       ${LOGO}
-      <h1><span data-i18n="h1a">${I18N.en.h1a}</span><br><span class="grad" data-i18n="h1b">${I18N.en.h1b}</span></h1>
+      <h1><span class="brandline">HeatPump DB</span><span data-i18n="h1a">${I18N.en.h1a}</span><br><span class="grad" data-i18n="h1b">${I18N.en.h1b}</span></h1>
       <p class="sub" data-i18n="sub">${I18N.en.sub}</p>
       <div class="feat-label" data-i18n="featLabel">${I18N.en.featLabel}</div>
       <div class="chips">${FEAT_ICONS.map((e, i) => `<span class="fchip"><span class="fic">${e}</span><span data-i18n="features.${i}">${I18N.en.features[i]}</span></span>`).join('')}</div>
