@@ -199,6 +199,17 @@ const App: React.FC = () => {
   const [authLoading, setAuthLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState<Language>(DEFAULT_LANGUAGE);
+
+  /**
+   * The language Firebase writes its account emails in.
+   *
+   * Without this every verification and password-reset mail goes out in
+   * English, whatever market the person signed up on — an English mail from an
+   * unfamiliar sender is exactly what a French or Polish recipient files as
+   * spam. It follows the UI language rather than the market, because someone
+   * who switched the site to English wants the mail in English too.
+   */
+  useEffect(() => { auth.languageCode = language; }, [language]);
   // Operations-console language (EN | KO only) — separate from the country
   // Language type, persisted so the choice carries into the dashboard.
   const [adminLang, setAdminLangState] = useState<AdminLang>(loadAdminLang());
