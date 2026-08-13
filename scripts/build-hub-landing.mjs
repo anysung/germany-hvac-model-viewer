@@ -211,10 +211,10 @@ const HTML = `<!doctype html>
 <meta property="og:description" content="One database, five markets. Every listed heat pump — searchable, comparable, printable.">
 <meta property="og:url" content="https://www.heatpumpdb.eu/">
 <meta property="og:type" content="website">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
+<link rel="icon" href="/favicon.ico?v=2026-08" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png?v=2026-08">
+<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png?v=2026-08">
+<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png?v=2026-08">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">${JSON.stringify({
@@ -489,10 +489,10 @@ const pageShell = (title, desc, canonicalPath, body, ld) => `<!doctype html>
 <title>${title}</title>
 <meta name="description" content="${desc}">
 <link rel="canonical" href="https://www.heatpumpdb.eu${canonicalPath}">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png">
+<link rel="icon" href="/favicon.ico?v=2026-08" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/appicon-48.png?v=2026-08">
+<link rel="icon" type="image/png" sizes="192x192" href="/appicon-192.png?v=2026-08">
+<link rel="apple-touch-icon" sizes="180x180" href="/appicon-180.png?v=2026-08">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}

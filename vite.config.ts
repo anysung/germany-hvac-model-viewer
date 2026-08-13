@@ -157,7 +157,7 @@ export default defineConfig(({ mode }) => {
               /<title>.*?<\/title>/,
               '<title>HeatPump DB — Operations Console</title>\n'
               + '    <meta name="robots" content="noindex, nofollow" />\n'
-              + `    <link rel="icon" type="image/png" sizes="32x32" href="/icons/de-32.png" />`,
+              + `    <link rel="icon" type="image/png" sizes="32x32" href="/icons/de-32.png?v=2026-08" />`,
             );
           }
           return html
@@ -190,9 +190,9 @@ export default defineConfig(({ mode }) => {
               // Favicons: root /favicon.ico + 48px PNG (Google Search prefers
               // ≥48×48) — per-market copies written in closeBundle so the SPA
               // rewrite never answers these URLs with index.html.
-              + `    <link rel="icon" href="/favicon.ico" sizes="any" />\n`
-              + `    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />\n`
-              + `    <link rel="icon" type="image/png" sizes="32x32" href="/icons/${m.iconCode}-32.png" />\n`
+              + `    <link rel="icon" href="/favicon.ico?v=2026-08" sizes="any" />\n`
+              + `    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=2026-08" />\n`
+              + `    <link rel="icon" type="image/png" sizes="32x32" href="/icons/${m.iconCode}-32.png?v=2026-08" />\n`
               + `    <link rel="apple-touch-icon" sizes="180x180" href="/icons/${m.iconCode}-180.png" />\n`
               + jsonLd(m),
             );
