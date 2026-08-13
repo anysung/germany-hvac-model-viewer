@@ -242,8 +242,11 @@ const HTML = `<!doctype html>
      h1 as the application name and rejected the page because it found only the
      tagline there (2026-08-13); more to the point, a visitor landing from a
      consent screen should see the same name they just approved. */
-  h1 .brandline { display:block; font-size:clamp(10.5px,1.2vw,12.5px); font-weight:700; letter-spacing:.2em;
-    text-transform:uppercase; color:var(--mut); opacity:.75; margin-bottom:14px; }
+  /* Rendered verbatim — no text-transform. Google's branding check compares the
+     app name on the homepage with the one on the consent screen, and an
+     uppercased "HEATPUMP DB" is not the string "HeatPump DB" (2026-08-13). */
+  h1 .brandline { display:block; font-size:clamp(12px,1.5vw,15px); font-weight:700; letter-spacing:.12em;
+    color:var(--mut); opacity:.85; margin-bottom:14px; }
   h1 .grad { background:linear-gradient(92deg,var(--red),var(--blue)); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .sub { max-width:640px; margin:18px auto 0; color:var(--mut); font-size:clamp(14.5px,1.7vw,17px); line-height:1.65; }
   /* Living logo — identical animation source to the app header (index.css). */
@@ -356,7 +359,7 @@ const HTML = `<!doctype html>
   <footer>
     <div>${MARKETS.map(m => `<a href="${m.url}">${m.host}</a>`).join(' · ')}</div>
     <div><a href="mailto:support@heatpumpdb.eu">support@heatpumpdb.eu</a> · <a href="/models/">Model index</a></div>
-    <div><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/refund-policy/">Refunds</a> · <a href="/imprint/">Legal Notice</a></div>
+    <div><a href="https://www.heatpumpdb.eu/privacy/">Privacy Policy</a> · <a href="https://www.heatpumpdb.eu/terms/">Terms of Service</a> · <a href="https://www.heatpumpdb.eu/refund-policy/">Refunds</a> · <a href="https://www.heatpumpdb.eu/imprint/">Legal Notice</a></div>
     <div class="legal">© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · <span data-i18n="legal">${I18N.en.legal}</span></div>
   </footer>
 
