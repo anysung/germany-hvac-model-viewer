@@ -1,0 +1,261 @@
+{
+  "_readme": "Special Report edition content store. The owner writes the report (report.html, self-contained, 5 languages) and the English article pack (article-source-en.md); this file is the PUBLISHED copy, one object per UI language, and is the review point for what goes on the sites. Figures are transcribed from the owner's article pack verbatim — never re-derived, never rounded. Build: scripts/build-special-report.mjs.",
+  "edition": "2026-08",
+  "published": "2026-08-16",
+  "reportFile": "report.html",
+  "reportPages": 18,
+  "reportLangs": ["en", "de", "fr", "pl", "it"],
+  "downloadName": "HeatPumpDB-Europe-Special-Report-2026-08.html",
+
+  "copy": {
+    "en": {
+      "eyebrow": "Special Report · August 2026",
+      "title": "Europe's Heating Transition: Five Markets, Five Realities",
+      "standfirst": "HeatPump DataBase Europe launches its new monthly Special Report series, combining verified market data, policy developments and the latest 2026 heat-pump signals across Europe's major heating markets.",
+      "byline": "HeatPump DataBase Europe Editorial Team",
+      "lead": [
+        "Europe's heating transition is accelerating, but the pace, technology mix and policy environment remain markedly different from one country to another.",
+        "The inaugural HeatPump DataBase Europe Special Report — “Europe's Heating Transition: Five Markets, Five Realities” — examines the latest available market evidence from Germany, the United Kingdom, France, Poland and Italy, combining 2025 full-year market data with the newest available 2026 indicators through August.",
+        "At the European level, heat-pump sales returned to growth in 2025, with approximately 2.9 million units sold across 21 European countries and an installed stock of around 29.3 million units. The national picture, however, remains far more complex."
+      ],
+      "bulletsTitle": "Five markets, five different stories",
+      "bullets": [
+        { "cc": "DE", "label": "Germany", "text": "Heat pumps became the country's largest individual heating-technology category in 2025, while H1 2026 sales reached 194,500 units, up 40% year on year." },
+        { "cc": "GB", "label": "United Kingdom", "text": "Hydronic heat-pump sales continued to rise, but boilers still dominate the heating market and the gap between product sales and actual retrofit deployment remains significant." },
+        { "cc": "FR", "label": "France", "text": "The hydronic heating market has contracted substantially since 2021, while the apparent heat-pump share increasingly reflects a shrinking overall market rather than rapid growth in absolute heat-pump volume." },
+        { "cc": "PL", "label": "Poland", "text": "The market is showing renewed momentum in 2026, with H1 heating heat-pump sell-in up 18%, although inventory effects and differences in market definitions remain essential to understanding the data." },
+        { "cc": "IT", "label": "Italy", "text": "Boiler demand declined sharply in 2025, while the latest H1 2026 data show air-to-water heat-pump volumes up 25.5%, signalling stronger momentum in electrified heating solutions." }
+      ],
+      "sections": [
+        {
+          "h": "A new monthly market-intelligence series",
+          "p": [
+            "Beginning with this edition, HeatPump DataBase Europe plans to publish a new European Heat Pump Special Report every month, focusing on the market developments most relevant to installers, manufacturers, distributors, architects, consultants and other heating-industry professionals.",
+            "Future editions will track not only unit sales, but also policy changes, subsidy programmes, market structure, technology shifts, channel behaviour and emerging 2026–2027 trends across major European markets.",
+            "The objective is to provide a clearer view of what is actually happening behind headline market-share figures — particularly where national definitions, product scopes and sales-versus-installation statistics differ."
+          ]
+        },
+        {
+          "h": "More than a static PDF",
+          "p": [
+            "The Special Report has been developed as an interactive digital report rather than a conventional static document.",
+            "Readers can move through the report page by page like a digital magazine and interact directly with the visual data. Moving the cursor over charts and individual data points reveals the underlying numerical values, making it possible to examine market changes in greater detail without overcrowding each page with labels.",
+            "The report also includes direct source references, national market chapters, 2026 market signals and methodology notes designed to make the underlying evidence transparent and easier to verify."
+          ]
+        }
+      ],
+      "ctaTitle": "Read the full interactive Special Report",
+      "ctaSub": "18 pages · five national chapters · available in English, German, French, Polish and Italian.",
+      "openLabel": "Open the interactive report",
+      "downloadLabel": "Download the report",
+      "downloadNote": "Single self-contained HTML file — opens in any browser, works offline. Use the report's own “Print / Save PDF” button to keep a PDF copy.",
+      "seriesTitle": "Special Reports",
+      "seriesSub": "Monthly European market intelligence from HeatPump DataBase Europe.",
+      "metaTitle": "Europe's Heating Transition: Five Markets, Five Realities | HeatPump DB Special Report",
+      "metaDesc": "August 2026 Special Report on Europe's heating market: Germany, the UK, France, Poland and Italy — 2025 full-year data with the newest 2026 signals. Interactive, five languages, free to read and download.",
+      "backLabel": "All Special Reports",
+      "editionLabel": "August 2026 edition",
+      "langNote": "The report itself can be read in English, German, French, Polish and Italian — switch language inside the report."
+    },
+
+    "de": {
+      "eyebrow": "Sonderbericht · August 2026",
+      "title": "Europas Wärmewende: Fünf Märkte, fünf Realitäten",
+      "standfirst": "HeatPump DataBase Europe startet eine neue monatliche Sonderbericht-Reihe und verbindet geprüfte Marktdaten, politische Entwicklungen und die neuesten Wärmepumpen-Signale 2026 aus Europas wichtigsten Wärmemärkten.",
+      "byline": "HeatPump DataBase Europe Redaktion",
+      "lead": [
+        "Europas Wärmewende beschleunigt sich — Tempo, Technologiemix und politische Rahmenbedingungen unterscheiden sich jedoch weiterhin deutlich von Land zu Land.",
+        "Der erste Sonderbericht von HeatPump DataBase Europe — „Europas Wärmewende: Fünf Märkte, fünf Realitäten“ — untersucht die aktuellsten verfügbaren Marktdaten aus Deutschland, dem Vereinigten Königreich, Frankreich, Polen und Italien und verbindet die Gesamtjahreszahlen 2025 mit den neuesten verfügbaren Indikatoren für 2026 bis August.",
+        "Auf europäischer Ebene kehrte der Wärmepumpenabsatz 2025 zum Wachstum zurück: rund 2,9 Millionen verkaufte Einheiten in 21 europäischen Ländern bei einem installierten Bestand von etwa 29,3 Millionen Geräten. Das nationale Bild bleibt jedoch deutlich komplexer."
+      ],
+      "bulletsTitle": "Fünf Märkte, fünf unterschiedliche Geschichten",
+      "bullets": [
+        { "cc": "DE", "label": "Deutschland", "text": "Wärmepumpen wurden 2025 zur größten einzelnen Heizungstechnologie-Kategorie des Landes; im ersten Halbjahr 2026 erreichte der Absatz 194.500 Einheiten — ein Plus von 40 % gegenüber dem Vorjahr." },
+        { "cc": "GB", "label": "Vereinigtes Königreich", "text": "Der Absatz hydronischer Wärmepumpen stieg weiter, doch Kessel dominieren den Wärmemarkt nach wie vor, und die Lücke zwischen Produktabsatz und tatsächlichem Sanierungseinbau bleibt erheblich." },
+        { "cc": "FR", "label": "Frankreich", "text": "Der hydronische Wärmemarkt ist seit 2021 deutlich geschrumpft; der scheinbare Wärmepumpenanteil spiegelt zunehmend einen schrumpfenden Gesamtmarkt wider und nicht ein rasches Wachstum des absoluten Wärmepumpenvolumens." },
+        { "cc": "PL", "label": "Polen", "text": "Der Markt zeigt 2026 neue Dynamik: Der Sell-in von Heizungswärmepumpen legte im ersten Halbjahr um 18 % zu — Lagerbestandseffekte und unterschiedliche Marktdefinitionen bleiben für das Verständnis der Daten jedoch wesentlich." },
+        { "cc": "IT", "label": "Italien", "text": "Die Kesselnachfrage ging 2025 stark zurück, während die neuesten Daten für das erste Halbjahr 2026 ein Plus von 25,5 % bei Luft/Wasser-Wärmepumpen zeigen — ein Zeichen für stärkere Dynamik bei elektrifizierten Heizlösungen." }
+      ],
+      "sections": [
+        {
+          "h": "Eine neue monatliche Marktanalyse-Reihe",
+          "p": [
+            "Beginnend mit dieser Ausgabe plant HeatPump DataBase Europe, jeden Monat einen neuen europäischen Wärmepumpen-Sonderbericht zu veröffentlichen — mit Fokus auf die Marktentwicklungen, die für Installateure, Hersteller, Großhandel, Architekten, Planer und weitere Fachleute der Heizungsbranche am relevantesten sind.",
+            "Künftige Ausgaben verfolgen nicht nur Stückzahlen, sondern auch politische Änderungen, Förderprogramme, Marktstruktur, Technologiewechsel, Kanalverhalten und aufkommende Trends 2026–2027 in den großen europäischen Märkten.",
+            "Ziel ist ein klareres Bild davon, was hinter den Schlagzeilen-Marktanteilen tatsächlich geschieht — insbesondere dort, wo nationale Definitionen, Produktabgrenzungen und die Unterscheidung zwischen Absatz und Einbau voneinander abweichen."
+          ]
+        },
+        {
+          "h": "Mehr als ein statisches PDF",
+          "p": [
+            "Der Sonderbericht wurde als interaktiver digitaler Bericht entwickelt und nicht als herkömmliches statisches Dokument.",
+            "Leserinnen und Leser können den Bericht Seite für Seite wie ein digitales Magazin durchblättern und direkt mit den Grafiken arbeiten. Wer den Cursor über Diagramme und einzelne Datenpunkte bewegt, sieht die zugrunde liegenden Zahlenwerte — so lassen sich Marktveränderungen genauer betrachten, ohne jede Seite mit Beschriftungen zu überfrachten.",
+            "Der Bericht enthält außerdem direkte Quellenangaben, nationale Marktkapitel, Marktsignale 2026 und Hinweise zur Methodik, die die zugrunde liegende Evidenz transparent und leichter überprüfbar machen."
+          ]
+        }
+      ],
+      "ctaTitle": "Den vollständigen interaktiven Sonderbericht lesen",
+      "ctaSub": "18 Seiten · fünf nationale Kapitel · verfügbar auf Englisch, Deutsch, Französisch, Polnisch und Italienisch.",
+      "openLabel": "Interaktiven Bericht öffnen",
+      "downloadLabel": "Bericht herunterladen",
+      "downloadNote": "Eine einzige eigenständige HTML-Datei — öffnet sich in jedem Browser und funktioniert offline. Für eine PDF-Kopie die Schaltfläche „Print / Save PDF“ im Bericht verwenden.",
+      "seriesTitle": "Sonderberichte",
+      "seriesSub": "Monatliche europäische Marktanalysen von HeatPump DataBase Europe.",
+      "metaTitle": "Europas Wärmewende: Fünf Märkte, fünf Realitäten | HeatPump DB Sonderbericht",
+      "metaDesc": "Sonderbericht August 2026 zum europäischen Wärmemarkt: Deutschland, Vereinigtes Königreich, Frankreich, Polen und Italien — Gesamtjahr 2025 mit den neuesten Signalen 2026. Interaktiv, fünf Sprachen, kostenlos lesen und herunterladen.",
+      "backLabel": "Alle Sonderberichte",
+      "editionLabel": "Ausgabe August 2026",
+      "langNote": "Der Bericht selbst ist auf Englisch, Deutsch, Französisch, Polnisch und Italienisch lesbar — die Sprache lässt sich im Bericht umschalten."
+    },
+
+    "fr": {
+      "eyebrow": "Rapport spécial · Août 2026",
+      "title": "La transition du chauffage en Europe : cinq marchés, cinq réalités",
+      "standfirst": "HeatPump DataBase Europe lance sa nouvelle série mensuelle de rapports spéciaux, associant données de marché vérifiées, évolutions réglementaires et derniers signaux 2026 des principaux marchés européens du chauffage.",
+      "byline": "Équipe éditoriale HeatPump DataBase Europe",
+      "lead": [
+        "La transition du chauffage en Europe s'accélère, mais le rythme, le mix technologique et l'environnement réglementaire restent très différents d'un pays à l'autre.",
+        "Le premier rapport spécial de HeatPump DataBase Europe — « La transition du chauffage en Europe : cinq marchés, cinq réalités » — examine les données de marché les plus récentes pour l'Allemagne, le Royaume-Uni, la France, la Pologne et l'Italie, en combinant l'année complète 2025 avec les indicateurs 2026 les plus récents disponibles jusqu'en août.",
+        "À l'échelle européenne, les ventes de pompes à chaleur sont reparties à la hausse en 2025, avec environ 2,9 millions d'unités vendues dans 21 pays européens et un parc installé d'environ 29,3 millions d'unités. Le tableau national reste toutefois bien plus complexe."
+      ],
+      "bulletsTitle": "Cinq marchés, cinq trajectoires différentes",
+      "bullets": [
+        { "cc": "DE", "label": "Allemagne", "text": "Les pompes à chaleur sont devenues en 2025 la première catégorie de technologie de chauffage du pays ; au premier semestre 2026, les ventes ont atteint 194 500 unités, en hausse de 40 % sur un an." },
+        { "cc": "GB", "label": "Royaume-Uni", "text": "Les ventes de pompes à chaleur hydroniques ont continué de progresser, mais les chaudières dominent toujours le marché du chauffage et l'écart entre les ventes de produits et les installations effectives en rénovation reste important." },
+        { "cc": "FR", "label": "France", "text": "Le marché du chauffage hydronique s'est nettement contracté depuis 2021 ; la part apparente des pompes à chaleur reflète de plus en plus un marché global en recul plutôt qu'une croissance rapide des volumes absolus." },
+        { "cc": "PL", "label": "Pologne", "text": "Le marché retrouve de l'élan en 2026, avec un sell-in de pompes à chaleur de chauffage en hausse de 18 % au premier semestre, même si les effets de stock et les différences de définition du marché restent essentiels à la lecture des données." },
+        { "cc": "IT", "label": "Italie", "text": "La demande de chaudières a fortement reculé en 2025, tandis que les dernières données du premier semestre 2026 montrent des volumes de pompes à chaleur air/eau en hausse de 25,5 %, signe d'une dynamique renforcée du chauffage électrifié." }
+      ],
+      "sections": [
+        {
+          "h": "Une nouvelle série mensuelle d'intelligence de marché",
+          "p": [
+            "À partir de cette édition, HeatPump DataBase Europe prévoit de publier chaque mois un nouveau rapport spécial européen sur les pompes à chaleur, centré sur les évolutions de marché les plus utiles aux installateurs, fabricants, distributeurs, architectes, bureaux d'études et autres professionnels du chauffage.",
+            "Les prochaines éditions suivront non seulement les volumes de ventes, mais aussi les évolutions réglementaires, les dispositifs d'aide, la structure du marché, les basculements technologiques, le comportement des canaux de distribution et les tendances émergentes 2026–2027 sur les grands marchés européens.",
+            "L'objectif est d'offrir une vision plus claire de ce qui se passe réellement derrière les parts de marché affichées — en particulier là où les définitions nationales, les périmètres produits et la distinction entre ventes et installations diffèrent."
+          ]
+        },
+        {
+          "h": "Plus qu'un PDF statique",
+          "p": [
+            "Le rapport spécial a été conçu comme un rapport numérique interactif, et non comme un document statique classique.",
+            "Le lecteur parcourt le rapport page par page comme un magazine numérique et interagit directement avec les visualisations. En plaçant le curseur sur les graphiques et les points de données, il fait apparaître les valeurs chiffrées sous-jacentes, ce qui permet d'examiner les évolutions de marché plus finement sans surcharger chaque page d'étiquettes.",
+            "Le rapport comprend également des références directes aux sources, des chapitres nationaux, les signaux de marché 2026 et des notes méthodologiques destinées à rendre les données sous-jacentes transparentes et plus faciles à vérifier."
+          ]
+        }
+      ],
+      "ctaTitle": "Lire le rapport spécial interactif complet",
+      "ctaSub": "18 pages · cinq chapitres nationaux · disponible en anglais, allemand, français, polonais et italien.",
+      "openLabel": "Ouvrir le rapport interactif",
+      "downloadLabel": "Télécharger le rapport",
+      "downloadNote": "Un fichier HTML autonome unique — il s'ouvre dans n'importe quel navigateur et fonctionne hors ligne. Utilisez le bouton « Print / Save PDF » du rapport pour en conserver une version PDF.",
+      "seriesTitle": "Rapports spéciaux",
+      "seriesSub": "Intelligence de marché européenne mensuelle par HeatPump DataBase Europe.",
+      "metaTitle": "La transition du chauffage en Europe : cinq marchés, cinq réalités | Rapport spécial HeatPump DB",
+      "metaDesc": "Rapport spécial d'août 2026 sur le marché européen du chauffage : Allemagne, Royaume-Uni, France, Pologne et Italie — année complète 2025 et derniers signaux 2026. Interactif, cinq langues, lecture et téléchargement gratuits.",
+      "backLabel": "Tous les rapports spéciaux",
+      "editionLabel": "Édition d'août 2026",
+      "langNote": "Le rapport se lit en anglais, allemand, français, polonais et italien — la langue se change à l'intérieur du rapport."
+    },
+
+    "pl": {
+      "eyebrow": "Raport specjalny · Sierpień 2026",
+      "title": "Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości",
+      "standfirst": "HeatPump DataBase Europe uruchamia nową comiesięczną serię raportów specjalnych, łączącą zweryfikowane dane rynkowe, zmiany regulacyjne i najnowsze sygnały z rynku pomp ciepła 2026 na największych rynkach grzewczych Europy.",
+      "byline": "Zespół redakcyjny HeatPump DataBase Europe",
+      "lead": [
+        "Transformacja ogrzewania w Europie przyspiesza, ale tempo, miks technologiczny i otoczenie regulacyjne pozostają wyraźnie różne w poszczególnych krajach.",
+        "Pierwszy raport specjalny HeatPump DataBase Europe — „Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości” — analizuje najnowsze dostępne dane rynkowe z Niemiec, Wielkiej Brytanii, Francji, Polski i Włoch, łącząc pełny rok 2025 z najnowszymi dostępnymi wskaźnikami 2026 do sierpnia.",
+        "Na poziomie europejskim sprzedaż pomp ciepła wróciła w 2025 roku do wzrostu — około 2,9 mln sprzedanych urządzeń w 21 krajach europejskich przy zainstalowanej bazie około 29,3 mln sztuk. Obraz krajowy pozostaje jednak znacznie bardziej złożony."
+      ],
+      "bulletsTitle": "Pięć rynków, pięć różnych historii",
+      "bullets": [
+        { "cc": "DE", "label": "Niemcy", "text": "W 2025 roku pompy ciepła stały się największą pojedynczą kategorią technologii grzewczej w kraju, a w pierwszej połowie 2026 roku sprzedaż osiągnęła 194 500 sztuk — o 40% więcej rok do roku." },
+        { "cc": "GB", "label": "Wielka Brytania", "text": "Sprzedaż hydraulicznych pomp ciepła nadal rosła, ale kotły wciąż dominują na rynku grzewczym, a różnica między sprzedażą produktów a rzeczywistą liczbą modernizacji pozostaje znacząca." },
+        { "cc": "FR", "label": "Francja", "text": "Rynek ogrzewania hydraulicznego istotnie się skurczył od 2021 roku, a pozorny udział pomp ciepła w coraz większym stopniu odzwierciedla kurczący się rynek ogółem, a nie szybki wzrost bezwzględnych wolumenów pomp ciepła." },
+        { "cc": "PL", "label": "Polska", "text": "Rynek odzyskuje dynamikę w 2026 roku — sell-in grzewczych pomp ciepła wzrósł w pierwszym półroczu o 18%, choć efekty zapasów i różnice w definicjach rynku pozostają kluczowe dla właściwego odczytu danych." },
+        { "cc": "IT", "label": "Włochy", "text": "Popyt na kotły mocno spadł w 2025 roku, natomiast najnowsze dane za pierwsze półrocze 2026 pokazują wzrost wolumenów pomp ciepła powietrze/woda o 25,5%, co wskazuje na silniejszą dynamikę rozwiązań elektryfikowanych." }
+      ],
+      "sections": [
+        {
+          "h": "Nowa comiesięczna seria analiz rynkowych",
+          "p": [
+            "Począwszy od tego wydania, HeatPump DataBase Europe planuje publikować co miesiąc nowy europejski raport specjalny o pompach ciepła, koncentrując się na zmianach rynkowych najistotniejszych dla instalatorów, producentów, dystrybutorów, architektów, projektantów i innych profesjonalistów branży grzewczej.",
+            "Kolejne wydania będą śledzić nie tylko wolumeny sprzedaży, lecz także zmiany regulacyjne, programy dopłat, strukturę rynku, przesunięcia technologiczne, zachowania kanałów sprzedaży oraz nadchodzące trendy 2026–2027 na głównych rynkach europejskich.",
+            "Celem jest jaśniejszy obraz tego, co naprawdę dzieje się za nagłówkowymi udziałami rynkowymi — zwłaszcza tam, gdzie różnią się definicje krajowe, zakresy produktowe oraz statystyki sprzedaży w zestawieniu z montażami."
+          ]
+        },
+        {
+          "h": "Więcej niż statyczny PDF",
+          "p": [
+            "Raport specjalny powstał jako interaktywny raport cyfrowy, a nie konwencjonalny dokument statyczny.",
+            "Czytelnik przechodzi przez raport strona po stronie jak przez cyfrowy magazyn i pracuje bezpośrednio z wizualizacjami. Najechanie kursorem na wykresy i pojedyncze punkty danych odsłania wartości liczbowe, co pozwala analizować zmiany rynkowe dokładniej, bez przeładowywania każdej strony etykietami.",
+            "Raport zawiera również bezpośrednie odniesienia do źródeł, rozdziały krajowe, sygnały rynkowe 2026 oraz noty metodologiczne, które czynią materiał dowodowy przejrzystym i łatwiejszym do weryfikacji."
+          ]
+        }
+      ],
+      "ctaTitle": "Przeczytaj pełny interaktywny raport specjalny",
+      "ctaSub": "18 stron · pięć rozdziałów krajowych · dostępny po angielsku, niemiecku, francusku, polsku i włosku.",
+      "openLabel": "Otwórz raport interaktywny",
+      "downloadLabel": "Pobierz raport",
+      "downloadNote": "Jeden samodzielny plik HTML — otwiera się w każdej przeglądarce i działa offline. Aby zachować kopię PDF, użyj przycisku „Print / Save PDF” w samym raporcie.",
+      "seriesTitle": "Raporty specjalne",
+      "seriesSub": "Comiesięczna europejska analiza rynku od HeatPump DataBase Europe.",
+      "metaTitle": "Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości | Raport specjalny HeatPump DB",
+      "metaDesc": "Raport specjalny z sierpnia 2026 o europejskim rynku grzewczym: Niemcy, Wielka Brytania, Francja, Polska i Włochy — pełny rok 2025 i najnowsze sygnały 2026. Interaktywny, pięć języków, bezpłatny do czytania i pobrania.",
+      "backLabel": "Wszystkie raporty specjalne",
+      "editionLabel": "Wydanie sierpień 2026",
+      "langNote": "Sam raport można czytać po angielsku, niemiecku, francusku, polsku i włosku — język przełącza się wewnątrz raportu."
+    },
+
+    "it": {
+      "eyebrow": "Rapporto speciale · Agosto 2026",
+      "title": "La transizione del riscaldamento in Europa: cinque mercati, cinque realtà",
+      "standfirst": "HeatPump DataBase Europe lancia la nuova serie mensile di rapporti speciali, combinando dati di mercato verificati, sviluppi normativi e i più recenti segnali 2026 sulle pompe di calore nei principali mercati europei del riscaldamento.",
+      "byline": "Redazione HeatPump DataBase Europe",
+      "lead": [
+        "La transizione del riscaldamento in Europa sta accelerando, ma ritmo, mix tecnologico e contesto normativo restano nettamente diversi da un paese all'altro.",
+        "Il primo rapporto speciale di HeatPump DataBase Europe — «La transizione del riscaldamento in Europa: cinque mercati, cinque realtà» — esamina le evidenze di mercato più recenti per Germania, Regno Unito, Francia, Polonia e Italia, combinando i dati dell'intero 2025 con gli indicatori 2026 più aggiornati disponibili fino ad agosto.",
+        "A livello europeo le vendite di pompe di calore sono tornate a crescere nel 2025, con circa 2,9 milioni di unità vendute in 21 paesi europei e un parco installato di circa 29,3 milioni di unità. Il quadro nazionale resta però assai più complesso."
+      ],
+      "bulletsTitle": "Cinque mercati, cinque storie diverse",
+      "bullets": [
+        { "cc": "DE", "label": "Germania", "text": "Nel 2025 le pompe di calore sono diventate la maggiore singola categoria di tecnologia di riscaldamento del paese; nel primo semestre 2026 le vendite hanno raggiunto 194.500 unità, in crescita del 40% su base annua." },
+        { "cc": "GB", "label": "Regno Unito", "text": "Le vendite di pompe di calore idroniche hanno continuato a crescere, ma le caldaie dominano ancora il mercato del riscaldamento e il divario tra vendite di prodotto e installazioni effettive in riqualificazione resta significativo." },
+        { "cc": "FR", "label": "Francia", "text": "Il mercato del riscaldamento idronico si è contratto sensibilmente dal 2021 e la quota apparente delle pompe di calore riflette sempre più un mercato complessivo in calo, più che una rapida crescita dei volumi assoluti." },
+        { "cc": "PL", "label": "Polonia", "text": "Il mercato mostra rinnovato slancio nel 2026, con il sell-in di pompe di calore per riscaldamento in crescita del 18% nel primo semestre, sebbene gli effetti di magazzino e le differenze nelle definizioni di mercato restino essenziali per leggere i dati." },
+        { "cc": "IT", "label": "Italia", "text": "La domanda di caldaie è calata nettamente nel 2025, mentre gli ultimi dati del primo semestre 2026 mostrano volumi di pompe di calore aria/acqua in crescita del 25,5%, segnalando uno slancio più forte delle soluzioni di riscaldamento elettrificate." }
+      ],
+      "sections": [
+        {
+          "h": "Una nuova serie mensile di market intelligence",
+          "p": [
+            "A partire da questa edizione, HeatPump DataBase Europe prevede di pubblicare ogni mese un nuovo rapporto speciale europeo sulle pompe di calore, concentrandosi sugli sviluppi di mercato più rilevanti per installatori, produttori, distributori, architetti, progettisti e altri professionisti del settore del riscaldamento.",
+            "Le edizioni future seguiranno non solo i volumi di vendita, ma anche i cambiamenti normativi, i programmi di incentivo, la struttura del mercato, i passaggi tecnologici, il comportamento dei canali e le tendenze emergenti 2026–2027 nei principali mercati europei.",
+            "L'obiettivo è offrire una visione più chiara di ciò che accade davvero dietro le quote di mercato dei titoli — in particolare dove differiscono definizioni nazionali, perimetri di prodotto e statistiche di vendita rispetto alle installazioni."
+          ]
+        },
+        {
+          "h": "Più di un PDF statico",
+          "p": [
+            "Il rapporto speciale è stato sviluppato come rapporto digitale interattivo e non come un documento statico convenzionale.",
+            "Il lettore scorre il rapporto pagina per pagina come una rivista digitale e interagisce direttamente con i dati visivi. Portando il cursore sui grafici e sui singoli punti dati compaiono i valori numerici sottostanti, il che consente di esaminare le variazioni di mercato con maggiore dettaglio senza sovraccaricare ogni pagina di etichette.",
+            "Il rapporto include inoltre riferimenti diretti alle fonti, capitoli nazionali, i segnali di mercato 2026 e note metodologiche pensate per rendere le evidenze sottostanti trasparenti e più facili da verificare."
+          ]
+        }
+      ],
+      "ctaTitle": "Leggi il rapporto speciale interattivo completo",
+      "ctaSub": "18 pagine · cinque capitoli nazionali · disponibile in inglese, tedesco, francese, polacco e italiano.",
+      "openLabel": "Apri il rapporto interattivo",
+      "downloadLabel": "Scarica il rapporto",
+      "downloadNote": "Un unico file HTML autonomo — si apre in qualsiasi browser e funziona offline. Per conservarne una copia PDF, usa il pulsante «Print / Save PDF» del rapporto.",
+      "seriesTitle": "Rapporti speciali",
+      "seriesSub": "Market intelligence europea mensile di HeatPump DataBase Europe.",
+      "metaTitle": "La transizione del riscaldamento in Europa: cinque mercati, cinque realtà | Rapporto speciale HeatPump DB",
+      "metaDesc": "Rapporto speciale di agosto 2026 sul mercato europeo del riscaldamento: Germania, Regno Unito, Francia, Polonia e Italia — anno completo 2025 e i più recenti segnali 2026. Interattivo, cinque lingue, gratuito da leggere e scaricare.",
+      "backLabel": "Tutti i rapporti speciali",
+      "editionLabel": "Edizione agosto 2026",
+      "langNote": "Il rapporto si legge in inglese, tedesco, francese, polacco e italiano — la lingua si cambia all'interno del rapporto."
+    }
+  }
+}

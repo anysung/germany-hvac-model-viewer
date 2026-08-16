@@ -23,9 +23,10 @@
  *
  * Run:  node scripts/build-public-news.mjs <MARKET> <outDir>
  */
-import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { newestEdition, copyOf } from './lib/special-report-store.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MARKET = (process.argv[2] || 'DE').toUpperCase();
@@ -105,6 +106,14 @@ if (!items.length) { console.log(`public news (${MARKET}): snapshot empty — sk
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const slug = (id) => String(id).replace(/[^a-zA-Z0-9-]/g, '-').toLowerCase();
+
+/* Special Report link in the public footer, labelled from the report's own
+   content store — news and the monthly report are siblings, and a reader who
+   lands on one should be able to reach the other. */
+const SR_NEWEST = newestEdition(ROOT);
+const SR_LINK = SR_NEWEST
+  ? `\n      <a href="/special-report/">${esc(copyOf(SR_NEWEST, M.lang).seriesTitle)}</a>`
+  : '';
 const fmtDate = (iso) => {
   const d = new Date(iso);
   return Number.isFinite(d.getTime())
@@ -175,7 +184,7 @@ ${body}
     <p style="margin-top:8px">
       <a href="/">${esc(M.back)}</a>
       <a href="/news/">${esc(M.all)}</a>
-      <a href="/guide/">${esc(M.guide)}</a>
+      <a href="/guide/">${esc(M.guide)}</a>${SR_LINK}
       <a href="/pricing">Plans</a>
       <a href="/privacy">Privacy</a>
       <a href="/imprint">Legal Notice</a>
@@ -308,6 +317,24 @@ const urls = [
           ...(MARKET === 'GB' ? []
             : [{ loc: `${M.host}/market-trends/${c.slug}.en.html`, lastmod: c.date, freq: 'yearly' }]),
         ])
+    : []),
+  // Special Report — build-special-report.mjs owns the pages; the sitemap
+  // lives here, so list the editions from the same committed store.
+  { loc: `${M.host}/special-report/`, freq: 'monthly' },
+  ...(existsSync(join(ROOT, 'data_sources', 'special_report'))
+    ? readdirSync(join(ROOT, 'data_sources', 'special_report'))
+        .filter((d) => /^\d{4}-\d{2}$/.test(d)
+          && existsSync(join(ROOT, 'data_sources', 'special_report', d, 'article.json')))
+        .sort().reverse()
+        .flatMap((id) => {
+          const meta = JSON.parse(readFileSync(join(ROOT, 'data_sources', 'special_report', id, 'article.json'), 'utf8'));
+          return [
+            { loc: `${M.host}/special-report/${id}/`, lastmod: meta.published, freq: 'yearly' },
+            // English twin of the article; GB's market language is already English.
+            ...(MARKET === 'GB' ? []
+              : [{ loc: `${M.host}/special-report/${id}/en.html`, lastmod: meta.published, freq: 'yearly' }]),
+          ];
+        })
     : []),
   { loc: `${M.host}/news/`, freq: 'weekly' },
   ...items.map((a) => ({ loc: `${M.host}/news/${slug(a.id)}.html`, freq: 'yearly', lastmod: String(a.date).slice(0, 10) })),

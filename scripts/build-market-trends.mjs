@@ -26,6 +26,7 @@
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { newestEdition, copyOf } from './lib/special-report-store.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const MARKET = (process.argv[2] || 'DE').toUpperCase();
@@ -249,6 +250,14 @@ const svg = `<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role=
 
 /* ── Page shell (matches the guide/news public-page look) ────────────────── */
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+/* Special Report link in the footer, labelled from the report's own content
+   store — the two surfaces are siblings (both are market intelligence), so a
+   reader who lands on one should be able to reach the other. */
+const SR_NEWEST = newestEdition(ROOT);
+const SR_LINK = SR_NEWEST
+  ? `\n    <a href="/special-report/">${esc(copyOf(SR_NEWEST, M.lang).seriesTitle)}</a>`
+  : '';
 const host = HOSTS[MARKET];
 const alternates = Object.entries(HOSTS)
   .map(([cc, h]) => `<link rel="alternate" hreflang="${HREFLANG[cc]}" href="${h}/market-trends/">`)
@@ -316,7 +325,7 @@ ${alternates}
 
   <footer>
     <a href="/guide/">${esc(M.guide)}</a>
-    <a href="/news/">${esc(M.news)}</a>
+    <a href="/news/">${esc(M.news)}</a>${SR_LINK}
     <span>© 2026 HeatPump DataBase (Europe)™</span>
   </footer>
 </div>

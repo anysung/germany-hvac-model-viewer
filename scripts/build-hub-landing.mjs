@@ -15,7 +15,7 @@
  * Deploy: npm run deploy:eu  (Firebase Hosting target "eu").
  */
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync, rmSync, readFileSync, copyFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, readFileSync, copyFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import QRCode from 'qrcode';
@@ -89,6 +89,21 @@ const FEAT_ICONS = ['⚡', '⚖️', '📄', '🏷️', '💶', '📰'];
    Google indexes; the hreflang cluster already routes languages to the
    country sites). Registry names in chips are proper nouns and never
    translate. */
+/* ── Special Report promo ────────────────────────────────────────────────
+   The hub is the European home of the monthly report, so it leads with the
+   newest edition. Copy is READ from the report's own content store
+   (data_sources/special_report/<edition>/article.json) rather than restated
+   here — one translation of a headline, not two that can drift apart. */
+const SR_STORE = join(ROOT, 'data_sources', 'special_report');
+const SR_EDITION = existsSync(SR_STORE)
+  ? readdirSync(SR_STORE)
+      .filter((d) => /^\d{4}-\d{2}$/.test(d) && existsSync(join(SR_STORE, d, 'article.json')))
+      .sort().reverse()[0] ?? null
+  : null;
+const SR = SR_EDITION
+  ? JSON.parse(readFileSync(join(SR_STORE, SR_EDITION, 'article.json'), 'utf8'))
+  : null;
+
 const I18N = {
   en: {
     h1a: 'Every listed heat pump in Europe.', h1b: 'One database.',
@@ -171,6 +186,31 @@ const I18N = {
     },
   },
 };
+
+/* Fold the report's own headline/standfirst into each language dictionary so
+   the promo switches with the hub's language switcher like everything else. */
+if (SR) {
+  for (const lang of Object.keys(I18N)) {
+    const c = SR.copy[lang] ?? SR.copy.en;
+    I18N[lang].sr = {
+      eyebrow: c.eyebrow, title: c.title, sub: c.standfirst,
+      open: c.openLabel, download: c.downloadLabel,
+    };
+  }
+}
+
+const SR_HTML = SR ? `
+  <div class="srband">
+    <a class="srcard" href="/special-report/${SR_EDITION}/">
+      <img src="/special-report/img/special-report-${SR_EDITION}-en.webp" alt="" loading="lazy">
+      <div class="srtxt">
+        <span class="sreyebrow" data-i18n="sr.eyebrow">${I18N.en.sr.eyebrow}</span>
+        <h2 data-i18n="sr.title">${I18N.en.sr.title}</h2>
+        <p data-i18n="sr.sub">${I18N.en.sr.sub}</p>
+        <span class="srcta"><span data-i18n="sr.open">${I18N.en.sr.open}</span> <span class="arr">→</span></span>
+      </div>
+    </a>
+  </div>` : '';
 
 const cardHtml = (m, i) => `
       <a class="card" href="${m.url}" style="--i:${i}">
@@ -306,6 +346,23 @@ const HTML = `<!doctype html>
   .card:hover .qr-tile { opacity:1; transform:scale(1.12); }
   .qr { width:100%; height:100%; display:block; }
 
+  /* ── Special Report promo: the cover carries the report's own artwork, so
+     the card stays quiet and lets the image do the work. ── */
+  .srband { margin:54px 0 8px; }
+  .srcard { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,1fr); gap:0;
+    border:1px solid var(--line); border-radius:22px; overflow:hidden; text-decoration:none;
+    background:rgba(255,255,255,.03); transition:border-color .18s, transform .18s; }
+  .srcard:hover { border-color:rgba(41,151,255,.55); transform:translateY(-2px); }
+  .srcard img { display:block; width:100%; height:100%; object-fit:cover; }
+  .srtxt { padding:30px 32px; display:flex; flex-direction:column; justify-content:center; }
+  .sreyebrow { font-size:11.5px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#4ade80; }
+  .srtxt h2 { margin:10px 0 9px; font-size:23px; line-height:1.25; letter-spacing:-.4px; color:var(--ink); }
+  .srtxt p { margin:0 0 18px; color:#b3c2d6; font-size:14px; line-height:1.65; }
+  .srcta { color:#2997ff; font-size:14px; font-weight:600; }
+  .srcard:hover .srcta .arr { transform:translateX(3px); }
+  .srcta .arr { display:inline-block; transition:transform .18s; }
+  @media(max-width:760px){ .srcard { grid-template-columns:1fr; } .srtxt { padding:24px 22px; } }
+
   /* ── Value band + footer ── */
   .band { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(255,255,255,.025);
     padding:30px 0; text-align:center; }
@@ -350,6 +407,7 @@ const HTML = `<!doctype html>
     <div class="sect" data-i18n="sect">${I18N.en.sect}</div>
     <div class="grid" id="grid">${MARKETS.map(cardHtml).join('')}
     </div>
+${SR_HTML}
   </div>
 
   <div class="band">
