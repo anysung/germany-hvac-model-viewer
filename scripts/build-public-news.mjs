@@ -143,6 +143,10 @@ const CSS = `
   .cta h2 { font-size:19px; margin-bottom:8px; }
   .cta p { font-size:14.5px; color:#3a3a3e; }
   .btn { display:inline-block; margin-top:14px; background:var(--blue); color:#fff; border-radius:999px; padding:11px 22px; font-size:14.5px; font-weight:600; }
+  /* The one link a Special Report announcement exists for — it sits with the
+     article, above the sources, not down in the sign-up block. */
+  .artcta { margin:26px 0 0; }
+  .artcta .btn { margin-top:0; background:#1d1d1f; }
   .srcs { margin-top:30px; padding-top:16px; border-top:1px solid var(--line); }
   .srcs h3 { font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--mut); margin-bottom:8px; }
   .srcs li { font-size:13.5px; margin-bottom:5px; list-style:none; word-break:break-word; }
@@ -253,6 +257,7 @@ for (const a of items) {
   <div class="body">
     ${paras.map((p) => `<p>${esc(p)}</p>`).join('\n    ')}
   </div>
+  ${a.ctaUrl && a.ctaLabel ? `<p class="artcta"><a class="btn" href="${esc(a.ctaUrl)}">${esc(a.ctaLabel)} →</a></p>` : ''}
   ${a.sources.length ? `<div class="srcs">
     <h3>${esc(M.sourcesLabel)}</h3>
     <ul>

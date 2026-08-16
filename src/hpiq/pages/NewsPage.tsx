@@ -19,7 +19,7 @@ import { FD } from '../ui';
 import { BrandLogo, WavingFlag } from '../../components/BrandLogo';
 import { MARKET_ICON_32 } from '../market';
 import {
-  NEWS_SERIF, categoryOf, localizedNews, newsEyebrow,
+  NEWS_SERIF, categoryOf, localizedNews, localizedCta, newsEyebrow,
   articleDeepLink, emailArticleHref, makeArticlePdf,
 } from '../newsModel';
 import { downloadPdf, openPdfForPrint, printPdfViaShareSheet } from '../pdf/deliverPdf';
@@ -204,6 +204,28 @@ export const NewsPage: React.FC<{ app: HpApp }> = ({ app }) => {
             {loc.body.split(/\n\s*\n/).map((para, i) => (
               <p key={i} style={{ fontFamily: NEWS_SERIF, fontSize: 17.5, lineHeight: 1.75, color: '#1d1d1f', margin: 0 }}>{para}</p>
             ))}
+
+            {/* Destination button — only the Special Report pieces carry a
+                ctaUrl, and they exist to hand the reader the report itself.
+                The body renders as plain text, so a URL typed into it would
+                not be clickable; this is the article's one real link. */}
+            {(() => {
+              const cta = localizedCta(reader, app.lang);
+              return cta ? (
+                <a
+                  href={cta.url}
+                  target="_blank"
+                  rel="noopener"
+                  style={{
+                    alignSelf: 'flex-start', background: '#1d1d1f', color: '#fff',
+                    borderRadius: 999, padding: '12px 26px', fontSize: 14.5,
+                    fontWeight: 600, textDecoration: 'none',
+                  }}
+                >
+                  {cta.label} →
+                </a>
+              ) : null;
+            })()}
 
             {!!reader.sources?.length && (
               <div style={{ borderTop: '1px solid #e0e0e0', paddingTop: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>

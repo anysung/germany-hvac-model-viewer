@@ -225,6 +225,24 @@ export interface NewsItem {
   title_it?: string;
   summary_it?: string;
   body_it?: string;
+  /** Holds the article at the top of the feed regardless of date. Used for the
+   *  monthly Special Report, which stays the lead story until the next edition
+   *  replaces it — news is otherwise strictly newest-first. */
+  pinned?: boolean;
+  /** Keeps this article's imageUrl out of the deterministic pool rotation.
+   *  scripts/news/backfill-news-images.mjs reassigns EVERY article's image on
+   *  each run; an article whose picture is the point (a report cover) must be
+   *  exempt or it silently loses it. */
+  imagePinned?: boolean;
+  /** Optional destination the article exists to send the reader to (the
+   *  Special Report). Rendered as a button under the body; ordinary articles
+   *  leave it unset and are unaffected. */
+  ctaUrl?: string;
+  ctaLabel?: string;
+  ctaLabel_de?: string;
+  ctaLabel_fr?: string;
+  ctaLabel_pl?: string;
+  ctaLabel_it?: string;
 }
 
 export interface PolicyItem {

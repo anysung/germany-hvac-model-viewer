@@ -1,7 +1,36 @@
 {
   "market": "IT",
-  "generatedAt": "2026-08-04T22:31:48.000Z",
+  "generatedAt": "2026-08-16T11:59:44.772Z",
   "items": [
+    {
+      "id": "news-20260816-it-sr1",
+      "date": "2026-08-16T00:00:00Z",
+      "category": "MARKET",
+      "title": "La transizione del riscaldamento in Europa: cinque mercati, cinque realtà",
+      "summary": "HeatPump DataBase Europe lancia un nuovo rapporto di mercato mensile interattivo sugli sviluppi più recenti del mercato delle pompe di calore e del riscaldamento in Europa.",
+      "body": "HeatPump DataBase Europe ha pubblicato la prima edizione del nuovo rapporto speciale mensile europeo sulle pompe di calore. Il rapporto esamina Germania, Regno Unito, Francia, Polonia e Italia sulla base dei dati dell'intero 2025, insieme ai più recenti segnali di mercato disponibili per il 2026.\n\nIl rapporto mostra cinque realtà di mercato molto diverse: il mercato tedesco delle pompe di calore ha continuato a rafforzarsi nel primo semestre 2026; il Regno Unito cresce ma resta dominato dalle caldaie; la Francia registra un mercato del riscaldamento idronico in contrazione; la Polonia si sta riprendendo mentre le scorte di canale si normalizzano; e l'Italia ha registrato una forte crescita delle pompe di calore aria/acqua nel primo semestre 2026.\n\nA differenza di un PDF statico convenzionale, il rapporto si presenta come un rapporto digitale interattivo. Il lettore scorre le pagine come una rivista digitale e, portando il cursore sui grafici, vede i valori numerici sottostanti; i riferimenti alle fonti e le note metodologiche forniscono il contesto.\n\nHeatPump DataBase Europe prevede di pubblicare ogni mese un nuovo rapporto speciale sul mercato europeo delle pompe di calore, dedicato alle tendenze di mercato, agli sviluppi normativi, agli incentivi, ai passaggi tecnologici e agli altri temi rilevanti per i professionisti del settore del riscaldamento.\n\nIl rapporto è gratuito da leggere e da scaricare ed è disponibile in inglese, tedesco, francese, polacco e italiano.",
+      "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "imageUrl": "/special-report/img/special-report-2026-08-it.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": true,
+      "ctaUrl": "https://www.heatpumpdb.it/special-report/2026-08/",
+      "ctaLabel": "Leggi il rapporto speciale",
+      "sources": [
+        {
+          "title": "Assotermica — caldaie, mercato in forte contrazione nel 2025",
+          "url": "https://www.anima.it/associazioni/elenco/assotermica/media/comunicati-stampa/caldaie-mercato-in-forte-contrazione-nel-2025-segnali-di-allarme-per-il-comparto.kl"
+        },
+        {
+          "title": "Assoclima — climatizzazione, primo semestre 2026",
+          "url": "https://www.anima.it/associazioni/elenco/assoclima/media/comunicati-stampa/climatizzazione-primo-semestre-due-velocita-in-flessione-split-avanzano-soluzioni-impiantistiche-piu-evolute.kl"
+        },
+        {
+          "title": "EHPA — European market data (updated 2026)",
+          "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
     {
       "id": "news-20260802-it-001",
       "date": "2026-08-02T00:00:00Z",
@@ -13,6 +42,9 @@
       "summaryEn": "Italian homeowners and businesses are encouraged to capitalize on current heat pump incentives, including the Conto Termico 3.0 and Ecobonus, as significant reductions are slated for 2027. The current year offers favorable rates up to 65% for direct grants and 50% for tax deductions on primary residences, but these are set to decrease, making 2026 a crucial period for energy efficiency investments.",
       "imageUrl": "/news-images/it-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Incentivi pompe di calore 2026: Guida completa alle detrazioni fiscali e bonus - Enpal",
@@ -43,6 +75,9 @@
       "summaryEn": "Italy's heat pump sector experienced robust growth in 2025 and continues to expand in the first half of 2026, positioning the country as Europe's second-largest market. This surge in high-efficiency systems contrasts with a decline in traditional mono and multi-split air conditioners, indicating a significant market shift towards sustainable heating and cooling solutions.",
       "imageUrl": "/news-images/common-market-05.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Climatizzazione: il mercato va a due velocità nel primo semestre 2026 - Canale Energia",
@@ -73,6 +108,9 @@
       "summaryEn": "Italy's heat pump industry is undergoing a significant transformation driven by the stricter EU F-Gas Regulation 2024/573, effective from January 1, 2026. This regulation imposes a ban on high Global Warming Potential (GWP) refrigerants for maintaining existing equipment, accelerating the transition towards natural refrigerants and influencing new efficiency metrics for incentives.",
       "imageUrl": "/news-images/common-tech-05.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Nuovo regolamento f-gas: cosa cambia dal 2026? - Emmetre Clima Service",
@@ -103,6 +141,9 @@
       "summaryEn": "The Conto Termico 3.0 incentive scheme has entered full operation in 2026 with significant updates, including increased single payment thresholds, expanded beneficiary categories, and a recently reopened application portal. These reforms aim to streamline access to funding for energy efficiency and renewable thermal energy projects across Italy.",
       "imageUrl": "/news-images/it-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Incentivi pompe di calore 2026: Guida completa alle detrazioni fiscali e bonus - Enpal",
@@ -133,6 +174,9 @@
       "summaryEn": "Italy's fiscal incentives for heat pump installations, including the Ecobonus and Bonus Ristrutturazioni, have been confirmed for 2026 with specific rates: 50% for main residences and 36% for other properties. These rates, however, are slated for further reduction starting in 2027, highlighting the current year as a critical window for homeowners.",
       "imageUrl": "/news-images/it-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Incentivi pompe di calore 2026: Guida completa alle detrazioni fiscali e bonus - Enpal",
@@ -163,6 +207,9 @@
       "summaryEn": "The new European F-gas Regulation (UE) 2024/573, effective March 11, 2024, is imposing stringent restrictions on fluorinated gases, with a critical ban on high Global Warming Potential (GWP) refrigerants for heat pump and air conditioning maintenance starting January 1, 2026. This mandate accelerates the industry's transition towards natural and low-GWP refrigerants.",
       "imageUrl": "/news-images/common-tech-06.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Nuovo regolamento f-gas: cosa cambia dal 2026? - Emmetre Clima Service",
@@ -193,6 +240,9 @@
       "summaryEn": "The Italian heat pump market demonstrated robust growth in 2025, contributing to a broader European expansion, but faces ongoing challenges from high electricity prices relative to gas. While direct expansion systems saw significant gains, the first half of 2026 indicates a mixed performance with traditional segments contracting while high-efficiency solutions continue to advance.",
       "imageUrl": "/news-images/common-market-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Pompe di calore, nel 2025 cresce il mercato italiano: avanzano split e sistemi medio-grandi - pv magazine Italia",
@@ -223,6 +273,9 @@
       "summaryEn": "Italy has yet to transpose the revised EU Energy Performance of Buildings Directive (EPBD IV), commonly known as the 'Casa Green' directive, missing the May 29, 2026, deadline and facing an infringement procedure from the European Commission. The directive sets national aggregate targets for reducing primary energy consumption in residential buildings, emphasizing a collective rather than individual property obligation.",
       "imageUrl": "/news-images/common-market-04.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Direttiva Casa Green: Cosa Cambia in Italia (Guida 2026) - Mediolanum Ristrutturazioni",
@@ -253,6 +306,9 @@
       "summaryEn": "Italy's landscape for heat pump incentives sees significant adjustments in 2026, with the full operationalization of Conto Termico 3.0 offering direct, non-repayable grants and a recalibration of Ecobonus fiscal deductions, according to recent updates from the GSE and Agenzia delle Entrate. These changes aim to streamline access to support while prioritizing high-efficiency solutions.",
       "imageUrl": "/news-images/it-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Conto Termico 3.0: guida pratica per accedere agli incentivi 2026 - A4Energie.it",
@@ -283,6 +339,9 @@
       "summaryEn": "Italy has cemented its status as a key player in Europe's growing heat pump sector, securing the second-highest sales volume in 2025, according to the European Heat Pump Association's (EHPA) latest report. The continent as a whole experienced robust growth, with sales increasing by 13% across monitored countries.",
       "imageUrl": "/news-images/common-market-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Pubblicato l'European Heat Pump Market Report 2026",
@@ -313,6 +372,9 @@
       "summaryEn": "The Italian heat pump industry is undergoing a significant transformation, driven by the new EU F-Gas Regulation (UE) 2024/573. Strict prohibitions on high Global Warming Potential (GWP) refrigerants, effective from January 1, 2026, are accelerating the adoption of natural refrigerants and promoting hybrid heating solutions across the market.",
       "imageUrl": "/news-images/common-tech-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Nuovo regolamento f-gas: cosa cambia dal 2026? - Emmetre Clima Service",

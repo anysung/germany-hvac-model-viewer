@@ -1,7 +1,40 @@
 {
   "market": "GB",
-  "generatedAt": "2026-08-04T22:31:47.713Z",
+  "generatedAt": "2026-08-16T11:59:44.449Z",
   "items": [
+    {
+      "id": "news-20260816-gb-sr1",
+      "date": "2026-08-16T00:00:00Z",
+      "category": "MARKET",
+      "title": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summary": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "body": "HeatPump DataBase Europe has published the first edition of its new monthly European Heat Pump Special Report, examining Germany, the United Kingdom, France, Poland and Italy using 2025 full-year data together with the latest available 2026 market signals.\n\nThe report shows five very different market realities: Germany's heat-pump market continued to strengthen in H1 2026; the UK is growing but remains dominated by boilers; France is seeing a shrinking hydronic heating market; Poland is recovering as channel inventories normalise; and Italy recorded strong H1 2026 growth in air-to-water heat pumps.\n\nUnlike a conventional static PDF, the report is presented as an interactive digital report. Readers can move through the pages like a digital magazine and place the cursor over charts to view the underlying numerical values, while source references and methodology notes provide additional context.\n\nHeatPump DataBase Europe plans to publish a new European heat-pump market Special Report every month, covering market trends, policy developments, subsidies, technology shifts and other developments relevant to heating-industry professionals.\n\nThe report is free to read and to download, and can be read in English, German, French, Polish and Italian.",
+      "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "imageUrl": "/special-report/img/special-report-2026-08-en.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": true,
+      "ctaUrl": "https://www.heatpumpdb.uk/special-report/2026-08/",
+      "ctaLabel": "Read the Special Report",
+      "sources": [
+        {
+          "title": "Heat Pump Association UK — UK heat pump sales reach record high in 2025",
+          "url": "https://hpauk.org.uk/news/uk-heat-pump-sales-reach-record-high-in-2025-but-more-must-be-done-to-meet-government-targets/"
+        },
+        {
+          "title": "HPA UK — response to DESNZ heat pump deployment statistics, Q1 2026",
+          "url": "https://hpauk.org.uk/news/hpa-uk-respond-to-desnz-heat-pump-deployment-statistics-for-q1-2026/"
+        },
+        {
+          "title": "DESNZ — Boiler Upgrade Scheme extension summary business case",
+          "url": "https://www.gov.uk/government/publications/boiler-upgrade-scheme-bus-extension-summary-business-case"
+        },
+        {
+          "title": "EHPA — European market data (updated 2026)",
+          "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
     {
       "id": "news-20260802-gb-001",
       "date": "2026-08-02T00:00:00Z",
@@ -13,6 +46,9 @@
       "summaryEn": "The UK's Boiler Upgrade Scheme (BUS) has significantly increased its grant for homeowners in England and Wales switching from heating oil or LPG to a heat pump, offering £9,000 from July 21, 2026. This uplift aims to accelerate the transition to low-carbon heating, particularly in off-gas grid properties. Standard grants for air and ground source heat pumps remain at £7,500, with air-to-air systems now eligible for £2,500.",
       "imageUrl": "/news-images/uk-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Boiler Upgrade Scheme 2026 — Get £7,500 Towards a Heat Pump - Great British Energy",
@@ -43,6 +79,9 @@
       "summaryEn": "The UK heat pump market saw record sales in 2025, with over 125,000 units installed, representing a 27% increase year-on-year. Driven by government initiatives like the Boiler Upgrade Scheme and the Clean Heat Market Mechanism, the market is projected for continued substantial growth, aiming for 600,000 annual installations by 2028.",
       "imageUrl": "/news-images/common-market-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "UK Heat Pump Market Size, Share, Growth & Analysis, 2034",
@@ -73,6 +112,9 @@
       "summaryEn": "England's permitted development rules for air source heat pumps have been significantly relaxed, removing the 1-meter boundary restriction and increasing unit size limits. However, from May 28, 2026, all permitted development installations now require a mandatory MCS 020(a) noise assessment, with a tightened noise limit of 37 dB(A) at the nearest habitable room, ensuring quieter operation for neighbours.",
       "imageUrl": "/news-images/common-tech-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Heat pump permitted development in 2026: the noise assessment that decides the job",
@@ -103,6 +145,9 @@
       "summaryEn": "The UK government's recently published Future Homes Standard, set for full implementation by March 2028, will mandate low-carbon heating systems like heat pumps in all new homes. Complementing this, the £15 billion Warm Homes Plan, launched in January 2026, aims to upgrade 5 million existing homes by 2030 through grants, loans, and new regulations for landlords, accelerating the nation's journey towards net-zero.",
       "imageUrl": "/news-images/common-energy-04.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Future Homes Standard 2026 Explained | Low Carbon Heating with Alto Energy",
@@ -133,6 +178,9 @@
       "summaryEn": "The UK government's Boiler Upgrade Scheme (BUS) has significantly increased its grant for homeowners in England and Wales replacing oil heating systems with heat pumps, rising from £7,500 to £9,000. This 20% uplift, effective from 21 July 2026, aims to accelerate the transition to low-carbon heating in off-gas-grid properties.",
       "imageUrl": "/news-images/uk-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Boiler Upgrade Scheme 2026 Rates: £9,000 for Oil Homes - Great British Energy",
@@ -163,6 +211,9 @@
       "summaryEn": "The UK has surpassed 250,000 certified heat pump installations since records began in 2009, with 2025 marking a record year of growth. Data from the Microgeneration Certification Scheme (MCS) reveals a 34% increase in installations in 2025 compared to 2024, demonstrating a sustained acceleration in the decarbonisation of home heating.",
       "imageUrl": "/news-images/common-energy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "UK passes 250000 certified heat pump installations - UKEM Group",
@@ -193,6 +244,9 @@
       "summaryEn": "From 28 May 2026, the Microgeneration Certification Scheme (MCS) 020(a) became the sole certification standard for air source heat pump installations under permitted development rights in England. This change introduces a stricter noise limit of 37.0 dB(A) at neighbouring properties, impacting installer practices and product selection.",
       "imageUrl": "/news-images/common-tech-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Air Source Heat Pump Regulations UK (2026): Planning Permission, Noise & Legal Rules",
@@ -223,6 +277,9 @@
       "summaryEn": "The UK's path to net-zero heating is accelerating with the March 2026 publication of the Future Homes Standard and the ongoing implementation of the Clean Heat Market Mechanism. These policies mandate low-carbon heating in new builds and incentivise heat pump sales by manufacturers, fundamentally reshaping the UK heating market.",
       "imageUrl": "/news-images/common-energy-05.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Future Homes Standard 2026: Full Guide | HEM Guide - Home Energy Model",
@@ -253,6 +310,9 @@
       "summaryEn": "The UK government's Boiler Upgrade Scheme (BUS) is set to increase grants to £9,000 for off-gas grid homes from July 21, 2026. The scheme has also expanded eligibility to include air-to-air heat pumps and removed the mandatory Energy Performance Certificate (EPC) requirement for applicants.",
       "imageUrl": "/news-images/uk-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Boiler Upgrade Scheme explained - Energy Saving Trust",
@@ -283,6 +343,9 @@
       "summaryEn": "The UK heat pump market reached a record 125,037 sales in 2025, marking a 27% increase year-on-year, according to the Heat Pump Association (HPA). This growth is driven by significant government support, including the Boiler Upgrade Scheme and the Clean Heat Market Mechanism, positioning the market for continued expansion towards ambitious 2030 targets.",
       "imageUrl": "/news-images/common-market-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "UK Heat Pump Market Size, Share, Growth & Analysis, 2034",
@@ -313,6 +376,9 @@
       "summaryEn": "Significant amendments to permitted development rights for heat pumps in England, effective throughout 2025 and 2026, have removed the previous 1-meter boundary rule, easing installation for many homes. Simultaneously, a stricter 37 dB(A) noise limit, assessed via the MCS 020(a) standard, became mandatory for permitted development as of May 28, 2026, placing a greater emphasis on acoustic design.",
       "imageUrl": "/news-images/common-tech-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Heat Pump Permitted Development Rights in 2026: What You Can Install Without Planning Permission | Cucumber Eco",
@@ -343,6 +409,9 @@
       "summaryEn": "The UK heat pump market is experiencing significant policy shifts, with the Boiler Upgrade Scheme (BUS) offering enhanced grants for off-gas grid properties from July 2026. Alongside the Clean Heat Market Mechanism incentivising manufacturers and the overarching Warm Homes Plan, government initiatives are creating a robust framework for decarbonising home heating.",
       "imageUrl": "/news-images/uk-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Boiler Upgrade Scheme: Guidance for Property Owners - Ofgem",
@@ -373,6 +442,9 @@
       "summaryEn": "The UK heat pump market is demonstrating robust expansion, with significant growth in installations and sales across Europe. Driven by government incentives and a clear trajectory towards net-zero, the sector is geared for continued acceleration, backed by ambitious targets and evolving policy support.",
       "imageUrl": "/news-images/common-energy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Policy support drives 11% growth in heat pump uptake across Europe in 2025",
@@ -403,6 +475,9 @@
       "summaryEn": "Recent updates to permitted development rights in England have simplified heat pump installations, while a focus on noise compliance through MCS 020(a) and the wider MCS Redeveloped Installer Scheme ensures quality. The expanding scope of MCS to include air-to-air heat pumps also presents new opportunities for installers.",
       "imageUrl": "/news-images/common-tech-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Heat Pump Permitted Development Rights in 2026: What You Can Install Without Planning Permission | Cucumber Eco",

@@ -128,6 +128,16 @@ for (const cc of MARKETS) {
   let changed = 0;
   for (const d of docs) {
     const id = d.name.split('/').pop();
+
+    // Articles whose picture IS the point — the Special Report covers — opt out
+    // of the rotation. Without this, the next run would quietly swap a report
+    // cover for a stock pool image and nobody would notice until a share
+    // preview looked wrong.
+    if (d.fields?.imagePinned?.booleanValue === true) {
+      console.log(`[${cc}] ${id} ${'—'.padEnd(17)} → pinned    ${sv(d, 'imageUrl')} (kept)`);
+      continue;
+    }
+
     const m = (id.match(/^news-(\d{6})/) ?? [])[1] ?? sv(d, 'date').slice(0, 7).replace('-', '') ?? 'unknown';
     if (m !== month) { month = m; usedThisMonth = []; }
     const cat = newsImageCategory(sv(d, 'category'), sv(d, 'title'), sv(d, 'summary'));

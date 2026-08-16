@@ -1,7 +1,40 @@
 {
   "market": "DE",
-  "generatedAt": "2026-08-04T22:31:47.579Z",
+  "generatedAt": "2026-08-16T11:59:44.329Z",
   "items": [
+    {
+      "id": "news-20260816-de-sr1",
+      "date": "2026-08-16T00:00:00Z",
+      "category": "MARKET",
+      "title": "Europas Wärmewende: Fünf Märkte, fünf Realitäten",
+      "summary": "HeatPump DataBase Europe startet einen neuen monatlichen interaktiven Marktbericht zu den aktuellen Entwicklungen im Wärmepumpen- und Wärmemarkt in Europa.",
+      "body": "HeatPump DataBase Europe hat die erste Ausgabe des neuen monatlichen europäischen Wärmepumpen-Sonderberichts veröffentlicht. Untersucht werden Deutschland, das Vereinigte Königreich, Frankreich, Polen und Italien — auf Basis der Gesamtjahresdaten 2025 zusammen mit den neuesten verfügbaren Marktsignalen für 2026.\n\nDer Bericht zeigt fünf sehr unterschiedliche Marktrealitäten: Der deutsche Wärmepumpenmarkt hat sich im ersten Halbjahr 2026 weiter gefestigt; das Vereinigte Königreich wächst, wird aber weiterhin von Kesseln dominiert; in Frankreich schrumpft der hydronische Wärmemarkt; Polen erholt sich, während sich die Lagerbestände im Handel normalisieren; und Italien verzeichnete im ersten Halbjahr 2026 ein kräftiges Wachstum bei Luft/Wasser-Wärmepumpen.\n\nAnders als ein herkömmliches statisches PDF ist der Bericht als interaktiver digitaler Bericht angelegt. Leserinnen und Leser blättern wie in einem digitalen Magazin durch die Seiten und sehen die zugrunde liegenden Zahlenwerte, sobald sie den Cursor über ein Diagramm bewegen; Quellenangaben und Methodikhinweise liefern den weiteren Kontext.\n\nHeatPump DataBase Europe plant, jeden Monat einen neuen Sonderbericht zum europäischen Wärmepumpenmarkt zu veröffentlichen — zu Markttrends, politischen Entwicklungen, Förderprogrammen, technologischen Verschiebungen und weiteren Themen, die für Fachleute der Heizungsbranche relevant sind.\n\nDer Bericht ist kostenlos lesbar und herunterladbar und steht auf Englisch, Deutsch, Französisch, Polnisch und Italienisch zur Verfügung.",
+      "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "imageUrl": "/special-report/img/special-report-2026-08-de.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": true,
+      "ctaUrl": "https://www.heatpumpdb.de/special-report/2026-08/",
+      "ctaLabel": "Sonderbericht lesen",
+      "sources": [
+        {
+          "title": "BDH — Absatzzahlen Heizungen Deutschland 2025",
+          "url": "https://www.bdh-industrie.de/fileadmin/user_upload/Downloads/PresseMeldungen/Absatzzahlen_Heizungen_Deutschland_2025.pdf"
+        },
+        {
+          "title": "BDH — Heizungsmarkt legt zu, Wärmepumpen setzen positive Impulse (H1 2026)",
+          "url": "https://www.bdh-industrie.de/presse/pressemeldungen/artikel/heizungsmarkt-legt-zu-waermepumpen-setzen-positive-impulse"
+        },
+        {
+          "title": "BWP — Branchenstudie 2026",
+          "url": "https://www.waermepumpe.de/fileadmin/user_upload/2026-03-30_BWP-Branchenstudie_2026_final.pdf"
+        },
+        {
+          "title": "EHPA — European market data (updated 2026)",
+          "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
     {
       "id": "news-20260802-de-001",
       "date": "2026-08-02T00:00:00Z",
@@ -13,6 +46,9 @@
       "summaryEn": "The German government has implemented significant changes to the KfW 458 'Heating Grant for Private Individuals – Residential Buildings' program, effective July 21, 2026. The reform introduces revised eligible costs, altered bonus structures, and a new family supplement, while discontinuing the efficiency bonus.",
       "imageUrl": "/news-images/de-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "BEG (Bundesförderung für effiziente Gebäude): Das gilt 2026 - Thermondo",
@@ -43,6 +79,9 @@
       "summaryEn": "After a challenging 2024, the German heat pump market experienced a robust recovery in 2025, with sales surging by 55%. The technology is now the most frequently sold heating system, driving optimistic forecasts for 2026, though sustained growth hinges on stable policy frameworks.",
       "imageUrl": "/news-images/common-market-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Infografik: Wie entwickelt sich der Absatz von Wärmepumpen? - Statista",
@@ -73,6 +112,9 @@
       "summaryEn": "Germany's heat pump sector is navigating significant technological shifts in 2026, driven by new, stricter noise emission requirements for funding eligibility and a growing industry push towards natural refrigerants like R290 (Propane) for enhanced environmental performance and regulatory compliance.",
       "imageUrl": "/news-images/common-tech-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Neue Schallanforderungen für Wärmepumpen in 2026 - Zewotherm",

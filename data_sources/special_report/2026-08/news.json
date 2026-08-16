@@ -1,0 +1,73 @@
+{
+  "_readme": "The news article that announces this edition, published into countries/<cc>/news and pinned to the top of the feed until the next edition replaces it. This is the SHORT version from the owner's article pack (his own recommendation for the website news slot) — the long version lives on /special-report/<edition>/. Copy is committed here so what goes into the production news collection is reviewable before it is written. Publish: node scripts/news/publish-special-report-news.mjs",
+
+  "docDate": "2026-08-16T00:00:00Z",
+  "idDate": "20260816",
+  "category": "MARKET",
+  "author": "HeatPump DataBase (Europe)",
+
+  "copy": {
+    "en": {
+      "title": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summary": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "body": "HeatPump DataBase Europe has published the first edition of its new monthly European Heat Pump Special Report, examining Germany, the United Kingdom, France, Poland and Italy using 2025 full-year data together with the latest available 2026 market signals.\n\nThe report shows five very different market realities: Germany's heat-pump market continued to strengthen in H1 2026; the UK is growing but remains dominated by boilers; France is seeing a shrinking hydronic heating market; Poland is recovering as channel inventories normalise; and Italy recorded strong H1 2026 growth in air-to-water heat pumps.\n\nUnlike a conventional static PDF, the report is presented as an interactive digital report. Readers can move through the pages like a digital magazine and place the cursor over charts to view the underlying numerical values, while source references and methodology notes provide additional context.\n\nHeatPump DataBase Europe plans to publish a new European heat-pump market Special Report every month, covering market trends, policy developments, subsidies, technology shifts and other developments relevant to heating-industry professionals.\n\nThe report is free to read and to download, and can be read in English, German, French, Polish and Italian.",
+      "ctaLabel": "Read the Special Report"
+    },
+    "de": {
+      "title": "Europas Wärmewende: Fünf Märkte, fünf Realitäten",
+      "summary": "HeatPump DataBase Europe startet einen neuen monatlichen interaktiven Marktbericht zu den aktuellen Entwicklungen im Wärmepumpen- und Wärmemarkt in Europa.",
+      "body": "HeatPump DataBase Europe hat die erste Ausgabe des neuen monatlichen europäischen Wärmepumpen-Sonderberichts veröffentlicht. Untersucht werden Deutschland, das Vereinigte Königreich, Frankreich, Polen und Italien — auf Basis der Gesamtjahresdaten 2025 zusammen mit den neuesten verfügbaren Marktsignalen für 2026.\n\nDer Bericht zeigt fünf sehr unterschiedliche Marktrealitäten: Der deutsche Wärmepumpenmarkt hat sich im ersten Halbjahr 2026 weiter gefestigt; das Vereinigte Königreich wächst, wird aber weiterhin von Kesseln dominiert; in Frankreich schrumpft der hydronische Wärmemarkt; Polen erholt sich, während sich die Lagerbestände im Handel normalisieren; und Italien verzeichnete im ersten Halbjahr 2026 ein kräftiges Wachstum bei Luft/Wasser-Wärmepumpen.\n\nAnders als ein herkömmliches statisches PDF ist der Bericht als interaktiver digitaler Bericht angelegt. Leserinnen und Leser blättern wie in einem digitalen Magazin durch die Seiten und sehen die zugrunde liegenden Zahlenwerte, sobald sie den Cursor über ein Diagramm bewegen; Quellenangaben und Methodikhinweise liefern den weiteren Kontext.\n\nHeatPump DataBase Europe plant, jeden Monat einen neuen Sonderbericht zum europäischen Wärmepumpenmarkt zu veröffentlichen — zu Markttrends, politischen Entwicklungen, Förderprogrammen, technologischen Verschiebungen und weiteren Themen, die für Fachleute der Heizungsbranche relevant sind.\n\nDer Bericht ist kostenlos lesbar und herunterladbar und steht auf Englisch, Deutsch, Französisch, Polnisch und Italienisch zur Verfügung.",
+      "ctaLabel": "Sonderbericht lesen"
+    },
+    "fr": {
+      "title": "La transition du chauffage en Europe : cinq marchés, cinq réalités",
+      "summary": "HeatPump DataBase Europe lance un nouveau rapport de marché mensuel interactif consacré aux dernières évolutions du marché de la pompe à chaleur et du chauffage en Europe.",
+      "body": "HeatPump DataBase Europe publie la première édition de son nouveau rapport spécial mensuel sur la pompe à chaleur en Europe. Il examine l'Allemagne, le Royaume-Uni, la France, la Pologne et l'Italie à partir des données de l'année complète 2025, complétées par les signaux de marché 2026 les plus récents disponibles.\n\nLe rapport met en évidence cinq réalités de marché très différentes : le marché allemand de la pompe à chaleur a continué de se renforcer au premier semestre 2026 ; le Royaume-Uni progresse mais reste dominé par les chaudières ; la France connaît une contraction du marché du chauffage hydronique ; la Pologne se redresse à mesure que les stocks des circuits de distribution se normalisent ; et l'Italie a enregistré une forte croissance des pompes à chaleur air/eau au premier semestre 2026.\n\nContrairement à un PDF statique classique, le rapport se présente comme un rapport numérique interactif. Le lecteur parcourt les pages comme un magazine numérique et fait apparaître les valeurs chiffrées en plaçant le curseur sur les graphiques, tandis que les références aux sources et les notes méthodologiques apportent le contexte.\n\nHeatPump DataBase Europe prévoit de publier chaque mois un nouveau rapport spécial sur le marché européen de la pompe à chaleur, couvrant les tendances de marché, les évolutions réglementaires, les dispositifs d'aide, les basculements technologiques et les autres sujets utiles aux professionnels du chauffage.\n\nLe rapport est consultable et téléchargeable gratuitement, en anglais, allemand, français, polonais et italien.",
+      "ctaLabel": "Lire le rapport spécial"
+    },
+    "pl": {
+      "title": "Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości",
+      "summary": "HeatPump DataBase Europe uruchamia nowy comiesięczny interaktywny raport rynkowy o najnowszych zmianach na rynku pomp ciepła i ogrzewania w Europie.",
+      "body": "HeatPump DataBase Europe opublikował pierwsze wydanie nowego comiesięcznego europejskiego raportu specjalnego o pompach ciepła. Analizuje on Niemcy, Wielką Brytanię, Francję, Polskę i Włochy na podstawie danych za pełny rok 2025 wraz z najnowszymi dostępnymi sygnałami rynkowymi z 2026 roku.\n\nRaport pokazuje pięć bardzo różnych rzeczywistości rynkowych: niemiecki rynek pomp ciepła dalej się umacniał w pierwszym półroczu 2026; Wielka Brytania rośnie, ale wciąż dominują na niej kotły; we Francji kurczy się rynek ogrzewania hydraulicznego; Polska odbudowuje się w miarę normalizacji zapasów w kanale dystrybucji; a Włochy odnotowały w pierwszym półroczu 2026 silny wzrost pomp ciepła powietrze/woda.\n\nW przeciwieństwie do zwykłego statycznego pliku PDF raport ma formę interaktywnego raportu cyfrowego. Czytelnik przechodzi przez strony jak przez cyfrowy magazyn, a najechanie kursorem na wykres odsłania wartości liczbowe; odniesienia do źródeł i noty metodologiczne dopełniają kontekst.\n\nHeatPump DataBase Europe planuje publikować nowy raport specjalny o europejskim rynku pomp ciepła co miesiąc — o trendach rynkowych, zmianach regulacyjnych, programach dopłat, przesunięciach technologicznych i innych zagadnieniach istotnych dla profesjonalistów branży grzewczej.\n\nRaport jest bezpłatny do czytania i pobrania, dostępny po angielsku, niemiecku, francusku, polsku i włosku.",
+      "ctaLabel": "Przeczytaj raport specjalny"
+    },
+    "it": {
+      "title": "La transizione del riscaldamento in Europa: cinque mercati, cinque realtà",
+      "summary": "HeatPump DataBase Europe lancia un nuovo rapporto di mercato mensile interattivo sugli sviluppi più recenti del mercato delle pompe di calore e del riscaldamento in Europa.",
+      "body": "HeatPump DataBase Europe ha pubblicato la prima edizione del nuovo rapporto speciale mensile europeo sulle pompe di calore. Il rapporto esamina Germania, Regno Unito, Francia, Polonia e Italia sulla base dei dati dell'intero 2025, insieme ai più recenti segnali di mercato disponibili per il 2026.\n\nIl rapporto mostra cinque realtà di mercato molto diverse: il mercato tedesco delle pompe di calore ha continuato a rafforzarsi nel primo semestre 2026; il Regno Unito cresce ma resta dominato dalle caldaie; la Francia registra un mercato del riscaldamento idronico in contrazione; la Polonia si sta riprendendo mentre le scorte di canale si normalizzano; e l'Italia ha registrato una forte crescita delle pompe di calore aria/acqua nel primo semestre 2026.\n\nA differenza di un PDF statico convenzionale, il rapporto si presenta come un rapporto digitale interattivo. Il lettore scorre le pagine come una rivista digitale e, portando il cursore sui grafici, vede i valori numerici sottostanti; i riferimenti alle fonti e le note metodologiche forniscono il contesto.\n\nHeatPump DataBase Europe prevede di pubblicare ogni mese un nuovo rapporto speciale sul mercato europeo delle pompe di calore, dedicato alle tendenze di mercato, agli sviluppi normativi, agli incentivi, ai passaggi tecnologici e agli altri temi rilevanti per i professionisti del settore del riscaldamento.\n\nIl rapporto è gratuito da leggere e da scaricare ed è disponibile in inglese, tedesco, francese, polacco e italiano.",
+      "ctaLabel": "Leggi il rapporto speciale"
+    }
+  },
+
+  "_sourcesNote": "Taken from the report's own source list — the national body first, then the European reference. Nothing here is added that the report does not cite.",
+  "sources": {
+    "DE": [
+      { "title": "BDH — Absatzzahlen Heizungen Deutschland 2025", "url": "https://www.bdh-industrie.de/fileadmin/user_upload/Downloads/PresseMeldungen/Absatzzahlen_Heizungen_Deutschland_2025.pdf" },
+      { "title": "BDH — Heizungsmarkt legt zu, Wärmepumpen setzen positive Impulse (H1 2026)", "url": "https://www.bdh-industrie.de/presse/pressemeldungen/artikel/heizungsmarkt-legt-zu-waermepumpen-setzen-positive-impulse" },
+      { "title": "BWP — Branchenstudie 2026", "url": "https://www.waermepumpe.de/fileadmin/user_upload/2026-03-30_BWP-Branchenstudie_2026_final.pdf" },
+      { "title": "EHPA — European market data (updated 2026)", "url": "https://ehpa.org/market-data/" }
+    ],
+    "GB": [
+      { "title": "Heat Pump Association UK — UK heat pump sales reach record high in 2025", "url": "https://hpauk.org.uk/news/uk-heat-pump-sales-reach-record-high-in-2025-but-more-must-be-done-to-meet-government-targets/" },
+      { "title": "HPA UK — response to DESNZ heat pump deployment statistics, Q1 2026", "url": "https://hpauk.org.uk/news/hpa-uk-respond-to-desnz-heat-pump-deployment-statistics-for-q1-2026/" },
+      { "title": "DESNZ — Boiler Upgrade Scheme extension summary business case", "url": "https://www.gov.uk/government/publications/boiler-upgrade-scheme-bus-extension-summary-business-case" },
+      { "title": "EHPA — European market data (updated 2026)", "url": "https://ehpa.org/market-data/" }
+    ],
+    "FR": [
+      { "title": "Uniclima — Dossier de presse, Bilan 2025", "url": "https://www.uniclima.fr/userfiles/2026/DP_Uniclima_Bilan_2025_VF.pdf" },
+      { "title": "Uniclima — communiqué, ventes air/air janvier–avril 2026", "url": "https://www.uniclima.fr/userfiles/2026/2026_06_23_CP_Vague_de_chaleur.pdf" },
+      { "title": "EHPA — European market data (updated 2026)", "url": "https://ehpa.org/market-data/" }
+    ],
+    "PL": [
+      { "title": "SPIUG — Market of heating appliances in Poland 2025", "url": "https://spiug.pl/app/uploads/2026/08/Report_Market_of_heating_appliances_in_Poland_2025.pdf" },
+      { "title": "PORT PC — rynek pomp ciepła 2025 i perspektywy 2026", "url": "https://portpc.pl/w-2025-roku-polacy-kupili-niemal-tyle-samo-pomp-ciepla-co-w-2024-%E2%88%92-wiekszosc-bez-dotacji/" },
+      { "title": "PORT PC — sprzedaż pomp ciepła w I półroczu 2026 (+18%)", "url": "https://informacjeprasowe.pl/sprzedaz-pomp-ciepla-do-ogrzewania-budynkow-wzrosla-o-18-proc-w-i-polroczu-2026-r/" },
+      { "title": "EHPA — European market data (updated 2026)", "url": "https://ehpa.org/market-data/" }
+    ],
+    "IT": [
+      { "title": "Assotermica — caldaie, mercato in forte contrazione nel 2025", "url": "https://www.anima.it/associazioni/elenco/assotermica/media/comunicati-stampa/caldaie-mercato-in-forte-contrazione-nel-2025-segnali-di-allarme-per-il-comparto.kl" },
+      { "title": "Assoclima — climatizzazione, primo semestre 2026", "url": "https://www.anima.it/associazioni/elenco/assoclima/media/comunicati-stampa/climatizzazione-primo-semestre-due-velocita-in-flessione-split-avanzano-soluzioni-impiantistiche-piu-evolute.kl" },
+      { "title": "EHPA — European market data (updated 2026)", "url": "https://ehpa.org/market-data/" }
+    ]
+  }
+}

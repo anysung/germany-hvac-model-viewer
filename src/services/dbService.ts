@@ -125,7 +125,11 @@ export const getNews = async (): Promise<NewsItem[]> => {
     const snapshot = await getDocs(q);
     
     const news = snapshot.docs.map(doc => doc.data() as NewsItem);
-    return news.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    // Pinned articles lead the feed (the monthly Special Report holds the top
+    // slot until the next edition); everything else stays newest-first.
+    return news.sort((a, b) =>
+      Number(b.pinned ?? false) - Number(a.pinned ?? false)
+      || new Date(b.date).getTime() - new Date(a.date).getTime());
   } catch (error) {
     console.error("Error fetching news:", error);
     return [];

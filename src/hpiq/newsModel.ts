@@ -38,6 +38,19 @@ export function localizedNews(item: NewsItem, lang: Language): { title: string; 
   return { title: item.title, summary: item.summary, body: item.body ?? '' };
 }
 
+/** The call-to-action an article can carry — used by the Special Report
+ *  pieces, which exist to send the reader to the report itself. Returns null
+ *  for ordinary articles, so the reader renders unchanged for them. */
+export function localizedCta(item: NewsItem, lang: Language): { url: string; label: string } | null {
+  if (!item.ctaUrl) return null;
+  const label = (lang === 'de' ? item.ctaLabel_de
+    : lang === 'fr' ? item.ctaLabel_fr
+      : lang === 'pl' ? item.ctaLabel_pl
+        : lang === 'it' ? item.ctaLabel_it
+          : undefined) ?? item.ctaLabel;
+  return label ? { url: item.ctaUrl, label } : null;
+}
+
 /** "MARKET • GERMANY" — localized category label + the edition's country name. */
 export const newsEyebrow = (t: HpStrings, item: NewsItem): string =>
   `${t.news.categories[categoryOf(item)] ?? categoryOf(item)} • ${t.news.marketCountry.toLocaleUpperCase()}`;

@@ -76,6 +76,12 @@ for (const cc of codes) {
       summaryEn: val(f.summary) ?? '',
       imageUrl: val(f.imageUrl) ?? '',
       author: val(f.author) ?? 'HeatPump DataBase (Europe)',
+      // Special Report announcements: they lead the public archive the same
+      // way they lead the in-app feed, and they carry the one link the piece
+      // exists for. Ordinary articles have neither field and are unaffected.
+      pinned: f.pinned?.booleanValue === true,
+      ctaUrl: val(f.ctaUrl) ?? '',
+      ctaLabel: pick(f, 'ctaLabel'),
       sources: (f.sources?.arrayValue?.values ?? [])
         .map((s) => ({
           title: val(s.mapValue?.fields?.title) ?? '',
@@ -87,7 +93,8 @@ for (const cc of codes) {
     // A page needs real text; anything thin is left out rather than published
     // as a stub (thin pages are what gets a section deindexed).
     .filter((a) => a.title && a.body && a.body.length >= 600)
-    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    .sort((a, b) => Number(b.pinned) - Number(a.pinned)
+      || String(b.date).localeCompare(String(a.date)));
 
   const file = join(OUT_DIR, `${cc}.json`);
   const prev = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : { items: [] };

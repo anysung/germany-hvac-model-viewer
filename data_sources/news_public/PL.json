@@ -1,7 +1,40 @@
 {
   "market": "PL",
-  "generatedAt": "2026-08-04T22:31:47.920Z",
+  "generatedAt": "2026-08-16T11:59:44.613Z",
   "items": [
+    {
+      "id": "news-20260816-pl-sr1",
+      "date": "2026-08-16T00:00:00Z",
+      "category": "MARKET",
+      "title": "Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości",
+      "summary": "HeatPump DataBase Europe uruchamia nowy comiesięczny interaktywny raport rynkowy o najnowszych zmianach na rynku pomp ciepła i ogrzewania w Europie.",
+      "body": "HeatPump DataBase Europe opublikował pierwsze wydanie nowego comiesięcznego europejskiego raportu specjalnego o pompach ciepła. Analizuje on Niemcy, Wielką Brytanię, Francję, Polskę i Włochy na podstawie danych za pełny rok 2025 wraz z najnowszymi dostępnymi sygnałami rynkowymi z 2026 roku.\n\nRaport pokazuje pięć bardzo różnych rzeczywistości rynkowych: niemiecki rynek pomp ciepła dalej się umacniał w pierwszym półroczu 2026; Wielka Brytania rośnie, ale wciąż dominują na niej kotły; we Francji kurczy się rynek ogrzewania hydraulicznego; Polska odbudowuje się w miarę normalizacji zapasów w kanale dystrybucji; a Włochy odnotowały w pierwszym półroczu 2026 silny wzrost pomp ciepła powietrze/woda.\n\nW przeciwieństwie do zwykłego statycznego pliku PDF raport ma formę interaktywnego raportu cyfrowego. Czytelnik przechodzi przez strony jak przez cyfrowy magazyn, a najechanie kursorem na wykres odsłania wartości liczbowe; odniesienia do źródeł i noty metodologiczne dopełniają kontekst.\n\nHeatPump DataBase Europe planuje publikować nowy raport specjalny o europejskim rynku pomp ciepła co miesiąc — o trendach rynkowych, zmianach regulacyjnych, programach dopłat, przesunięciach technologicznych i innych zagadnieniach istotnych dla profesjonalistów branży grzewczej.\n\nRaport jest bezpłatny do czytania i pobrania, dostępny po angielsku, niemiecku, francusku, polsku i włosku.",
+      "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "imageUrl": "/special-report/img/special-report-2026-08-pl.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": true,
+      "ctaUrl": "https://www.heatpumpdb.pl/special-report/2026-08/",
+      "ctaLabel": "Przeczytaj raport specjalny",
+      "sources": [
+        {
+          "title": "SPIUG — Market of heating appliances in Poland 2025",
+          "url": "https://spiug.pl/app/uploads/2026/08/Report_Market_of_heating_appliances_in_Poland_2025.pdf"
+        },
+        {
+          "title": "PORT PC — rynek pomp ciepła 2025 i perspektywy 2026",
+          "url": "https://portpc.pl/w-2025-roku-polacy-kupili-niemal-tyle-samo-pomp-ciepla-co-w-2024-%E2%88%92-wiekszosc-bez-dotacji/"
+        },
+        {
+          "title": "PORT PC — sprzedaż pomp ciepła w I półroczu 2026 (+18%)",
+          "url": "https://informacjeprasowe.pl/sprzedaz-pomp-ciepla-do-ogrzewania-budynkow-wzrosla-o-18-proc-w-i-polroczu-2026-r/"
+        },
+        {
+          "title": "EHPA — European market data (updated 2026)",
+          "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
     {
       "id": "news-20260802-pl-001",
       "date": "2026-08-02T00:00:00Z",
@@ -13,6 +46,9 @@
       "summaryEn": "Poland's flagship 'Czyste Powietrze' (Clean Air) program has introduced substantial reforms as of July 20, 2026, aimed at enhancing accessibility and refining grant conditions for thermal modernization and heat pump installations. The changes include relaxed ownership rules, increased funding for select works, and extended deadlines for investment completion.",
       "imageUrl": "/news-images/pl-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Zmiany w programie Czyste Powietrze. Od 20 lipca łatwiej skorzystasz z dotacji | Program Czyste Powietrze | NFOŚiGW",
@@ -43,6 +79,9 @@
       "summaryEn": "The Polish residential heat pump market experienced significant growth in the first quarter of 2026, with sales increasing by 20%. This surge, part of a broader European trend, is largely attributed to rising energy prices and heightened concerns over energy security, particularly following global events affecting fossil fuel supplies.",
       "imageUrl": "/news-images/common-market-04.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Energy crisis sees rise in heat pump sales",
@@ -73,6 +112,9 @@
       "summaryEn": "The European Union's revised F-Gas Regulation, effective March 11, 2024, is profoundly impacting the heat pump sector by accelerating the phase-down of fluorinated greenhouse gases (F-gases). The regulation introduces stricter GWP limits and bans, compelling manufacturers and installers to transition rapidly towards low-GWP refrigerants and sustainable practices.",
       "imageUrl": "/news-images/common-tech-04.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "EU heat pump policy: F-gas regulations & key deadlines - Grundfos",
@@ -103,6 +145,9 @@
       "summaryEn": "Poland's 'Moje Ciepło' (My Heat) program, designed to support heat pump installations in new single-family homes, is progressing towards its 2026 deadline with a significant unused budget. The National Fund for Environmental Protection and Water Management (NFOŚiGW) is exploring options to extend the program, recognizing its crucial role in promoting renewable energy sources in new residential construction.",
       "imageUrl": "/news-images/pl-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Moje Ciepło – Program dofinansowania pomp ciepła",
@@ -133,6 +178,9 @@
       "summaryEn": "Poland's flagship 'Czyste Powietrze' (Clean Air) program has introduced substantial changes effective July 20, 2026, enhancing support for energy efficiency and streamlining application processes. Notably, electric heating subsidies will exclusively target heat pumps from January 1, 2027, marking a pivotal shift in the nation's decarbonization strategy.",
       "imageUrl": "/news-images/pl-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "EU Heat Pump Grants 2026: 10-Country Comparison (FR, DE, UK, NL, IT, ES, PL, SE, CZ, HU) - Embuild",
@@ -163,6 +211,9 @@
       "summaryEn": "After a challenging 2025 marked by declining sales, the Polish heat pump market is showing signs of recovery, with residential sales in Q1 2026 seeing a significant average increase. The market is projected to expand to USD 911.72 million by 2031, driven by decarbonization mandates and rising fossil fuel costs, despite ongoing challenges like installer shortages.",
       "imageUrl": "/news-images/common-energy-05.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Poland Heat Pump Market Size, Share & 2031 Growth Trends Report - Mordor Intelligence",
@@ -193,6 +244,9 @@
       "summaryEn": "The European Union's revised F-Gas Regulation (EU) 2024/573 is set to significantly impact the heat pump sector in Poland and across Europe, with a servicing ban on high-GWP virgin fluorinated gases taking effect in 2026. Stricter GWP limits and eventual phase-outs for various heat pump systems are scheduled through 2035, prompting industry concerns over adaptation timelines and the availability of natural refrigerant alternatives.",
       "imageUrl": "/news-images/common-tech-06.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "The EU's new F-Gas Regulation - ECOS - Environmental Coalition on Standards",
@@ -223,6 +277,9 @@
       "summaryEn": "Poland's National Fund for Environmental Protection and Water Management (NFOŚiGW) is actively running its key programs, 'Moje Ciepło' and 'Ciepłe Mieszkanie', providing substantial financial incentives for heat pump installations. 'Moje Ciepło' continues to support new, energy-efficient single-family homes, while 'Ciepłe Mieszkanie' focuses on improving energy efficiency in multi-family dwellings, with both programs accepting applications until the end of 2026.",
       "imageUrl": "/news-images/pl-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Moje Ciepło 2026 — Program priorytetowy Moje Ciepło: nabory, budżet, jak aplikować | Atlas Dotacji",
@@ -253,6 +310,9 @@
       "summaryEn": "Poland's flagship 'Czyste Powietrze' program is implementing substantial changes from July 20, 2026, aimed at increasing accessibility and enhancing support for energy efficiency upgrades, with a clear focus on heat pump technology for heating systems. The revisions will introduce higher grant amounts and streamline application processes, according to the Ministry of Climate and Environment.",
       "imageUrl": "/news-images/pl-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Dofinansowanie do pompy ciepła w 2026 roku - Aktualne programy - SM-Project",
@@ -283,6 +343,9 @@
       "summaryEn": "After a period of stagnation, the Polish heat pump market has shown a strong resurgence in the first quarter of 2026, with overall sales increasing by approximately 20% year-on-year. This growth, particularly in ground-source and monoblock air-to-water units, signals a maturing market driven by investor awareness and economic considerations, according to data from the Polish Organisation for the Development of Heat Pump Technology (PORT PC).",
       "imageUrl": "/news-images/common-market-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Polacy kupują więcej pomp ciepła. Wzrost sprzedaży najdroższych modeli - Komputer Świat",
@@ -313,6 +376,9 @@
       "summaryEn": "New European Union F-Gas Regulations are poised to significantly transform the heat pump industry in Poland and across the EU, introducing stricter criteria for refrigerant use and device production. From January 1, 2027, the market introduction of new split heat pumps under 12 kW with refrigerants having a Global Warming Potential (GWP) of 150 or higher will be prohibited, accelerating the adoption of natural, low-GWP alternatives like R290 (propane).",
       "imageUrl": "/news-images/common-tech-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Nowe kryteria produkcji pomp ciepła od 2026 roku",

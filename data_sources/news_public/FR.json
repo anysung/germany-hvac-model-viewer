@@ -1,7 +1,36 @@
 {
   "market": "FR",
-  "generatedAt": "2026-08-04T22:31:47.821Z",
+  "generatedAt": "2026-08-16T11:59:44.544Z",
   "items": [
+    {
+      "id": "news-20260816-fr-sr1",
+      "date": "2026-08-16T00:00:00Z",
+      "category": "MARKET",
+      "title": "La transition du chauffage en Europe : cinq marchés, cinq réalités",
+      "summary": "HeatPump DataBase Europe lance un nouveau rapport de marché mensuel interactif consacré aux dernières évolutions du marché de la pompe à chaleur et du chauffage en Europe.",
+      "body": "HeatPump DataBase Europe publie la première édition de son nouveau rapport spécial mensuel sur la pompe à chaleur en Europe. Il examine l'Allemagne, le Royaume-Uni, la France, la Pologne et l'Italie à partir des données de l'année complète 2025, complétées par les signaux de marché 2026 les plus récents disponibles.\n\nLe rapport met en évidence cinq réalités de marché très différentes : le marché allemand de la pompe à chaleur a continué de se renforcer au premier semestre 2026 ; le Royaume-Uni progresse mais reste dominé par les chaudières ; la France connaît une contraction du marché du chauffage hydronique ; la Pologne se redresse à mesure que les stocks des circuits de distribution se normalisent ; et l'Italie a enregistré une forte croissance des pompes à chaleur air/eau au premier semestre 2026.\n\nContrairement à un PDF statique classique, le rapport se présente comme un rapport numérique interactif. Le lecteur parcourt les pages comme un magazine numérique et fait apparaître les valeurs chiffrées en plaçant le curseur sur les graphiques, tandis que les références aux sources et les notes méthodologiques apportent le contexte.\n\nHeatPump DataBase Europe prévoit de publier chaque mois un nouveau rapport spécial sur le marché européen de la pompe à chaleur, couvrant les tendances de marché, les évolutions réglementaires, les dispositifs d'aide, les basculements technologiques et les autres sujets utiles aux professionnels du chauffage.\n\nLe rapport est consultable et téléchargeable gratuitement, en anglais, allemand, français, polonais et italien.",
+      "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
+      "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
+      "imageUrl": "/special-report/img/special-report-2026-08-fr.webp",
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": true,
+      "ctaUrl": "https://www.heatpumpdb.fr/special-report/2026-08/",
+      "ctaLabel": "Lire le rapport spécial",
+      "sources": [
+        {
+          "title": "Uniclima — Dossier de presse, Bilan 2025",
+          "url": "https://www.uniclima.fr/userfiles/2026/DP_Uniclima_Bilan_2025_VF.pdf"
+        },
+        {
+          "title": "Uniclima — communiqué, ventes air/air janvier–avril 2026",
+          "url": "https://www.uniclima.fr/userfiles/2026/2026_06_23_CP_Vague_de_chaleur.pdf"
+        },
+        {
+          "title": "EHPA — European market data (updated 2026)",
+          "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
     {
       "id": "news-20260802-fr-001",
       "date": "2026-08-02T00:00:00Z",
@@ -13,6 +42,9 @@
       "summaryEn": "France's primary energy renovation aid, MaPrimeRénov', has undergone significant reforms for 2026, aiming to channel efforts towards comprehensive renovations while adjusting eligibility and processing for individual works. The changes, effective from January 1st and February 23rd, 2026, introduce mandatory accompaniment for major projects and exclude certain single-action works, directly impacting homeowners planning heat pump installations.",
       "imageUrl": "/news-images/fr-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "MaPrimeRénov' Pompe à chaleur 2026 : montants, conditions et démarches - Hello Watt",
@@ -43,6 +75,9 @@
       "summaryEn": "France solidified its position as Europe's leading heat pump market in 2025, with over 1.08 million units sold, despite a nuanced stabilization following a challenging 2024. While air-to-air systems saw sustained demand driven by summer heatwaves, the air-to-water segment experienced modest growth, and geothermal installations remained a niche, according to recent market analyses.",
       "imageUrl": "/news-images/common-energy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Étude 2026 sur le marché des pompes à chaleur 2025 - Observ'ER",
@@ -73,6 +108,9 @@
       "summaryEn": "France is implementing a substantial reform of its RGE (Reconnu Garant de l'Environnement) certification system, with new rules already in effect and further changes coming in 2027. These reforms introduce reinforced controls, stricter auditing processes, and clear sanction mechanisms, aiming to elevate the quality of energy renovation works, combat fraud, and bolster consumer confidence in qualified installers, particularly for heat pump installations.",
       "imageUrl": "/news-images/common-install-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "QualiPAC : certification RGE, prix et démarches 2026 - Habitatpresto",
@@ -103,6 +141,9 @@
       "summaryEn": "France's RE2020 environmental regulation, in effect since 2022 for new homes and expanded in 2026, is profoundly shaping the building sector by prioritizing low-carbon solutions and improved summer comfort. Heat pumps are emerging as a pivotal technology to meet these ambitious targets, driven by stricter carbon emission thresholds and a revised DPE calculation method.",
       "imageUrl": "/news-images/common-energy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "RE2020 : date d'application et nouvelles échéances 2025-2028-2031",
@@ -133,6 +174,9 @@
       "summaryEn": "France is set to significantly increase financial incentives for heat pump installations with a five-fold multiplication of Certificats d'Économies d'Énergie (CEE) primes for a list of approved models starting September 2026. This pivotal change coincides with new restrictions under MaPrimeRénov', particularly impacting renovations that include gas heating.",
       "imageUrl": "/news-images/fr-policy-03.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "MaPrimeRénov' 2026 : Conséquences des Nouvelles Conditions d'Éligibilité",
@@ -163,6 +207,9 @@
       "summaryEn": "The French heat pump market experienced a decline in sales during 2025, a trend that runs counter to the broader European rebound of over 10% growth. This downturn in France, while still maintaining its position as Europe's largest market, is primarily attributed to persistent regulatory instability and a challenging economic climate.",
       "imageUrl": "/news-images/common-market-02-factory-layoff.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Pompes à chaleur : la France reste le premier marché européen en 2025 - Effy",
@@ -193,6 +240,9 @@
       "summaryEn": "Recent studies by the French Agency for Ecological Transition (ADEME) reinforce that heat pumps deliver high performance and significant energy savings when properly installed. This validation coincides with the implementation of stricter controls and enforcement for the 'Reconnu Garant de l'Environnement' (RGE) certification, vital for installers to qualify projects for government subsidies.",
       "imageUrl": "/news-images/common-install-04.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Avis ADEME : Performances des Pompes à Chaleur confirmées - AFPAC",
@@ -223,6 +273,9 @@
       "summaryEn": "France's primary heat pump incentives, MaPrimeRénov' and the CEE-backed 'Coup de pouce Chauffage', are undergoing significant revisions in 2026, introducing more stringent eligibility for global renovations and a new mandate for European-manufactured equipment to qualify for enhanced CEE benefits starting September 1.",
       "imageUrl": "/news-images/fr-policy-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Nouvelles règles MaPrimeRénov 2026 : aides, plafonds, conditions - VELUX",
@@ -253,6 +306,9 @@
       "summaryEn": "While the European heat pump market recorded an 11% increase in sales in 2025, the French market, despite remaining the continent's largest, experienced a slight downturn, largely attributed to unstable regulatory frameworks and fluctuating energy prices.",
       "imageUrl": "/news-images/common-market-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "La France toujours en tête du marché européen des pompes à chaleur - PV Magazine",
@@ -283,6 +339,9 @@
       "summaryEn": "The French heat pump sector is seeing significant technological advancements driven by new F-Gas regulations, a strong push towards natural refrigerants like R290, increasingly strict noise emission standards, and the integration of smart, connected functionalities for enhanced energy management.",
       "imageUrl": "/news-images/common-tech-02.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "F-Gas 2025-2030 : fin du R410A, avenir R32 et R290 | AUX France",
@@ -313,6 +372,9 @@
       "summaryEn": "France's key financial aids for heat pump installations, MaPrimeRénov' and the Certificats d'Économies d'Énergie (CEE), are undergoing significant modifications in 2026. Installers and homeowners must be aware of updated eligibility criteria, income bands, and the new European manufacturing requirement for boosted CEE primes starting September 1st.",
       "imageUrl": "/news-images/fr-policy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "MaPrimeRénov' pour une pompe à chaleur en 2026 - Quelle Energie",
@@ -343,6 +405,9 @@
       "summaryEn": "The French Environmental Regulation 2020 (RE2020) has profoundly reshaped the new construction landscape, making heat pumps the undeniable choice for nearly all individual homes. By imposing stringent carbon emission limits and energy consumption targets, RE2020 has positioned heat pumps as the most effective and compliant heating and cooling solution.",
       "imageUrl": "/news-images/common-energy-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Pompe à chaleur et RE 2020 : l'essentiel à retenir - Rénovation Globale Énergies",
@@ -373,6 +438,9 @@
       "summaryEn": "The heat pump industry is undergoing a significant technological shift with the increasing adoption of R290 (propane) as a natural refrigerant, driven by evolving F-Gas regulations. Concurrently, managing sound power remains a critical consideration for installers, with strict noise emergence rules in place to ensure neighborhood tranquility.",
       "imageUrl": "/news-images/common-tech-01.webp",
       "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
       "sources": [
         {
           "title": "Fluide R290 dans les PAC : naturel et performant - MonDevisPAC",
