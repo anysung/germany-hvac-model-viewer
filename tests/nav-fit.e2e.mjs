@@ -53,18 +53,57 @@ for (const w of WIDTHS) {
   check(m.shown > 0, `[${CC} ${w}px] at least one destination is visible`);
 }
 
-// Whatever was collapsed must still be reachable — at the narrowest width the
-// menu is guaranteed to hold something.
-await page.setViewportSize({ width: 1152, height: 900 });
-await page.waitForTimeout(400);
-const more = page.locator('[data-testid="nav-more"]');
-if (await more.count()) {
+// Whatever was collapsed must still be reachable — and "reachable" means the
+// entry NAVIGATES, not merely that it is listed. Asserting only that the menu
+// has children is what let a dead menu ship: the panel renders outside the nav
+// row, the outside-click handler closed it on mousedown, and the click landed
+// on nothing (2026-08-16). Every entry is therefore clicked for real.
+//
+// The overflow button wears the current page's name whenever that page is one
+// of the collapsed ones, so the button's own label is the arrival signal.
+const MENU = '[data-testid="nav-more-menu"]';
+for (const w of [1152, 1280, 1440]) {
+  await page.setViewportSize({ width: w, height: 900 });
+  await page.waitForTimeout(400);
+  const more = page.locator('[data-testid="nav-more"]');
+  if (!(await more.count())) {
+    check(true, `[${CC} ${w}px] everything fits — no overflow menu needed`);
+    continue;
+  }
+
   await more.click();
-  await page.waitForTimeout(300);
-  const entries = await page.locator('div[style*="position: fixed"][style*="top: 60px"] > div').count();
-  check(entries > 0, `[${CC} 1152px] overflow menu lists the collapsed destinations`, `${entries} entries`);
-} else {
-  check(true, `[${CC} 1152px] everything fits — no overflow menu needed`);
+  await page.waitForTimeout(250);
+  const labels = await page.locator(`${MENU} > div`).allTextContents();
+  check(labels.length > 0, `[${CC} ${w}px] overflow menu lists the collapsed destinations`, `${labels.length} entries`);
+
+  for (const label of labels) {
+    if (!(await page.locator(MENU).count())) {
+      await more.click();
+      await page.waitForTimeout(250);
+    }
+    await page.locator(`${MENU} > div`, { hasText: label }).first().click();
+    await page.waitForTimeout(400);
+
+    // Arrival is "this destination is now the ACTIVE one in the bar", not
+    // "the overflow button wears its name". Landing on a page changes what the
+    // button says, which changes its width, which can let the destination back
+    // into the row as a normal item — a correct outcome that a button-only
+    // check reads as a failure.
+    const arrived = await page.evaluate((wanted) => {
+      const norm = (s) => (s || '').replace(/\s+/g, ' ').trim();
+      const bar = document.querySelector('.hp-gnav-links');
+      const inRow = [...(bar?.children ?? [])].some(el =>
+        el.tagName === 'SPAN' && el.offsetParent !== null
+        && norm(el.textContent) === norm(wanted)
+        && getComputedStyle(el).fontWeight === '600');
+      const btn = document.querySelector('[data-testid="nav-more"]');
+      const onButton = !!btn && norm(btn.textContent).startsWith(norm(wanted));
+      return inRow || onButton;
+    }, label);
+
+    check(arrived, `[${CC} ${w}px] "${label}" navigates when clicked`,
+      'menu closed but the destination never became active');
+  }
 }
 
 await browser.close();

@@ -100,6 +100,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   const navRowRef = useRef<HTMLDivElement>(null);
   const navSizerRef = useRef<HTMLDivElement>(null);
   const navMoreRef = useRef<HTMLSpanElement>(null);
+  const navMenuRef = useRef<HTMLDivElement>(null);
   const [navVisible, setNavVisible] = useState(NAV_IDS.length);
   const [navMenu, setNavMenu] = useState(false);
   const [navMenuLeft, setNavMenuLeft] = useState(0);
@@ -145,11 +146,20 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
 
   // Close the overflow menu on any outside click (never on the button itself,
   // which toggles) and whenever the page changes.
+  //
+  // The PANEL must be spared as well as the row. It renders as a sibling of the
+  // row, not a child, so a `contains(row)` test alone calls a click on a menu
+  // item "outside": mousedown closed the menu, the item unmounted, and the
+  // click that followed had nothing left to land on — the entries looked dead
+  // (2026-08-16). Anything that closes on mousedown must exempt every element
+  // the user can legitimately press.
   useEffect(() => {
     if (!navMenu) return;
     setNavMenuLeft(navMoreRef.current?.getBoundingClientRect().left ?? 0);
     const close = (e: MouseEvent) => {
-      if (!navRowRef.current?.contains(e.target as Node)) setNavMenu(false);
+      const target = e.target as Node;
+      if (navRowRef.current?.contains(target) || navMenuRef.current?.contains(target)) return;
+      setNavMenu(false);
     };
     document.addEventListener('mousedown', close);
     return () => document.removeEventListener('mousedown', close);
@@ -515,6 +525,8 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
             bar on first paint), and a clipped dropdown would be unusable. */}
         {navMenu && navVisible < NAV_IDS.length && (
           <div
+            ref={navMenuRef}
+            data-testid="nav-more-menu"
             style={{
               position: 'fixed', top: 60, left: navMenuLeft, minWidth: 200,
               background: '#1d1d1f', border: '1px solid rgba(255,255,255,.16)', borderRadius: 14,
