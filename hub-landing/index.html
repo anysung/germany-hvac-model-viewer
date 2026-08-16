@@ -323,6 +323,23 @@
   let saved = 'en';
   try { saved = localStorage.getItem('hub-lang') || 'en'; } catch {}
   setLang(I18N[saved] ? saved : 'en');
+
+  // ── Carry ?ref= across the hop ────────────────────────────────────────
+  // The hub is a chooser: a campaign sends people here, they pick a market,
+  // and the signup happens over there. The market app reads ?ref= on arrival
+  // (src/services/signupRef.ts), so a link that drops the parameter at this
+  // hop makes every hub-led signup anonymous. Campaigns whose primary CTA is
+  // heatpumpdb.eu — the Special Report post is one — would report nothing.
+  (function carryRef() {
+    var ref = new URLSearchParams(location.search).get('ref');
+    if (!ref) return;
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!/^https?:\/\/[^/]*heatpumpdb\./i.test(href)) return;   // our domains only
+      if (/[?&]ref=/.test(href)) return;                            // already labelled
+      a.setAttribute('href', href + (href.indexOf('?') === -1 ? '?' : '&') + 'ref=' + encodeURIComponent(ref));
+    });
+  })();
 </script>
 </body>
 </html>

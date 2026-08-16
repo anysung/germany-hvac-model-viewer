@@ -126,6 +126,10 @@ const STYLE = `
   ul.mk li .fl{flex:0 0 auto}
   .cta{margin-top:34px;background:linear-gradient(160deg,#0b1626,#132741);color:#fff;border-radius:20px;padding:30px 30px 28px}
   .cta h2{margin:0 0 8px;font-size:21px;color:#fff}
+  .pcta{margin-top:20px;border:1px solid #e4e6ec;background:#f6f8fb;border-radius:20px;padding:26px 30px}
+  .pcta h2{margin:0 0 6px;font-size:19px;letter-spacing:-.3px}
+  .pcta p{margin:0 0 16px;color:#4a5364;font-size:14.5px;line-height:1.6}
+  .pcta .btn.p{background:#0066cc}
   .cta p{margin:0 0 20px;color:#b9c8dc;font-size:14.5px;line-height:1.6}
   .acts{display:flex;flex-wrap:wrap;gap:12px}
   .btn{display:inline-block;border-radius:999px;padding:12px 26px;font-size:14.5px;text-decoration:none;font-weight:600}
@@ -164,9 +168,40 @@ ${ld ? `<script type="application/ld+json">${JSON.stringify(ld)}</script>` : ''}
 </head>
 <body><div class="wrap">`;
 
+/* The campaign's landing page needs a way INTO the product. Without this the
+   funnel ends at a free report: the reader gets what was promised and leaves,
+   and the LinkedIn spend (time or money) buys a download rather than a trial.
+   The report stays free and ungated — this simply offers the next step. */
+const productCta = (t) => (t.productCta ? `
+  <div class="pcta">
+    <h2>${esc(t.productCta.h)}</h2>
+    <p>${esc(t.productCta.p)}</p>
+    <a class="btn p" href="/">${esc(t.productCta.b)}</a>
+  </div>` : '');
+
+/* Carry ?ref= off this static page and into the app.
+   These pages are generated HTML, not the React app, so services/signupRef.ts
+   never runs here — a visitor arriving from a campaign and then clicking
+   through to sign up would arrive unattributed. This forwards whatever ref
+   brought them, and labels organic arrivals as `report` so the Marketing page
+   can still tell where the account came from. */
+const CARRY_REF = `<script>
+(function(){
+  var ref = new URLSearchParams(location.search).get('ref') || 'report';
+  document.querySelectorAll('a[href]').forEach(function(a){
+    var h = a.getAttribute('href');
+    if (!h || /^(#|mailto:|tel:)/.test(h)) return;
+    if (/^https?:/i.test(h) && !/^https?:\\/\\/[^/]*heatpumpdb\\./i.test(h)) return;  // ours only
+    if (/[?&]ref=/.test(h)) return;
+    if (a.hasAttribute('download')) return;                                          // keep the file link clean
+    a.setAttribute('href', h + (h.indexOf('?') === -1 ? '?' : '&') + 'ref=' + encodeURIComponent(ref));
+  });
+})();
+</script>`;
+
 const foot = (t) => `
   <footer>© ${new Date().getFullYear()} HeatPump DataBase (Europe)™ · <a href="${HOSTS.EU}">heatpumpdb.eu</a> · ${esc(t.langNote)}</footer>
-</div></body></html>`;
+</div>${CARRY_REF}</body></html>`;
 
 /* ── the edition article ─────────────────────────────────────────────────── */
 
@@ -231,6 +266,7 @@ function renderEdition(ed, lang) {
     </div>
     <p class="dlnote">${esc(t.downloadNote)}</p>
   </div>
+${productCta(t)}
 ` + foot(t);
 
   return { file, html };

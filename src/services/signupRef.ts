@@ -17,8 +17,23 @@
 const KEY = 'hp_signup_ref';
 
 /** The channels we actually use. An open vocabulary invites typos that split
- *  one channel into five rows ("li", "LI", "linkedIn"…). */
-const KNOWN = new Set(['li', 'yt', 'news', 'guide', 'trends', 'seo', 'other']);
+ *  one channel into five rows ("li", "LI", "linkedIn"…), so this stays a closed
+ *  list and anything unrecognised is filed as 'other'.
+ *
+ *  Campaign variants must therefore be ADDED HERE BEFORE THE LINKS GO OUT.
+ *  The Special Report links (2026-08) were built with per-market refs and would
+ *  all have landed in 'other' — one indistinguishable pile — if this list had
+ *  not been extended first. Anything new gets the same treatment: add it here,
+ *  ship, then publish the link. */
+const KNOWN = new Set([
+  'li', 'yt', 'news', 'guide', 'trends', 'seo', 'other',
+  // Special Report campaign: the hub CTA, the newsletter, and one per market so
+  // the admin Marketing page can tell which edition actually pulled.
+  'li-report', 'li-newsletter',
+  'li-report-de', 'li-report-gb', 'li-report-fr', 'li-report-pl', 'li-report-it',
+  // Organic arrivals on a /special-report/ page that then click into the app.
+  'report',
+]);
 
 /** Call once on boot, before any routing. Idempotent; never throws. */
 export function captureSignupRef(): void {

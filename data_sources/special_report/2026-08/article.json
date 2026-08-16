@@ -4,9 +4,14 @@
   "published": "2026-08-16",
   "reportFile": "report.html",
   "reportPages": 18,
-  "reportLangs": ["en", "de", "fr", "pl", "it"],
+  "reportLangs": [
+    "en",
+    "de",
+    "fr",
+    "pl",
+    "it"
+  ],
   "downloadName": "HeatPumpDB-Europe-Special-Report-2026-08.html",
-
   "copy": {
     "en": {
       "eyebrow": "Special Report · August 2026",
@@ -20,11 +25,31 @@
       ],
       "bulletsTitle": "Five markets, five different stories",
       "bullets": [
-        { "cc": "DE", "label": "Germany", "text": "Heat pumps became the country's largest individual heating-technology category in 2025, while H1 2026 sales reached 194,500 units, up 40% year on year." },
-        { "cc": "GB", "label": "United Kingdom", "text": "Hydronic heat-pump sales continued to rise, but boilers still dominate the heating market and the gap between product sales and actual retrofit deployment remains significant." },
-        { "cc": "FR", "label": "France", "text": "The hydronic heating market has contracted substantially since 2021, while the apparent heat-pump share increasingly reflects a shrinking overall market rather than rapid growth in absolute heat-pump volume." },
-        { "cc": "PL", "label": "Poland", "text": "The market is showing renewed momentum in 2026, with H1 heating heat-pump sell-in up 18%, although inventory effects and differences in market definitions remain essential to understanding the data." },
-        { "cc": "IT", "label": "Italy", "text": "Boiler demand declined sharply in 2025, while the latest H1 2026 data show air-to-water heat-pump volumes up 25.5%, signalling stronger momentum in electrified heating solutions." }
+        {
+          "cc": "DE",
+          "label": "Germany",
+          "text": "Heat pumps became the country's largest individual heating-technology category in 2025, while H1 2026 sales reached 194,500 units, up 40% year on year."
+        },
+        {
+          "cc": "GB",
+          "label": "United Kingdom",
+          "text": "Hydronic heat-pump sales continued to rise, but boilers still dominate the heating market and the gap between product sales and actual retrofit deployment remains significant."
+        },
+        {
+          "cc": "FR",
+          "label": "France",
+          "text": "The hydronic heating market has contracted substantially since 2021, while the apparent heat-pump share increasingly reflects a shrinking overall market rather than rapid growth in absolute heat-pump volume."
+        },
+        {
+          "cc": "PL",
+          "label": "Poland",
+          "text": "The market is showing renewed momentum in 2026, with H1 heating heat-pump sell-in up 18%, although inventory effects and differences in market definitions remain essential to understanding the data."
+        },
+        {
+          "cc": "IT",
+          "label": "Italy",
+          "text": "Boiler demand declined sharply in 2025, while the latest H1 2026 data show air-to-water heat-pump volumes up 25.5%, signalling stronger momentum in electrified heating solutions."
+        }
       ],
       "sections": [
         {
@@ -55,9 +80,13 @@
       "metaDesc": "August 2026 Special Report on Europe's heating market: Germany, the UK, France, Poland and Italy — 2025 full-year data with the newest 2026 signals. Interactive, five languages, free to read and download.",
       "backLabel": "All Special Reports",
       "editionLabel": "August 2026 edition",
-      "langNote": "The report itself can be read in English, German, French, Polish and Italian — switch language inside the report."
+      "langNote": "The report itself can be read in English, German, French, Polish and Italian — switch language inside the report.",
+      "productCta": {
+        "h": "The data behind the numbers",
+        "p": "Every heat pump model with SCOP, sound power, refrigerant and local listing status — searchable, comparable, printable as a quote-ready data sheet.",
+        "b": "Join free — 7 days, no card"
+      }
     },
-
     "de": {
       "eyebrow": "Sonderbericht · August 2026",
       "title": "Europas Wärmewende: Fünf Märkte, fünf Realitäten",
@@ -70,11 +99,31 @@
       ],
       "bulletsTitle": "Fünf Märkte, fünf unterschiedliche Geschichten",
       "bullets": [
-        { "cc": "DE", "label": "Deutschland", "text": "Wärmepumpen wurden 2025 zur größten einzelnen Heizungstechnologie-Kategorie des Landes; im ersten Halbjahr 2026 erreichte der Absatz 194.500 Einheiten — ein Plus von 40 % gegenüber dem Vorjahr." },
-        { "cc": "GB", "label": "Vereinigtes Königreich", "text": "Der Absatz hydronischer Wärmepumpen stieg weiter, doch Kessel dominieren den Wärmemarkt nach wie vor, und die Lücke zwischen Produktabsatz und tatsächlichem Sanierungseinbau bleibt erheblich." },
-        { "cc": "FR", "label": "Frankreich", "text": "Der hydronische Wärmemarkt ist seit 2021 deutlich geschrumpft; der scheinbare Wärmepumpenanteil spiegelt zunehmend einen schrumpfenden Gesamtmarkt wider und nicht ein rasches Wachstum des absoluten Wärmepumpenvolumens." },
-        { "cc": "PL", "label": "Polen", "text": "Der Markt zeigt 2026 neue Dynamik: Der Sell-in von Heizungswärmepumpen legte im ersten Halbjahr um 18 % zu — Lagerbestandseffekte und unterschiedliche Marktdefinitionen bleiben für das Verständnis der Daten jedoch wesentlich." },
-        { "cc": "IT", "label": "Italien", "text": "Die Kesselnachfrage ging 2025 stark zurück, während die neuesten Daten für das erste Halbjahr 2026 ein Plus von 25,5 % bei Luft/Wasser-Wärmepumpen zeigen — ein Zeichen für stärkere Dynamik bei elektrifizierten Heizlösungen." }
+        {
+          "cc": "DE",
+          "label": "Deutschland",
+          "text": "Wärmepumpen wurden 2025 zur größten einzelnen Heizungstechnologie-Kategorie des Landes; im ersten Halbjahr 2026 erreichte der Absatz 194.500 Einheiten — ein Plus von 40 % gegenüber dem Vorjahr."
+        },
+        {
+          "cc": "GB",
+          "label": "Vereinigtes Königreich",
+          "text": "Der Absatz hydronischer Wärmepumpen stieg weiter, doch Kessel dominieren den Wärmemarkt nach wie vor, und die Lücke zwischen Produktabsatz und tatsächlichem Sanierungseinbau bleibt erheblich."
+        },
+        {
+          "cc": "FR",
+          "label": "Frankreich",
+          "text": "Der hydronische Wärmemarkt ist seit 2021 deutlich geschrumpft; der scheinbare Wärmepumpenanteil spiegelt zunehmend einen schrumpfenden Gesamtmarkt wider und nicht ein rasches Wachstum des absoluten Wärmepumpenvolumens."
+        },
+        {
+          "cc": "PL",
+          "label": "Polen",
+          "text": "Der Markt zeigt 2026 neue Dynamik: Der Sell-in von Heizungswärmepumpen legte im ersten Halbjahr um 18 % zu — Lagerbestandseffekte und unterschiedliche Marktdefinitionen bleiben für das Verständnis der Daten jedoch wesentlich."
+        },
+        {
+          "cc": "IT",
+          "label": "Italien",
+          "text": "Die Kesselnachfrage ging 2025 stark zurück, während die neuesten Daten für das erste Halbjahr 2026 ein Plus von 25,5 % bei Luft/Wasser-Wärmepumpen zeigen — ein Zeichen für stärkere Dynamik bei elektrifizierten Heizlösungen."
+        }
       ],
       "sections": [
         {
@@ -105,9 +154,13 @@
       "metaDesc": "Sonderbericht August 2026 zum europäischen Wärmemarkt: Deutschland, Vereinigtes Königreich, Frankreich, Polen und Italien — Gesamtjahr 2025 mit den neuesten Signalen 2026. Interaktiv, fünf Sprachen, kostenlos lesen und herunterladen.",
       "backLabel": "Alle Sonderberichte",
       "editionLabel": "Ausgabe August 2026",
-      "langNote": "Der Bericht selbst ist auf Englisch, Deutsch, Französisch, Polnisch und Italienisch lesbar — die Sprache lässt sich im Bericht umschalten."
+      "langNote": "Der Bericht selbst ist auf Englisch, Deutsch, Französisch, Polnisch und Italienisch lesbar — die Sprache lässt sich im Bericht umschalten.",
+      "productCta": {
+        "h": "Die Daten hinter den Zahlen",
+        "p": "Jede Wärmepumpe mit SCOP, Schallleistung, Kältemittel und Listenstatus — durchsuchbar, vergleichbar, als angebotsfertiges Datenblatt druckbar.",
+        "b": "Kostenlos registrieren — 7 Tage, ohne Karte"
+      }
     },
-
     "fr": {
       "eyebrow": "Rapport spécial · Août 2026",
       "title": "La transition du chauffage en Europe : cinq marchés, cinq réalités",
@@ -120,11 +173,31 @@
       ],
       "bulletsTitle": "Cinq marchés, cinq trajectoires différentes",
       "bullets": [
-        { "cc": "DE", "label": "Allemagne", "text": "Les pompes à chaleur sont devenues en 2025 la première catégorie de technologie de chauffage du pays ; au premier semestre 2026, les ventes ont atteint 194 500 unités, en hausse de 40 % sur un an." },
-        { "cc": "GB", "label": "Royaume-Uni", "text": "Les ventes de pompes à chaleur hydroniques ont continué de progresser, mais les chaudières dominent toujours le marché du chauffage et l'écart entre les ventes de produits et les installations effectives en rénovation reste important." },
-        { "cc": "FR", "label": "France", "text": "Le marché du chauffage hydronique s'est nettement contracté depuis 2021 ; la part apparente des pompes à chaleur reflète de plus en plus un marché global en recul plutôt qu'une croissance rapide des volumes absolus." },
-        { "cc": "PL", "label": "Pologne", "text": "Le marché retrouve de l'élan en 2026, avec un sell-in de pompes à chaleur de chauffage en hausse de 18 % au premier semestre, même si les effets de stock et les différences de définition du marché restent essentiels à la lecture des données." },
-        { "cc": "IT", "label": "Italie", "text": "La demande de chaudières a fortement reculé en 2025, tandis que les dernières données du premier semestre 2026 montrent des volumes de pompes à chaleur air/eau en hausse de 25,5 %, signe d'une dynamique renforcée du chauffage électrifié." }
+        {
+          "cc": "DE",
+          "label": "Allemagne",
+          "text": "Les pompes à chaleur sont devenues en 2025 la première catégorie de technologie de chauffage du pays ; au premier semestre 2026, les ventes ont atteint 194 500 unités, en hausse de 40 % sur un an."
+        },
+        {
+          "cc": "GB",
+          "label": "Royaume-Uni",
+          "text": "Les ventes de pompes à chaleur hydroniques ont continué de progresser, mais les chaudières dominent toujours le marché du chauffage et l'écart entre les ventes de produits et les installations effectives en rénovation reste important."
+        },
+        {
+          "cc": "FR",
+          "label": "France",
+          "text": "Le marché du chauffage hydronique s'est nettement contracté depuis 2021 ; la part apparente des pompes à chaleur reflète de plus en plus un marché global en recul plutôt qu'une croissance rapide des volumes absolus."
+        },
+        {
+          "cc": "PL",
+          "label": "Pologne",
+          "text": "Le marché retrouve de l'élan en 2026, avec un sell-in de pompes à chaleur de chauffage en hausse de 18 % au premier semestre, même si les effets de stock et les différences de définition du marché restent essentiels à la lecture des données."
+        },
+        {
+          "cc": "IT",
+          "label": "Italie",
+          "text": "La demande de chaudières a fortement reculé en 2025, tandis que les dernières données du premier semestre 2026 montrent des volumes de pompes à chaleur air/eau en hausse de 25,5 %, signe d'une dynamique renforcée du chauffage électrifié."
+        }
       ],
       "sections": [
         {
@@ -155,9 +228,13 @@
       "metaDesc": "Rapport spécial d'août 2026 sur le marché européen du chauffage : Allemagne, Royaume-Uni, France, Pologne et Italie — année complète 2025 et derniers signaux 2026. Interactif, cinq langues, lecture et téléchargement gratuits.",
       "backLabel": "Tous les rapports spéciaux",
       "editionLabel": "Édition d'août 2026",
-      "langNote": "Le rapport se lit en anglais, allemand, français, polonais et italien — la langue se change à l'intérieur du rapport."
+      "langNote": "Le rapport se lit en anglais, allemand, français, polonais et italien — la langue se change à l'intérieur du rapport.",
+      "productCta": {
+        "h": "Les données derrière les chiffres",
+        "p": "Chaque pompe à chaleur avec SCOP, puissance acoustique et fluide frigorigène — recherchable, comparable, imprimable en fiche prête pour le devis.",
+        "b": "Inscription gratuite — 7 jours, sans carte"
+      }
     },
-
     "pl": {
       "eyebrow": "Raport specjalny · Sierpień 2026",
       "title": "Transformacja ogrzewania w Europie: pięć rynków, pięć rzeczywistości",
@@ -170,11 +247,31 @@
       ],
       "bulletsTitle": "Pięć rynków, pięć różnych historii",
       "bullets": [
-        { "cc": "DE", "label": "Niemcy", "text": "W 2025 roku pompy ciepła stały się największą pojedynczą kategorią technologii grzewczej w kraju, a w pierwszej połowie 2026 roku sprzedaż osiągnęła 194 500 sztuk — o 40% więcej rok do roku." },
-        { "cc": "GB", "label": "Wielka Brytania", "text": "Sprzedaż hydraulicznych pomp ciepła nadal rosła, ale kotły wciąż dominują na rynku grzewczym, a różnica między sprzedażą produktów a rzeczywistą liczbą modernizacji pozostaje znacząca." },
-        { "cc": "FR", "label": "Francja", "text": "Rynek ogrzewania hydraulicznego istotnie się skurczył od 2021 roku, a pozorny udział pomp ciepła w coraz większym stopniu odzwierciedla kurczący się rynek ogółem, a nie szybki wzrost bezwzględnych wolumenów pomp ciepła." },
-        { "cc": "PL", "label": "Polska", "text": "Rynek odzyskuje dynamikę w 2026 roku — sell-in grzewczych pomp ciepła wzrósł w pierwszym półroczu o 18%, choć efekty zapasów i różnice w definicjach rynku pozostają kluczowe dla właściwego odczytu danych." },
-        { "cc": "IT", "label": "Włochy", "text": "Popyt na kotły mocno spadł w 2025 roku, natomiast najnowsze dane za pierwsze półrocze 2026 pokazują wzrost wolumenów pomp ciepła powietrze/woda o 25,5%, co wskazuje na silniejszą dynamikę rozwiązań elektryfikowanych." }
+        {
+          "cc": "DE",
+          "label": "Niemcy",
+          "text": "W 2025 roku pompy ciepła stały się największą pojedynczą kategorią technologii grzewczej w kraju, a w pierwszej połowie 2026 roku sprzedaż osiągnęła 194 500 sztuk — o 40% więcej rok do roku."
+        },
+        {
+          "cc": "GB",
+          "label": "Wielka Brytania",
+          "text": "Sprzedaż hydraulicznych pomp ciepła nadal rosła, ale kotły wciąż dominują na rynku grzewczym, a różnica między sprzedażą produktów a rzeczywistą liczbą modernizacji pozostaje znacząca."
+        },
+        {
+          "cc": "FR",
+          "label": "Francja",
+          "text": "Rynek ogrzewania hydraulicznego istotnie się skurczył od 2021 roku, a pozorny udział pomp ciepła w coraz większym stopniu odzwierciedla kurczący się rynek ogółem, a nie szybki wzrost bezwzględnych wolumenów pomp ciepła."
+        },
+        {
+          "cc": "PL",
+          "label": "Polska",
+          "text": "Rynek odzyskuje dynamikę w 2026 roku — sell-in grzewczych pomp ciepła wzrósł w pierwszym półroczu o 18%, choć efekty zapasów i różnice w definicjach rynku pozostają kluczowe dla właściwego odczytu danych."
+        },
+        {
+          "cc": "IT",
+          "label": "Włochy",
+          "text": "Popyt na kotły mocno spadł w 2025 roku, natomiast najnowsze dane za pierwsze półrocze 2026 pokazują wzrost wolumenów pomp ciepła powietrze/woda o 25,5%, co wskazuje na silniejszą dynamikę rozwiązań elektryfikowanych."
+        }
       ],
       "sections": [
         {
@@ -205,9 +302,13 @@
       "metaDesc": "Raport specjalny z sierpnia 2026 o europejskim rynku grzewczym: Niemcy, Wielka Brytania, Francja, Polska i Włochy — pełny rok 2025 i najnowsze sygnały 2026. Interaktywny, pięć języków, bezpłatny do czytania i pobrania.",
       "backLabel": "Wszystkie raporty specjalne",
       "editionLabel": "Wydanie sierpień 2026",
-      "langNote": "Sam raport można czytać po angielsku, niemiecku, francusku, polsku i włosku — język przełącza się wewnątrz raportu."
+      "langNote": "Sam raport można czytać po angielsku, niemiecku, francusku, polsku i włosku — język przełącza się wewnątrz raportu.",
+      "productCta": {
+        "h": "Dane stojące za liczbami",
+        "p": "Każda pompa ciepła z SCOP, mocą akustyczną, czynnikiem chłodniczym i statusem na liście ZUM — wyszukiwalna, porównywalna, gotowa do wydruku jako karta do oferty.",
+        "b": "Dołącz za darmo — 7 dni, bez karty"
+      }
     },
-
     "it": {
       "eyebrow": "Rapporto speciale · Agosto 2026",
       "title": "La transizione del riscaldamento in Europa: cinque mercati, cinque realtà",
@@ -220,11 +321,31 @@
       ],
       "bulletsTitle": "Cinque mercati, cinque storie diverse",
       "bullets": [
-        { "cc": "DE", "label": "Germania", "text": "Nel 2025 le pompe di calore sono diventate la maggiore singola categoria di tecnologia di riscaldamento del paese; nel primo semestre 2026 le vendite hanno raggiunto 194.500 unità, in crescita del 40% su base annua." },
-        { "cc": "GB", "label": "Regno Unito", "text": "Le vendite di pompe di calore idroniche hanno continuato a crescere, ma le caldaie dominano ancora il mercato del riscaldamento e il divario tra vendite di prodotto e installazioni effettive in riqualificazione resta significativo." },
-        { "cc": "FR", "label": "Francia", "text": "Il mercato del riscaldamento idronico si è contratto sensibilmente dal 2021 e la quota apparente delle pompe di calore riflette sempre più un mercato complessivo in calo, più che una rapida crescita dei volumi assoluti." },
-        { "cc": "PL", "label": "Polonia", "text": "Il mercato mostra rinnovato slancio nel 2026, con il sell-in di pompe di calore per riscaldamento in crescita del 18% nel primo semestre, sebbene gli effetti di magazzino e le differenze nelle definizioni di mercato restino essenziali per leggere i dati." },
-        { "cc": "IT", "label": "Italia", "text": "La domanda di caldaie è calata nettamente nel 2025, mentre gli ultimi dati del primo semestre 2026 mostrano volumi di pompe di calore aria/acqua in crescita del 25,5%, segnalando uno slancio più forte delle soluzioni di riscaldamento elettrificate." }
+        {
+          "cc": "DE",
+          "label": "Germania",
+          "text": "Nel 2025 le pompe di calore sono diventate la maggiore singola categoria di tecnologia di riscaldamento del paese; nel primo semestre 2026 le vendite hanno raggiunto 194.500 unità, in crescita del 40% su base annua."
+        },
+        {
+          "cc": "GB",
+          "label": "Regno Unito",
+          "text": "Le vendite di pompe di calore idroniche hanno continuato a crescere, ma le caldaie dominano ancora il mercato del riscaldamento e il divario tra vendite di prodotto e installazioni effettive in riqualificazione resta significativo."
+        },
+        {
+          "cc": "FR",
+          "label": "Francia",
+          "text": "Il mercato del riscaldamento idronico si è contratto sensibilmente dal 2021 e la quota apparente delle pompe di calore riflette sempre più un mercato complessivo in calo, più che una rapida crescita dei volumi assoluti."
+        },
+        {
+          "cc": "PL",
+          "label": "Polonia",
+          "text": "Il mercato mostra rinnovato slancio nel 2026, con il sell-in di pompe di calore per riscaldamento in crescita del 18% nel primo semestre, sebbene gli effetti di magazzino e le differenze nelle definizioni di mercato restino essenziali per leggere i dati."
+        },
+        {
+          "cc": "IT",
+          "label": "Italia",
+          "text": "La domanda di caldaie è calata nettamente nel 2025, mentre gli ultimi dati del primo semestre 2026 mostrano volumi di pompe di calore aria/acqua in crescita del 25,5%, segnalando uno slancio più forte delle soluzioni di riscaldamento elettrificate."
+        }
       ],
       "sections": [
         {
@@ -255,7 +376,12 @@
       "metaDesc": "Rapporto speciale di agosto 2026 sul mercato europeo del riscaldamento: Germania, Regno Unito, Francia, Polonia e Italia — anno completo 2025 e i più recenti segnali 2026. Interattivo, cinque lingue, gratuito da leggere e scaricare.",
       "backLabel": "Tutti i rapporti speciali",
       "editionLabel": "Edizione agosto 2026",
-      "langNote": "Il rapporto si legge in inglese, tedesco, francese, polacco e italiano — la lingua si cambia all'interno del rapporto."
+      "langNote": "Il rapporto si legge in inglese, tedesco, francese, polacco e italiano — la lingua si cambia all'interno del rapporto.",
+      "productCta": {
+        "h": "I dati dietro i numeri",
+        "p": "Ogni pompa di calore con SCOP, potenza sonora, refrigerante e stato nel catalogo GSE — ricercabile, confrontabile, stampabile come scheda pronta per il preventivo.",
+        "b": "Iscriviti gratis — 7 giorni, senza carta"
+      }
     }
   }
 }
