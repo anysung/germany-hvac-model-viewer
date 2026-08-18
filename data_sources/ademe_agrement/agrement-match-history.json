@@ -1,0 +1,196 @@
+{
+ "version": 1,
+ "updated_at": "2026-08-18T22:49:33.479Z",
+ "note": "Confirmed canonical↔ADEME agrément mappings. A mapping that stops matching becomes review_required, never \"not agréé\".",
+ "matches": {
+  "16000577": {
+   "agrement_number": "62-2026-000058",
+   "register_model": "NIBE F2050-6",
+   "match_method": "component_identity",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16000579": {
+   "agrement_number": "62-2026-000059",
+   "register_model": "F2050-10",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16002241": {
+   "agrement_number": "9-2026-000001",
+   "register_model": "CHA-07-400V",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16002242": {
+   "agrement_number": "9-2026-000007",
+   "register_model": "CHA-10-400V",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16014522": {
+   "agrement_number": "129-2026-000002",
+   "register_model": "EcoTouch Air Bloc 7008 (400V)",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16014523": {
+   "agrement_number": "129-2026-000003",
+   "register_model": "EcoTouch Air Bloc 7008 (230V)",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16014524": {
+   "agrement_number": "129-2026-000004",
+   "register_model": "EcoTouch Air Bloc 7006 (230V)",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16015393": {
+   "agrement_number": "62-2026-000005",
+   "register_model": "NIBE S2125-16 1X230V",
+   "match_method": "component_identity",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16015394": {
+   "agrement_number": "62-2026-000008",
+   "register_model": "NIBE S2125-20 3X400V",
+   "match_method": "component_identity",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16016883": {
+   "agrement_number": "141-2026-000001",
+   "register_model": "61AQ 040P",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16016884": {
+   "agrement_number": "141-2026-000006",
+   "register_model": "61AQ 050P",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16016885": {
+   "agrement_number": "141-2026-000005",
+   "register_model": "61AQ 080P",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16017302": {
+   "agrement_number": "141-2026-000003",
+   "register_model": "61AQ 060P",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16017351": {
+   "agrement_number": "129-2026-000001",
+   "register_model": "EcoTouch Air Bloc 7016",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018069": {
+   "agrement_number": "149-2026-000035",
+   "register_model": "LWZ 07.1 Premium HKWL 230",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018071": {
+   "agrement_number": "149-2026-000034",
+   "register_model": "LWZ 05.1 Premium HKWL 230",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018072": {
+   "agrement_number": "149-2026-000033",
+   "register_model": "LWZ 05.1 Plus H(K)WL 230",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018197": {
+   "agrement_number": "155-2026-000001",
+   "register_model": "LA 2030CP",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018199": {
+   "agrement_number": "155-2026-000003",
+   "register_model": "LA 4060 CP",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018202": {
+   "agrement_number": "155-2026-000002",
+   "register_model": "LA 1525CP",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  },
+  "16018439": {
+   "agrement_number": "141-2026-000004",
+   "register_model": "61AQ 070P",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "snapshot": "2026-08"
+  }
+ }
+}

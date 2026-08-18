@@ -1,0 +1,5 @@
+{
+  "_readme": "Official manufacturer cross-references between canonical products and ADEME agrément entries. Some products can never be matched automatically: the register prints Daikin and Vaillant component codes that appear in no European source, while Viessmann's canonical identity is an internal component code the register never prints. The only way through is the manufacturer telling us which product is which. A mapping added here is treated as official evidence and outranks every string method — so it is added ONLY from a document we can point at.",
+  "note": "Adding a mapping needs no code change. Re-run scripts/fr/match-canonical-to-agrement.mjs.",
+  "mappings": []
+}
