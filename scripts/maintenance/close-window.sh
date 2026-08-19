@@ -9,7 +9,7 @@ set -uo pipefail
 
 export PATH="/Users/christophersung/.nvm/versions/node/v20.19.6/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 REPO="/Users/christophersung/heatpumpdb-app"
-[ -f "$HOME/.heatpumpdb/env" ] && . "$HOME/.heatpumpdb/env"
+# Keys are loaded by the Node script itself (see run-window.sh).
 
 cd "$REPO" || exit 1
 exec node scripts/monthly-maintenance.mjs --close --if-window

@@ -3,7 +3,7 @@
  * monthly-maintenance.mjs — the unattended monthly window.
  *
  * 00:00 Europe/Berlin on the 1st: the service goes down with a notice.
- * 00:05: this runs. Everything must be finished by 03:00, or the window closes
+ * 00:05: this runs. Everything must be finished by 04:00, or the window closes
  * itself on the version that was already live.
  *
  * WHY A WINDOW AT ALL
@@ -43,7 +43,7 @@
  * on with last month's snapshot rather than holding the catalogue back.
  *
  *   node scripts/monthly-maintenance.mjs --run        the window
- *   node scripts/monthly-maintenance.mjs --close      lift the notice (03:00 guard)
+ *   node scripts/monthly-maintenance.mjs --close      lift the notice (04:00 guard)
  *   node scripts/monthly-maintenance.mjs --status     what happened last time
  *   node scripts/monthly-maintenance.mjs --run --dry-run
  */
@@ -68,6 +68,25 @@ mkdirSync(STATE_DIR, { recursive: true });
 mkdirSync(LOG_DIR, { recursive: true });
 const LOG = join(LOG_DIR, `${runId}.log`);
 const say = (m) => { const line = `[${new Date().toISOString()}] ${m}`; console.log(line); try { appendFileSync(LOG, line + '\n'); } catch {} };
+
+/* ── Environment ─────────────────────────────────────────────────────────────
+   launchd starts with almost nothing, and the keys this run needs are already
+   on this machine — SECRET_KEY in .env, EPREL_API_KEY in .env.local, both
+   gitignored and both entered long before this window existed. Asking the owner
+   to copy them into a third file would have been a second place to keep in sync
+   and a second place to leak them from. They are read here, in order, and an
+   existing environment variable always wins so a manual run can override. */
+for (const f of ['.env', '.env.local', join(process.env.HOME ?? '', '.heatpumpdb', 'env')]) {
+  const path = f.startsWith('/') ? f : join(ROOT, f);
+  if (!existsSync(path)) continue;
+  for (const line of readFileSync(path, 'utf8').split('\n')) {
+    const m = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)$/);
+    if (!m) continue;                                    // comments and blanks
+    const [, k, rawV] = m;
+    if (process.env[k]) continue;                        // never clobber the caller
+    process.env[k] = rawV.trim().replace(/^["']|["']$/g, '');
+  }
+}
 
 const token = () => execSync('gcloud auth print-access-token', { encoding: 'utf8' }).trim();
 
@@ -154,7 +173,7 @@ function step(name, cmd, { fatal = true } = {}) {
    would run an hour early or late for half the year. */
 if (args.includes('--if-window')) {
   const b = berlinParts();
-  const wantHour = MODE === 'close' ? 3 : 0;
+  const wantHour = MODE === 'close' ? 4 : 0;
   const ok = b.day === 1 && b.hour === wantHour;
   if (!ok) {
     console.log(`not the window (Berlin ${b.date} ${String(b.hour).padStart(2, '0')}:${String(b.minute).padStart(2, '0')}) — exiting`);
@@ -170,7 +189,7 @@ if (MODE === 'status') {
   process.exit(0);
 }
 
-/* ── close: the 03:00 guard ──────────────────────────────────────────────── */
+/* ── close: the 04:00 guard ──────────────────────────────────────────────── */
 if (MODE === 'close') {
   const s = loadState();
   // Ask the SERVICE, never this machine's memory. A state file that says "done"
@@ -195,8 +214,8 @@ if (MODE === 'close') {
 }
 
 /* ── run ─────────────────────────────────────────────────────────────────── */
-const until = berlinISOToday(3, 0);
-say(`monthly window ${runId} — must finish by 03:00 Europe/Berlin (${until})`);
+const until = berlinISOToday(4, 0);
+say(`monthly window ${runId} — must finish by 04:00 Europe/Berlin (${until})`);
 saveState({ phase: 'starting' });
 
 try {
@@ -266,7 +285,7 @@ try {
   saveState({ ...s, phase: 'failed', failedStep: s.step ?? 'unknown', error: String(err.message ?? err) });
   say(`STOPPED: ${err.message ?? err}`);
   say('The notice stays UP and nothing further runs. Waiting for the owner.');
-  say(`If no instruction arrives, the 03:00 guard restores service on the previous version.`);
+  say(`If no instruction arrives, the 04:00 guard restores service on the previous version.`);
   say(`log: ${LOG}`);
   process.exit(1);
 }
