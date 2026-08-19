@@ -88,7 +88,19 @@ if (!existsSync(GB)) {
   is('every UK product is a canonical product', gb.every(p => canonicalIds.has(String(p.bafa_id))), true);
   is('no UK product was created by the PEL', gb.every(p => p.primary_source !== 'OFGEM_PEL'), true);
   is('the UK catalogue is the canonical catalogue', gb.length, de.length);
-  is('France too', fr.length, de.length);
+  // France also publishes an FR-EDITION-ONLY layer (2026-08-19): ADEME agrément
+  // entries carrying EPREL performance, for models the German baseline never had.
+  // The canonical part must still travel whole, and the native part must stay put.
+  const frCanonical = fr.filter(p => p.performance_source !== 'EPREL');
+  const frNative = fr.filter(p => p.performance_source === 'EPREL');
+  is('every canonical product travels to France', frCanonical.length, de.length);
+  is('French natives are FR-scoped and carry the agrément number they exist for',
+    frNative.length > 0 && frNative.every(p =>
+      String(p.source_id).startsWith('FR-') && p.agrement_number && p.country === 'FR'), true);
+  is('no French native leaked into the UK catalogue',
+    gb.every(p => p.performance_source !== 'EPREL'), true);
+  is('no French native leaked into the German canonical baseline',
+    de.every(p => p.performance_source !== 'EPREL'), true);
 
   console.log('\nA failed local match changes NOTHING');
   const unmatched = gb.filter(p => p.pel_match_status !== 'confirmed');

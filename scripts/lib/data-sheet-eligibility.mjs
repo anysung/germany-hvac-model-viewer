@@ -179,13 +179,64 @@ export function gseNativeEligibility(p) {
 export const isGseNativeEligible = p => gseNativeEligibility(p).eligible;
 
 /**
+ * FRANCE-SPECIFIC publication tier — ADEME agrément entries carrying EPREL
+ * performance (added 2026-08-19).
+ *
+ * The French market has the opposite problem to Germany. Its subsidy register
+ * names the models that matter — Atlantic, De Dietrich, Saunier Duval, Thermor,
+ * brands the German baseline never carried — but publishes no performance at
+ * all. EPREL publishes the performance for the same model identifiers and no
+ * agrément number. Neither source alone can produce a data sheet; together they
+ * can, and an installer whose quote must carry the agrément number is exactly
+ * the reader who needs it.
+ *
+ * What this tier requires that the global rule cannot get here:
+ *   ηs and rated output come from EPREL, so the usual measured five are thin —
+ *   EPREL has no refrigerant, COP or SCOP field at all. Refrigerant comes from
+ *   the register's own facet, sound power from EPREL, and those two are the
+ *   measured pair. Anything less publishes a sheet with nothing to compare.
+ *
+ * What it refuses to soften: identity, heat-source type, a rated capacity, a
+ * classified segment, seasonal efficiency, and the agrément number that is the
+ * record's whole reason to exist. A name and a number is a business card.
+ *
+ * These records never travel: source_id is 'FR-<agrément number>' and the FR
+ * builder is the only one that emits them.
+ */
+export function eprelNativeEligibility(p) {
+  const reasons = [];
+  if (p?.performance_source !== 'EPREL') reasons.push('not_eprel_native');
+  for (const f of ['manufacturer', 'model', 'type']) {
+    if (!present(p?.[f])) reasons.push(`missing_${f}`);
+  }
+  if (!present(p?.agrement_number)) reasons.push('missing_agrement_provenance');
+  if (!present(p?.eprel_registration_number)) reasons.push('missing_eprel_provenance');
+  if (!String(p?.source_id ?? '').startsWith('FR-')) reasons.push('missing_fr_source_id');
+  if (ratedCapacityKw(p) == null) reasons.push('no_rated_capacity');
+  if (segmentOf(p) === 'unclassified') reasons.push('unclassified_segment');
+  if (!present(p?.efficiency_35C_percent) && !present(p?.efficiency_55C_percent)) {
+    reasons.push('no_seasonal_performance');
+  }
+  // The measured pair this tier is built on: refrigerant (register facet) and
+  // sound power (EPREL). Two is the same floor the global rule sets.
+  const measured = [p?.refrigerant, p?.noise_outdoor_dB, p?.noise_indoor_dB].filter(present).length;
+  if (measured < MIN_CORE_FIELDS) reasons.push('insufficient_measured_fields');
+  return { eligible: reasons.length === 0, reasons };
+}
+
+export const isEprelNativeEligible = p => eprelNativeEligibility(p).eligible;
+
+
+/**
  * Publication rule for a MARKET's public dataset: the global rule, plus the
  * Italy-only GSE-native tier for records that declare that provenance. Used by
  * the IT builder and the dataset gate's IT section; other markets never
  * contain GSE_CATALOGUE records, so this is the global rule there.
  */
 export const isPublishable = p =>
-  p?.performance_source === 'GSE_CATALOGUE' ? isGseNativeEligible(p) : isDataSheetEligible(p);
+  p?.performance_source === 'GSE_CATALOGUE' ? isGseNativeEligible(p)
+    : p?.performance_source === 'EPREL' ? isEprelNativeEligible(p)
+      : isDataSheetEligible(p);
 
 /** Split a canonical pool, with failure reasons tallied for the build report. */
 export function applyEligibility(products) {

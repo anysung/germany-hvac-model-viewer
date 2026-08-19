@@ -27,14 +27,19 @@
  */
 
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { eprelNativeEligibility } from '../lib/data-sheet-eligibility.mjs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '../..');
 
-const EXPECTED_FIELD_COUNT = 79; // DE 78 − 4 German status/funding fields (they do not travel)
+const EXPECTED_FIELD_COUNT = 87; // DE 78 − 4 German status/funding fields (they do not travel)
                                  //        + performance_source + bafa_reference_*(3) + nf_pac_reference
+                                 //        + the 8 ADEME agrément fields, present on EVERY record.
+                                 // The native layer must not give itself a wider shape than the rest
+                                 // of the dataset: a field that exists on some records and not others
+                                 // is a field consumers cannot rely on.
 const PRICE_KEY_FRAGMENTS = ['price', 'brand_tier', 'price_confidence', 'package_scope', 'capacity_band', 'refrigerant_group'];
 
 function loadJSON(relPath, hint) {
@@ -91,12 +96,112 @@ function toFrItem(p) {
     bafa_reference_model: p.model ?? null,
     bafa_reference_match_type: 'same_record',
     nf_pac_reference: nfpacByBafaId.get(String(p.bafa_id))?.nf_pac_reference ?? null,
+    // The agrément block exists on every FR record. A German-derived product has
+    // no agrément of its own — that is a null, not a missing field, and it reads
+    // as "vérification requise" rather than as absence from the register.
+    agrement_number: null,
+    agrement_match_status: null,
+    agrement_gamme: null,
+    agrement_commercial_ref: null,
+    agrement_usage: null,
+    agrement_snapshot: null,
+    agrement_import_date: null,
+    performance_basis_note: null,
   };
 }
 
 const residential = deResidential.items.map(toFrItem);
 const commercial = deCommercial.items.map(toFrItem);
-const allItems = [...residential, ...commercial];
+
+/* ── FR-market native layer: ADEME agrément × EPREL ──────────────────────────
+   The German baseline never carried the brands that dominate the French subsidy
+   register — Atlantic, De Dietrich, Saunier Duval, Thermor, Intuis. Those models
+   are exactly the ones a French installer must put an agrément number against
+   from 2026-09-01, so a catalogue without them answers the wrong question.
+
+   The register supplies identity, heat-source type, refrigerant, usage and the
+   agrément number; EPREL supplies ηs, rated output and sound power for the same
+   model identifier. Neither alone can produce a data sheet. Nothing is inferred
+   from a model name, and no figure is carried over from the German records.
+
+   These are FR-EDITION ONLY: source_id is 'FR-<agrément number>' and no other
+   builder reads this file. */
+const AGR_DIR = resolve(ROOT, 'data_sources/ademe_agrement/matching');
+const agrSnapshot = existsSync(AGR_DIR)
+  ? readdirSync(AGR_DIR).filter(d => /^\d{4}-\d{2}$/.test(d)).sort().reverse()[0] : null;
+const agrFile = agrSnapshot && existsSync(resolve(AGR_DIR, agrSnapshot, 'agrement-eprel-enrichment.json'))
+  ? loadJSON(`data_sources/ademe_agrement/matching/${agrSnapshot}/agrement-eprel-enrichment.json`) : null;
+
+/** Register type strings are already French; they are used verbatim. */
+const TYPE_AGR = {
+  'Air/Eau': 'Air / Eau',
+  'Eau glycolée/Eau': 'Eau glycolée / Eau',
+  'Eau/Eau': 'Eau / Eau',
+  'Sol/Eau': 'Sol / Eau',
+};
+const CONFIG_AGR = { Monobloc: 'Monoblock', Split: 'Split' };
+
+const TEMPLATE_KEYS = Object.keys(residential[0] ?? {});
+const nativeRejected = {};
+const native = [];
+for (const e of (agrFile?.entries ?? [])) {
+  if (e.status !== 'matched' || !e.publishable) continue;
+  const candidate = Object.fromEntries(TEMPLATE_KEYS.map(k => [k, null]));
+  Object.assign(candidate, {
+    bafa_id: `FR-${e.agrement}`,
+    source_id: `FR-${e.agrement}`,
+    country: 'FR',
+    primary_source: 'ADEME_AGREMENT',
+    performance_source: 'EPREL',
+    manufacturer: e.brand,
+    manufacturer_normalized: String(e.brand ?? '').toUpperCase().normalize('NFKD')
+      .replace(/[^A-Z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim(),
+    manufacturer_short: e.brand,
+    model: e.model,
+    type: TYPE_AGR[e.type_pac] ?? e.type_pac,
+    installation_type: CONFIG_AGR[e.configuration] ?? null,
+    refrigerant: e.refrigerant ?? null,
+    // Performance exactly as EPREL publishes it. The energy class is NOT copied:
+    // the app derives it from ηs per EU 811/2013, the same way it does for every
+    // other record, so one rule decides every class on the site.
+    power_35C_kw: e.rated_kw_35 ?? null,
+    power_55C_kw: e.rated_kw_55 ?? null,
+    efficiency_35C_percent: e.eta_s_35 ?? null,
+    efficiency_55C_percent: e.eta_s_55 ?? null,
+    noise_outdoor_dB: e.noise_outdoor_dB ?? null,
+    noise_indoor_dB: e.noise_indoor_dB ?? null,
+    outdoor_side_display_model: e.model,
+    outdoor_side_identified: false,
+    // Listing block: the record IS an agrément entry, so it is confirmed by
+    // construction. It carries the number a devis and a facture must show.
+    agrement_number: e.agrement,
+    agrement_match_status: 'confirmed',
+    agrement_gamme: e.gamme ?? null,
+    agrement_commercial_ref: e.commercial_ref ?? null,
+    agrement_usage: e.usage ?? null,
+    agrement_snapshot: agrSnapshot,
+    agrement_import_date: agrFile?._meta?.register_import_date ?? null,
+    eprel_registration_number: e.eprel_registration_number ?? null,
+    eprel_model: e.eprel_model ?? null,
+    eprel_match_type: e.match_method ?? null,
+    performance_basis_note: 'EPREL (EU energy label registry); listing and refrigerant from the ADEME agrément register',
+    source_snapshot_generated_at: agrFile?._meta?.generated ?? null,
+    market_segment: null,   // resolved by the shared segmentation rule below
+  });
+  candidate.market_segment = (candidate.power_35C_kw ?? 0) > 23 ? 'commercial' : 'residential_core';
+
+  const r = eprelNativeEligibility(candidate);
+  if (!r.eligible) { for (const x of r.reasons) nativeRejected[x] = (nativeRejected[x] ?? 0) + 1; continue; }
+  native.push(candidate);
+}
+console.log(agrFile
+  ? `ADEME×EPREL native layer: ${native.length} FR-edition records (snapshot ${agrSnapshot})`
+    + (Object.keys(nativeRejected).length ? ` · rejected ${JSON.stringify(nativeRejected)}` : '')
+  : 'ADEME×EPREL native layer: none (run scripts/fr/enrich-agrement-from-eprel.mjs)');
+
+const nativeRes = native.filter(i => i.market_segment !== 'commercial');
+const nativeCom = native.filter(i => i.market_segment === 'commercial');
+const allItems = [...residential, ...commercial, ...native];
 
 // ── Validate ──────────────────────────────────────────────────────────────────
 
@@ -116,15 +221,21 @@ if (priceKeysFound.length > 0) {
 }
 
 const badProvenance = allItems.filter(i =>
-  !i.bafa_id || !i.source_id || i.country !== 'FR' || i.performance_source !== 'BAFA_REFERENCE'
+  !i.bafa_id || !i.source_id || i.country !== 'FR'
+  || !['BAFA_REFERENCE', 'EPREL'].includes(i.performance_source)
+  // An EPREL-native record without its agrément number is the one thing this
+  // layer may never publish — the number is why the record exists.
+  || (i.performance_source === 'EPREL' && (!i.agrement_number || !String(i.source_id).startsWith('FR-')))
+  // …and no German-derived record may ever claim EPREL provenance.
+  || (i.performance_source === 'BAFA_REFERENCE' && String(i.source_id).startsWith('FR-'))
 );
 if (badProvenance.length > 0) {
   console.error(`FAIL: ${badProvenance.length} items missing required FR provenance`);
   process.exit(1);
 }
 
-if (allItems.length !== deResidential.items.length + deCommercial.items.length) {
-  console.error('FAIL: record count mismatch vs DE source datasets');
+if (allItems.length !== deResidential.items.length + deCommercial.items.length + native.length) {
+  console.error('FAIL: record count mismatch vs DE source datasets + native layer');
   process.exit(1);
 }
 
@@ -168,8 +279,8 @@ function writeOutput(relPath, items, dataset, sourceMeta) {
   console.log(`Wrote ${items.length} items → ${relPath}`);
 }
 
-writeOutput('public/data/products-fr.json', residential, 'residential', deResidential._meta);
-writeOutput('public/data/products-commercial-fr.json', commercial, 'commercial', deCommercial._meta);
+writeOutput('public/data/products-fr.json', [...residential, ...nativeRes], 'residential', deResidential._meta);
+writeOutput('public/data/products-commercial-fr.json', [...commercial, ...nativeCom], 'commercial', deCommercial._meta);
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 

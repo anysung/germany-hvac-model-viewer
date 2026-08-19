@@ -81,7 +81,7 @@ const loadExceptions = file => {
  * (one local id → one confirmed product, no cross-manufacturer/capacity/type/
  * segment conflicts, no id without a confirmed listing); only the field names
  * differ per registry. Markets without an overlay (DE has its own registry
- * fields, FR has no list) simply count zero local ids here.
+ * fields) simply count zero local ids here.
  */
 const LOCAL_OVERLAY = {
   GB: {
@@ -97,6 +97,15 @@ const LOCAL_OVERLAY = {
     // deterministic entry key — the same one-key-one-product integrity applies.
     status: 'gse_match_status', id: 'gse_entry_key', extraId: null,
     method: 'gse_match_method', exceptions: [],
+  },
+  FR: {
+    // The ADEME agrément register DOES publish a per-entry number, and it is the
+    // number an installer copies onto the devis — so it gets the same
+    // one-id-one-product integrity as every other overlay. Added 2026-08-19 with
+    // the FR native layer; before that France had no national list and this
+    // section counted zero.
+    status: 'agrement_match_status', id: 'agrement_number', extraId: null,
+    method: null, exceptions: [],
   },
 };
 const NO_OVERLAY = { status: 'pel_match_status', id: 'mcs_number', extraId: 'pel_source_id', method: 'pel_match_method', exceptions: [] };
@@ -499,6 +508,15 @@ if (blockers.length) {
     writeFileSync(resolve(ROOT, CANDIDATE), JSON.stringify(manifest, null, 2) + '\n');
     console.warn(`\n⚠ OVERRIDDEN by the operator: "${REASON}"`);
     console.warn('  The blockers above were NOT fixed. This is recorded in data_manifests/candidate.json.');
+    // An overridden change still has to be able to BECOME the baseline. Without
+    // this the same blocker fires on every subsequent run for a change the
+    // operator already accepted, and the gate teaches everyone to ignore it.
+    // The override travels into the baseline, so the reason stays attached to
+    // the numbers it explains.
+    if (APPROVE) {
+      writeFileSync(resolve(ROOT, BASELINE), JSON.stringify(manifest, null, 2) + '\n');
+      console.warn(`  ✓ Approved anyway: ${BASELINE} now describes production, with the override recorded in it.`);
+    }
     process.exit(0);
   }
   console.error('\nNothing was uploaded; the live datasets are untouched.');

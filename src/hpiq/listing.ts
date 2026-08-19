@@ -13,8 +13,14 @@
  *                        else says "verification required" — a failed automated
  *                        match is a fact about OUR MATCHING, not about the PEL.
  *                        Absence of a match is not evidence of absence.
- *   FR → none            France has no national product list. Nothing is shown; a
- *                        foreign registry's listing is never relabelled as French.
+ *   FR → ADEME agrément  the register of models approved for the heat pump bonus.
+ *                        From 2026-09-01 its number must appear on the devis and
+ *                        the facture, so it is the one identifier a French quote
+ *                        cannot go out without. PEL rules: a confirmed entry says
+ *                        "agréé" and shows the number; anything else says
+ *                        verification required. Never "not approved" — our
+ *                        catalogue does not originate from the register, so a
+ *                        failed match is a fact about OUR matching.
  *   PL → Lista ZUM       an overlay, PEL rules: a confirmed match says
  *                        "ZUM listed" (na liście ZUM); anything else says
  *                        verification required. Never "not on ZUM".
@@ -65,6 +71,13 @@ export function localListingStatus(p: HeatPump): LocalListingStatus | null {
     return raw.zum_match_status === 'confirmed' ? 'listed' : 'verification_required';
   }
 
+  if (LOCAL_LISTING_SOURCE === 'AGREMENT') {
+    // Records built FROM the register are confirmed by construction; every
+    // German-derived product carries a null status and reads as verification
+    // required, which is what it is.
+    return raw.agrement_match_status === 'confirmed' ? 'listed' : 'verification_required';
+  }
+
   if (LOCAL_LISTING_SOURCE === 'GSE') {
     // GSE Conto Termico catalogue follows the PEL rules exactly: a failed
     // match may never be presented as absence from the catalogue.
@@ -87,6 +100,12 @@ export function localListingId(p: HeatPump): string | null {
   if (LOCAL_LISTING_SOURCE === 'ZUM') {
     if (raw.zum_match_status !== 'confirmed') return null;
     return typeof raw.zum_id === 'string' && raw.zum_id ? raw.zum_id : null;
+  }
+  if (LOCAL_LISTING_SOURCE === 'AGREMENT') {
+    // Unlike the GSE catalogue, this register DOES publish a per-entry number —
+    // and it is the number the installer has to copy onto the paperwork.
+    if (raw.agrement_match_status !== 'confirmed') return null;
+    return typeof raw.agrement_number === 'string' && raw.agrement_number ? raw.agrement_number : null;
   }
   // GSE: the Conto Termico catalogue publishes NO per-row identifier, and our
   // internal gse_entry_key must never be presented as an official id.

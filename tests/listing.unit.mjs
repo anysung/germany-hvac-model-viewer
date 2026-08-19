@@ -96,12 +96,30 @@ for (const country of ['GB', 'DE', 'FR', 'PL', 'IT']) {
   }
 
   if (country === 'FR') {
-    is('France has no national list', LOCAL_LISTING_SOURCE, null);
-    is('so nothing is claimed, ever', localListingStatus({ pel_match_status: 'confirmed', mcs_number: 'X' }), null);
-    is('no foreign listing is relabelled as French',
-      localListingStatus({ bafa_listing_status: 'listed_in_snapshot' }), null);
-    is('and no id is shown', localListingId({ mcs_number: 'X' }), null);
-    is('no listing filter', LOCAL_LISTING_FILTER, false);
+    // France gained a national list on 2026-08-19: the ADEME agrément register,
+    // whose number a devis must carry from 1 September 2026.
+    is('source is the ADEME agrément register', LOCAL_LISTING_SOURCE, 'AGREMENT');
+    is('no listing filter — confirmed entries do not divide the catalogue usefully',
+      LOCAL_LISTING_FILTER, false);
+
+    is('confirmed → listed',
+      localListingStatus({ agrement_match_status: 'confirmed', agrement_number: '18-2026-000008' }), 'listed');
+    is('confirmed → the agrément number is shown (a devis has to carry it)',
+      localListingId({ agrement_match_status: 'confirmed', agrement_number: '18-2026-000008' }), '18-2026-000008');
+
+    // PEL rules: our catalogue does not originate from the register, so a failed
+    // match is a fact about our matching and may never read as absence.
+    is('unmatched → verification required, never "not approved"',
+      localListingStatus({ agrement_match_status: null }), 'verification_required');
+    is('unmatched → no number is shown',
+      localListingId({ agrement_match_status: null, agrement_number: '18-2026-000008' }), null);
+
+    // Foreign registries stay foreign.
+    is('a UK PEL status is ignored entirely',
+      localListingStatus({ pel_match_status: 'confirmed', mcs_number: 'X' }), 'verification_required');
+    is('a German listing status is ignored entirely',
+      localListingStatus({ bafa_listing_status: 'listed_in_snapshot' }), 'verification_required');
+    is('and no foreign id is shown', localListingId({ mcs_number: 'X' }), null);
   }
 
   if (country === 'PL') {

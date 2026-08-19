@@ -135,7 +135,8 @@ export interface CountryProfile {
    * never creates a product, never supplies a spec, and never removes a product
    * when a match fails.
    *
-   * `source: null` = this market has no national product list (France:
+   * `source: null` = this market has no national product list (was France until
+   * 2026-08-19, when the ADEME agrément register gave it one:
    * MaPrimeRénov'/CEE are criteria-based). Then nothing is shown — a foreign
    * registry's listing is never relabelled as a local one.
    *
@@ -147,7 +148,7 @@ export interface CountryProfile {
    * wording stays translatable and no English leaks into a non-English site.
    */
   localListingOverlay: {
-    source: 'BAFA' | 'PEL' | 'ZUM' | 'GSE' | null;
+    source: 'BAFA' | 'PEL' | 'ZUM' | 'GSE' | 'AGREMENT' | null;
     filterEnabled: boolean;
     /**
      * Start with the "listed only" filter ON? Only sensible where the listed
@@ -218,7 +219,7 @@ export const COUNTRY_PROFILES: Record<CountryCode, CountryProfile> = {
     // France has NO national heat-pump list (MaPrimeRénov'/CEE are criteria-based,
     // not a product list). A foreign registry's listing must never be relabelled as
     // a French one, so France shows no local listing status at all.
-    localListingOverlay: { source: null, filterEnabled: false },
+    localListingOverlay: { source: 'AGREMENT', filterEnabled: false },
   },
 
   GB: {
