@@ -72,19 +72,60 @@ for (const r of eprel) {
 }
 const products = [...byCore.values()];
 
+/**
+ * One manufacturer, several registered names. EPREL carries Viessmann under both
+ * "Viessmann Climate Solutions SE" (336) and "Viessmann Werke GmbH & Co. KG"
+ * (122), Toshiba under "Toshiba Carrier Corporation" (456) and "Toshiba" (13).
+ * Returning the FIRST pool that matched left Viessmann with 122 records to search
+ * instead of 458, and read as "EPREL simply does not have them" — the answer that
+ * would have sent us buying catalogues for products EPREL already described.
+ * Every matching pool is merged.
+ *
+ * Matching is on the trading name with corporate suffixes folded away, and one
+ * side must START with the other rather than merely contain it: containment
+ * anywhere would let a short brand match the middle of an unrelated company name.
+ */
+const CORP = /(GMBH|CO|KG|SE|AG|SA|SAS|NV|BV|AB|AS|OY|SPA|SRL|LTD|PLC|INC|GROUP|WERKE|CLIMATESOLUTIONS|CARRIERCORPORATION|CORPORATION|ELECTRIC|INDUSTRIES|EUROPE|FRANCE|INTERNATIONAL)+$/;
+const brandKey = (s) => { const n = norm(s); return n.replace(CORP, '') || n; };
+
 const brandIndex = new Map();
 for (const r of products) {
-  const b = norm(r.supplierOrTrademark); if (!b) continue;
+  const b = brandKey(r.supplierOrTrademark); if (!b) continue;
   if (!brandIndex.has(b)) brandIndex.set(b, []);
   brandIndex.get(b).push(r);
 }
-const poolFor = (brand) => { const n = norm(brand); for (const [k, v] of brandIndex) if (k.includes(n) || n.includes(k)) return v; return []; };
+const poolFor = (brand) => {
+  const n = brandKey(brand); if (!n) return [];
+  let merged = [];
+  for (const [k, v] of brandIndex) if (k === n || k.startsWith(n) || n.startsWith(k)) merged = merged.concat(v);
+  return merged;
+};
 
-/** One product, or nothing. Several DIFFERENT products is a refusal, not a guess. */
+/** The enrichment payload — the only values that leave this join. */
+const payload = (h) => [
+  h.seasonalSpaceHeatingEnergyEfficiencyAverage35 ?? h.seasonalSpaceHeatingEnergyEfficiency,
+  h.seasonalSpaceHeatingEnergyEfficiencyAverage55,
+  h.ratedHeatOutputAverage35 ?? h.ratedHeatOutput, h.ratedHeatOutputAverage55,
+  h.energyClass35 ?? h.energyClass, h.energyClass55,
+  h.outdoorNoise > 0 ? h.outdoorNoise : null, h.noise > 0 ? h.noise : null,
+].join('|');
+
+/**
+ * One product, or nothing.
+ *
+ * Several rows of the SAME product is not ambiguity — the snapshot repeats
+ * registrations. Nor is it ambiguity when several different registrations agree
+ * on every figure we would take: there is nothing to choose between them, and
+ * refusing would discard a fact we hold twice over. What is refused is
+ * candidates that DISAGREE — 164 of them, mostly Mitsubishi, where picking one
+ * would be inventing a performance figure. Those wait for a manufacturer
+ * cross-reference, not for a heuristic.
+ */
 const only = (hits) => {
   if (!hits.length) return null;
   const cores = new Set(hits.map((h) => h.productModelCoreId ?? h.modelIdentifier));
-  return cores.size === 1 ? hits[0] : null;
+  if (cores.size === 1) return hits[0];
+  return new Set(hits.map(payload)).size === 1 ? hits[0] : null;
 };
 
 const out = [];
