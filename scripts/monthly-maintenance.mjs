@@ -35,9 +35,12 @@
  * decide anything by itself. If no instruction arrives, the 03:00 closer
  * (--close) lifts the notice on whatever was last serving.
  *
- * EPREL is deliberately NOT crawled here. It is ~45k records and would eat the
- * window; scripts/eprel/fetch-eprel-raw.mjs runs on its own, outside any window,
- * because it only writes local files.
+ * EPREL IS crawled here. It was left out on the assumption that 45k records
+ * means hours — measured, it is 457 pages at 1s, about eight minutes. Leaving it
+ * to a second schedule would have been a second thing to remember for no gain,
+ * and the French join reads it, so a stale EPREL quietly stops matching new
+ * models. It is non-fatal: without a key, or on a bad crawl, the window carries
+ * on with last month's snapshot rather than holding the catalogue back.
  *
  *   node scripts/monthly-maintenance.mjs --run        the window
  *   node scripts/monthly-maintenance.mjs --close      lift the notice (03:00 guard)
@@ -205,7 +208,12 @@ try {
   step('fetch sources, build all markets, verify (DE first; GB/FR/PL/IT derive from it)',
     'node scripts/update-all.mjs --fetch');
 
-  // 1b — France's own layer. The register moves monthly and EPREL is already on disk.
+  // 1b — EPREL, before anything that reads it.
+  saveState({ phase: 'running', step: 'eprel' });
+  step('refresh EPREL snapshot (EU energy-label registry)',
+    'node scripts/eprel/fetch-eprel-raw.mjs --full', { fatal: false });
+
+  // 1c — France's own layer, which joins the register to that EPREL snapshot.
   saveState({ phase: 'running', step: 'fr-agrement' });
   step('FR: ADEME agrément register snapshot', 'node scripts/fr/fetch-ademe.mjs');
   step('FR: recover type/refrigerant/usage facets', 'node scripts/fr/enrich-agrement-facets.mjs');
@@ -226,11 +234,28 @@ try {
   saveState({ phase: 'running', step: 'news-snapshot' });
   if (newsOk) step('export public news snapshot', 'node scripts/export-news-public.mjs', { fatal: false });
 
-  // 5 — every surface ships one epoch.
+  // 5 — every surface ships one epoch, the admin console included: it runs the
+  // same app code, so leaving it on last month's bundle is how an ops screen
+  // starts disagreeing with the service it is meant to describe.
   saveState({ phase: 'running', step: 'build+deploy' });
   step('build + deploy all sites',
-    'npm run build:de && npm run build:uk && npm run build:fr && npm run build:pl && npm run build:it && npm run build:hub'
-    + ' && firebase deploy --only hosting:de,hosting:uk,hosting:fr,hosting:pl,hosting:it,hosting:eu');
+    'npm run build:de && npm run build:uk && npm run build:fr && npm run build:pl && npm run build:it'
+    + ' && npm run build:hub && npm run build:admin'
+    + ' && firebase deploy --only hosting:de,hosting:uk,hosting:fr,hosting:pl,hosting:it,hosting:eu,hosting:hub');
+
+  // 6 — record the epoch as the new baseline. Without this the gate keeps
+  // comparing next month against the month before last and blocks a change it
+  // already let through — which is how a gate teaches people to override it.
+  saveState({ phase: 'running', step: 'approve-baseline' });
+  step('approve the published set as the new baseline', 'node scripts/dataset-gate.mjs --approve');
+
+  // 7 — the run edits COMMITTED files: match histories, the BAFA fetched-at
+  // index, the public news snapshot, the manifests. Left uncommitted they are
+  // one careless checkout from gone, and next month starts from a dirty tree.
+  saveState({ phase: 'running', step: 'commit' });
+  step('commit and push what the run changed',
+    'git add -A && (git diff --cached --quiet || git commit -q -m '
+    + `"chore(data): monthly update ${runId}" ) && git push -q origin main`, { fatal: false });
 
   await setMaintenance(false, null);
   saveState({ phase: 'done', newsOk });
