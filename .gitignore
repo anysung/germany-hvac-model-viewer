@@ -111,3 +111,6 @@ linkedin_posts/
 
 # Generated demo recordings (rebuild with scripts/record-demo.mjs)
 demo_video/
+
+# Unattended maintenance window — run state and logs are machine-local.
+.maintenance/

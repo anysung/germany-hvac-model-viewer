@@ -29,6 +29,7 @@ import { DEFAULT_LANGUAGE, COUNTRY_SITES } from './hpiq/market';
 import { PUBLIC_ENV } from './config/env';
 import { REGISTRATION_OPEN, REGISTRATION_REOPEN_DATE } from './config/registration';
 import { captureSignupRef } from './services/signupRef';
+import { MaintenanceGate } from './components/MaintenanceGate';
 
 // Attribution: catch ?ref= before any routing can strip it.
 captureSignupRef();
@@ -190,7 +191,7 @@ const SubscribeGate: React.FC<{
   );
 };
 
-const App: React.FC = () => {
+const AppInner: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(IS_ADMIN_BUILD ? 'LOGIN' : 'LANDING');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   // One-email-one-country redirect screen: { country } for a login/social block
@@ -1126,4 +1127,16 @@ const App: React.FC = () => {
 
   return <div>{t.loading}</div>;
 };
+/**
+ * The monthly database window covers the whole service, so the gate sits OUTSIDE
+ * the app rather than inside one of its many return branches — every screen,
+ * signed in or not, is covered by construction. It defaults to this edition's
+ * language: during the window there is no session to read a preference from.
+ */
+const App: React.FC = () => (
+  <MaintenanceGate language={DEFAULT_LANGUAGE}>
+    <AppInner />
+  </MaintenanceGate>
+);
+
 export default App;

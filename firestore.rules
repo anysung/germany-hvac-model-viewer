@@ -95,6 +95,18 @@ service cloud.firestore {
     //   as a non-privileged pending profile (the owner account is the exception).
     // - Users may update their own doc ONLY to request account deletion
     //   (store-required in-app deletion flow); everything else is admin-only.
+    /**
+     * Service configuration the app must be able to read BEFORE anyone signs in.
+     * Today that is the monthly maintenance notice: a visitor who cannot sign in
+     * during the window is exactly the person who needs to be told why, so this
+     * one document is world-readable. Writes stay closed — the pipeline updates
+     * it with an admin credential, never the client.
+     */
+    match /config/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     match /users/{userId} {
       allow get: if isSignedIn() && request.auth.uid == userId;
 
