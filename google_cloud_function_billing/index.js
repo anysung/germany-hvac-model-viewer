@@ -1402,6 +1402,252 @@ async function archiveDiscount(req, res) {
 }
 
 // ---------------------------------------------------------------------------
+// Member email — support@heatpumpdb.eu (Zoho SMTP)
+//
+// WHY THIS IS SERVER-SIDE AND ADMIN-ONLY
+// The service publishes support@heatpumpdb.eu in its legal pages, so that is
+// the address a member must be able to reply to. Sending as that address needs
+// the mailbox credential, which can never reach a browser: anything that can
+// send as the company can impersonate it. The client sends { uid, subject,
+// body } and the server decides who it is allowed to reach.
+//
+// WHY ZOHO AND NOT AN ESP
+// heatpumpdb.eu already runs its mail on Zoho (MX zoho.eu) with SPF
+// (include:zohomail.eu) and DKIM (zoho._domainkey) published. Sending through
+// the mailbox that owns the domain means both pass with no new vendor, no new
+// DNS, and replies land in the inbox a human already reads. An ESP would need
+// its own domain authentication and would put replies somewhere else.
+//
+// EVERY SEND IS RECORDED. A notice about someone's account — a suspension
+// above all — is the kind of message that gets disputed later, so the message
+// as sent, who sent it and when are written to `memberEmails` before the
+// caller gets a response. A failed send is recorded too: silence about a
+// notice we believe we sent is worse than a visible failure.
+// ---------------------------------------------------------------------------
+
+const SUPPORT_FROM = process.env.SUPPORT_FROM || 'support@heatpumpdb.eu';
+// smtpPRO, not smtp: Zoho serves organisation accounts on the pro hosts, and
+// the account's own POP/IMAP page is the authority for which one applies.
+const SMTP_HOST = process.env.SMTP_HOST || 'smtppro.zoho.eu';
+const SMTP_PORT = Number(process.env.SMTP_PORT || 465);
+const SMTP_USER = process.env.SMTP_USER || SUPPORT_FROM;
+const SMTP_PASS = process.env.SMTP_PASS || '';
+
+let mailer = null;
+function transport() {
+  if (mailer) return mailer;
+  if (!SMTP_PASS) return null;                       // not configured — refuse loudly, never pretend
+  const nodemailer = require('nodemailer');
+  mailer = nodemailer.createTransport({
+    host: SMTP_HOST, port: SMTP_PORT, secure: SMTP_PORT === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+  return mailer;
+}
+
+/* ── Letterhead ───────────────────────────────────────────────────────────────
+   An account notice is read as either genuine or as phishing, and a wall of
+   unstyled text from an address the reader has never written to lands on the
+   wrong side of that. The letterhead exists to answer "is this really them" in
+   the first second — nothing more, so it stays a logo, a signature and a line
+   saying who the message was sent to.
+
+   BOTH IMAGES ARE THE EXISTING BRAND ASSETS, RESIZED — never redrawn. The
+   lockup is brand-assets/png/heatpumpdb-3a-lockup-light-4x.png and the mark is
+   the EU app icon public/icons/eu-192.png (the unbadged HP DB mark, which is
+   what the EU edition uses). deploy.sh copies them in.
+
+   They travel as CID attachments rather than URLs: a remote image is blocked by
+   default in most clients until the reader clicks "load images", which is
+   exactly the moment a suspension notice looks fake. It also means the mail
+   renders with no request back to us — nothing to log, nothing to track.
+
+   Every style is inline and the layout is tables, because Outlook still drops a
+   <style> block and does not do flex. Sent as text AND html: the plain part is
+   the message of record, and it is what a screen reader and a text-only client
+   get. */
+
+const MAIL_ASSETS = [
+  { cid: 'hpdb-logo', file: 'logo.png' },
+  { cid: 'hpdb-mark', file: 'mark.png' },
+];
+function mailAttachments() {
+  const path = require('node:path');
+  const fs = require('node:fs');
+  const out = [];
+  for (const a of MAIL_ASSETS) {
+    const p = path.join(__dirname, 'mail-assets', a.file);
+    // A missing asset must not stop a suspension notice going out; the mail
+    // simply renders without that image.
+    if (fs.existsSync(p)) out.push({ filename: a.file, path: p, cid: a.cid });
+  }
+  return out;
+}
+
+const esc = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** Plain text → paragraphs. Blank line starts one; a single newline breaks. */
+function bodyHtml(text) {
+  return String(text).trim().split(/\n\s*\n/).map((para) =>
+    `<p style="margin:0 0 15px;">${esc(para).replace(/\n/g, '<br>')}</p>`).join('');
+}
+
+const TEXT_SIGNATURE = `
+
+--
+HeatPump DataBase Europe
+${SUPPORT_FROM}
+Germany · France · United Kingdom · Poland · Italy`;
+
+/** Images as data: URIs — for the PREVIEW only, where a cid: reference has no
+ *  message to resolve against. Real sends keep cid: (see the note above). */
+function inlineAssets(html) {
+  const path = require('node:path');
+  const fs = require('node:fs');
+  let out = html;
+  for (const a of MAIL_ASSETS) {
+    const p = path.join(__dirname, 'mail-assets', a.file);
+    if (!fs.existsSync(p)) continue;
+    out = out.replace(`cid:${a.cid}`, `data:image/png;base64,${fs.readFileSync(p).toString('base64')}`);
+  }
+  return out;
+}
+
+function letterhead(bodyText, to) {
+  const INK = '#1d1d1f', MUTED = '#6e6e73', FAINT = '#9a9aa0', LINE = '#ececf0';
+  return `<!doctype html>
+<html><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
+<title>HeatPump DB</title></head>
+<body style="margin:0;padding:0;background:#f4f4f6;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f4f4f6;">
+<tr><td align="center" style="padding:28px 12px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;background:#ffffff;border:1px solid ${LINE};border-radius:14px;">
+  <tr><td style="padding:26px 32px 18px;border-bottom:1px solid ${LINE};">
+    <img src="cid:hpdb-logo" width="180" height="33" alt="HeatPump DB"
+         style="display:block;border:0;outline:none;text-decoration:none;height:auto;">
+  </td></tr>
+  <tr><td style="padding:26px 32px 8px;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.65;color:${INK};">
+    ${bodyHtml(bodyText)}
+  </td></tr>
+  <tr><td style="padding:10px 32px 0;"><div style="border-top:1px solid ${LINE};font-size:0;line-height:0;">&nbsp;</div></td></tr>
+  <tr><td style="padding:18px 32px 4px;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="48" valign="top" style="width:48px;">
+        <img src="cid:hpdb-mark" width="44" height="44" alt=""
+             style="display:block;border:0;border-radius:10px;">
+      </td>
+      <td valign="top" style="padding-left:14px;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+        <!-- Two lines at 22px each = 44px, the height of the mark beside them.
+             Line-height is in PIXELS, not a ratio: a ratio is resolved against
+             each client's own default font size, and the alignment would drift
+             by a few pixels in every one of them. -->
+        <div style="font-size:15px;line-height:22px;font-weight:600;color:${INK};">HeatPump DataBase Europe</div>
+        <div style="font-size:14px;line-height:22px;color:${MUTED};">
+          <a href="mailto:${SUPPORT_FROM}" style="color:#0066cc;text-decoration:none;">${SUPPORT_FROM}</a>
+        </div>
+      </td>
+    </tr></table>
+  </td></tr>
+  <tr><td style="padding:16px 32px 26px;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:11.5px;line-height:1.6;color:${FAINT};">
+    Germany · France · United Kingdom · Poland · Italy<br>
+    This message was sent to ${esc(to)} about that HeatPump DB account. Replies reach our support team.
+  </td></tr>
+</table>
+</td></tr></table>
+</body></html>`;
+}
+
+/** Message kinds an admin may send. Free text is still the admin's, but the
+ *  kind is what the member record and the audit log are searchable by. */
+const MEMBER_EMAIL_KINDS = ['suspension', 'verification_request', 'reactivation', 'support_reply', 'notice'];
+
+async function sendMemberEmail(req, res) {
+  const admin = await verifyAdmin(req);
+  if (!admin) return sendErr(res, 403, 'admin-only');
+
+  const { uid, subject, body, kind } = req.body || {};
+  if (!/^[A-Za-z0-9_-]{6,128}$/.test(String(uid || ''))) return sendErr(res, 400, 'bad-uid');
+  const subj = String(subject || '').trim();
+  const text = String(body || '').trim();
+  if (subj.length < 3 || subj.length > 200) return sendErr(res, 400, 'bad-subject');
+  if (text.length < 10 || text.length > 20000) return sendErr(res, 400, 'bad-body');
+  const k = MEMBER_EMAIL_KINDS.includes(kind) ? kind : 'notice';
+
+  // The recipient is resolved from the account, never taken from the request:
+  // an admin console may address a MEMBER, not an arbitrary address.
+  const snap = await db.collection('users').doc(String(uid)).get();
+  if (!snap.exists) return sendErr(res, 404, 'no-such-user');
+  const to = String(snap.data().email || '').trim();
+  if (!to || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) return sendErr(res, 400, 'user-has-no-email');
+
+  const record = {
+    uid: String(uid), to, subject: subj, body: text, kind: k,
+    sentByUid: admin.uid, sentByEmail: admin.email || null,
+    at: nowIso(),
+  };
+
+  const tx = transport();
+  if (!tx) {
+    await db.collection('memberEmails').add({ ...record, ok: false, error: 'smtp-not-configured' });
+    return sendErr(res, 503, 'smtp-not-configured');
+  }
+
+  try {
+    const info = await tx.sendMail({
+      from: `HeatPump DB Support <${SUPPORT_FROM}>`,
+      to, replyTo: SUPPORT_FROM, subject: subj,
+      text: text + TEXT_SIGNATURE,
+      html: letterhead(text, to),
+      attachments: mailAttachments(),
+    });
+    await db.collection('memberEmails').add({ ...record, ok: true, messageId: info.messageId || null });
+    await db.collection('opsAuditLog').add({
+      action: 'sendMemberEmail', targetUid: String(uid), kind: k, subject: subj,
+      by: admin.email || admin.uid, at: record.at,
+    });
+    return res.status(200).json({ ok: true, to, messageId: info.messageId || null });
+  } catch (e) {
+    console.error('sendMemberEmail failed', e);
+    await db.collection('memberEmails').add({ ...record, ok: false, error: String(e && e.message || e).slice(0, 500) });
+    return sendErr(res, 502, 'send-failed');
+  }
+}
+
+/** Exactly what a send would produce, without sending it. The composer shows
+ *  this rather than reimplementing the letterhead: a preview that drifts from
+ *  the real thing is worse than no preview. */
+async function previewMemberEmail(req, res) {
+  const admin = await verifyAdmin(req);
+  if (!admin) return sendErr(res, 403, 'admin-only');
+  const { uid, body } = req.body || {};
+  const text = String(body || '').trim();
+  if (!text) return sendErr(res, 400, 'bad-body');
+
+  let to = 'member@example.com';
+  if (/^[A-Za-z0-9_-]{6,128}$/.test(String(uid || ''))) {
+    const snap = await db.collection('users').doc(String(uid)).get();
+    if (snap.exists && snap.data().email) to = String(snap.data().email);
+  }
+  return res.status(200).json({ ok: true, html: inlineAssets(letterhead(text, to)) });
+}
+
+/** The messages already sent to one member — shown on the admin member page. */
+async function listMemberEmails(req, res) {
+  const admin = await verifyAdmin(req);
+  if (!admin) return sendErr(res, 403, 'admin-only');
+  const uid = String((req.body || {}).uid || '');
+  if (!/^[A-Za-z0-9_-]{6,128}$/.test(uid)) return sendErr(res, 400, 'bad-uid');
+  const snap = await db.collection('memberEmails').where('uid', '==', uid).get();
+  const items = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+    .sort((a, b) => String(b.at).localeCompare(String(a.at)))
+    .slice(0, 50);
+  return res.status(200).json({ ok: true, items });
+}
+
+// ---------------------------------------------------------------------------
 // HTTP entry
 // ---------------------------------------------------------------------------
 functions.http('accountBilling', async (req, res) => {
@@ -1423,6 +1669,9 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/revokeOtherSessions')) return await revokeOtherSessions(req, res);
     if (path.endsWith('/signOutEverywhere')) return await signOutEverywhere(req, res);
     if (path.endsWith('/adminClearSessions')) return await adminClearSessions(req, res);
+    if (path.endsWith('/sendMemberEmail')) return await sendMemberEmail(req, res);
+    if (path.endsWith('/listMemberEmails')) return await listMemberEmails(req, res);
+    if (path.endsWith('/previewMemberEmail')) return await previewMemberEmail(req, res);
     if (path.endsWith('/cancelSubscription')) return await cancelSubscription(req, res);
     if (path.endsWith('/billingPortal')) return await billingPortal(req, res);
     if (path.endsWith('/applyPlanChange')) return await applyPlanChange(req, res);

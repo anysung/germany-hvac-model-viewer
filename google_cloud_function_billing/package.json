@@ -1,13 +1,14 @@
 {
   "name": "heatpump-db-account-billing",
   "version": "1.0.0",
-  "description": "Account lifecycle (finalizeSignup / createTeamOrg / deleteAccount) + Paddle billing webhook",
+  "description": "Account lifecycle (finalizeSignup / createTeamOrg / deleteAccount) + Paddle billing webhook + member email (support@heatpumpdb.eu)",
   "main": "index.js",
   "scripts": {
     "start": "functions-framework --target=accountBilling"
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.0.0",
-    "firebase-admin": "^12.0.0"
+    "firebase-admin": "^12.0.0",
+    "nodemailer": "^6.9.14"
   }
 }

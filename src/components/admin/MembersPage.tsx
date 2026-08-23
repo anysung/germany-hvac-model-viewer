@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
+import { sendMemberEmail, listMemberEmails, previewMemberEmail, type SentMemberEmail } from '../../services/memberMailService';
+import { MEMBER_EMAIL_TEMPLATES } from '../../config/memberEmailTemplates';
 import { TRIAL_FLOW_ENABLED } from '../../services/billingFnService';
 import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
 import { adminClearSessions } from '../../services/opsService';
@@ -307,6 +309,10 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
                       "I can't sign in on my new device" and "I registered on the
                       wrong country site". Both are non-destructive. */}
                   <SupportTools al={al} user={selectedUser} onChanged={load} />
+
+                  {/* Writing to a member is an admin action like any other, so it
+                      lives with them rather than in a separate mail screen. */}
+                  <MemberEmail al={al} user={selectedUser} />
                 </div>
               )}
 
@@ -473,6 +479,148 @@ const SubscriptionAdminPanel: React.FC<{ al: AdminLang; user: User; onChanged: (
  * mean an admin action that looks, to the member, like an unexplained
  * "reset your password" mail — a phishing pattern we should not create.
  */
+/**
+ * MemberEmail — write to a member from support@heatpumpdb.eu.
+ *
+ * The service had no way to send mail at all: the only member-facing channel
+ * was the in-app ticket thread, which a suspended member cannot open because
+ * suspension signs them out. So the one message that most needs to reach
+ * someone — "your account was closed, here is why, here is how to appeal" —
+ * was the one message the system could not deliver.
+ *
+ * A template fills the composer and then gets out of the way; what is sent is
+ * whatever the admin has in front of them. The send is confirmed, recorded
+ * server-side with the message as sent, and shown back here, because a notice
+ * about someone's account is the kind of thing that gets disputed months later.
+ */
+const MemberEmail: React.FC<{ al: AdminLang; user: User }> = ({ al, user }) => {
+  const A = ADMIN_I18N[al];
+  const [templateId, setTemplateId] = useState(MEMBER_EMAIL_TEMPLATES[0].id);
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [history, setHistory] = useState<SentMemberEmail[]>([]);
+  const [open, setOpen] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const template = MEMBER_EMAIL_TEMPLATES.find(t => t.id === templateId) ?? MEMBER_EMAIL_TEMPLATES[0];
+
+  // A new member, or a new template, means a new draft — never a half-edited
+  // message carried over to the wrong person.
+  useEffect(() => {
+    const d = template.build(user);
+    setSubject(d.subject);
+    setBody(d.body);
+    setMsg('');
+    setPreview(null);
+  }, [user.id, templateId]);
+
+  const loadHistory = () => {
+    listMemberEmails(user.id)
+      .then(r => setHistory(r.items ?? []))
+      .catch(() => setHistory([]));
+  };
+  useEffect(() => { if (open) loadHistory(); }, [open, user.id]);
+
+  const showPreview = async () => {
+    if (preview) { setPreview(null); return; }     // toggle closed
+    setBusy(true);
+    try {
+      const r = await previewMemberEmail(user.id, body);
+      setPreview(r.html);
+    } catch (e: any) {
+      setMsg(`${A.meFailed} ${String(e?.message ?? e)}`);
+    } finally { setBusy(false); }
+  };
+
+  const send = async () => {
+    if (!confirm(A.meConfirm(user.email))) return;
+    setBusy(true);
+    setMsg('');
+    try {
+      const r = await sendMemberEmail(user.id, subject, body, template.kind);
+      setMsg(`${A.meSent} ${r.to}`);
+      loadHistory();
+    } catch (e: any) {
+      const err = String(e?.message ?? e);
+      setMsg(err === 'smtp-not-configured' ? A.meNotConfigured : `${A.meFailed} ${err}`);
+    } finally { setBusy(false); }
+  };
+
+  return (
+    <div className="pt-3 border-t border-gray-100 space-y-2">
+      <button onClick={() => setOpen(o => !o)} className="text-xs font-bold text-gray-500 uppercase flex items-center gap-1">
+        ✉️ {A.meTitle} <span className="text-gray-300">{open ? '▲' : '▼'}</span>
+      </button>
+
+      {open && (
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-600 w-16">{A.meTemplate}</span>
+            <select value={templateId} onChange={e => setTemplateId(e.target.value)}
+              className="flex-1 px-2 py-1 border rounded text-xs bg-white">
+              {MEMBER_EMAIL_TEMPLATES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+            </select>
+          </div>
+
+          {template.fillIn?.length ? (
+            <div className="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded p-2">
+              <div className="font-semibold">{A.meFillIn}</div>
+              <ul className="list-disc pl-4">{template.fillIn.map(f => <li key={f}>{f}</li>)}</ul>
+            </div>
+          ) : null}
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-600 w-16">{A.meSubject}</span>
+            <input value={subject} onChange={e => setSubject(e.target.value)}
+              className="flex-1 px-2 py-1 border rounded text-xs" />
+          </div>
+
+          <textarea value={body} onChange={e => setBody(e.target.value)} rows={14}
+            className="w-full px-2 py-1.5 border rounded text-xs font-mono leading-relaxed" />
+
+          <div className="flex items-center gap-2">
+            <button onClick={send} disabled={busy || subject.trim().length < 3 || body.trim().length < 10}
+              className="text-xs px-3 py-1.5 rounded border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-50">
+              {busy ? A.meSending : A.meSend}
+            </button>
+            <button onClick={showPreview} disabled={busy || body.trim().length < 10}
+              className="text-xs px-3 py-1.5 rounded border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50">
+              {preview ? A.mePreviewHide : A.mePreview}
+            </button>
+            {msg && <span className="text-[11px] text-gray-600">{msg}</span>}
+          </div>
+
+          {/* srcDoc + a sandbox with nothing granted: the preview is our own
+              HTML, but it is still rendered as a document and gets no script,
+              no forms and no access back to the console. */}
+          {preview && (
+            <iframe title="preview" srcDoc={preview} sandbox=""
+              className="w-full rounded border border-gray-200 bg-white" style={{ height: 520 }} />
+          )}
+          <div className="text-[11px] text-gray-400">{A.meHint}</div>
+
+          <div className="pt-2 border-t border-gray-100">
+            <div className="text-[11px] font-bold text-gray-500 uppercase mb-1">{A.meHistory}</div>
+            {history.length === 0 && <div className="text-[11px] text-gray-400">{A.meNoHistory}</div>}
+            {history.map(h => (
+              <div key={h.id} className="text-[11px] text-gray-600 border-b border-gray-50 py-1">
+                <span className={h.ok === false ? 'text-red-600' : 'text-gray-400'}>
+                  {String(h.at).slice(0, 16).replace('T', ' ')}
+                </span>{' '}
+                <span className="font-medium">{h.subject}</span>{' '}
+                <span className="text-gray-400">· {h.kind}{h.sentByEmail ? ` · ${h.sentByEmail}` : ''}</span>
+                {h.ok === false && <span className="text-red-600"> · {h.error}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const SupportTools: React.FC<{ al: AdminLang; user: User; onChanged: () => void }> = ({ al, user, onChanged }) => {
   const A = ADMIN_I18N[al];
   const [busy, setBusy] = useState(false);
