@@ -110,7 +110,21 @@ const PIPELINES = {
   FR: {
     dependsOn: ['DE'],
     steps: [
-      { name: 'build FR app datasets (DE-derived)', cmd: 'node scripts/fr/build-app-products-fr.mjs' },
+      // Direction: CANONICAL → ADEME agrément register. The register is a listing
+      // overlay, never a product source (same rule as the Ofgem PEL and ZUM).
+      // Only the ADEME×EPREL join may add records, and only for register entries
+      // the canonical baseline does not have.
+      { name: 'fetch ADEME agrément register', cmd: 'node scripts/fr/fetch-ademe.mjs', when: 'fetch' },
+      // The register prints no heat-source type and no refrigerant; both are
+      // recovered from its own public search facets. Must follow the fetch and
+      // precede everything that reads a record as a specification.
+      { name: 'recover ADEME facets (type / refrigerant / usage)', cmd: 'node scripts/fr/enrich-agrement-facets.mjs', when: 'fetch' },
+      // Joins the register to EPREL: the performance half of the FR-native layer,
+      // and the evidence the listing matcher's eprel_bridge stage depends on — so
+      // it runs BEFORE the matcher, not after it as it did on the first day.
+      { name: 'join ADEME register → EPREL', cmd: 'node scripts/fr/enrich-agrement-from-eprel.mjs', optional: true },
+      { name: 'match canonical → ADEME agrément (listing overlay)', cmd: 'node scripts/fr/match-canonical-to-agrement.mjs', optional: true },
+      { name: 'build FR app datasets (DE-derived + FR native layer)', cmd: 'node scripts/fr/build-app-products-fr.mjs' },
     ],
     requires: [],
     datasets: ['public/data/products-fr.json', 'public/data/products-commercial-fr.json'],

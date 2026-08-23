@@ -67,6 +67,37 @@ console.log(nfpacFile
   ? `NF PAC overlay: ${nfpacByBafaId.size} confident matches (snapshot ${nfpacSnapshot})`
   : 'NF PAC overlay: none (references will appear once confident match data exists)');
 
+/* ── ADEME agrément: two distinct files, two distinct jobs ────────────────────
+   canonical-agrement-overlay.json   listing status for products that already
+                                     exist in the canonical baseline — attaches a
+                                     number, never a specification
+   agrement-eprel-enrichment.json    the FR-edition native layer further down —
+                                     register entries the baseline never had
+
+   The overlay used to be written and then read by nobody: every German-derived
+   record was published with a hardcoded null agrément, so the matcher's confirmed
+   mappings never reached a single user. The assertion after the build exists so
+   that silence can never come back. */
+const AGR_DIR = resolve(ROOT, 'data_sources/ademe_agrement/matching');
+const agrSnapshot = existsSync(AGR_DIR)
+  ? readdirSync(AGR_DIR).filter(d => /^\d{4}-\d{2}$/.test(d)).sort().reverse()[0] : null;
+
+const agrOverlayPath = `data_sources/ademe_agrement/matching/${agrSnapshot}/canonical-agrement-overlay.json`;
+const agrOverlay = agrSnapshot && existsSync(resolve(ROOT, agrOverlayPath)) ? loadJSON(agrOverlayPath) : null;
+/** canonical id → confirmed listing. Anything short of confirmed stays null:
+ *  "vérification requise" is the honest reading of every other state. */
+const agrByCanonicalId = new Map();
+/** Agrément numbers the baseline already accounts for — see the native layer. */
+const agrementInCanonical = new Set();
+for (const e of agrOverlay?.entries ?? []) {
+  if (e.status !== 'confirmed') continue;
+  agrByCanonicalId.set(String(e.canonical_id), e);
+  agrementInCanonical.add(e.agrement_number);
+}
+console.log(agrOverlay
+  ? `ADEME listing overlay: ${agrByCanonicalId.size} confirmed canonical listings (snapshot ${agrSnapshot})`
+  : 'ADEME listing overlay: none (run scripts/fr/match-canonical-to-agrement.mjs)');
+
 const generatedAt = new Date().toISOString();
 
 /** German BAFA type strings → French display strings. Unknown values pass through. */
@@ -85,6 +116,7 @@ const GERMAN_ONLY_FIELDS = [
 function toFrItem(p) {
   const base = { ...p };
   for (const f of GERMAN_ONLY_FIELDS) delete base[f];
+  const agr = agrByCanonicalId.get(String(p.bafa_id));
   return {
     ...base,
     type: TYPE_FR[p.type] ?? p.type,
@@ -96,16 +128,18 @@ function toFrItem(p) {
     bafa_reference_model: p.model ?? null,
     bafa_reference_match_type: 'same_record',
     nf_pac_reference: nfpacByBafaId.get(String(p.bafa_id))?.nf_pac_reference ?? null,
-    // The agrément block exists on every FR record. A German-derived product has
-    // no agrément of its own — that is a null, not a missing field, and it reads
-    // as "vérification requise" rather than as absence from the register.
-    agrement_number: null,
-    agrement_match_status: null,
-    agrement_gamme: null,
+    // The agrément block exists on every FR record. A canonical product that the
+    // register confirms carries its number; one we cannot confirm carries nulls,
+    // which read as "vérification requise" — never as absence from the register.
+    // usage and the commercial reference are register-row facts the listing
+    // overlay does not carry, so they stay null outside the native layer.
+    agrement_number: agr?.agrement_number ?? null,
+    agrement_match_status: agr ? 'confirmed' : null,
+    agrement_gamme: agr?.register_gamme ?? null,
     agrement_commercial_ref: null,
     agrement_usage: null,
-    agrement_snapshot: null,
-    agrement_import_date: null,
+    agrement_snapshot: agr ? agrSnapshot : null,
+    agrement_import_date: agr?.import_date ?? null,
     performance_basis_note: null,
   };
 }
@@ -125,10 +159,17 @@ const commercial = deCommercial.items.map(toFrItem);
    from a model name, and no figure is carried over from the German records.
 
    These are FR-EDITION ONLY: source_id is 'FR-<agrément number>' and no other
-   builder reads this file. */
-const AGR_DIR = resolve(ROOT, 'data_sources/ademe_agrement/matching');
-const agrSnapshot = existsSync(AGR_DIR)
-  ? readdirSync(AGR_DIR).filter(d => /^\d{4}-\d{2}$/.test(d)).sort().reverse()[0] : null;
+   builder reads this file.
+
+   THE LAYER EXISTS FOR ENTRIES THE BASELINE DOES NOT HAVE — so an entry the
+   listing overlay has already confirmed against a canonical product is skipped
+   here. Publishing both would put the same machine in the catalogue twice under
+   one agrément number: once with German reference values and once with EPREL
+   values, in two data sheets a French installer would have to choose between.
+   The canonical record wins and simply carries the number, which is what a
+   listing overlay is for. (Publishing both is exactly what happened on the
+   layer's first day, because the overlay was not wired in and the collision was
+   invisible: 87 duplicate pairs.) */
 const agrFile = agrSnapshot && existsSync(resolve(AGR_DIR, agrSnapshot, 'agrement-eprel-enrichment.json'))
   ? loadJSON(`data_sources/ademe_agrement/matching/${agrSnapshot}/agrement-eprel-enrichment.json`) : null;
 
@@ -146,6 +187,7 @@ const nativeRejected = {};
 const native = [];
 for (const e of (agrFile?.entries ?? [])) {
   if (e.status !== 'matched' || !e.publishable) continue;
+  if (agrementInCanonical.has(e.agrement)) { nativeRejected.already_in_canonical_baseline = (nativeRejected.already_in_canonical_baseline ?? 0) + 1; continue; }
   const candidate = Object.fromEntries(TEMPLATE_KEYS.map(k => [k, null]));
   Object.assign(candidate, {
     bafa_id: `FR-${e.agrement}`,
@@ -237,6 +279,23 @@ if (badProvenance.length > 0) {
 if (allItems.length !== deResidential.items.length + deCommercial.items.length + native.length) {
   console.error('FAIL: record count mismatch vs DE source datasets + native layer');
   process.exit(1);
+}
+
+/* The listing overlay must actually reach the dataset. It did not for the whole
+   of the layer's first day: the matcher confirmed mappings, the builder ignored
+   the file, and every German-derived record shipped with a null agrément while
+   the gate — which reads the published dataset — saw the native layer's 1,078
+   confirmations and reported a healthy count. A silent disconnect that a guard
+   cannot see is the failure mode worth spending an assertion on. */
+if (agrOverlay) {
+  const canonicalIds = new Set([...residential, ...commercial].map(i => String(i.bafa_id)));
+  const applicable = [...agrByCanonicalId.keys()].filter(id => canonicalIds.has(id)).length;
+  const applied = [...residential, ...commercial].filter(i => i.agrement_match_status === 'confirmed').length;
+  if (applied !== applicable) {
+    console.error(`FAIL: listing overlay not applied — ${applicable} confirmed mappings match a canonical product, ${applied} reached the dataset`);
+    process.exit(1);
+  }
+  console.log(`ADEME listing applied:   ${applied} canonical products carry an agrément number`);
 }
 
 // NF PAC references must never be guessed — every value must come from the overlay.

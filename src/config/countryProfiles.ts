@@ -200,9 +200,11 @@ export const COUNTRY_PROFILES: Record<CountryCode, CountryProfile> = {
     locale: 'fr-FR',
     firestoreRoot: 'countries/FR',
     // FR catalogue is derived from the German BAFA registry (same hardware sold
-    // in both markets — user decision 2026-07-07). BAFA is the data source;
-    // NF PAC references are attached as an enrichment layer only where a
-    // confident match exists (uncertain → no reference shown, never guessed).
+    // in both markets — user decision 2026-07-07), plus an FR-only layer built
+    // from the ADEME agrément register joined to EPREL for the models France has
+    // and Germany never listed. BAFA is the reference data source; NF PAC
+    // references are attached as an enrichment layer only where a confident match
+    // exists (uncertain → no reference shown, never guessed).
     primaryRegistry: 'BAFA',
     primaryRegistryIdField: 'bafa_id',
     subsidyAuthorityLabel: "MaPrimeRénov' (ANAH) / CEE",
@@ -216,9 +218,13 @@ export const COUNTRY_PROFILES: Record<CountryCode, CountryProfile> = {
       commercialProducts: '/data/products-commercial-fr.json',
     },
     technicalBaseline: 'canonical',
-    // France has NO national heat-pump list (MaPrimeRénov'/CEE are criteria-based,
-    // not a product list). A foreign registry's listing must never be relabelled as
-    // a French one, so France shows no local listing status at all.
+    // MaPrimeRénov'/CEE remain criteria-based — they are not a product list. The
+    // national list France does have is the ADEME agrément register, whose number
+    // must appear on the devis and the facture from 2026-09-01, so that is the
+    // listing status shown here. No foreign registry's listing is ever relabelled
+    // as a French one. The filter stays off while agréé products are a small
+    // fraction of the catalogue: a filter that hides most of it is a discovery
+    // trap, the same call made for the UK.
     localListingOverlay: { source: 'AGREMENT', filterEnabled: false },
   },
 

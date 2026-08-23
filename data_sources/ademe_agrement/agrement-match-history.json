@@ -1,15 +1,15 @@
 {
  "version": 1,
- "updated_at": "2026-08-18T22:49:33.479Z",
+ "updated_at": "2026-08-19T22:25:22.865Z",
  "note": "Confirmed canonical↔ADEME agrément mappings. A mapping that stops matching becomes review_required, never \"not agréé\".",
  "matches": {
   "16000577": {
    "agrement_number": "62-2026-000058",
    "register_model": "NIBE F2050-6",
-   "match_method": "component_identity",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16000579": {
@@ -18,7 +18,7 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16002241": {
@@ -27,7 +27,7 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16002242": {
@@ -36,7 +36,466 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16003010": {
+   "agrement_number": "152-2026-000079",
+   "register_model": "Vitocal 250-SH HAWB-M-AC 252.B06",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16003012": {
+   "agrement_number": "152-2026-000081",
+   "register_model": "Vitocal 250-SH HAWB-M-AC 252.B08",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16003013": {
+   "agrement_number": "152-2026-000082",
+   "register_model": "Vitocal 250-SH HAWB-M-AC-AF 252.B08",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16003014": {
+   "agrement_number": "152-2026-000083",
+   "register_model": "Vitocal 250-SH HAWB-M-AC 252.B10",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16003015": {
+   "agrement_number": "152-2026-000084",
+   "register_model": "Vitocal 250-SH HAWB-M-AC-AF 252.B10",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006644": {
+   "agrement_number": "54-2026-000031",
+   "register_model": "YUTAKI S 2.0 16.0kW Mono R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006646": {
+   "agrement_number": "54-2026-000033",
+   "register_model": "YUTAKI S 2.0 14.0kW Tri R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006715": {
+   "agrement_number": "54-2026-000024",
+   "register_model": "YUTAKI S 2.0 4.3kW Mono  R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006726": {
+   "agrement_number": "54-2026-000079",
+   "register_model": "YUTAKI M 13kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006727": {
+   "agrement_number": "54-2026-000082",
+   "register_model": "YUTAKI M 13kW Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16006731": {
+   "agrement_number": "54-2026-000083",
+   "register_model": "YUTAKI M 16kW Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16007734": {
+   "agrement_number": "54-2026-000026",
+   "register_model": "YUTAKI S 2.0 6.0kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16007735": {
+   "agrement_number": "54-2026-000027",
+   "register_model": "YUTAKI S 2.0 8.0kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16007736": {
+   "agrement_number": "54-2026-000029",
+   "register_model": "YUTAKI S 2.0 11.0kW Mono R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16007737": {
+   "agrement_number": "54-2026-000030",
+   "register_model": "YUTAKI S 2.0 14.0kW Mono R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010825": {
+   "agrement_number": "54-2026-000005",
+   "register_model": "YUTAKI S80 14.0kW  Mono  R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010826": {
+   "agrement_number": "54-2026-000007",
+   "register_model": "YUTAKI S80 16.0kW  Mono  R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010864": {
+   "agrement_number": "64-2026-000099",
+   "register_model": "Aquarea Haute Performance All in One 185 L Série K 3 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010865": {
+   "agrement_number": "64-2026-000045",
+   "register_model": "Aquarea Haute Performance All in One Série K 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010866": {
+   "agrement_number": "64-2026-000048",
+   "register_model": "Aquarea Haute Performance All in One Série K 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010867": {
+   "agrement_number": "64-2026-000051",
+   "register_model": "Aquarea Haute Performance All in One Série K 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010872": {
+   "agrement_number": "64-2026-000101",
+   "register_model": "Aquarea Haute Performance All in One 185 L Série K 3 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010873": {
+   "agrement_number": "64-2026-000047",
+   "register_model": "Aquarea Haute Performance All in One Série K 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010874": {
+   "agrement_number": "64-2026-000050",
+   "register_model": "Aquarea Haute Performance All in One Série K 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010882": {
+   "agrement_number": "54-2026-000006",
+   "register_model": "YUTAKI S80 14.0kW Tri  R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010897": {
+   "agrement_number": "64-2026-000040",
+   "register_model": "Aquarea Haute Performance All in One Série L 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010902": {
+   "agrement_number": "64-2026-000037",
+   "register_model": "Aquarea Haute Performance All in One Série L 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010903": {
+   "agrement_number": "64-2026-000042",
+   "register_model": "Aquarea Haute Performance All in One Série L 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010907": {
+   "agrement_number": "64-2026-000063",
+   "register_model": "Aquarea T-CAP All in One Série K 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010910": {
+   "agrement_number": "64-2026-000066",
+   "register_model": "Aquarea T-CAP All in One Série K 12 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010911": {
+   "agrement_number": "64-2026-000102",
+   "register_model": "Aquarea Haute Performance Bi-bloc Série K 3 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010912": {
+   "agrement_number": "64-2026-000054",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010913": {
+   "agrement_number": "64-2026-000056",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010914": {
+   "agrement_number": "54-2026-000008",
+   "register_model": "YUTAKI S80 16.0kW Tri  R410A",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010918": {
+   "agrement_number": "64-2026-000058",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010919": {
+   "agrement_number": "64-2026-000103",
+   "register_model": "Aquarea Haute Performance Bi-bloc Série K 3 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010920": {
+   "agrement_number": "64-2026-000055",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010921": {
+   "agrement_number": "64-2026-000059",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010922": {
+   "agrement_number": "64-2026-000033",
+   "register_model": "Aquarea Haute Performance bi-bloc Série L 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010924": {
+   "agrement_number": "64-2026-000043",
+   "register_model": "Aquarea Haute Performance bi-bloc Série L 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010925": {
+   "agrement_number": "64-2026-000034",
+   "register_model": "Aquarea Haute Performance bi-bloc Série L 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010926": {
+   "agrement_number": "64-2026-000039",
+   "register_model": "Aquarea Haute Performance bi-bloc Série L 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010927": {
+   "agrement_number": "64-2026-000044",
+   "register_model": "Aquarea Haute Performance bi-bloc Série L 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16010928": {
+   "agrement_number": "64-2026-000067",
+   "register_model": "Aquarea T-CAP bi-bloc Série K 9 kW monophasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011185": {
+   "agrement_number": "64-2026-000064",
+   "register_model": "Aquarea T-CAP All in One Série K 12 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011187": {
+   "agrement_number": "64-2026-000068",
+   "register_model": "Aquarea T-CAP bi-bloc Série K 9 kW monophasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011238": {
+   "agrement_number": "64-2026-000053",
+   "register_model": "Aquarea Haute Performance All in One Série K 9 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011239": {
+   "agrement_number": "64-2026-000030",
+   "register_model": "Aquarea Haute Performance All in One Série L 5 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011250": {
+   "agrement_number": "64-2026-000057",
+   "register_model": "Aquarea Haute Performance bi-bloc Série K 7 kW",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16011503": {
+   "agrement_number": "64-2026-000072",
+   "register_model": "Aquarea T-CAP bi-bloc Série K 12 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16012717": {
+   "agrement_number": "60-2026-000010",
+   "register_model": "MEHP-iB-G07 /40Y",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16014522": {
@@ -45,7 +504,7 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16014523": {
@@ -54,7 +513,7 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16014524": {
@@ -63,7 +522,7 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16015393": {
@@ -72,16 +531,61 @@
    "match_method": "component_identity",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16015394": {
    "agrement_number": "62-2026-000008",
    "register_model": "NIBE S2125-20 3X400V",
-   "match_method": "component_identity",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016415": {
+   "agrement_number": "54-2026-000023",
+   "register_model": "YUTAKI S 2.0 4,3kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016416": {
+   "agrement_number": "54-2026-000025",
+   "register_model": "YUTAKI S 2.0 6.0kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016421": {
+   "agrement_number": "54-2026-000014",
+   "register_model": "YUTAKI S COMBI 2.0 8.0kW Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016480": {
+   "agrement_number": "64-2026-000024",
+   "register_model": "Big Aquarea T-CAP Série M 20 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016481": {
+   "agrement_number": "64-2026-000026",
+   "register_model": "Big Aquarea T-CAP Série M 25 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16016883": {
@@ -90,34 +594,61 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16016884": {
    "agrement_number": "141-2026-000006",
    "register_model": "61AQ 050P",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16016885": {
    "agrement_number": "141-2026-000005",
    "register_model": "61AQ 080P",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16016888": {
+   "agrement_number": "142-2026-000002",
+   "register_model": "ITEV 130P",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017070": {
+   "agrement_number": "64-2026-000028",
+   "register_model": "Big Aquarea T-CAP Série M 30 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16017302": {
    "agrement_number": "141-2026-000003",
    "register_model": "61AQ 060P",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017304": {
+   "agrement_number": "142-2026-000003",
+   "register_model": "ITEV 160P",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16017351": {
@@ -126,61 +657,295 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017733": {
+   "agrement_number": "54-2026-000053",
+   "register_model": "AirH2O 600 S 8,5kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017735": {
+   "agrement_number": "54-2026-000055",
+   "register_model": "AirH2O 600 S 10,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017736": {
+   "agrement_number": "54-2026-000057",
+   "register_model": "AirH2O 600 S 12,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017737": {
+   "agrement_number": "54-2026-000059",
+   "register_model": "AirH2O 600 S 14,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017738": {
+   "agrement_number": "54-2026-000054",
+   "register_model": "AirH2O 600 S 8,5kW  Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017739": {
+   "agrement_number": "54-2026-000056",
+   "register_model": "AirH2O 600 S 10,0kW  Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017744": {
+   "agrement_number": "54-2026-000067",
+   "register_model": "AirH2O 600 S COMBI 10,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017745": {
+   "agrement_number": "54-2026-000069",
+   "register_model": "AirH2O 600 S COMBI 12,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017746": {
+   "agrement_number": "54-2026-000071",
+   "register_model": "AirH2O 600 S COMBI 14,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017748": {
+   "agrement_number": "54-2026-000068",
+   "register_model": "AirH2O 600 S COMBI 10,0kW  Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017749": {
+   "agrement_number": "54-2026-000070",
+   "register_model": "AirH2O 600 S COMBI 12,0kW  Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017750": {
+   "agrement_number": "54-2026-000072",
+   "register_model": "AirH2O 600 S COMBI 14,0kW  Tri R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017774": {
+   "agrement_number": "54-2026-000084",
+   "register_model": "AIRH2O 800 M  4kW Mono R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017776": {
+   "agrement_number": "54-2026-000086",
+   "register_model": "AIRH2O 800 M  8kW Mono R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017777": {
+   "agrement_number": "54-2026-000087",
+   "register_model": "AIRH2O 800 M  10kW Mono R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017779": {
+   "agrement_number": "54-2026-000091",
+   "register_model": "AIRH2O 800 M  14kW Mono R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017780": {
+   "agrement_number": "54-2026-000088",
+   "register_model": "AIRH2O 800 M  10kW Tri  R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017781": {
+   "agrement_number": "54-2026-000090",
+   "register_model": "AIRH2O 800 M  12kW Tri R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16017782": {
+   "agrement_number": "54-2026-000092",
+   "register_model": "AIRH2O 800 M  14kW Tri R290",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018069": {
    "agrement_number": "149-2026-000035",
    "register_model": "LWZ 07.1 Premium HKWL 230",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018071": {
    "agrement_number": "149-2026-000034",
    "register_model": "LWZ 05.1 Premium HKWL 230",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018072": {
    "agrement_number": "149-2026-000033",
    "register_model": "LWZ 05.1 Plus H(K)WL 230",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018197": {
    "agrement_number": "155-2026-000001",
    "register_model": "LA 2030CP",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018199": {
    "agrement_number": "155-2026-000003",
    "register_model": "LA 4060 CP",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018202": {
    "agrement_number": "155-2026-000002",
    "register_model": "LA 1525CP",
-   "match_method": "exact_model",
+   "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018382": {
+   "agrement_number": "54-2026-000061",
+   "register_model": "AirH2O 600 S COMBI 3,5kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018383": {
+   "agrement_number": "54-2026-000050",
+   "register_model": "AirH2O 600 S 4,3kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018384": {
+   "agrement_number": "54-2026-000062",
+   "register_model": "AirH2O 600 S COMBI 4,3kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018385": {
+   "agrement_number": "54-2026-000051",
+   "register_model": "AirH2O 600 S 6kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018386": {
+   "agrement_number": "54-2026-000063",
+   "register_model": "AirH2O 600 S COMBI 6kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018387": {
+   "agrement_number": "54-2026-000052",
+   "register_model": "AirH2O 600 S 8,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018388": {
+   "agrement_number": "54-2026-000064",
+   "register_model": "AirH2O 600 S COMBI 8,0kW  Mono R32",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   },
   "16018439": {
@@ -189,7 +954,25 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-18T22:49:33.479Z",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018638": {
+   "agrement_number": "64-2026-000075",
+   "register_model": "Aquarea T-CAP bi-bloc SQ Série K 9 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
+   "snapshot": "2026-08"
+  },
+  "16018642": {
+   "agrement_number": "64-2026-000077",
+   "register_model": "Aquarea T-CAP bi-bloc SQ Série K 12kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
    "snapshot": "2026-08"
   }
  }

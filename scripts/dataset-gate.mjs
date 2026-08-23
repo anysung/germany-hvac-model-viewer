@@ -253,6 +253,15 @@ for (const [cc, files] of Object.entries(DATASETS)) {
   const OV = LOCAL_OVERLAY[cc] ?? NO_OVERLAY;
   const EXCEPTIONS = OV.exceptions;
   const confirmed = items.filter(i => i[OV.status] === 'confirmed').length;
+  /* A market with a native layer confirms listings from two independent places:
+     the listing overlay (canonical products the registry confirms) and the native
+     records, which are confirmed by construction because they ARE registry rows.
+     One total hides the other's collapse — France shipped a build where the
+     overlay reached nothing and this number still read 1,078, because the native
+     layer alone filled it. Count them apart so each can fail on its own. */
+  const isNative = (i) => String(i.source_id ?? '').startsWith(`${cc}-`);
+  const confirmedNative = items.filter(i => i[OV.status] === 'confirmed' && isNative(i)).length;
+  const confirmedCanonical = confirmed - confirmedNative;
   const reviewReq = items.filter(i => i[OV.status] === 'review_required').length;
   const verifyReq = items.filter(i => i[OV.status] === 'verification_required').length;
   const localIds = items.filter(i => i[OV.id]).map(i => String(i[OV.id]));
@@ -304,6 +313,8 @@ for (const [cc, files] of Object.entries(DATASETS)) {
     missing_model: missingModel,
     manufacturers: new Set(items.map(i => i.manufacturer_short ?? i.manufacturer)).size,
     local_confirmed: confirmed,
+    local_confirmed_canonical: confirmedCanonical,
+    local_confirmed_native: confirmedNative,
     local_review_required: reviewReq,
     local_verification_required: verifyReq,
     local_ids: new Set(localIds).size,
@@ -427,6 +438,12 @@ if (!baseline) {
     if (d('data_sheet_eligible') < -T.eligibleDropPct) {
       block(`[${cc}] Data Sheet eligible fell ${d('data_sheet_eligible').toFixed(1)}% (${prev.data_sheet_eligible} → ${cur.data_sheet_eligible}), limit ${T.eligibleDropPct}% — products are losing technical fields`);
     }
+    if (prev.local_confirmed_canonical > 0 && cur.local_confirmed_canonical === 0) {
+      block(`[${cc}] every confirmed listing on a CANONICAL product disappeared (${prev.local_confirmed_canonical} → 0) — the listing overlay is not reaching the build`);
+    }
+    if (prev.local_confirmed_canonical > 0 && d('local_confirmed_canonical') < -T.localMatchDropPct) {
+      block(`[${cc}] confirmed listings on canonical products collapsed ${d('local_confirmed_canonical').toFixed(1)}% (${prev.local_confirmed_canonical} → ${cur.local_confirmed_canonical}), limit ${T.localMatchDropPct}%`);
+    }
     if (prev.local_confirmed > 0 && d('local_confirmed') < -T.localMatchDropPct) {
       block(`[${cc}] confirmed local listings collapsed ${d('local_confirmed').toFixed(1)}% (${prev.local_confirmed} → ${cur.local_confirmed}), limit ${T.localMatchDropPct}% — a matcher or parser regression is far likelier than a mass delisting`);
     }
@@ -475,7 +492,8 @@ for (const [cc, cur] of Object.entries(manifest.markets)) {
   const prev = baseline?.markets?.[cc];
   console.log(`\n[${cc}]  ${'metric'.padEnd(28)} ${pad('previous', 9)} ${pad('candidate', 10)} ${pad('change', 8)}`);
   const metrics = ['products', 'data_sheet_eligible', 'residential', 'commercial', 'unclassified',
-    'with_rated_capacity', 'local_confirmed', 'local_review_required', 'local_verification_required',
+    'with_rated_capacity', 'local_confirmed', 'local_confirmed_canonical', 'local_confirmed_native',
+    'local_review_required', 'local_verification_required',
     'duplicate_source_ids', 'shared_local_ids', 'ambiguous_confirmed_local_ids', 'conflicting_local_ids',
     'manufacturers'];
   for (const k of metrics) {

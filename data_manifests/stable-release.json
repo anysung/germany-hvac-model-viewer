@@ -1,7 +1,7 @@
 {
-  "runId": "snap-20260819-094743",
-  "publishedAt": "2026-08-19T09:48:40.169Z",
-  "preUpdateSnapshot": "snapshots/snap-20260819-094743/",
+  "runId": "snap-20260819-224831",
+  "publishedAt": "2026-08-19T22:49:10.073Z",
+  "preUpdateSnapshot": "snapshots/snap-20260819-224831/",
   "objects": [
     {
       "path": "datasets/DE/products.json",
@@ -35,15 +35,15 @@
       "path": "datasets/FR/products-fr.json",
       "country": "FR",
       "segment": "residential",
-      "items": 6273,
-      "md5": "8YEmSTUF/EqNHuHs9pOFww=="
+      "items": 6197,
+      "md5": "56Mj2AhN0zNkWqTANI0RMg=="
     },
     {
       "path": "datasets/FR/products-commercial-fr.json",
       "country": "FR",
       "segment": "commercial",
-      "items": 1997,
-      "md5": "AggKtksWNCCF8nD0oIS+UA=="
+      "items": 1986,
+      "md5": "Fry2RyG8D6gkFj8TFqPJlQ=="
     },
     {
       "path": "datasets/PL/products-pl.json",

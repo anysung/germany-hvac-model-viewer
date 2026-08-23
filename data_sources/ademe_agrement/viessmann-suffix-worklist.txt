@@ -1,0 +1,232 @@
+Viessmann — ADEME agrément 23행이 EPREL 후보 여러 개와 맞아 성능을 확정하지 못한 목록.
+
+확인해야 하는 것: ADEME 등록부가 쓰는 접미 SP 가 무엇인가, 그리고 EPREL 쪽 NEV / 2C / AF 가 무엇인가.
+후보들은 ηs 와 정격출력이 모두 같고 음향출력만 다르다 — 어느 것을 고르느냐가 곧 음향출력을 정하는 일이라,
+접미의 의미를 모른 채로는 규칙을 넣을 수 없다.
+
+ADEME 등록부 조회: https://bonus-pac.ademe.fr/  (마르크 Viessmann + 아래 agrément 번호)
+EPREL 제품 페이지: 각 후보 아래 링크. 후보 문자열 앞 7자리는 Viessmann 품번이지 EPREL 번호가 아니다.
+
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000126   Vitocal 200-S AWB-M-E-AC-AF 201.E10 SP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E10 SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123216 Vitocal 200-S AWB-M-E-AC 201.E10 2C 10 kW
+     EPREL#2398672  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398672
+   · 2122437 Vitocal 200-S AWB-M-E-AC 201.E10 10 kW
+     EPREL#2405854  음향 50 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2405854
+   · 2123211 Vitocal 200-S AWB-M-E-AC-AF 201.E10 NEV 10 kW
+     EPREL#2398667  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398667
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000096   Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C SP
+   ref: Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123218 Vitocal 222-S AWBT-M-E-AC 221.E06 6 kW
+     EPREL#2398674  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398674
+   · 2123549 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C 6 kW
+     EPREL#2398681  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398681
+   · 2123543 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 6 kW
+     EPREL#2398675  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398675
+   · 2123548 Vitocal 222-S AWBT-M-E-AC 221.E06 2C 6 kW
+     EPREL#2398680  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398680
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000120   Vitocal 200-S AWB-M-E-AC 201.E08 SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E08 SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123209 Vitocal 200-S AWB-M-E-AC-AF 201.E08 NEV 8 kW
+     EPREL#2398665  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398665
+   · 2123215 Vitocal 200-S AWB-M-E-AC-AF 201.E08 2C 8 kW
+     EPREL#2398671  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398671
+   · 2123208 Vitocal 200-S AWB-M-E-AC 201.E08 NEV 8 kW
+     EPREL#2398664  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398664
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000101   Vitocal 222-S AWBT-M-E-AC-AF 221.E08 SP
+   ref: Vitocal 222-S AWBT-M-E-AC-AF 221.E08 SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123545 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 8 kW
+     EPREL#2398677  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398677
+   · 2123825 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C 8 kW
+     EPREL#2772063  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2772063
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000115   Vitocal 200-S AWB-M-E-AC 201.E06 2C SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E06 2C SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2122424 Vitocal 200-S AWB-M-E-AC 201.E06 6 kW
+     EPREL#2400179  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2400179
+   · 2123206 Vitocal 200-S AWB-M-E-AC 201.E06 NEV 6 kW
+     EPREL#2398662  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398662
+   · 2123207 Vitocal 200-S AWB-M-E-AC-AF 201.E06 NEV 6 kW
+     EPREL#2398663  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398663
+   · 2123213 Vitocal 200-S AWB-M-E-AC-AF 201.E06 2C 6 kW
+     EPREL#2398669  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398669
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000122   Vitocal 200-S AWB-M-E-AC-AF 201.E08 SP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E08 SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123209 Vitocal 200-S AWB-M-E-AC-AF 201.E08 NEV 8 kW
+     EPREL#2398665  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398665
+   · 2123215 Vitocal 200-S AWB-M-E-AC-AF 201.E08 2C 8 kW
+     EPREL#2398671  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398671
+   · 2123208 Vitocal 200-S AWB-M-E-AC 201.E08 NEV 8 kW
+     EPREL#2398664  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398664
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000116   Vitocal 200-S AWB-M-E-AC 201.E06 SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E06 SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2122424 Vitocal 200-S AWB-M-E-AC 201.E06 6 kW
+     EPREL#2400179  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2400179
+   · 2123206 Vitocal 200-S AWB-M-E-AC 201.E06 NEV 6 kW
+     EPREL#2398662  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398662
+   · 2123207 Vitocal 200-S AWB-M-E-AC-AF 201.E06 NEV 6 kW
+     EPREL#2398663  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398663
+   · 2123213 Vitocal 200-S AWB-M-E-AC-AF 201.E06 2C 6 kW
+     EPREL#2398669  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398669
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000124   Vitocal 200-S AWB-M-E-AC 201.E10 SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E10 SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123216 Vitocal 200-S AWB-M-E-AC 201.E10 2C 10 kW
+     EPREL#2398672  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398672
+   · 2122437 Vitocal 200-S AWB-M-E-AC 201.E10 10 kW
+     EPREL#2405854  음향 50 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2405854
+   · 2123211 Vitocal 200-S AWB-M-E-AC-AF 201.E10 NEV 10 kW
+     EPREL#2398667  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398667
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000106   Vitocal 200-S AWB-M-E-AC 201.D10 F
+   ref: Vitocal 200-S AWB-M-E-AC 201.D10 F   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2122459 Vitocal 200-S AWB-M-E-AC 201.D10 10 KW
+     EPREL#220237  음향 56 dB  ηs35 176  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220237
+   · 2122453 Vitocal 200-S AWB-E 201.D10 10 KW
+     EPREL#219241  음향 56 dB  ηs35 180  10 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219241
+   · 2122471 Vitocal 200-S AWB-E-AC 201.D10 F 10 KW
+     EPREL#220259  음향 56 dB  ηs35 180  10 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220259
+   · 2122450 Vitocal 200-S AWB-E-M 201.D10 10 KW
+     EPREL#219238  음향 56 dB  ηs35 176  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219238
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000123   Vitocal 200-S AWB-M-E-AC 201.E10 2C SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E10 2C SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123216 Vitocal 200-S AWB-M-E-AC 201.E10 2C 10 kW
+     EPREL#2398672  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398672
+   · 2122437 Vitocal 200-S AWB-M-E-AC 201.E10 10 kW
+     EPREL#2405854  음향 50 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2405854
+   · 2123211 Vitocal 200-S AWB-M-E-AC-AF 201.E10 NEV 10 kW
+     EPREL#2398667  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398667
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000118   Vitocal 200-S AWB-M-E-AC-AF 201.E06 SP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E06 SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2122424 Vitocal 200-S AWB-M-E-AC 201.E06 6 kW
+     EPREL#2400179  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2400179
+   · 2123206 Vitocal 200-S AWB-M-E-AC 201.E06 NEV 6 kW
+     EPREL#2398662  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398662
+   · 2123207 Vitocal 200-S AWB-M-E-AC-AF 201.E06 NEV 6 kW
+     EPREL#2398663  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398663
+   · 2123213 Vitocal 200-S AWB-M-E-AC-AF 201.E06 2C 6 kW
+     EPREL#2398669  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398669
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000119   Vitocal 200-S AWB-M-E-AC 201.E08 2C SP
+   ref: Vitocal 200-S AWB-M-E-AC 201.E08 2C SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123209 Vitocal 200-S AWB-M-E-AC-AF 201.E08 NEV 8 kW
+     EPREL#2398665  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398665
+   · 2123215 Vitocal 200-S AWB-M-E-AC-AF 201.E08 2C 8 kW
+     EPREL#2398671  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398671
+   · 2123208 Vitocal 200-S AWB-M-E-AC 201.E08 NEV 8 kW
+     EPREL#2398664  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398664
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000098   Vitocal 222-S AWBT-M-E-AC 221.E08 2C SP
+   ref: Vitocal 222-S AWBT-M-E-AC 221.E08 2C SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123545 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 8 kW
+     EPREL#2398677  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398677
+   · 2123825 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C 8 kW
+     EPREL#2772063  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2772063
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000110   Vitocal 200-S AWB-E-AC 201.D13 F
+   ref: Vitocal 200-S AWB-E-AC 201.D13 F   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2122469 Vitocal 200-S AWB-M-E-AC 201.D13 F 13 KW
+     EPREL#220257  음향 56 dB  ηs35 175  10 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220257
+   · 2122454 Vitocal 200-S AWB-E 201.D13 13 KW
+     EPREL#219242  음향 56 dB  ηs35 182  11 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219242
+   · 2122460 Vitocal 200-S AWB-M-E-AC 201.D13 13 KW
+     EPREL#220238  음향 56 dB  ηs35 175  10 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220238
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000125   Vitocal 200-S AWB-M-E-AC-AF 201.E10 2C SP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E10 2CSP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123216 Vitocal 200-S AWB-M-E-AC 201.E10 2C 10 kW
+     EPREL#2398672  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398672
+   · 2122437 Vitocal 200-S AWB-M-E-AC 201.E10 10 kW
+     EPREL#2405854  음향 50 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2405854
+   · 2123211 Vitocal 200-S AWB-M-E-AC-AF 201.E10 NEV 10 kW
+     EPREL#2398667  음향 62 dB  ηs35 192  9 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398667
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000121   Vitocal 200-S AWB-M-E-AC-AF 201.E08 2CSP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E08 2CSP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123209 Vitocal 200-S AWB-M-E-AC-AF 201.E08 NEV 8 kW
+     EPREL#2398665  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398665
+   · 2123215 Vitocal 200-S AWB-M-E-AC-AF 201.E08 2C 8 kW
+     EPREL#2398671  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398671
+   · 2123208 Vitocal 200-S AWB-M-E-AC 201.E08 NEV 8 kW
+     EPREL#2398664  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398664
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000097   Vitocal 222-S AWBT-M-E-AC-AF 221.E06 SP
+   ref: Vitocal 222-S AWBT-M-E-AC-AF 221.E06 SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123218 Vitocal 222-S AWBT-M-E-AC 221.E06 6 kW
+     EPREL#2398674  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398674
+   · 2123549 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C 6 kW
+     EPREL#2398681  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398681
+   · 2123543 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 6 kW
+     EPREL#2398675  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398675
+   · 2123548 Vitocal 222-S AWBT-M-E-AC 221.E06 2C 6 kW
+     EPREL#2398680  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398680
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000095   Vitocal 222-S AWBT-M-E-AC 221.E06 SP
+   ref: Vitocal 222-S AWBT-M-E-AC 221.E06 SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123218 Vitocal 222-S AWBT-M-E-AC 221.E06 6 kW
+     EPREL#2398674  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398674
+   · 2123549 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C 6 kW
+     EPREL#2398681  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398681
+   · 2123543 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 6 kW
+     EPREL#2398675  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398675
+   · 2123548 Vitocal 222-S AWBT-M-E-AC 221.E06 2C 6 kW
+     EPREL#2398680  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398680
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000094   Vitocal 222-S AWBT-M-E-AC 221.E06 2C SP
+   ref: Vitocal 222-S AWBT-M-E-AC 221.E06 2C SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123218 Vitocal 222-S AWBT-M-E-AC 221.E06 6 kW
+     EPREL#2398674  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398674
+   · 2123549 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 2C 6 kW
+     EPREL#2398681  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398681
+   · 2123543 Vitocal 222-S AWBT-M-E-AC-AF 221.E06 6 kW
+     EPREL#2398675  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398675
+   · 2123548 Vitocal 222-S AWBT-M-E-AC 221.E06 2C 6 kW
+     EPREL#2398680  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398680
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000117   Vitocal 200-S AWB-M-E-AC-AF 201.E06 2C SP
+   ref: Vitocal 200-S AWB-M-E-AC-AF 201.E06 2CSP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2122424 Vitocal 200-S AWB-M-E-AC 201.E06 6 kW
+     EPREL#2400179  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2400179
+   · 2123206 Vitocal 200-S AWB-M-E-AC 201.E06 NEV 6 kW
+     EPREL#2398662  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398662
+   · 2123207 Vitocal 200-S AWB-M-E-AC-AF 201.E06 NEV 6 kW
+     EPREL#2398663  음향 57 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398663
+   · 2123213 Vitocal 200-S AWB-M-E-AC-AF 201.E06 2C 6 kW
+     EPREL#2398669  음향 49 dB  ηs35 185  6 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398669
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000108   Vitocal 200-S AWB-M-E-AC 201.D16 F
+   ref: Vitocal 200-S AWB-M-E-AC 201.D16 F   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2122451 Vitocal 200-S AWB-E-M 201.D16 13 KW
+     EPREL#219239  음향 56 dB  ηs35 175  11 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219239
+   · 2122455 Vitocal 200-S AWB-E 201.D16 16 KW
+     EPREL#219243  음향 56 dB  ηs35 182  12 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219243
+   · 2122473 Vitocal 200-S AWB-E-AC 201.D16 F 16 KW
+     EPREL#220261  음향 56 dB  ηs35 182  12 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220261
+   · 2122452 Vitocal 200-S AWB-E-M 201.D16 16 KW
+     EPREL#219240  음향 56 dB  ηs35 175  11 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/219240
+   · 2122464 Vitocal 200-S AWB-E-AC 201.D16 16 KW
+     EPREL#220242  음향 56 dB  ηs35 182  12 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/220242
+   · 2122446 Vitocal 200-S AWB 201.D16 16 KW
+     EPREL#218139  음향 56 dB  ηs35 182  12 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/218139
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000099   Vitocal 222-S AWBT-M-E-AC 221.E08 SP
+   ref: Vitocal 222-S AWBT-M-E-AC 221.E08 SP   [SP 의미를 알아도 NEV/2C 판단이 더 필요]
+   · 2123545 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 8 kW
+     EPREL#2398677  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398677
+   · 2123825 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C 8 kW
+     EPREL#2772063  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2772063
+──────────────────────────────────────────────────────────────────────────────
+agrément 152-2026-000100   Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C SP
+   ref: Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C SP   [SP 를 무시해도 되면 접미 일치로 결정 가능]
+   · 2123545 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 8 kW
+     EPREL#2398677  음향 59 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2398677
+   · 2123825 Vitocal 222-S AWBT-M-E-AC-AF 221.E08 2C 8 kW
+     EPREL#2772063  음향 50 dB  ηs35 193  8 kW   https://eprel.ec.europa.eu/screen/product/spaceheaters/2772063
