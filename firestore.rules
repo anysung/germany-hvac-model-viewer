@@ -33,8 +33,22 @@ service cloud.firestore {
     function ownerToken() {
       return isSignedIn() &&
              (request.auth.token.get('owner', false) == true ||
-              (request.auth.token.email == 'sungyongsoo1976@gmail.com' &&
-               request.auth.token.email_verified == true));
+              (authEmail() == 'sungyongsoo1976@gmail.com' &&
+               request.auth.token.get('email_verified', false) == true));
+    }
+
+    /**
+     * The signed-in email, or '' when the token carries no email claim.
+     *
+     * Reading request.auth.token.email directly THROWS when the claim is absent
+     * ("Property email is undefined on object") — and a rule that throws denies,
+     * so the failure is silent and looks identical to a legitimate refusal. Not
+     * every token has one: a provider identity can omit it, and so can a custom
+     * token. Every email comparison below goes through here, because '' matches
+     * no account, no invitation and no grant.
+     */
+    function authEmail() {
+      return request.auth != null ? request.auth.token.get('email', '') : '';
     }
 
     // ── Access window (trial / subscription gate) ─────────────────────────
@@ -73,9 +87,9 @@ service cloud.firestore {
     // exactly that org (the seat was already bought by the team owner).
     function invitedToOrg(orgId) {
       return orgId is string && orgId != '' &&
-             request.auth.token.email != null &&
+             authEmail() != '' &&
              exists(/databases/$(database)/documents/organizations/$(orgId)) &&
-             request.auth.token.email in
+             authEmail() in
                get(/databases/$(database)/documents/organizations/$(orgId)).data.invitedEmails;
     }
 
@@ -196,11 +210,11 @@ service cloud.firestore {
     // subscription must copy planCode + endsAt from the grant doc, so an
     // expired grant can only ever yield an already-expired entitlement.
     function hasGrant() {
-      return request.auth.token.email != null &&
-             exists(/databases/$(database)/documents/freeAccessGrants/$(request.auth.token.email));
+      return authEmail() != '' &&
+             exists(/databases/$(database)/documents/freeAccessGrants/$(authEmail()));
     }
     function grantData() {
-      return get(/databases/$(database)/documents/freeAccessGrants/$(request.auth.token.email)).data;
+      return get(/databases/$(database)/documents/freeAccessGrants/$(authEmail())).data;
     }
     function grantRedemptionValid() {
       // 2026-08-03: grants live in their OWN field (user.grant) — the
@@ -230,8 +244,8 @@ service cloud.firestore {
     }
 
     match /freeAccessGrants/{email} {
-      allow read: if isAdmin() || (isSignedIn() && request.auth.token.email == email);
-      allow update: if isSignedIn() && request.auth.token.email == email &&
+      allow read: if isAdmin() || (isSignedIn() && authEmail() == email);
+      allow update: if isSignedIn() && authEmail() == email &&
         request.resource.data.diff(resource.data).affectedKeys()
           .hasOnly(['redeemedByUid', 'redeemedAt']) &&
         request.resource.data.redeemedByUid == request.auth.uid;
@@ -286,13 +300,13 @@ service cloud.firestore {
       // depend on this permission at all.
       allow get: if isAdmin() ||
                     (isSignedIn() && request.auth.uid in resource.data.memberUids) ||
-                    (isSignedIn() && request.auth.token.email in resource.data.invitedEmails) ||
+                    (isSignedIn() && authEmail() in resource.data.invitedEmails) ||
                     (isSignedIn() && request.auth.uid == resource.data.ownerUid);
       // The one query the app runs (subscriptionService.joinOrgIfInvited):
       // "which org invited me?". Every document it can return must satisfy this,
       // so the query can only ever see the caller's own invitations.
       allow list: if isAdmin() ||
-                    (isSignedIn() && request.auth.token.email in resource.data.invitedEmails);
+                    (isSignedIn() && authEmail() in resource.data.invitedEmails);
       allow create, delete: if isAdmin();
       allow update: if isAdmin() ||
         (
@@ -314,7 +328,7 @@ service cloud.firestore {
         (
           // Invited user claims their seat. memberUids proves the added seat is
           // the CALLER's own — rules cannot look inside the member maps.
-          isSignedIn() && request.auth.token.email in resource.data.invitedEmails &&
+          isSignedIn() && authEmail() in resource.data.invitedEmails &&
           request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['members', 'memberUids', 'invitedEmails', 'invitedAt']) &&
           request.resource.data.members.size() <= resource.data.seatLimit &&

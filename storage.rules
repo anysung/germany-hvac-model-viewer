@@ -26,11 +26,18 @@ service firebase.storage {
     }
     // Owner global exception — mirror of firestore.rules ownerToken():
     // server-set custom claim first, verified owner email as recovery path.
+    // Reading request.auth.token.email directly THROWS when the claim is absent
+    // ("Property email is undefined on object"), and a rule that throws denies —
+    // so the failure is silent and looks exactly like a legitimate refusal. The
+    // safe accessor yields '' instead, which matches no account.
+    function authEmail() {
+      return request.auth != null ? request.auth.token.get('email', '') : '';
+    }
     function ownerToken() {
       return request.auth != null &&
              (request.auth.token.get('owner', false) == true ||
-              (request.auth.token.email == 'sungyongsoo1976@gmail.com' &&
-               request.auth.token.email_verified == true));
+              (authEmail() == 'sungyongsoo1976@gmail.com' &&
+               request.auth.token.get('email_verified', false) == true));
     }
     function isAdmin() {
       return ownerToken() ||
