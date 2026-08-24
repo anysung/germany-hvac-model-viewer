@@ -36,6 +36,16 @@
 #          --region=$REGION --project=$PROJECT_ID \
 #          --format='value(serviceConfig.serviceAccountEmail)')" \
 #        --role=roles/secretmanager.secretAccessor --project=$PROJECT_ID
+#   TRIAL REMINDERS. /runTrialReminders is called by Cloud Scheduler once a day
+#   and authenticates on an x-api-key header matching REMINDER_KEY, also mounted
+#   from Secret Manager. The header is required ALWAYS — the x-cloudscheduler
+#   header the news function trusts can be set by anyone, which is tolerable for
+#   an idempotent rebuild and not for an endpoint that sends mail.
+#     printf '%s' "$(openssl rand -hex 32)" | gcloud secrets create heatpumpdb-reminder-key \
+#       --data-file=- --project=$PROJECT_ID
+#   The scheduler job must carry the same value in its header; rotating means
+#   updating both.
+#
 #   Rotating the password = add a new secret version; no redeploy needed.
 #   Without the secret the endpoint returns 503 and records the failure — it
 #   never silently drops a message.
@@ -122,7 +132,7 @@ gcloud functions deploy "${FUNCTION_NAME}" \
   --memory=512MB \
   --timeout=300s \
   --update-env-vars "${ENV_UPDATES}" \
-  --set-secrets "SMTP_PASS=heatpumpdb-smtp-pass:latest"
+  --set-secrets "SMTP_PASS=heatpumpdb-smtp-pass:latest,REMINDER_KEY=heatpumpdb-reminder-key:latest"
 
 echo ""
 echo "Done. Function URL:"

@@ -1634,6 +1634,192 @@ async function previewMemberEmail(req, res) {
   return res.status(200).json({ ok: true, html: inlineAssets(letterhead(text, to)) });
 }
 
+/* ── Trial reminders ──────────────────────────────────────────────────────────
+   A 7-day trial with no touchpoints converts at roughly nothing, and until now
+   the service had none: the trial was granted at signup and expired in total
+   silence — no warning, no notice, no way for the person to know the window had
+   closed except by finding the app locked. One account's trial ended that way on
+   2026-08-19.
+
+   Three messages, and no more than three. Each one is sent AT MOST ONCE per
+   account, recorded on the account itself (`trialReminders.<stage>`), so a
+   scheduler that fires twice, a retry, or a manual re-run cannot mail anyone
+   again. The marker is written in the SAME operation as the send being
+   recorded, and only after the send succeeded — a failure leaves the stage
+   unmarked so the next run retries it, which is the right way round for a
+   message whose whole value is arriving on time.
+
+   WHO IS DELIBERATELY SKIPPED
+     - anything but an active account: suspended, disabled, deletion-requested
+     - anyone already paying, or holding a free-access grant
+     - team MEMBERS: the window belongs to the team admin, and a member who
+       cannot buy anything should not be asked to
+   Getting this wrong is worse than sending nothing, because the one thing a
+   suspended member must not receive is a cheerful note about their trial.
+
+   In the member's own market language. A conversion email in a language the
+   reader did not choose is a conversion email that does not work.
+   ────────────────────────────────────────────────────────────────────────── */
+
+const TRIAL_STAGES = ['two_days_left', 'last_day', 'expired'];
+
+const MARKET_SITE = {
+  DE: 'https://www.heatpumpdb.de',
+  GB: 'https://www.heatpumpdb.uk',
+  FR: 'https://www.heatpumpdb.fr',
+  PL: 'https://www.heatpumpdb.pl',
+  IT: 'https://www.heatpumpdb.it',
+};
+const MARKET_LANG = { DE: 'de', FR: 'fr', PL: 'pl', IT: 'it', GB: 'en' };
+
+/** Short by design: three sentences and one link convert better than a page. */
+const TRIAL_COPY = {
+  en: {
+    two_days_left: (n, url) => ({
+      subject: 'Your HeatPump DB trial ends in 2 days',
+      body: `Your free trial ends on ${n}. After that the catalogue is no longer accessible, and any comparisons you have open will not load.\n\nIf HeatPump DB is useful to you, you can continue without interruption by choosing a plan here:\n${url}\n\nIf it is not the right fit, no action is needed and nothing will be charged.`,
+    }),
+    last_day: (n, url) => ({
+      subject: 'Last day of your HeatPump DB trial',
+      body: `Your free trial ends today (${n}). Access to the catalogue stops when it does.\n\nTo keep working without a gap, choose a plan here:\n${url}\n\nNothing is charged unless you do.`,
+    }),
+    expired: (n, url) => ({
+      subject: 'Your HeatPump DB trial has ended',
+      body: `Your free trial ended on ${n} and the catalogue is no longer accessible from your account.\n\nEverything is still here — choosing a plan restores access immediately, with your account and settings as you left them:\n${url}\n\nIf you would rather tell us what was missing, reply to this message. We read every answer.`,
+    }),
+  },
+  de: {
+    two_days_left: (n, url) => ({
+      subject: 'Ihr HeatPump DB Test endet in 2 Tagen',
+      body: `Ihr kostenloser Test endet am ${n}. Danach ist der Katalog nicht mehr zugänglich, und offene Vergleiche lassen sich nicht mehr laden.\n\nWenn HeatPump DB für Sie nützlich ist, können Sie hier ohne Unterbrechung mit einem Tarif weiterarbeiten:\n${url}\n\nWenn es nicht passt, müssen Sie nichts tun — es wird nichts berechnet.`,
+    }),
+    last_day: (n, url) => ({
+      subject: 'Letzter Tag Ihres HeatPump DB Tests',
+      body: `Ihr kostenloser Test endet heute (${n}). Mit ihm endet der Zugang zum Katalog.\n\nUm ohne Lücke weiterzuarbeiten, wählen Sie hier einen Tarif:\n${url}\n\nEs wird nichts berechnet, solange Sie das nicht tun.`,
+    }),
+    expired: (n, url) => ({
+      subject: 'Ihr HeatPump DB Test ist beendet',
+      body: `Ihr kostenloser Test endete am ${n}; der Katalog ist über Ihr Konto nicht mehr zugänglich.\n\nAlles ist weiterhin vorhanden — mit einem Tarif wird der Zugang sofort wiederhergestellt, Konto und Einstellungen unverändert:\n${url}\n\nWenn Sie uns lieber sagen möchten, was gefehlt hat: antworten Sie einfach auf diese Nachricht. Wir lesen jede Antwort.`,
+    }),
+  },
+  fr: {
+    two_days_left: (n, url) => ({
+      subject: 'Votre essai HeatPump DB se termine dans 2 jours',
+      body: `Votre essai gratuit se termine le ${n}. Ensuite, le catalogue ne sera plus accessible et vos comparaisons en cours ne se chargeront plus.\n\nSi HeatPump DB vous est utile, vous pouvez continuer sans interruption en choisissant une formule ici :\n${url}\n\nSi ce n'est pas adapté, aucune action n'est nécessaire et rien ne sera facturé.`,
+    }),
+    last_day: (n, url) => ({
+      subject: 'Dernier jour de votre essai HeatPump DB',
+      body: `Votre essai gratuit se termine aujourd'hui (${n}). L'accès au catalogue s'arrête en même temps.\n\nPour continuer sans coupure, choisissez une formule ici :\n${url}\n\nRien n'est facturé sans votre action.`,
+    }),
+    expired: (n, url) => ({
+      subject: 'Votre essai HeatPump DB est terminé',
+      body: `Votre essai gratuit s'est terminé le ${n} et le catalogue n'est plus accessible depuis votre compte.\n\nTout est conservé — choisir une formule rétablit l'accès immédiatement, avec votre compte et vos réglages tels que vous les avez laissés :\n${url}\n\nSi vous préférez nous dire ce qui manquait, répondez à ce message. Nous lisons chaque réponse.`,
+    }),
+  },
+  pl: {
+    two_days_left: (n, url) => ({
+      subject: 'Twój okres próbny HeatPump DB kończy się za 2 dni',
+      body: `Bezpłatny okres próbny kończy się ${n}. Po tym terminie katalog przestanie być dostępny, a otwarte porównania się nie wczytają.\n\nJeśli HeatPump DB jest dla Ciebie przydatny, możesz kontynuować bez przerwy, wybierając plan tutaj:\n${url}\n\nJeśli to nie jest to, czego szukasz — nie musisz nic robić i nic nie zostanie pobrane.`,
+    }),
+    last_day: (n, url) => ({
+      subject: 'Ostatni dzień okresu próbnego HeatPump DB',
+      body: `Bezpłatny okres próbny kończy się dziś (${n}). Wraz z nim kończy się dostęp do katalogu.\n\nAby pracować bez przerwy, wybierz plan tutaj:\n${url}\n\nNic nie zostanie pobrane, dopóki tego nie zrobisz.`,
+    }),
+    expired: (n, url) => ({
+      subject: 'Okres próbny HeatPump DB zakończył się',
+      body: `Bezpłatny okres próbny zakończył się ${n} i katalog nie jest już dostępny z Twojego konta.\n\nWszystko jest na miejscu — wybór planu natychmiast przywraca dostęp, wraz z kontem i ustawieniami w takim stanie, w jakim je zostawiłeś:\n${url}\n\nJeśli wolisz powiedzieć nam, czego zabrakło — odpowiedz na tę wiadomość. Czytamy każdą odpowiedź.`,
+    }),
+  },
+  it: {
+    two_days_left: (n, url) => ({
+      subject: 'La tua prova HeatPump DB termina fra 2 giorni',
+      body: `La prova gratuita termina il ${n}. Dopo quella data il catalogo non sarà più accessibile e i confronti aperti non si caricheranno.\n\nSe HeatPump DB ti è utile, puoi continuare senza interruzioni scegliendo un piano qui:\n${url}\n\nSe non è quello che cercavi non devi fare nulla e non verrà addebitato niente.`,
+    }),
+    last_day: (n, url) => ({
+      subject: 'Ultimo giorno della tua prova HeatPump DB',
+      body: `La prova gratuita termina oggi (${n}). Con essa termina l'accesso al catalogo.\n\nPer continuare senza interruzioni, scegli un piano qui:\n${url}\n\nNulla viene addebitato se non lo fai.`,
+    }),
+    expired: (n, url) => ({
+      subject: 'La tua prova HeatPump DB è terminata',
+      body: `La prova gratuita è terminata il ${n} e il catalogo non è più accessibile dal tuo account.\n\nTutto è ancora al suo posto — scegliere un piano ripristina immediatamente l'accesso, con account e impostazioni come li hai lasciati:\n${url}\n\nSe preferisci dirci cosa mancava, rispondi a questo messaggio. Leggiamo ogni risposta.`,
+    }),
+  },
+};
+
+const LOCALE_FOR = { en: 'en-GB', de: 'de-DE', fr: 'fr-FR', pl: 'pl-PL', it: 'it-IT' };
+
+const { trialStageFor, skipReminder } = require('./trialReminderRules');
+
+async function runTrialReminders(req, res) {
+  const key = process.env.REMINDER_KEY || '';
+  if (!key || req.headers['x-api-key'] !== key) return sendErr(res, 403, 'unauthorized');
+  const dryRun = String(req.query?.dryRun ?? (req.body || {}).dryRun ?? '') === 'true';
+
+  const nowMs = Date.now();
+  const snap = await db.collection('users').limit(5000).get();
+  const planned = [], skipped = {}, sent = [], failed = [];
+
+  for (const doc of snap.docs) {
+    const u = doc.data();
+    const stage = trialStageFor(u, nowMs);
+    if (!stage) continue;
+    if ((u.trialReminders || {})[stage]) { skipped['already-sent'] = (skipped['already-sent'] ?? 0) + 1; continue; }
+    const why = skipReminder(u);
+    if (why) { skipped[why] = (skipped[why] ?? 0) + 1; continue; }
+
+    const cc = String(u.country || 'DE').toUpperCase();
+    const lang = MARKET_LANG[cc] || 'en';
+    const url = `${MARKET_SITE[cc] || MARKET_SITE.DE}/pricing`;
+    const when = new Date(tsMillis(u.trialEndsAt)).toLocaleDateString(LOCALE_FOR[lang] || 'en-GB',
+      { year: 'numeric', month: 'long', day: 'numeric' });
+    const salutation = [u.firstName, u.lastName].filter(Boolean).join(' ');
+    const copy = (TRIAL_COPY[lang] || TRIAL_COPY.en)[stage](when, url);
+    const greeting = { en: 'Dear', de: 'Guten Tag', fr: 'Bonjour', pl: 'Dzień dobry', it: 'Buongiorno' }[lang] || 'Dear';
+    const body = `${salutation ? `${greeting} ${salutation},` : `${greeting},`}\n\n${copy.body}`;
+
+    planned.push({ uid: doc.id, email: u.email, stage, lang, market: cc, subject: copy.subject });
+    if (dryRun) continue;
+
+    const record = {
+      uid: doc.id, to: u.email, subject: copy.subject, body, kind: 'trial_reminder',
+      sentByUid: 'system', sentByEmail: null, at: nowIso(), stage,
+    };
+    const tx = transport();
+    if (!tx) { failed.push({ uid: doc.id, error: 'smtp-not-configured' }); continue; }
+    try {
+      const info = await tx.sendMail({
+        from: `HeatPump DB Support <${SUPPORT_FROM}>`,
+        to: u.email, replyTo: SUPPORT_FROM, subject: copy.subject,
+        text: body + TEXT_SIGNATURE, html: letterhead(body, u.email),
+        attachments: mailAttachments(),
+      });
+      // Marked only after the send succeeded: an unmarked stage is retried by
+      // the next run, which is what a time-critical message needs.
+      await doc.ref.set({ trialReminders: { [stage]: nowIso() } }, { merge: true });
+      await db.collection('memberEmails').add({ ...record, ok: true, messageId: info.messageId || null });
+      sent.push({ uid: doc.id, email: u.email, stage });
+    } catch (e) {
+      console.error('trial reminder failed', doc.id, e);
+      await db.collection('memberEmails').add({ ...record, ok: false, error: String(e && e.message || e).slice(0, 500) });
+      failed.push({ uid: doc.id, error: String(e && e.message || e).slice(0, 200) });
+    }
+  }
+
+  // The audit row carries the counts, not the per-account detail: Firestore
+  // rejects an undefined field, and a run log does not need to repeat what
+  // memberEmails already records message by message.
+  await db.collection('opsAuditLog').add({
+    action: 'runTrialReminders', dryRun, scanned: snap.size,
+    planned: planned.length, sent: sent.length, failed: failed.length,
+    skipped, at: nowIso(),
+  });
+  return res.status(200).json({
+    ok: true, dryRun, scanned: snap.size, planned: planned.length,
+    sent: sent.length, failed: failed.length, skipped,
+    detail: dryRun ? planned : { sent, failed },
+  });
+}
+
 /** The messages already sent to one member — shown on the admin member page. */
 async function listMemberEmails(req, res) {
   const admin = await verifyAdmin(req);
@@ -1672,6 +1858,7 @@ functions.http('accountBilling', async (req, res) => {
     if (path.endsWith('/sendMemberEmail')) return await sendMemberEmail(req, res);
     if (path.endsWith('/listMemberEmails')) return await listMemberEmails(req, res);
     if (path.endsWith('/previewMemberEmail')) return await previewMemberEmail(req, res);
+    if (path.endsWith('/runTrialReminders')) return await runTrialReminders(req, res);
     if (path.endsWith('/cancelSubscription')) return await cancelSubscription(req, res);
     if (path.endsWith('/billingPortal')) return await billingPortal(req, res);
     if (path.endsWith('/applyPlanChange')) return await applyPlanChange(req, res);
