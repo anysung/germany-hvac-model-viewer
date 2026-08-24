@@ -30,6 +30,7 @@ import { PUBLIC_ENV } from './config/env';
 import { REGISTRATION_OPEN, REGISTRATION_REOPEN_DATE } from './config/registration';
 import { captureSignupRef } from './services/signupRef';
 import { MaintenanceGate } from './components/MaintenanceGate';
+import { BillingProfileForm, billingProfileComplete } from './components/BillingProfileForm';
 
 // Attribution: catch ?ref= before any routing can strip it.
 captureSignupRef();
@@ -109,7 +110,13 @@ const SubscribeGate: React.FC<{
   const [busy, setBusy] = useState(false);
   const hadTrial = !!user.trialEndsAt;
 
+  // Ask for the account details we still lack BEFORE handing over to Paddle —
+  // once, and only when something is missing (BillingProfileForm explains why
+  // this is the moment rather than signup or mid-trial).
+  const [profileFor, setProfileFor] = useState<SubPlanCode | null>(null);
+
   const subscribe = async (plan: SubPlanCode) => {
+    if (!billingProfileComplete(user)) { setProfileFor(plan); return; }
     try { await openCheckout(user, plan, term); }
     catch { alert(t.subReqComingSoon); }
   };
@@ -187,6 +194,22 @@ const SubscribeGate: React.FC<{
         </div>
         <LegalFooter language={language} dark />
       </GlassCard>
+      {profileFor && (
+        <BillingProfileForm
+          language={language}
+          user={user}
+          onSaved={(patch) => {
+            const plan = profileFor;
+            setProfileFor(null);
+            // Keep the screen's own copy in step, then continue where the
+            // person was going — they clicked a plan, not a form.
+            onRefreshed({ ...user, ...patch } as typeof user);
+            openCheckout({ ...user, ...patch } as typeof user, plan, term)
+              .catch(() => alert(t.subReqComingSoon));
+          }}
+          onCancel={() => setProfileFor(null)}
+        />
+      )}
     </AuthShell>
   );
 };

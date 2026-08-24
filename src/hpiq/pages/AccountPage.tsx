@@ -7,6 +7,7 @@ import { getSessionId, revokeSessionFn, revokeOtherSessionsFn, signOutEverywhere
 import { tsToMillis } from '../../config/entitlement';
 import { requestDeletion } from '../../services/adminService';
 import { openCheckout, checkoutConfigured } from '../../services/paddleService';
+import { BillingProfileForm, billingProfileComplete } from '../../components/BillingProfileForm';
 import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn, cancelSubscriptionFn, billingPortalFn } from '../../services/billingFnService';
 import { accessInfo } from '../../config/entitlement';
 import {
@@ -92,6 +93,7 @@ const PlanPicker: React.FC<{
   const s = t.sub;
   const [term, setTerm] = useState<BillingTerm>('monthly');
   const [pendingDowngrade, setPendingDowngrade] = useState<SubPlanCode | null>(null);
+  const [profileFor, setProfileFor] = useState<SubPlanCode | null>(null);
   const [keepUids, setKeepUids] = useState<string[]>([]);
   const isPreview = app.user.id === 'preview';
 
@@ -99,6 +101,9 @@ const PlanPicker: React.FC<{
     if (isPreview) { app.notify(t.account.previewOnly); return; }
     if (mode === 'checkout') {
       if (!checkoutConfigured(plan, term)) { app.notify(s.notConfigured); return; }
+      // The account details we no longer ask for at signup are collected here,
+      // once, before Paddle takes over (see BillingProfileForm).
+      if (!billingProfileComplete(app.user)) { setProfileFor(plan); return; }
       openCheckout(app.user, plan, term).catch(() => app.notify(s.notConfigured));
       return;
     }
@@ -134,6 +139,19 @@ const PlanPicker: React.FC<{
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      {profileFor && (
+        <BillingProfileForm
+          language={app.lang as any}
+          user={app.user}
+          onSaved={(patch) => {
+            const plan = profileFor;
+            setProfileFor(null);
+            openCheckout({ ...app.user, ...patch }, plan, term)
+              .catch(() => app.notify(s.notConfigured));
+          }}
+          onCancel={() => setProfileFor(null)}
+        />
+      )}
       {mode === 'schedule' && minPlan && (
         <span style={{ fontSize: 12.5, color: '#9a6b00', background: '#fdf6e7', border: '1px solid #f0e2c0', borderRadius: 10, padding: '9px 13px', lineHeight: 1.55 }}>
           {s.upgradeOnlyNote}
