@@ -147,11 +147,24 @@ if (COUNTRY === 'GB') {
     /verification required/i.test(comBody));
   check('[GB] no BUS eligibility is claimed', !/eligible for BUS|BUS eligible/i.test(comBody));
 } else if (COUNTRY === 'FR') {
-  check('[FR] no listing filter is offered (France has no national list)',
+  /* France gained a national list on 2026-08-19 — the ADEME agrément register,
+     whose number must appear on a devis from 1 September 2026. These assertions
+     used to say "France has no national list"; they now hold it to the same PEL
+     rules as every other market. The FILTER stays off: agréé products are a
+     small share of the catalogue, so a filter would hide most of it. */
+  check('[FR] no listing filter is offered (it would hide most of the catalogue)',
     (await page.locator('[data-testid="listed-only-toggle"]').count()) === 0);
-  check('[FR] no local listing status is shown at all',
-    (await page.locator('[data-testid="local-listing-status"]').count()) === 0);
-  check('[FR] no foreign listing is relabelled as French', !/Ofgem|\bPEL\b/i.test(comBody));
+  check('[FR] the agrément status IS shown on a selected product',
+    (await page.locator('[data-testid="local-listing-status"]').count()) >= 1);
+  check('[FR] the status names the ADEME register',
+    /ADEME|agr[ée]ment/i.test(comBody), around(comBody, 'ADEME'));
+  // A failed match is a fact about OUR matching, never about the register.
+  check('[FR] never "not agréé" — absence of a match is not absence from the register',
+    !/non\s+agr[éeè]{1,2}|not\s+agr[ée]{1,2}d?|pas\s+au\s+registre/i.test(comBody),
+    around(comBody, 'agr'));
+  check('[FR] unconfirmed products ask for verification',
+    /v[ée]rification|verification required/i.test(comBody));
+  check('[FR] no foreign listing is relabelled as French', !/Ofgem|\bPEL\b|\bZUM\b|\bGSE\b/i.test(comBody));
 } else if (COUNTRY === 'PL') {
   // Poland has its own national list (Lista ZUM) — PEL rules apply: only a
   // confirmed match is "listed", a failed match is never absence.

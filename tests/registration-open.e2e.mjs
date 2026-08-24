@@ -68,9 +68,28 @@ check(
   (await page.locator('[data-testid="registration-paused"]').count()) === 0,
 );
 check(
-  'required fields are present (email, password, company name)',
+  'the form asks for an email and a password',
   (await page.locator('[data-testid="su-email"]').count()) === 1 &&
   (await page.locator('[data-testid="su-password"]').count()) === 1,
+);
+/* The form was cut to two fields on 2026-08-24 and the fields that left must
+   STAY gone: each one is a step between a visitor and a product they have not
+   seen, and they creep back one "just this one" at a time. Name and company are
+   asked at the point of subscribing instead (BillingProfileForm). */
+check(
+  'it asks for nothing else — name and company are collected at checkout',
+  (await page.locator('[data-testid="su-first"]').count()) === 0 &&
+  (await page.locator('[data-testid="su-last"]').count()) === 0 &&
+  (await page.locator('[data-testid="su-company-name"]').count()) === 0 &&
+  (await page.locator('[data-testid="su-company-type"]').count()) === 0 &&
+  (await page.locator('[data-testid="su-email-confirm"]').count()) === 0,
+);
+/* Naming a price before anyone has seen a data sheet raises "what will this
+   cost me" at the moment we are asking for trust (owner decision 2026-08-24). */
+check(
+  'the submit button does not mention a plan or a price',
+  !/plan|tarif|formule|piano|abbonamento|preis|price|prezzo|cena|forfait/i.test(
+    (await page.locator('[data-testid="su-submit"]').innerText()).trim()),
 );
 check(
   'the company-email advice is shown under the email field',

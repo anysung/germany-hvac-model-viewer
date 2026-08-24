@@ -46,58 +46,53 @@ await page.waitForTimeout(700);
 
 check('signup form is rendered (registration reopened)', await page.locator('[data-testid="signup-form"]').isVisible());
 
-for (const f of ['su-first', 'su-last', 'su-email', 'su-password', 'su-company-name', 'su-company-type']) {
+/* The form was cut to email + password + consent on 2026-08-24. Everything the
+   old assertions checked for — name, company, type, city, website, the retyped
+   email — is deliberately gone: each was a step between a visitor and a product
+   they had not seen, and none was needed to start a free trial. Name, company,
+   type and city are collected at the point of SUBSCRIBING instead
+   (components/BillingProfileForm.tsx). */
+for (const f of ['su-email', 'su-password']) {
   check(`required field present: ${f}`, (await page.locator(`[data-testid="${f}"]`).count()) === 1);
 }
-check('optional field present: company city', (await page.locator('[data-testid="su-city"]').count()) === 1);
-check('optional field present: company website', (await page.locator('[data-testid="su-website"]').count()) === 1);
+for (const f of ['su-first', 'su-last', 'su-company-name', 'su-company-type',
+                 'su-city', 'su-website', 'su-email-confirm']) {
+  check(`field is gone from signup: ${f}`, (await page.locator(`[data-testid="${f}"]`).count()) === 0);
+}
 
 const body = await page.locator('body').innerText();
 check('Job Role field removed', !/Job Role|Funktion|Fonction/i.test(body));
 check('Referral Source field removed', !/Referral|Wie sind Sie auf uns|Source de/i.test(body));
 check('no separate country field', !/^Country$|Land \*|Pays \*/m.test(body));
-check('company guidance shown', await page.locator('[data-testid="su-company-guidance"]').isVisible());
+check('the company-email advice is still shown',
+  await page.locator('[data-testid="su-email-advice"]').isVisible());
 
-// Company types: the controlled list
-const options = await page.locator('[data-testid="su-company-type"] option').allInnerTexts();
-check('10 company types offered', options.length === 11, `got ${options.length} (incl. placeholder)`);
+// Naming a price before anyone has seen a data sheet raises "what will this cost
+// me" at the moment we are asking for trust (owner decision 2026-08-24).
+check('the submit button does not mention a plan or a price',
+  !/plan|tarif|formule|piano|abbonamento|preis|price|prezzo|cena|forfait/i.test(
+    (await page.locator('[data-testid="su-submit"]').innerText()).trim()));
 
-// Individual / Sole Trader guidance
-await page.selectOption('[data-testid="su-company-type"]', 'individual');
-await page.waitForTimeout(250);
-check('Individual / Sole Trader guidance appears', await page.locator('[data-testid="su-individual-hint"]').isVisible());
-
-// "Other" requires the detail field
-await page.selectOption('[data-testid="su-company-type"]', 'other');
-await page.waitForTimeout(250);
-check('"Other" reveals the detail field', await page.locator('[data-testid="su-company-type-other"]').isVisible());
+// The password is one field with a reveal, not two.
+check('the password can be revealed', await page.locator('[data-testid="su-password-toggle"]').isVisible());
+await page.fill('[data-testid="su-password"]', 'Sup3rSecret!');
+await page.click('[data-testid="su-password-toggle"]');
+await page.waitForTimeout(150);
+check('revealing shows the typed password',
+  (await page.getAttribute('[data-testid="su-password"]', 'type')) === 'text');
+await page.click('[data-testid="su-password-toggle"]');
 
 // Validation: consent is required
-const fill = async () => {
-  const probe = `probe-${Date.now()}@example.com`;
-  await page.fill('[data-testid="su-first"]', 'Test');
-  await page.fill('[data-testid="su-last"]', 'User');
-  await page.fill('[data-testid="su-email"]', probe);
-  // Re-entry is required: the account email is immutable, so a typo is not a
-  // correctable mistake (2026-08-13).
-  await page.fill('[data-testid="su-email-confirm"]', probe);
+const fill = async (email) => {
+  await page.fill('[data-testid="su-email"]', email ?? `probe-${Date.now()}@example.com`);
   await page.fill('[data-testid="su-password"]', 'Sup3rSecret!');
-  await page.fill('[data-testid="su-company-name"]', 'Probe GmbH');
-  await page.selectOption('[data-testid="su-company-type"]', 'installer');
 };
 await fill();
 await page.click('[data-testid="su-submit"]');
 await page.waitForTimeout(400);
 check('terms acceptance is required', await page.locator('[data-testid="su-error"]').isVisible());
 
-// Validation: the two email fields must agree, and a typo'd domain is offered a fix
-await fill();
-await page.fill('[data-testid="su-email-confirm"]', 'someone-else@example.com');
-await page.check('[data-testid="su-consent"]');
-await page.click('[data-testid="su-submit"]');
-await page.waitForTimeout(400);
-check('mismatched confirmation email is rejected', await page.locator('[data-testid="su-error"]').isVisible());
-
+// A mistyped domain is still offered a fix — the habit, not the slip.
 await page.fill('[data-testid="su-email"]', 'someone@gmial.com');
 await page.waitForTimeout(250);
 check('a mistyped domain is offered a correction', await page.locator('[data-testid="su-email-hint"]').isVisible());
@@ -106,18 +101,36 @@ await page.waitForTimeout(250);
 check('accepting the correction rewrites the address',
   (await page.inputValue('[data-testid="su-email"]')) === 'someone@gmail.com');
 
-// Validation: website format
+/* The account email cannot be changed afterwards and receipts go to it, so a
+   CONSUMER mailbox is confirmed before it becomes permanent — and a company
+   address is not interrupted at all. */
+await fill('installer@gmail.com');
 await page.check('[data-testid="su-consent"]');
-await page.fill('[data-testid="su-website"]', 'not a website');
 await page.click('[data-testid="su-submit"]');
-await page.waitForTimeout(400);
-check('invalid website is rejected', await page.locator('[data-testid="su-error"]').isVisible());
+await page.waitForTimeout(600);
+check('a consumer mailbox is confirmed before committing',
+  await page.locator('[data-testid="su-freemail-dialog"]').isVisible());
+await page.click('[data-testid="su-freemail-change"]');
+await page.waitForTimeout(250);
+check('declining the confirmation returns to the form, nothing submitted',
+  (await page.locator('[data-testid="su-freemail-dialog"]').count()) === 0 &&
+  await page.locator('[data-testid="signup-form"]').isVisible());
+
+await fill('planner@engineering-buero.de');
+await page.click('[data-testid="su-submit"]');
+await page.waitForTimeout(600);
+check('a company address is NOT interrupted',
+  (await page.locator('[data-testid="su-freemail-dialog"]').count()) === 0);
 
 // Policy links on the signup page
 check('Terms link on signup', (await page.locator('[data-testid="su-terms-link"]').getAttribute('href')) === '/terms');
 check('Privacy link on signup', (await page.locator('[data-testid="su-privacy-link"]').getAttribute('href')) === '/privacy');
-check('CTA reads "continue to plan selection"',
-  /plan selection|Tarifauswahl|choix de la formule|wyboru planu|scelta del piano/i.test(await page.locator('[data-testid="su-submit"]').innerText()));
+/* The CTA used to promise "continue to plan selection" and led to "check your
+   email" — there is no plan-selection step in signup and there should not be
+   (owner decision 2026-08-24). It now says what it does. */
+check('CTA says it creates an account, and promises no plan step',
+  /create account|Konto erstellen|Créer un compte|Utwórz konto|Crea account/i.test(
+    await page.locator('[data-testid="su-submit"]').innerText()));
 
 /* ── 2. PUBLIC POLICY PAGES (no login; Paddle-review business identity) ────── */
 // Every legal page is public over the same domain, shows the brand and the one
