@@ -226,9 +226,14 @@ export interface NewsItem {
   summary_it?: string;
   body_it?: string;
   /** Holds the article at the top of the feed regardless of date. Used for the
-   *  monthly Special Report, which stays the lead story until the next edition
-   *  replaces it — news is otherwise strictly newest-first. */
+   *  monthly Special Report — news is otherwise strictly newest-first. */
   pinned?: boolean;
+  /** Last day (YYYY-MM-DD, inclusive) the pin applies. A Special Report leads
+   *  the feed for its own month and the month after, so the top of the feed
+   *  carries the current report and the previous one, and older editions retire
+   *  on their own date rather than waiting for someone to unpin them. Absent =
+   *  pinned indefinitely (how the first editions were written). */
+  pinnedUntil?: string;
   /** Keeps this article's imageUrl out of the deterministic pool rotation.
    *  scripts/news/backfill-news-images.mjs reassigns EVERY article's image on
    *  each run; an article whose picture is the point (a report cover) must be

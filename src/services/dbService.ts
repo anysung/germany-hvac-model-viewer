@@ -118,6 +118,24 @@ export const getNewsFor = async (countryCode: string): Promise<NewsItem[]> => {
   }
 };
 
+/**
+ * Is this article still holding the top of the feed on `today` (YYYY-MM-DD)?
+ *
+ * The expiry is compared as a plain date string, not a Date: the pin is an
+ * editorial window ("through the end of September"), not an instant, and
+ * parsing it into a Date would make the last day of the window end at midnight
+ * UTC — i.e. mid-morning in Europe, where the readers are. A missing
+ * pinnedUntil means an indefinite pin (the first editions were written that
+ * way, before the two-month window).
+ *
+ * The same rule lives in scripts/lib/special-report-store.mjs (isPinnedOn),
+ * which the publisher and the public-archive exporter share; this is its one
+ * duplicate, across the TS/mjs boundary. tests/news-pin.unit.mjs covers the
+ * window itself.
+ */
+export const isPinnedOn = (item: NewsItem, today: string): boolean =>
+  item.pinned === true && (!item.pinnedUntil || item.pinnedUntil >= today);
+
 export const getNews = async (): Promise<NewsItem[]> => {
   try {
     const newsCollection = collection(db, NEWS_REF);
@@ -125,10 +143,12 @@ export const getNews = async (): Promise<NewsItem[]> => {
     const snapshot = await getDocs(q);
     
     const news = snapshot.docs.map(doc => doc.data() as NewsItem);
-    // Pinned articles lead the feed (the monthly Special Report holds the top
-    // slot until the next edition); everything else stays newest-first.
+    // Pinned articles lead the feed (the monthly Special Report), then
+    // newest-first. Two reports sit at the top at any time — the current
+    // month's and the previous one's — because each pin carries its own expiry.
+    const today = new Date().toISOString().slice(0, 10);
     return news.sort((a, b) =>
-      Number(b.pinned ?? false) - Number(a.pinned ?? false)
+      Number(isPinnedOn(b, today)) - Number(isPinnedOn(a, today))
       || new Date(b.date).getTime() - new Date(a.date).getTime());
   } catch (error) {
     console.error("Error fetching news:", error);

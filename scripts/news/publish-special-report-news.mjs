@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * publish-special-report-news.mjs — announce a Special Report edition in each
- * market's in-app news feed, pinned to the top until the next edition.
+ * market's in-app news feed, pinned to the top for its own month and the one
+ * after it.
  *
  * WHY A SCRIPT AND NOT THE CLOUD FUNCTION
  * The news function generates the monthly market articles; this one article is
@@ -13,6 +14,9 @@
  *   pinned:true       holds it at the top of the feed (news is otherwise
  *                     strictly newest-first, so next month's batch would bury
  *                     the report the week it launched)
+ *   pinnedUntil       the date that pin expires — see pinnedThrough() below.
+ *                     Two reports lead the feed at any time, this month's and
+ *                     last month's, and an edition retires by itself
  *   imagePinned:true  keeps its cover out of the image-pool rotation —
  *                     backfill-news-images.mjs reassigns every article's image
  *                     on each run and would otherwise swap the report cover
@@ -34,7 +38,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { editions } from '../lib/special-report-store.mjs';
+import { editions, pinnedThrough } from '../lib/special-report-store.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const PROJECT = 'gen-lang-client-0324244302';
@@ -72,6 +76,8 @@ const srcArray = (list) => ({
   arrayValue: { values: list.map((s) => ({ mapValue: { fields: { title: S(s.title), url: S(s.url) } } })) },
 });
 
+const PIN_UNTIL = pinnedThrough(ed.id);
+
 let wrote = 0;
 for (const [cc, m] of Object.entries(MARKETS)) {
   const id = `news-${N.idDate}-${cc.toLowerCase()}-sr1`;
@@ -94,6 +100,7 @@ for (const [cc, m] of Object.entries(MARKETS)) {
     imageUrl: S(`/special-report/img/special-report-${ed.id}-${m.lang}.webp`),
     imagePinned: B(true),
     pinned: B(true),
+    pinnedUntil: S(PIN_UNTIL),
     sourceUrl: S(sources[0]?.url ?? editionUrl),
     sources: srcArray(sources),
     ctaUrl: S(editionUrl),
@@ -110,6 +117,7 @@ for (const [cc, m] of Object.entries(MARKETS)) {
   console.log(`[${cc}] ${id}`);
   console.log(`      "${loc.title}"`);
   console.log(`      image ${fields.imageUrl.stringValue} · cta ${editionUrl}`);
+  console.log(`      pinned to the top through ${PIN_UNTIL}`);
   if (DRY) continue;
 
   // Create, then fall back to a full overwrite when the id already exists —
@@ -127,4 +135,4 @@ for (const [cc, m] of Object.entries(MARKETS)) {
 
 console.log(DRY
   ? `\nDRY RUN — nothing written. Edition ${ed.id}, ${Object.keys(MARKETS).length} markets.`
-  : `\nEdition ${ed.id}: ${wrote} market news articles published and pinned.`);
+  : `\nEdition ${ed.id}: ${wrote} market news articles published, pinned through ${PIN_UNTIL}.`);

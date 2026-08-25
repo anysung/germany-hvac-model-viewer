@@ -24,6 +24,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isPinnedOn } from './lib/special-report-store.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'data_sources', 'news_public');
@@ -45,6 +46,8 @@ const codes = only ? [only] : Object.keys(MARKETS);
 
 const token = execFileSync('gcloud', ['auth', 'print-access-token'], { encoding: 'utf8' }).trim();
 const val = (f) => (f ? Object.values(f)[0] : undefined);
+/** The day the export runs — decides which Special Reports still lead (below). */
+const TODAY = new Date().toISOString().slice(0, 10);
 
 mkdirSync(OUT_DIR, { recursive: true });
 
@@ -79,7 +82,9 @@ for (const cc of codes) {
       // Special Report announcements: they lead the public archive the same
       // way they lead the in-app feed, and they carry the one link the piece
       // exists for. Ordinary articles have neither field and are unaffected.
-      pinned: f.pinned?.booleanValue === true,
+      // A Special Report leads the archive for its own month and the next,
+      // the same window the app applies to the in-app feed.
+      pinned: isPinnedOn(f.pinned?.booleanValue === true, val(f.pinnedUntil), TODAY),
       ctaUrl: val(f.ctaUrl) ?? '',
       ctaLabel: pick(f, 'ctaLabel'),
       sources: (f.sources?.arrayValue?.values ?? [])
