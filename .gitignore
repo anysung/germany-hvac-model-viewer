@@ -106,8 +106,10 @@ __pycache__/
 .venv/
 google_cloud_function_billing/canary-records.json
 
-# Generated LinkedIn post packages (rebuild with scripts/build-linkedin-posts.mjs)
+# Generated LinkedIn post packages (rebuild with scripts/build-linkedin-posts.mjs
+# and scripts/marketing/build-report-linkedin.mjs)
 linkedin_posts/
+linkedin_report_posts/
 
 # Generated demo recordings (rebuild with scripts/record-demo.mjs)
 demo_video/
