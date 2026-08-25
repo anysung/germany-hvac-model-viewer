@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  market-facts.md — daily refresh, 08:30 local.
+
+  WHY DAILY WHEN THE DATA IS MONTHLY
+  The numbers change once a month; marketing quotes them every day. The monthly
+  pipeline already refreshes them at the moment they change, so this job is
+  almost always a no-op that exits in under a second — its whole purpose is the
+  cases where the pipeline did not run to completion, ran on another machine, or
+  a number moved through an out-of-band correction. A fact sheet that is right
+  because someone remembered is a fact sheet that will one day be wrong in front
+  of 27,000 professionals.
+
+  08:30 because it lands before the working day rather than during it: the file
+  is read while writing copy, and a file that changes under an open editor is a
+  file people stop trusting.
+
+  RunAtLoad so a Mac that was asleep at 08:30 catches up on wake, and so
+  installing the job proves it works immediately instead of tomorrow.
+
+  Install:
+    cp scripts/marketing/launchd/com.heatpumpdb.marketfacts.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.heatpumpdb.marketfacts.plist
+  Remove:
+    launchctl bootout gui/$(id -u)/com.heatpumpdb.marketfacts
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.heatpumpdb.marketfacts</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/christophersung/heatpumpdb-app/scripts/marketing/refresh-facts.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>30</integer></dict>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/Users/christophersung/heatpumpdb-app/.maintenance/marketfacts.log</string>
+  <key>StandardErrorPath</key><string>/Users/christophersung/heatpumpdb-app/.maintenance/marketfacts.log</string>
+</dict>
+</plist>

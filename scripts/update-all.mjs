@@ -319,6 +319,18 @@ if (DEPLOY) {
   }
 }
 
+/* ── Marketing facts ───────────────────────────────────────────────────────
+   The counts marketing quotes come from the manifest this run just approved, so
+   this is the moment they change. Refreshing here means a comment written the
+   next morning cannot cite last month's catalogue. Never fatal: a stale fact
+   sheet is a marketing problem, not a reason to fail a data release. */
+try {
+  execSync('node scripts/marketing/update-market-facts.mjs', { cwd: ROOT, stdio: 'inherit' });
+} catch {
+  console.error('  (market-facts.md refresh failed — the release is unaffected; rerun');
+  console.error('   node scripts/marketing/update-market-facts.mjs before quoting numbers)');
+}
+
 /* ── Summary ──────────────────────────────────────────────────────────────── */
 
 console.log('\n════ Summary ════');
