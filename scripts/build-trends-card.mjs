@@ -91,7 +91,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   h3.country { font-size: 32px; color: #fff; font-weight: 700; margin-bottom: 14px; position: relative; }
   h1 { font-size: ${S.titleSize ?? 45}px; line-height: 1.14; color: #fff; font-weight: 800; letter-spacing: -.8px; position: relative; }
   h1 .l2 { color: ${T.a}; display: block; }
-  .sub { margin-top: 11px; color: rgba(255,255,255,.62); font-size: 20px; line-height: 1.4; max-width: 900px; position: relative; }
+  .sub { margin-top: 12px; color: rgba(255,255,255,.68); font-size: 24px; line-height: 1.4; max-width: 940px; position: relative; }
 
   .flow { display: flex; flex-direction: column; gap: 20px; margin-top: 24px; flex: 1; position: relative; min-height: 0; }
   /* The opening stat and the closing takeaway keep their natural height; the
@@ -108,7 +108,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .pnl { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.09); border-radius: 18px;
     padding: 22px 24px; display: flex; flex-direction: column; }
   .ph { display: flex; align-items: center; gap: 13px; margin-bottom: 14px; }
-  .ph b { color: #fff; font-size: 23px; font-weight: 700; }
+  .ph b { color: #fff; font-size: 28px; font-weight: 700; }
 
   /* hero */
   .hero { background: rgba(255,255,255,.05); border: 1px solid ${T.a}30; border-radius: 20px;
@@ -122,13 +122,17 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .hside small { color: rgba(255,255,255,.55); font-size: 15px; }
 
   /* stats */
+  /* The stat row is the card's headline furniture: it stretches with the
+     flow, so its contents CENTRE inside whatever height they are given rather
+     than clinging to the top and leaving a hole underneath. */
   .stats { display: flex; gap: 18px; }
   .stat { flex: 1; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.09);
-    border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 4px;
+    border-radius: 18px; padding: 26px 26px; display: flex; flex-direction: column; gap: 6px;
+    justify-content: center; text-align: center; align-items: center;
     justify-content: center; }
-  .sv { font-size: 36px; font-weight: 800; letter-spacing: -1px; }
-  .sl { color: rgba(255,255,255,.72); font-size: 17px; line-height: 1.3; }
-  .sn { color: rgba(255,255,255,.42); font-size: 14px; margin-top: 2px; }
+  .sv { font-size: 62px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; }
+  .sl { color: rgba(255,255,255,.8); font-size: 22px; line-height: 1.3; }
+  .sn { color: rgba(255,255,255,.45); font-size: 16px; margin-top: 4px; }
 
   /* bars */
   .bars { display: flex; gap: 20px; align-items: flex-end; flex: 1; padding-top: 8px; min-height: 230px; }
@@ -136,7 +140,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .bv { font-size: 20px; font-weight: 700; }
   .bcol { width: 100%; max-width: 92px; border-radius: 10px 10px 3px 3px; }
   .bl { color: rgba(255,255,255,.55); font-size: 15px; text-align: center; }
-  .bfoot { margin-top: 12px; color: rgba(255,255,255,.42); font-size: 14.5px; }
+  .bfoot { margin-top: auto; padding-top: 14px; color: rgba(255,255,255,.45); font-size: 16px; }
 
 /* series */
   .lgnd { display: flex; gap: 20px; font-size: 15px; color: rgba(255,255,255,.6); margin-bottom: 6px; }
@@ -173,17 +177,20 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .rnt span i { color: rgba(255,255,255,.55); font-style: normal; font-weight: 400; }
 
   /* checks */
-  .crow { display: flex; gap: 13px; align-items: flex-start; padding: 10px 0; }
-  .cic { flex: none; margin-top: 1px; }
-  .cl { color: rgba(255,255,255,.78); font-size: 18px; line-height: 1.42; }
+  /* Rows share the panel's spare height instead of stacking at the top —
+     a four-item list and a two-item list both fill their panel. */
+  .checks { display: flex; flex-direction: column; justify-content: space-evenly; flex: 1; }
+  .crow { display: flex; gap: 16px; align-items: center; padding: 6px 0; }
+  .cic { flex: none; }
+  .cl { color: rgba(255,255,255,.84); font-size: 25px; line-height: 1.34; }
 
   /* timeline */
-  .tline { display: flex; flex-direction: column; gap: 18px; padding-top: 4px; }
+  .tline { display: flex; flex-direction: column; justify-content: space-evenly; gap: 18px; flex: 1; }
   .tstep { display: flex; gap: 14px; align-items: flex-start; position: relative; }
   .tdot { flex: none; width: 15px; height: 15px; border-radius: 50%; margin-top: 5px; }
   .trail { position: absolute; left: 7px; top: 22px; width: 2px; height: calc(100% + 4px); }
-  .ttx b { display: block; font-size: 16.5px; letter-spacing: .6px; }
-  .ttx span { color: rgba(255,255,255,.75); font-size: 17.5px; line-height: 1.4; display: block; margin-top: 2px; }
+  .ttx b { display: block; font-size: 19px; letter-spacing: .6px; }
+  .ttx span { color: rgba(255,255,255,.8); font-size: 21px; line-height: 1.4; display: block; margin-top: 3px; }
 
   /* compare */
   .cmp { display: flex; gap: 18px; flex: 1; }
@@ -197,8 +204,8 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .fazit { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.09); border-radius: 18px;
     padding: 20px 28px; display: flex; gap: 22px; align-items: center; }
   .fico { flex: none; width: 72px; height: 72px; border: 1.6px solid; border-radius: 50%; display: grid; place-items: center; }
-  .ftxt b { display: block; color: #fff; font-size: 24px; margin-bottom: 4px; }
-  .ftxt p { color: rgba(255,255,255,.62); font-size: 18px; line-height: 1.4; }
+  .ftxt b { display: block; color: #fff; font-size: 29px; margin-bottom: 6px; }
+  .ftxt p { color: rgba(255,255,255,.72); font-size: 23px; line-height: 1.42; }
   .fmotif { margin-left: auto; flex: none; opacity: .8; }
 
   .foot { margin-top: 20px; display: flex; align-items: center; position: relative; }

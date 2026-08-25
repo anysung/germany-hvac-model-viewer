@@ -170,11 +170,13 @@ const list = (b, T) => panel(`
 /** checklist — plain ticked/crossed statements. */
 const checks = (b, T) => panel(`
   ${head(b.icon, b.title, T)}
+  <div class="checks">
   ${b.rows.map((r) => `
     <div class="crow">
       <span class="cic">${IC(r.no ? 'cross' : 'check', r.no ? T.b : T.a, 26)}</span>
       <span class="cl">${esc(r.label)}${r.value ? ` <b style="color:${T.a}">${esc(r.value)}</b>` : ''}</span>
-    </div>`).join('')}`, T);
+    </div>`).join('')}
+  </div>`, T);
 
 /** timeline — dated phases along a rail. */
 const timeline = (b, T) => panel(`

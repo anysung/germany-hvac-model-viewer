@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Weekly marketing check — Monday 09:00 local.
+
+  WHY MONDAY, AND WHY ONLY A REPORT
+  The market monitoring digest lands over the weekend, so Monday morning is the
+  first moment the week's findings and the card cadence can be judged together.
+  The job reports; it never writes or publishes. Deciding whether a finding is
+  publishable is the one step that must not be automated — the channel's whole
+  value is that we publish only numbers we can prove.
+
+  The 14-day floor per market comes from the owner (2026-08-25): a card is made
+  where the monitoring turned something up, no market is obliged to produce one
+  every week, but none may go a fortnight without one. A feed that stops is a
+  feed people stop opening.
+
+  RunAtLoad so a Mac asleep on Monday catches up on wake, and so installing the
+  job proves it works now rather than next week.
+
+  Install:
+    cp scripts/marketing/launchd/com.heatpumpdb.marketing.weekly.plist ~/Library/LaunchAgents/
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.heatpumpdb.marketing.weekly.plist
+  Remove:
+    launchctl bootout gui/$(id -u)/com.heatpumpdb.marketing.weekly
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.heatpumpdb.marketing.weekly</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/christophersung/heatpumpdb-app/scripts/marketing/weekly-marketing-check.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key><integer>1</integer>
+    <key>Hour</key><integer>9</integer>
+    <key>Minute</key><integer>0</integer>
+  </dict>
+  <key>RunAtLoad</key><true/>
+  <key>StandardOutPath</key><string>/Users/christophersung/heatpumpdb-app/.maintenance/marketing-weekly.log</string>
+  <key>StandardErrorPath</key><string>/Users/christophersung/heatpumpdb-app/.maintenance/marketing-weekly.log</string>
+</dict>
+</plist>

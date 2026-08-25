@@ -1,0 +1,82 @@
+{
+  "country": "FR",
+  "countryLabel": "France",
+  "month": "SEPTEMBRE 2026",
+  "motif": "stamp",
+  "titleSize": 46,
+  "title": [
+    "Le numéro d'agrément",
+    "entre sur le devis"
+  ],
+  "sub": "À partir du 1ᵉʳ septembre 2026.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "1ᵉʳ sept.",
+          "label": "opérations engagées"
+        },
+        {
+          "value": "3",
+          "label": "documents concernés",
+          "note": "devis · facture · attestation"
+        },
+        {
+          "value": "2 ans",
+          "label": "contrôle ADEME",
+          "accent": 2
+        }
+      ]
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "Le numéro figure sur",
+        "rows": [
+          {
+            "label": "Le devis"
+          },
+          {
+            "label": "La facture"
+          },
+          {
+            "label": "L'attestation sur l'honneur"
+          },
+          {
+            "label": "Emmy"
+          }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "cal",
+        "title": "À savoir",
+        "rows": [
+          {
+            "label": "Condition appréciée à l'acceptation du devis"
+          },
+          {
+            "label": "Audits sur site possibles pendant 2 ans"
+          },
+          {
+            "no": true,
+            "label": "Ne préjuge ni de MaPrimeRénov' ni des CEE"
+          }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Dans notre catalogue France",
+      "icon": "search",
+      "lines": [
+        "1 099 modèles portent un numéro d'agrément confirmé."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB France Editorial Team"
+}

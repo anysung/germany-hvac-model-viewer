@@ -1,71 +1,96 @@
 [
-  {
-    "slug": "2026-08-marche-chauffage",
-    "date": "2026-08-13",
-    "image": "fr-2026-08-marche-chauffage.webp",
-    "title": "Le marché du chauffage a fondu de 40 % — la PAC gagne surtout par le dénominateur",
-    "excerpt": "613 460 générateurs hydrauliques vendus en 2025 contre 1 018 840 en 2021. La part de la PAC monte, mais les volumes air/eau reculent.",
-    "body": [
-      "Le marché français des générateurs hydrauliques est passé de 1 018 840 unités en 2021 à 613 460 en 2025, soit une contraction de 40 %. Sur la même période, la part des pompes à chaleur (air/eau et géothermie) est passée de 26,5 % à 29,6 %.",
-      "Cette progression mérite une lecture prudente : elle vient d'abord du dénominateur. Les ventes de PAC air/eau ont culminé à 355 473 unités en 2022, puis sont retombées à 182 685 en 2024 (−40 %) et 179 377 en 2025 (−1,8 %). Autrement dit, 2025 marque un plancher plutôt qu'une reprise. Les chaudières gaz et fioul, elles, représentent encore 422 000 unités — soit 2,4 fois le volume air/eau.",
-      "Le graphique exclut volontairement les PAC air/air : 803 661 unités extérieures en 2025. Uniclima attribue la reprise du second semestre aux 27 jours de canicule de l'année, ce qui en fait largement un achat de rafraîchissement plutôt qu'une solution de chauffage — les mélanger ferait passer la part des PAC de 29,6 % à près de 70 %.",
-      "Côté horizon, il faut distinguer objectifs et prévisions. L'État vise un million de PAC produites en France par an d'ici fin 2027 : c'est un objectif industriel de production, pas de ventes. L'AFPAC vise un parc de 8,8 millions de PAC résidentielles en 2030. Uniclima, de son côté, ne publie aucune prévision chiffrée pour 2026."
-    ],
-    "sourceNote": "Composants publiés par Uniclima, dossier de presse Bilan 2025 (05.02.2026), données PAC issues de PAC&Clim'Info ; totaux et parts : calcul HeatPump DB. Objectif de production : DGE / ministère de l'Économie (15.04.2024). Objectif de parc : AFPAC (février 2026). Uniclima révise ses séries d'une année sur l'autre : les valeurs ci-dessus sont celles du millésime 2026.",
-    "titleEn": "France's heating market shrank 40% — the heat pump gains mostly on the denominator",
-    "excerptEn": "613,460 hydronic generators sold in 2025 against 1,018,840 in 2021. The heat pump share rises while air-to-water volumes fall.",
-    "bodyEn": [
-      "The French hydronic generator market fell from 1,018,840 units in 2021 to 613,460 in 2025, a contraction of 40 per cent. Over the same period the heat pump share (air-to-water plus ground source) rose from 26.5 to 29.6 per cent.",
-      "That rise deserves a careful reading, because it comes mainly from the denominator. Air-to-water sales peaked at 355,473 units in 2022, then fell to 182,685 in 2024 (−40 per cent) and 179,377 in 2025 (−1.8 per cent). In other words, 2025 is a floor rather than a recovery. Gas and oil boilers still account for 422,000 units — 2.4 times the air-to-water volume.",
-      "The chart deliberately excludes air-to-air heat pumps: 803,661 outdoor units in 2025. Uniclima attributes the second-half rebound to the year's 27 heatwave days, which makes it largely a cooling purchase rather than a heating solution — including them would lift the heat pump share from 29.6 per cent to nearly 70 per cent.",
-      "On the outlook, targets and forecasts must be kept apart. The French state aims for one million heat pumps produced in France per year by the end of 2027 — an industrial production target, not a sales forecast. AFPAC targets a residential fleet of 8.8 million heat pumps by 2030. Uniclima itself publishes no numerical forecast for 2026."
-    ],
-    "sourceNoteEn": "Components published by Uniclima, Bilan 2025 press dossier (5 Feb 2026), heat pump data from PAC&Clim'Info; totals and shares: HeatPump DB calculation. Production target: DGE / Ministry of the Economy (15 Apr 2024). Fleet target: AFPAC (Feb 2026). Uniclima restates its series between vintages; the figures above are the 2026 vintage."
-  },
-  {
-    "slug": "2026-08-rge-reforme",
-    "date": "2026-08-12",
-    "image": "fr-2026-08-rge-reforme.webp",
-    "title": "Réforme RGE : contrôles renforcés et sanctions graduées",
-    "excerpt": "Le label qui conditionne MaPrimeRénov' et les CEE devient plus difficile à obtenir — et plus facile à perdre.",
-    "body": [
-      "La certification RGE, indispensable pour accéder à MaPrimeRénov' et aux primes CEE, fait l'objet d'une refonte en deux temps. La première phase, fondée sur un arrêté publié le 26 juin 2026, est entrée en vigueur un mois plus tard : examen renforcé des assurances, des références de chantiers, des contrôles d'exécution et de la cohérence entre devis, factures et travaux réalisés.",
-      "Les audits changent d'échelle. L'historique des sinistres de l'entreprise est analysé systématiquement sur les quatre dernières années, et au-delà de dix chantiers par an l'examen documentaire s'accompagne de visites sur site destinées à vérifier la conformité et la qualité d'exécution.",
-      "Le barème de sanctions devient explicite et progressif : suspension de la qualification pouvant aller jusqu'à 24 mois, retrait en cas de non-conformités majeures répétées, avec un retrait obligatoire lorsque deux rapports de contrôle révèlent des manquements significatifs.",
-      "La seconde étape est prévue pour le 1er mars 2027 : l'expérience pratique sera reconnue par une « attestation chantier », permettant de valoriser des projets réalisés et contrôlés. Pour les équipements à énergies renouvelables comme les pompes à chaleur, une preuve spécifique des connaissances techniques pourra toutefois rester exigée."
-    ],
-    "sourceNote": "Cadre fixé par l'arrêté du 26 juin 2026 ; les conditions officielles de qualification prévalent. Août 2026.",
-    "titleEn": "RGE reform: tighter controls and a graduated sanctions scale",
-    "excerptEn": "The label that gates MaPrimeRénov' and CEE support is becoming harder to obtain — and easier to lose.",
-    "bodyEn": [
-      "RGE certification, indispensable for access to MaPrimeRénov' and CEE bonuses, is being overhauled in two stages. The first, based on a decree published on 26 June 2026, took effect a month later: a stricter review of insurance cover, project references, execution controls, and the consistency between quotations, invoices and the work actually carried out.",
-      "The audits change in scale. A company's claims history over the past four years is analysed systematically, and above ten projects a year the documentary review is accompanied by site visits to verify compliance and the quality of the work.",
-      "The sanctions scale becomes explicit and graduated: suspension of the qualification for up to 24 months, withdrawal in cases of repeated major non-conformities, and mandatory withdrawal where two inspection reports reveal significant failings.",
-      "The second stage is planned for 1 March 2027: practical experience will be recognised through a « attestation chantier », allowing completed and inspected projects to count towards qualification. For renewable equipment such as heat pumps, specific proof of technical knowledge may nevertheless still be required."
-    ],
-    "sourceNoteEn": "Framework set by the decree of 26 June 2026; the official qualification conditions prevail. August 2026."
-  },
-  {
-    "slug": "2026-07-tva-air-air",
-    "date": "2026-07-18",
-    "title": "PAC air/air réversible : TVA réduite à 5,5 % depuis le 18 juillet 2026",
-    "image": "fr-2026-07-tva-air-air.webp",
-    "excerpt": "Les pompes à chaleur air/air réversibles fixes éligibles bénéficient désormais du taux réduit de TVA de 5,5 % — une baisse réelle du prix d'achat.",
-    "body": [
-      "Depuis le 18 juillet 2026, les pompes à chaleur air/air réversibles fixes qui remplissent certaines conditions bénéficient du taux réduit de TVA de 5,5 % en France. Par rapport au taux normal, l'allègement fiscal se traduit par une baisse réelle du prix pour le consommateur.",
-      "Le taux réduit ne s'applique pas à n'importe quel produit air/air. Les principales conditions : une PAC air/air réversible en installation fixe, un logement résidentiel achevé depuis plus de deux ans, le respect de critères de performance environnementale, un fluide frigorigène conforme au règlement F-gas et, le cas échéant, des fonctions de pilotage numérique et de connectivité.",
-      "Le changement de fond est ailleurs : la PAC air/air monte en statut. D'équipement perçu comme un simple climatiseur, elle devient un outil reconnu de rénovation énergétique — au moment même où la demande de rafraîchissement estival augmente en France.",
-      "Un seul équipement pour chauffer et rafraîchir : l'économie des PAC réversibles s'améliore nettement. Au-delà de l'air/eau, le segment air/air réversible devient une catégorie à suivre de près sur le marché français."
-    ],
-    "sourceNote": "Informations données à titre indicatif — les conditions officielles d'éligibilité prévalent. Juillet 2026.",
-    "titleEn": "Reversible air-to-air heat pumps: VAT cut to 5.5% since 18 July 2026",
-    "excerptEn": "Eligible fixed reversible air-to-air heat pumps now qualify for the reduced 5.5% VAT rate — a real cut in the purchase price.",
-    "bodyEn": [
-      "Since 18 July 2026, fixed reversible air-to-air heat pumps meeting certain conditions qualify for France's reduced VAT rate of 5.5%. Compared with the standard rate, the tax relief translates into a genuine price reduction for the consumer.",
-      "The reduced rate does not apply to just any air-to-air product. The main conditions: a reversible air-to-air heat pump in a fixed installation, a residential dwelling completed more than two years ago, compliance with environmental performance criteria, a refrigerant compliant with the F-gas regulation and, where applicable, digital control and connectivity functions.",
-      "The deeper change lies elsewhere: the status of the air-to-air heat pump is rising. From equipment perceived as a simple air conditioner, it is becoming a recognised tool of energy renovation — at the very moment when demand for summer cooling is increasing in France.",
-      "A single unit to heat and to cool: the economics of reversible heat pumps improve markedly. Beyond air-to-water, the reversible air-to-air segment becomes a category to watch closely on the French market."
-    ],
-    "sourceNoteEn": "Information provided for guidance only — the official eligibility conditions prevail. July 2026."
-  }
+ {
+  "slug": "2026-09-agrement",
+  "date": "2026-08-25",
+  "image": "fr-2026-09-agrement.webp",
+  "title": "Au 1ᵉʳ septembre, le numéro d'agrément entre sur le devis",
+  "excerpt": "À partir du 1ᵉʳ septembre 2026, le numéro d'agrément ADEME doit figurer sur le devis, la facture et l'attestation sur l'honneur. La condition s'apprécie à la date d'acceptation du devis.",
+  "body": [
+   "À partir du 1ᵉʳ septembre 2026, pour toute opération engagée à compter de cette date, le numéro d'agrément ADEME doit figurer sur le devis, sur la facture et sur l'attestation sur l'honneur, ainsi que dans le registre Emmy. Le numéro devient ainsi l'identifiant qu'un devis français ne peut plus omettre.",
+   "Un point mérite d'être connu des installateurs : la condition s'apprécie à la date d'acceptation du devis. Une perte d'agrément survenue après cette date n'est pas, en elle-même, un motif de remise en cause d'une opération déjà engagée. Les devis acceptés avant le 1ᵉʳ septembre restent régis par les règles en vigueur au moment de leur acceptation.",
+   "Le contrôle ne s'arrête pas à la délivrance. Pendant deux ans à compter de l'agrément, l'ADEME peut demander des justificatifs complémentaires et mandater un tiers pour réaliser des audits sur site. Le titulaire doit signaler sans délai tout changement affectant les conditions de l'agrément — changement de site de fabrication, perte de certification — l'arrêté pouvant alors être modifié.",
+   "Enfin, une distinction qui évite bien des malentendus en clientèle : l'agrément est une condition portant sur le produit. Il ne préjuge ni de MaPrimeRénov' ni des CEE, qui restent soumis à leurs propres critères et à l'intervention d'un installateur RGE.",
+   "Dans notre catalogue France, 1 099 modèles portent aujourd'hui un numéro d'agrément confirmé, vérifiable modèle par modèle avant l'envoi du devis."
+  ],
+  "sourceNote": "Source : ADEME — FAQ agrément, consultée le 24/08/2026. Les aides publiques françaises reposent sur des critères ; vérifiez l'éligibilité en vigueur avant tout devis.",
+  "titleEn": "From 1 September, the agrément number belongs on the quote",
+  "excerptEn": "From 1 September 2026 the ADEME agrément number must appear on the devis, the facture and the attestation sur l'honneur. The condition is assessed at the date the quote is accepted.",
+  "bodyEn": [
+   "From 1 September 2026, for any operation engaged from that date, the ADEME agrément number must appear on the quote, the invoice and the sworn statement, as well as in the Emmy registry. The number becomes the one identifier a French quote can no longer leave out.",
+   "One point installers should know: the condition is assessed at the date the quote is accepted. A loss of agrément occurring afterwards is not in itself grounds to revisit an operation already engaged. Quotes accepted before 1 September remain governed by the rules in force when they were accepted.",
+   "Oversight does not end at award. For two years from the agrément, ADEME may request additional supporting evidence and may commission a third party to carry out on-site audits. The holder must notify ADEME without delay of any change affecting the conditions — a change of manufacturing site, a loss of certification — after which the arrêté may be amended.",
+   "And a distinction that prevents a good deal of confusion with customers: the agrément is a condition on the product. It does not determine MaPrimeRénov' or CEE, which remain subject to their own criteria and to an RGE-certified installer.",
+   "In our France catalogue, 1,099 models currently carry a confirmed agrément number, checkable model by model before a quote goes out."
+  ],
+  "sourceNoteEn": "Source: ADEME — agrément FAQ, consulted 24/08/2026. French public support is criteria-based; verify current eligibility before quoting."
+ },
+ {
+  "slug": "2026-08-marche-chauffage",
+  "date": "2026-08-13",
+  "image": "fr-2026-08-marche-chauffage.webp",
+  "title": "Le marché du chauffage a fondu de 40 % — la PAC gagne surtout par le dénominateur",
+  "excerpt": "613 460 générateurs hydrauliques vendus en 2025 contre 1 018 840 en 2021. La part de la PAC monte, mais les volumes air/eau reculent.",
+  "body": [
+   "Le marché français des générateurs hydrauliques est passé de 1 018 840 unités en 2021 à 613 460 en 2025, soit une contraction de 40 %. Sur la même période, la part des pompes à chaleur (air/eau et géothermie) est passée de 26,5 % à 29,6 %.",
+   "Cette progression mérite une lecture prudente : elle vient d'abord du dénominateur. Les ventes de PAC air/eau ont culminé à 355 473 unités en 2022, puis sont retombées à 182 685 en 2024 (−40 %) et 179 377 en 2025 (−1,8 %). Autrement dit, 2025 marque un plancher plutôt qu'une reprise. Les chaudières gaz et fioul, elles, représentent encore 422 000 unités — soit 2,4 fois le volume air/eau.",
+   "Le graphique exclut volontairement les PAC air/air : 803 661 unités extérieures en 2025. Uniclima attribue la reprise du second semestre aux 27 jours de canicule de l'année, ce qui en fait largement un achat de rafraîchissement plutôt qu'une solution de chauffage — les mélanger ferait passer la part des PAC de 29,6 % à près de 70 %.",
+   "Côté horizon, il faut distinguer objectifs et prévisions. L'État vise un million de PAC produites en France par an d'ici fin 2027 : c'est un objectif industriel de production, pas de ventes. L'AFPAC vise un parc de 8,8 millions de PAC résidentielles en 2030. Uniclima, de son côté, ne publie aucune prévision chiffrée pour 2026."
+  ],
+  "sourceNote": "Composants publiés par Uniclima, dossier de presse Bilan 2025 (05.02.2026), données PAC issues de PAC&Clim'Info ; totaux et parts : calcul HeatPump DB. Objectif de production : DGE / ministère de l'Économie (15.04.2024). Objectif de parc : AFPAC (février 2026). Uniclima révise ses séries d'une année sur l'autre : les valeurs ci-dessus sont celles du millésime 2026.",
+  "titleEn": "France's heating market shrank 40% — the heat pump gains mostly on the denominator",
+  "excerptEn": "613,460 hydronic generators sold in 2025 against 1,018,840 in 2021. The heat pump share rises while air-to-water volumes fall.",
+  "bodyEn": [
+   "The French hydronic generator market fell from 1,018,840 units in 2021 to 613,460 in 2025, a contraction of 40 per cent. Over the same period the heat pump share (air-to-water plus ground source) rose from 26.5 to 29.6 per cent.",
+   "That rise deserves a careful reading, because it comes mainly from the denominator. Air-to-water sales peaked at 355,473 units in 2022, then fell to 182,685 in 2024 (−40 per cent) and 179,377 in 2025 (−1.8 per cent). In other words, 2025 is a floor rather than a recovery. Gas and oil boilers still account for 422,000 units — 2.4 times the air-to-water volume.",
+   "The chart deliberately excludes air-to-air heat pumps: 803,661 outdoor units in 2025. Uniclima attributes the second-half rebound to the year's 27 heatwave days, which makes it largely a cooling purchase rather than a heating solution — including them would lift the heat pump share from 29.6 per cent to nearly 70 per cent.",
+   "On the outlook, targets and forecasts must be kept apart. The French state aims for one million heat pumps produced in France per year by the end of 2027 — an industrial production target, not a sales forecast. AFPAC targets a residential fleet of 8.8 million heat pumps by 2030. Uniclima itself publishes no numerical forecast for 2026."
+  ],
+  "sourceNoteEn": "Components published by Uniclima, Bilan 2025 press dossier (5 Feb 2026), heat pump data from PAC&Clim'Info; totals and shares: HeatPump DB calculation. Production target: DGE / Ministry of the Economy (15 Apr 2024). Fleet target: AFPAC (Feb 2026). Uniclima restates its series between vintages; the figures above are the 2026 vintage."
+ },
+ {
+  "slug": "2026-08-rge-reforme",
+  "date": "2026-08-12",
+  "image": "fr-2026-08-rge-reforme.webp",
+  "title": "Réforme RGE : contrôles renforcés et sanctions graduées",
+  "excerpt": "Le label qui conditionne MaPrimeRénov' et les CEE devient plus difficile à obtenir — et plus facile à perdre.",
+  "body": [
+   "La certification RGE, indispensable pour accéder à MaPrimeRénov' et aux primes CEE, fait l'objet d'une refonte en deux temps. La première phase, fondée sur un arrêté publié le 26 juin 2026, est entrée en vigueur un mois plus tard : examen renforcé des assurances, des références de chantiers, des contrôles d'exécution et de la cohérence entre devis, factures et travaux réalisés.",
+   "Les audits changent d'échelle. L'historique des sinistres de l'entreprise est analysé systématiquement sur les quatre dernières années, et au-delà de dix chantiers par an l'examen documentaire s'accompagne de visites sur site destinées à vérifier la conformité et la qualité d'exécution.",
+   "Le barème de sanctions devient explicite et progressif : suspension de la qualification pouvant aller jusqu'à 24 mois, retrait en cas de non-conformités majeures répétées, avec un retrait obligatoire lorsque deux rapports de contrôle révèlent des manquements significatifs.",
+   "La seconde étape est prévue pour le 1er mars 2027 : l'expérience pratique sera reconnue par une « attestation chantier », permettant de valoriser des projets réalisés et contrôlés. Pour les équipements à énergies renouvelables comme les pompes à chaleur, une preuve spécifique des connaissances techniques pourra toutefois rester exigée."
+  ],
+  "sourceNote": "Cadre fixé par l'arrêté du 26 juin 2026 ; les conditions officielles de qualification prévalent. Août 2026.",
+  "titleEn": "RGE reform: tighter controls and a graduated sanctions scale",
+  "excerptEn": "The label that gates MaPrimeRénov' and CEE support is becoming harder to obtain — and easier to lose.",
+  "bodyEn": [
+   "RGE certification, indispensable for access to MaPrimeRénov' and CEE bonuses, is being overhauled in two stages. The first, based on a decree published on 26 June 2026, took effect a month later: a stricter review of insurance cover, project references, execution controls, and the consistency between quotations, invoices and the work actually carried out.",
+   "The audits change in scale. A company's claims history over the past four years is analysed systematically, and above ten projects a year the documentary review is accompanied by site visits to verify compliance and the quality of the work.",
+   "The sanctions scale becomes explicit and graduated: suspension of the qualification for up to 24 months, withdrawal in cases of repeated major non-conformities, and mandatory withdrawal where two inspection reports reveal significant failings.",
+   "The second stage is planned for 1 March 2027: practical experience will be recognised through a « attestation chantier », allowing completed and inspected projects to count towards qualification. For renewable equipment such as heat pumps, specific proof of technical knowledge may nevertheless still be required."
+  ],
+  "sourceNoteEn": "Framework set by the decree of 26 June 2026; the official qualification conditions prevail. August 2026."
+ },
+ {
+  "slug": "2026-07-tva-air-air",
+  "date": "2026-07-18",
+  "title": "PAC air/air réversible : TVA réduite à 5,5 % depuis le 18 juillet 2026",
+  "image": "fr-2026-07-tva-air-air.webp",
+  "excerpt": "Les pompes à chaleur air/air réversibles fixes éligibles bénéficient désormais du taux réduit de TVA de 5,5 % — une baisse réelle du prix d'achat.",
+  "body": [
+   "Depuis le 18 juillet 2026, les pompes à chaleur air/air réversibles fixes qui remplissent certaines conditions bénéficient du taux réduit de TVA de 5,5 % en France. Par rapport au taux normal, l'allègement fiscal se traduit par une baisse réelle du prix pour le consommateur.",
+   "Le taux réduit ne s'applique pas à n'importe quel produit air/air. Les principales conditions : une PAC air/air réversible en installation fixe, un logement résidentiel achevé depuis plus de deux ans, le respect de critères de performance environnementale, un fluide frigorigène conforme au règlement F-gas et, le cas échéant, des fonctions de pilotage numérique et de connectivité.",
+   "Le changement de fond est ailleurs : la PAC air/air monte en statut. D'équipement perçu comme un simple climatiseur, elle devient un outil reconnu de rénovation énergétique — au moment même où la demande de rafraîchissement estival augmente en France.",
+   "Un seul équipement pour chauffer et rafraîchir : l'économie des PAC réversibles s'améliore nettement. Au-delà de l'air/eau, le segment air/air réversible devient une catégorie à suivre de près sur le marché français."
+  ],
+  "sourceNote": "Informations données à titre indicatif — les conditions officielles d'éligibilité prévalent. Juillet 2026.",
+  "titleEn": "Reversible air-to-air heat pumps: VAT cut to 5.5% since 18 July 2026",
+  "excerptEn": "Eligible fixed reversible air-to-air heat pumps now qualify for the reduced 5.5% VAT rate — a real cut in the purchase price.",
+  "bodyEn": [
+   "Since 18 July 2026, fixed reversible air-to-air heat pumps meeting certain conditions qualify for France's reduced VAT rate of 5.5%. Compared with the standard rate, the tax relief translates into a genuine price reduction for the consumer.",
+   "The reduced rate does not apply to just any air-to-air product. The main conditions: a reversible air-to-air heat pump in a fixed installation, a residential dwelling completed more than two years ago, compliance with environmental performance criteria, a refrigerant compliant with the F-gas regulation and, where applicable, digital control and connectivity functions.",
+   "The deeper change lies elsewhere: the status of the air-to-air heat pump is rising. From equipment perceived as a simple air conditioner, it is becoming a recognised tool of energy renovation — at the very moment when demand for summer cooling is increasing in France.",
+   "A single unit to heat and to cool: the economics of reversible heat pumps improve markedly. Beyond air-to-water, the reversible air-to-air segment becomes a category to watch closely on the French market."
+  ],
+  "sourceNoteEn": "Information provided for guidance only — the official eligibility conditions prevail. July 2026."
+ }
 ]

@@ -1,0 +1,91 @@
+{
+  "country": "PL",
+  "countryLabel": "Polska",
+  "month": "WRZESIEŃ 2026",
+  "motif": "chart",
+  "titleSize": 46,
+  "title": [
+    "9 220 pomp ciepła",
+    "w katalogu"
+  ],
+  "sub": "2 578 z potwierdzonym wpisem na liście ZUM.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "9 220",
+          "label": "modeli w katalogu"
+        },
+        {
+          "value": "2 578",
+          "label": "potwierdzone na liście ZUM"
+        },
+        {
+          "value": "31 %",
+          "label": "z czynnikiem R290",
+          "accent": 2
+        }
+      ]
+    },
+    [
+      {
+        "type": "bars",
+        "flex": 1,
+        "icon": "chart",
+        "title": "Czynniki chłodnicze",
+        "items": [
+          {
+            "label": "R32",
+            "value": "43 %",
+            "v": 43,
+            "hi": true
+          },
+          {
+            "label": "R290",
+            "value": "31 %",
+            "v": 31,
+            "hi": true
+          },
+          {
+            "label": "R410A",
+            "value": "12 %",
+            "v": 12
+          },
+          {
+            "label": "inne",
+            "value": "14 %",
+            "v": 14
+          }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "Status ZUM",
+        "rows": [
+          {
+            "label": "Potwierdzony wpis — numer widoczny"
+          },
+          {
+            "label": "Dane odświeżane co miesiąc"
+          },
+          {
+            "no": true,
+            "label": "Brak potwierdzenia nie oznacza braku na liście"
+          }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Aktualizacja",
+      "icon": "bulb",
+      "lines": [
+        "Dane odświeżane co miesiąc ze źródeł urzędowych."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Poland Editorial Team"
+}

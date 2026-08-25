@@ -1,71 +1,94 @@
 [
-  {
-    "slug": "2026-08-rynek-grzewczy",
-    "date": "2026-08-13",
-    "image": "pl-2026-08-rynek-grzewczy.webp",
-    "title": "Pompy ciepła to już niemal jedna trzecia rynku grzewczego",
-    "excerpt": "178 610 pomp ciepła sprzedanych w 2025 r. — 32,1% rynku liczącego 556 370 urządzeń.",
-    "body": [
-      "W 2025 roku w Polsce sprzedano 178 610 pomp ciepła, co odpowiada 32,1% rynku urządzeń grzewczych liczącego 556 370 sztuk. Kotły gazowe to 236 710 urządzeń, kotły na paliwa stałe — 129 900.",
-      "Rynek pomp ciepła rośnie drugi rok z rzędu po głębokim załamaniu. Po rekordowym 2022 roku (249 760 szt.) sprzedaż spadła w 2023 r. do 158 480, by odbić do 163 460 w 2024 i 178 610 w 2025 roku.",
-      "Trzeba wiedzieć, co te liczby obejmują. SPIUG podaje sprzedaż do kanału dystrybucji, a nie liczbę instalacji, i wlicza pompy powietrze-powietrze oraz do ciepłej wody użytkowej. PORT PC liczy węziej — tylko urządzenia do ogrzewania budynków — i dla 2025 roku podaje około 87 tysięcy sztuk. Obie liczby są poprawne na swojej podstawie; nie należy ich zestawiać. Dane o kotłach na paliwa stałe SPIUG oznacza jako szacunkowe.",
-      "Na 2026 rok PORT PC podaje wstępną prognozę wzrostu o 10–15% dla pomp powietrze-woda do centralnego ogrzewania i o 15–25% dla gruntowych. Pierwsze półrocze 2026 roku potwierdza kierunek: sprzedaż pomp do ogrzewania budynków wzrosła o 18%. Żadna z organizacji nie publikuje prognozy liczbowej na 2027 rok."
-    ],
-    "sourceNote": "Dane: SPIUG, Report: Market of heating appliances in Poland 2025 (Warszawa, 07.07.2026), rys. 11, 13 i 38. Prognoza i ujęcie węższe: PORT PC (12.03.2026 i 06.08.2026). Podane wielkości to sprzedaż do kanału dystrybucji, nie liczba instalacji.",
-    "titleEn": "Heat pumps are now almost a third of Poland's heating market",
-    "excerptEn": "178,610 heat pumps sold in 2025 — 32.1% of a market of 556,370 appliances.",
-    "bodyEn": [
-      "Poland sold 178,610 heat pumps in 2025, equal to 32.1 per cent of a heating appliance market of 556,370 units. Gas boilers accounted for 236,710 units and solid-fuel boilers for 129,900.",
-      "The heat pump market has now grown for two consecutive years after a deep collapse. Following the record year of 2022 (249,760 units), sales fell to 158,480 in 2023, then recovered to 163,460 in 2024 and 178,610 in 2025.",
-      "It matters what these figures include. SPIUG reports sales into the distribution channel rather than installations, and counts air-to-air and domestic hot water heat pumps. PORT PC counts more narrowly — space-heating units only — and puts 2025 at roughly 87,000. Both are correct on their own basis and should not be placed side by side. SPIUG marks its solid-fuel boiler data as estimates.",
-      "For 2026 PORT PC gives a preliminary forecast of 10–15 per cent growth for air-to-water space-heating units and 15–25 per cent for ground-source. The first half of 2026 confirms the direction: sales of space-heating heat pumps rose 18 per cent. No organisation publishes a numerical forecast for 2027."
-    ],
-    "sourceNoteEn": "Data: SPIUG, Report: Market of heating appliances in Poland 2025 (Warsaw, 7 Jul 2026), figures 11, 13 and 38. Forecast and the narrower basis: PORT PC (12 Mar 2026 and 6 Aug 2026). The volumes are sales into the distribution channel, not installations."
-  },
-  {
-    "slug": "2026-08-czyste-powietrze",
-    "date": "2026-08-12",
-    "image": "pl-2026-08-czyste-powietrze.webp",
-    "title": "Czyste Powietrze po zmianach: łatwiej o dotację od 20 lipca 2026",
-    "excerpt": "Krótszy wymagany okres własności, wyższe stawki na termomodernizację i więcej czasu na realizację inwestycji.",
-    "body": [
-      "NFOŚiGW wprowadził pakiet zmian w programie Czyste Powietrze, obowiązujących od 20 lipca 2026 roku. Celem jest ułatwienie właścicielom domów jednorodzinnych korzystania z dotacji na termomodernizację, z naciskiem na efektywność energetyczną i ekologiczne źródła ciepła.",
-      "Złagodzono zasady dotyczące okresu własności nieruchomości. Dotychczas wymagane trzy lata skrócono do jednego roku w wybranych przypadkach — na przykład dla nieruchomości nabytych przez zasiedzenie lub gdy co najmniej 50% udziałów nabyto w drodze zakupu lub darowizny od wstępnych.",
-      "Wzrosło również wsparcie na wybrane prace: dotacje na ocieplenie ścian i innych przegród, wymianę okien, drzwi zewnętrznych i bram garażowych są wyższe o 10%. Maksymalna kwota dotacji na termomodernizację w najwyższym poziomie wsparcia pozostaje jednak na poziomie 83 000 zł. Termin zakończenia inwestycji objętych prefinansowaniem wydłużono ze 120 do 180 dni — również dla umów podpisanych po 31 marca 2025 roku, po ich aneksowaniu.",
-      "Kierunek programu pozostaje niezmieniony. Po 2026 roku Czyste Powietrze nie będzie wspierać ogrzewania elektrycznego innego niż pompy ciepła, a audyt energetyczny jest obowiązkowy dla wszystkich poziomów dofinansowania od 31 marca 2026 roku, z dodatkowym bonusem 1 200 zł."
-    ],
-    "sourceNote": "Warunki określa NFOŚiGW — decydują oficjalne zasady programu Czyste Powietrze. Stan: sierpień 2026.",
-    "titleEn": "Czyste Powietrze after the reform: easier access to grants from 20 July 2026",
-    "excerptEn": "A shorter required ownership period, higher rates for thermal modernisation and more time to complete the investment.",
-    "bodyEn": [
-      "NFOŚiGW has introduced a package of changes to the Czyste Powietrze (Clean Air) programme, in force since 20 July 2026. The aim is to make grants for thermal modernisation easier to use for owners of detached houses, with the emphasis on energy efficiency and clean heat sources.",
-      "The property-ownership rules have been relaxed. The three-year holding period required until now is shortened to one year in selected cases — for example for properties acquired by adverse possession, or where at least 50% of the shares were acquired by purchase or gift from ascendants.",
-      "Support for selected works has also risen: grants for insulating walls and other building envelopes, and for replacing windows, external doors and garage doors, are 10% higher. The maximum thermal-modernisation grant at the highest support level nevertheless stays at PLN 83,000. The deadline for completing pre-financed investments has been extended from 120 to 180 days — including for contracts signed after 31 March 2025, once amended.",
-      "The direction of the programme is unchanged. After 2026, Czyste Powietrze will no longer support electric heating other than heat pumps, and an energy audit has been mandatory at every support level since 31 March 2026, carrying an additional PLN 1,200 bonus."
-    ],
-    "sourceNoteEn": "Conditions are set by NFOŚiGW — the official Czyste Powietrze programme rules prevail. As of August 2026."
-  },
-  {
-    "slug": "2026-07-moje-cieplo",
-    "date": "2026-07-31",
-    "title": "Moje Ciepło: dopłaty do pomp ciepła w nowych domach do końca 2026 roku",
-    "image": "pl-2026-07-moje-cieplo.webp",
-    "excerpt": "Program Moje Ciepło nadal wspiera pompy ciepła w nowych domach jednorodzinnych — do 30% kosztów, a z Kartą Dużej Rodziny do 45%.",
-    "body": [
-      "W lipcu najważniejszym punktem odniesienia dla polskiego rynku nie jest nowy program, lecz ciągłość istniejącego: Moje Ciepło — program wsparcia pomp ciepła w nowych domach jednorodzinnych — działa nadal, do końca 2026 roku.",
-      "Dofinansowanie wynosi co do zasady do 30% kosztów kwalifikowanych projektu, a posiadacze Karty Dużej Rodziny mogą otrzymać do 45%. Maksymalne kwoty na urządzenie: gruntowa pompa ciepła — do 21 000 zł, pompa powietrze-woda — do 7 000 zł, centralna pompa powietrze-powietrze — do 7 000 zł.",
-      "Wnioski można składać do 31 grudnia 2026 r. lub do wyczerpania budżetu.",
-      "Sens programu wykracza poza samą dopłatę. Moje Ciepło kieruje rynek nowych domów tak, aby ogrzewanie oparte na paliwach kopalnych w ogóle nie było instalowane — pompa ciepła staje się domyślną opcją grzewczą w nowym budownictwie. To właśnie ten segment, obok modernizacji istniejących budynków, ma dla polskiego rynku kluczowe znaczenie."
-    ],
-    "sourceNote": "Kwoty i warunki określa NFOŚiGW — decydują oficjalne zasady programu. Stan: lipiec 2026.",
-    "titleEn": "Moje Ciepło: heat pump grants for new homes run to the end of 2026",
-    "excerptEn": "The Moje Ciepło programme continues to support heat pumps in new detached houses — up to 30% of costs, or 45% with a Large Family Card.",
-    "bodyEn": [
-      "In July, the most important reference point for the Polish market is not a new programme but the continuity of an existing one: Moje Ciepło — the support programme for heat pumps in new detached houses — remains in operation until the end of 2026.",
-      "As a rule the grant covers up to 30% of the project's eligible costs, and holders of the Large Family Card (Karta Dużej Rodziny) can receive up to 45%. Maximum amounts per appliance: ground-source heat pump — up to PLN 21,000; air-to-water heat pump — up to PLN 7,000; central air-to-air heat pump — up to PLN 7,000.",
-      "Applications can be submitted until 31 December 2026, or until the budget is exhausted.",
-      "The purpose of the programme goes beyond the grant itself. Moje Ciepło steers the new-build market so that fossil-fuel heating is not installed in the first place — the heat pump becomes the default heating option in new construction. That segment, alongside the retrofit of existing buildings, is precisely what matters most for the Polish market."
-    ],
-    "sourceNoteEn": "Amounts and conditions are set by NFOŚiGW — the official programme rules prevail. As of July 2026."
-  }
+ {
+  "slug": "2026-09-katalog",
+  "date": "2026-08-25",
+  "image": "pl-2026-09-katalog.webp",
+  "title": "9 220 pomp ciepła w katalogu, 2 578 potwierdzonych na liście ZUM",
+  "excerpt": "Katalog dla rynku polskiego liczy 9 220 modeli od 321 producentów. R32 i R290 odpowiadają razem za blisko trzy czwarte pozycji.",
+  "body": [
+   "Katalog dla rynku polskiego liczy obecnie 9 220 modeli pomp ciepła od 321 producentów. Spośród nich 2 578 ma potwierdzony wpis na liście ZUM — liście zielonych urządzeń i materiałów programu Czyste Powietrze.",
+   "W strukturze czynników chłodniczych dominuje R32 z udziałem 43 procent, przed R290 z 31 procentami. Razem odpowiadają za blisko trzy czwarte katalogu; R410A to 12 procent, pozostałe czynniki 14 procent.",
+   "Warto rozumieć, co oznacza status wpisu. Model oznaczamy jako potwierdzony wyłącznie wtedy, gdy udało się go dopasować do wpisu ZUM na podstawie ścisłej tożsamości — dokładnego modelu, oficjalnego odpowiednika producenta albo tożsamości komponentów. W pozostałych przypadkach widnieje „weryfikacja wymagana”. To informacja o naszym dopasowaniu, a nie dowód, że urządzenia nie ma na liście.",
+   "Dane odświeżamy co miesiąc ze źródeł urzędowych."
+  ],
+  "sourceNote": "Dane własne z katalogu HeatPump DB, stan na 25.08.2026. Dofinansowanie zależy od kryteriów programu — sprawdź aktualne warunki przed złożeniem oferty.",
+  "titleEn": "9,220 heat pumps in the catalogue, 2,578 confirmed on the ZUM list",
+  "excerptEn": "The Polish catalogue holds 9,220 models from 321 manufacturers. R32 and R290 together account for nearly three quarters of it.",
+  "bodyEn": [
+   "The catalogue for the Polish market currently holds 9,220 heat pump models from 321 manufacturers. Of those, 2,578 carry a confirmed entry on the ZUM list — the list of eligible devices and materials for the Czyste Powietrze programme.",
+   "R32 leads the refrigerant mix at 43 percent, ahead of R290 at 31 percent. Together they account for nearly three quarters of the catalogue; R410A is 12 percent and other refrigerants 14 percent.",
+   "It is worth understanding what a listing status means. A model is marked confirmed only where we could match it to a ZUM entry on strict identity — an exact model, an official manufacturer alias, or component identity. Everything else reads verification required. That is a statement about our matching, not evidence that the device is absent from the list.",
+   "The data is refreshed monthly from official sources."
+  ],
+  "sourceNoteEn": "HeatPump DB catalogue data as at 25/08/2026. Funding depends on programme criteria — check current conditions before quoting."
+ },
+ {
+  "slug": "2026-08-rynek-grzewczy",
+  "date": "2026-08-13",
+  "image": "pl-2026-08-rynek-grzewczy.webp",
+  "title": "Pompy ciepła to już niemal jedna trzecia rynku grzewczego",
+  "excerpt": "178 610 pomp ciepła sprzedanych w 2025 r. — 32,1% rynku liczącego 556 370 urządzeń.",
+  "body": [
+   "W 2025 roku w Polsce sprzedano 178 610 pomp ciepła, co odpowiada 32,1% rynku urządzeń grzewczych liczącego 556 370 sztuk. Kotły gazowe to 236 710 urządzeń, kotły na paliwa stałe — 129 900.",
+   "Rynek pomp ciepła rośnie drugi rok z rzędu po głębokim załamaniu. Po rekordowym 2022 roku (249 760 szt.) sprzedaż spadła w 2023 r. do 158 480, by odbić do 163 460 w 2024 i 178 610 w 2025 roku.",
+   "Trzeba wiedzieć, co te liczby obejmują. SPIUG podaje sprzedaż do kanału dystrybucji, a nie liczbę instalacji, i wlicza pompy powietrze-powietrze oraz do ciepłej wody użytkowej. PORT PC liczy węziej — tylko urządzenia do ogrzewania budynków — i dla 2025 roku podaje około 87 tysięcy sztuk. Obie liczby są poprawne na swojej podstawie; nie należy ich zestawiać. Dane o kotłach na paliwa stałe SPIUG oznacza jako szacunkowe.",
+   "Na 2026 rok PORT PC podaje wstępną prognozę wzrostu o 10–15% dla pomp powietrze-woda do centralnego ogrzewania i o 15–25% dla gruntowych. Pierwsze półrocze 2026 roku potwierdza kierunek: sprzedaż pomp do ogrzewania budynków wzrosła o 18%. Żadna z organizacji nie publikuje prognozy liczbowej na 2027 rok."
+  ],
+  "sourceNote": "Dane: SPIUG, Report: Market of heating appliances in Poland 2025 (Warszawa, 07.07.2026), rys. 11, 13 i 38. Prognoza i ujęcie węższe: PORT PC (12.03.2026 i 06.08.2026). Podane wielkości to sprzedaż do kanału dystrybucji, nie liczba instalacji.",
+  "titleEn": "Heat pumps are now almost a third of Poland's heating market",
+  "excerptEn": "178,610 heat pumps sold in 2025 — 32.1% of a market of 556,370 appliances.",
+  "bodyEn": [
+   "Poland sold 178,610 heat pumps in 2025, equal to 32.1 per cent of a heating appliance market of 556,370 units. Gas boilers accounted for 236,710 units and solid-fuel boilers for 129,900.",
+   "The heat pump market has now grown for two consecutive years after a deep collapse. Following the record year of 2022 (249,760 units), sales fell to 158,480 in 2023, then recovered to 163,460 in 2024 and 178,610 in 2025.",
+   "It matters what these figures include. SPIUG reports sales into the distribution channel rather than installations, and counts air-to-air and domestic hot water heat pumps. PORT PC counts more narrowly — space-heating units only — and puts 2025 at roughly 87,000. Both are correct on their own basis and should not be placed side by side. SPIUG marks its solid-fuel boiler data as estimates.",
+   "For 2026 PORT PC gives a preliminary forecast of 10–15 per cent growth for air-to-water space-heating units and 15–25 per cent for ground-source. The first half of 2026 confirms the direction: sales of space-heating heat pumps rose 18 per cent. No organisation publishes a numerical forecast for 2027."
+  ],
+  "sourceNoteEn": "Data: SPIUG, Report: Market of heating appliances in Poland 2025 (Warsaw, 7 Jul 2026), figures 11, 13 and 38. Forecast and the narrower basis: PORT PC (12 Mar 2026 and 6 Aug 2026). The volumes are sales into the distribution channel, not installations."
+ },
+ {
+  "slug": "2026-08-czyste-powietrze",
+  "date": "2026-08-12",
+  "image": "pl-2026-08-czyste-powietrze.webp",
+  "title": "Czyste Powietrze po zmianach: łatwiej o dotację od 20 lipca 2026",
+  "excerpt": "Krótszy wymagany okres własności, wyższe stawki na termomodernizację i więcej czasu na realizację inwestycji.",
+  "body": [
+   "NFOŚiGW wprowadził pakiet zmian w programie Czyste Powietrze, obowiązujących od 20 lipca 2026 roku. Celem jest ułatwienie właścicielom domów jednorodzinnych korzystania z dotacji na termomodernizację, z naciskiem na efektywność energetyczną i ekologiczne źródła ciepła.",
+   "Złagodzono zasady dotyczące okresu własności nieruchomości. Dotychczas wymagane trzy lata skrócono do jednego roku w wybranych przypadkach — na przykład dla nieruchomości nabytych przez zasiedzenie lub gdy co najmniej 50% udziałów nabyto w drodze zakupu lub darowizny od wstępnych.",
+   "Wzrosło również wsparcie na wybrane prace: dotacje na ocieplenie ścian i innych przegród, wymianę okien, drzwi zewnętrznych i bram garażowych są wyższe o 10%. Maksymalna kwota dotacji na termomodernizację w najwyższym poziomie wsparcia pozostaje jednak na poziomie 83 000 zł. Termin zakończenia inwestycji objętych prefinansowaniem wydłużono ze 120 do 180 dni — również dla umów podpisanych po 31 marca 2025 roku, po ich aneksowaniu.",
+   "Kierunek programu pozostaje niezmieniony. Po 2026 roku Czyste Powietrze nie będzie wspierać ogrzewania elektrycznego innego niż pompy ciepła, a audyt energetyczny jest obowiązkowy dla wszystkich poziomów dofinansowania od 31 marca 2026 roku, z dodatkowym bonusem 1 200 zł."
+  ],
+  "sourceNote": "Warunki określa NFOŚiGW — decydują oficjalne zasady programu Czyste Powietrze. Stan: sierpień 2026.",
+  "titleEn": "Czyste Powietrze after the reform: easier access to grants from 20 July 2026",
+  "excerptEn": "A shorter required ownership period, higher rates for thermal modernisation and more time to complete the investment.",
+  "bodyEn": [
+   "NFOŚiGW has introduced a package of changes to the Czyste Powietrze (Clean Air) programme, in force since 20 July 2026. The aim is to make grants for thermal modernisation easier to use for owners of detached houses, with the emphasis on energy efficiency and clean heat sources.",
+   "The property-ownership rules have been relaxed. The three-year holding period required until now is shortened to one year in selected cases — for example for properties acquired by adverse possession, or where at least 50% of the shares were acquired by purchase or gift from ascendants.",
+   "Support for selected works has also risen: grants for insulating walls and other building envelopes, and for replacing windows, external doors and garage doors, are 10% higher. The maximum thermal-modernisation grant at the highest support level nevertheless stays at PLN 83,000. The deadline for completing pre-financed investments has been extended from 120 to 180 days — including for contracts signed after 31 March 2025, once amended.",
+   "The direction of the programme is unchanged. After 2026, Czyste Powietrze will no longer support electric heating other than heat pumps, and an energy audit has been mandatory at every support level since 31 March 2026, carrying an additional PLN 1,200 bonus."
+  ],
+  "sourceNoteEn": "Conditions are set by NFOŚiGW — the official Czyste Powietrze programme rules prevail. As of August 2026."
+ },
+ {
+  "slug": "2026-07-moje-cieplo",
+  "date": "2026-07-31",
+  "title": "Moje Ciepło: dopłaty do pomp ciepła w nowych domach do końca 2026 roku",
+  "image": "pl-2026-07-moje-cieplo.webp",
+  "excerpt": "Program Moje Ciepło nadal wspiera pompy ciepła w nowych domach jednorodzinnych — do 30% kosztów, a z Kartą Dużej Rodziny do 45%.",
+  "body": [
+   "W lipcu najważniejszym punktem odniesienia dla polskiego rynku nie jest nowy program, lecz ciągłość istniejącego: Moje Ciepło — program wsparcia pomp ciepła w nowych domach jednorodzinnych — działa nadal, do końca 2026 roku.",
+   "Dofinansowanie wynosi co do zasady do 30% kosztów kwalifikowanych projektu, a posiadacze Karty Dużej Rodziny mogą otrzymać do 45%. Maksymalne kwoty na urządzenie: gruntowa pompa ciepła — do 21 000 zł, pompa powietrze-woda — do 7 000 zł, centralna pompa powietrze-powietrze — do 7 000 zł.",
+   "Wnioski można składać do 31 grudnia 2026 r. lub do wyczerpania budżetu.",
+   "Sens programu wykracza poza samą dopłatę. Moje Ciepło kieruje rynek nowych domów tak, aby ogrzewanie oparte na paliwach kopalnych w ogóle nie było instalowane — pompa ciepła staje się domyślną opcją grzewczą w nowym budownictwie. To właśnie ten segment, obok modernizacji istniejących budynków, ma dla polskiego rynku kluczowe znaczenie."
+  ],
+  "sourceNote": "Kwoty i warunki określa NFOŚiGW — decydują oficjalne zasady programu. Stan: lipiec 2026.",
+  "titleEn": "Moje Ciepło: heat pump grants for new homes run to the end of 2026",
+  "excerptEn": "The Moje Ciepło programme continues to support heat pumps in new detached houses — up to 30% of costs, or 45% with a Large Family Card.",
+  "bodyEn": [
+   "In July, the most important reference point for the Polish market is not a new programme but the continuity of an existing one: Moje Ciepło — the support programme for heat pumps in new detached houses — remains in operation until the end of 2026.",
+   "As a rule the grant covers up to 30% of the project's eligible costs, and holders of the Large Family Card (Karta Dużej Rodziny) can receive up to 45%. Maximum amounts per appliance: ground-source heat pump — up to PLN 21,000; air-to-water heat pump — up to PLN 7,000; central air-to-air heat pump — up to PLN 7,000.",
+   "Applications can be submitted until 31 December 2026, or until the budget is exhausted.",
+   "The purpose of the programme goes beyond the grant itself. Moje Ciepło steers the new-build market so that fossil-fuel heating is not installed in the first place — the heat pump becomes the default heating option in new construction. That segment, alongside the retrofit of existing buildings, is precisely what matters most for the Polish market."
+  ],
+  "sourceNoteEn": "Amounts and conditions are set by NFOŚiGW — the official programme rules prevail. As of July 2026."
+ }
 ]

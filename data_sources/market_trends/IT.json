@@ -1,71 +1,96 @@
 [
-  {
-    "slug": "2026-08-mercato-caldaie",
-    "date": "2026-08-13",
-    "image": "it-2026-08-mercato-caldaie.webp",
-    "title": "Caldaie murali: −15,7% in un anno, oltre 140.000 unità in meno",
-    "excerpt": "Il 2025 è il primo anno pieno senza incentivi per le caldaie a combustibile fossile. L'Italia non pubblica però un totale di mercato.",
-    "body": [
-      "Nel 2025 le vendite di caldaie murali in Italia sono scese a 769.090 unità, contro 911.899 nel 2024: −15,7%, oltre 140.000 unità in meno. Anche le caldaie a basamento calano (da 8.342 a 6.340) e gli scaldacqua in pompa di calore passano da 23.516 a 22.916.",
-      "La causa più credibile è normativa: la Legge di Bilancio 2025 ha escluso le caldaie a combustibile fossile autonome da Ecobonus e Bonus Casa, e il 2025 è il primo anno pieno senza quel sostegno.",
-      "Sul fronte pompe di calore il quadro italiano è meno leggibile di quanto ci si aspetterebbe, e vale la pena dirlo apertamente: Assotermica pubblica i volumi delle caldaie, Assoclima pubblica solo variazioni percentuali a panel costante, ed EHPA conta anche l'aria-aria (423.000 unità in Italia nel 2025). Nessuna delle tre pubblica una quota di mercato delle pompe di calore, e sommare basi diverse la gonfierebbe di diverse volte. Per questo la quota non compare su questa scheda.",
-      "La direzione del 2025 secondo Assoclima: pompe di calore idroniche fino a 10 kW in calo del 4,4% a volume, fascia 18–50 kW in crescita dell'11,6%, monosplit aria-aria +16%. Assoclima attribuisce il calo residenziale alla ristrutturazione degli incentivi e all'attesa del Conto Termico 3.0. Per il 2026 né Assotermica né Assoclima pubblicano una previsione numerica."
-    ],
-    "sourceNote": "Dati: Assotermica (ANIMA Confindustria), comunicato del 24.03.2026, rilevazione a panel costante; Assoclima, comunicato del 25.03.2026; EHPA, dati di mercato 2026. Le percentuali Assotermica sono a panel costante mentre i valori assoluti sono totali: i due dati non sempre si dividono esattamente.",
-    "titleEn": "Italy's wall-hung boilers: −15.7% in a year, over 140,000 units fewer",
-    "excerptEn": "2025 was the first full year without incentives for fossil-fuel boilers. Italy publishes no consolidated heating market total.",
-    "bodyEn": [
-      "Wall-hung boiler sales in Italy fell to 769,090 units in 2025 from 911,899 in 2024: −15.7 per cent, more than 140,000 units fewer. Floor-standing boilers also declined (8,342 to 6,340) and heat pump water heaters went from 23,516 to 22,916.",
-      "The most credible cause is regulatory: the 2025 Budget Law removed standalone fossil-fuel boilers from Ecobonus and Bonus Casa eligibility, and 2025 is the first full year without that support.",
-      "On heat pumps the Italian picture is less legible than one would expect, and it is worth saying so plainly: Assotermica publishes boiler volumes, Assoclima publishes only percentage changes at constant panel, and EHPA counts air-to-air as well (423,000 units in Italy in 2025). None of the three publishes a heat pump market share, and adding different bases together would inflate it several times over. That is why no share appears on this card.",
-      "The direction of 2025 according to Assoclima: hydronic heat pumps up to 10 kW down 4.4 per cent by volume, the 18–50 kW band up 11.6 per cent, and air-to-air monosplit units up 16 per cent. Assoclima attributes the residential dip to the restructuring of incentives and buyers waiting for Conto Termico 3.0. For 2026 neither Assotermica nor Assoclima publishes a numerical forecast."
-    ],
-    "sourceNoteEn": "Data: Assotermica (ANIMA Confindustria) release of 24 Mar 2026, survey at constant panel; Assoclima release of 25 Mar 2026; EHPA market data 2026. Assotermica's percentages are at constant panel while the absolute values are totals, so the two do not always divide exactly."
-  },
-  {
-    "slug": "2026-08-scadenza-2027",
-    "date": "2026-08-12",
-    "image": "it-2026-08-scadenza-2027.webp",
-    "title": "Il 2026 è l'ultimo anno delle aliquote piene",
-    "excerpt": "Dal 2027 le detrazioni scendono: Conto Termico 3.0 ed Ecobonus restano ai livelli attuali solo fino al 31 dicembre 2026.",
-    "body": [
-      "Il quadro italiano degli incentivi per le pompe di calore è in una fase di transizione: il 2026 è l'ultimo anno in cui si applicano diverse aliquote vantaggiose, prima delle riduzioni previste dal 2027.",
-      "Il Conto Termico 3.0, in vigore dal 25 dicembre 2025 e gestito dal GSE, eroga contributi diretti fino al 65% delle spese ammissibili per i soggetti privati; per le Pubbliche Amministrazioni — in particolare scuole e ospedali in comuni sotto i 15.000 abitanti — il rimborso può arrivare al 100%. I pagamenti avvengono in un'unica soluzione fino a 15.000 euro e in due-cinque rate annuali per importi superiori. Dal 15 aprile 2026 un catalogo di apparecchi pre-qualificati semplifica la domanda validando in anticipo la conformità tecnica.",
-      "L'Ecobonus 2026 mantiene una detrazione del 50% sulla prima casa e del 36% sugli altri immobili, su una spesa massima di 30.000 euro per l'installazione di una pompa di calore, recuperata in dieci quote annuali. Il Bonus Ristrutturazioni offre percentuali analoghe con un tetto di spesa più elevato, fino a 96.000 euro.",
-      "La scadenza è il punto pratico: dal 2027 le aliquote dell'Ecobonus sono previste in calo al 36% per la prima casa e al 30% per gli altri immobili. Per assicurarsi le condizioni attuali occorre completare i lavori ammissibili e presentare la documentazione entro la fine del 2026."
-    ],
-    "sourceNote": "Le condizioni ufficiali sono definite dal GSE e dalla normativa fiscale vigente; le aliquote dipendono dal caso specifico. Agosto 2026.",
-    "titleEn": "2026 is the last year of the full incentive rates",
-    "excerptEn": "From 2027 the tax deductions fall: Conto Termico 3.0 and the Ecobonus hold their current levels only until 31 December 2026.",
-    "bodyEn": [
-      "Italy's incentive framework for heat pumps is in transition: 2026 is the last year in which several favourable rates apply, ahead of the reductions scheduled from 2027.",
-      "Conto Termico 3.0, in force since 25 December 2025 and administered by the GSE, pays direct contributions of up to 65% of eligible expenditure for private applicants; for public administrations — in particular schools and hospitals in municipalities under 15,000 inhabitants — reimbursement can reach 100%. Payment is made in a single instalment up to €15,000, and in two to five annual instalments above that. Since 15 April 2026 a catalogue of pre-qualified appliances simplifies applications by validating technical compliance in advance.",
-      "The 2026 Ecobonus keeps a 50% deduction on a principal residence and 36% on other properties, on maximum expenditure of €30,000 for installing a heat pump, recovered over ten annual instalments. The Bonus Ristrutturazioni offers comparable rates with a higher spending cap, up to €96,000.",
-      "The deadline is the practical point: from 2027 the Ecobonus rates are expected to fall to 36% for a principal residence and 30% for other properties. Securing today's conditions means completing eligible work and filing the documentation before the end of 2026."
-    ],
-    "sourceNoteEn": "The official conditions are set by the GSE and by the tax legislation in force; the rates depend on the specific case. August 2026."
-  },
-  {
-    "slug": "2026-07-conto-termico-3",
-    "date": "2026-07-31",
-    "title": "Conto Termico 3.0: incentivo diretto fino al 65% per le pompe di calore",
-    "image": "it-2026-07-conto-termico-3.webp",
-    "excerpt": "Il Conto Termico 3.0 si conferma lo strumento diretto di riferimento per la transizione alle pompe di calore: contributo erogato dal GSE, fino al 65% della spesa ammissibile.",
-    "body": [
-      "Per il mercato italiano, la cornice più rilevante di luglio è il consolidamento del Conto Termico 3.0 come principale incentivo diretto per il passaggio alle pompe di calore.",
-      "La differenza sostanziale rispetto alle detrazioni fiscali è il meccanismo: il contributo viene erogato direttamente dal GSE, invece di essere recuperato in più anni come detrazione. Il numero chiave: fino al 65% della spesa ammissibile.",
-      "Caratteristiche principali: gestione a cura del GSE, sostegno alla sostituzione degli impianti di riscaldamento esistenti — pompe di calore incluse —, una platea ampia che comprende privati, imprese e pubbliche amministrazioni, operatività tramite il Portaltermico 3.0. Per specifici progetti del settore pubblico il sostegno può arrivare, a determinate condizioni, fino al 100%.",
-      "Per chi vuole recuperare rapidamente l'investimento iniziale, il contributo diretto è più attraente della detrazione pluriennale. Per produttori e installatori, «quanto riconosce il Conto Termico» diventa un argomento di vendita concreto, accanto all'efficienza del prodotto."
-    ],
-    "sourceNote": "Le condizioni ufficiali sono definite dal GSE (D.M. Conto Termico 3.0) — le percentuali dipendono dal caso specifico. Luglio 2026.",
-    "titleEn": "Conto Termico 3.0: direct incentive of up to 65% for heat pumps",
-    "excerptEn": "Conto Termico 3.0 is confirmed as the reference direct instrument for the switch to heat pumps: paid out by the GSE, up to 65% of eligible expenditure.",
-    "bodyEn": [
-      "For the Italian market, July's most relevant framework is the consolidation of Conto Termico 3.0 as the principal direct incentive for the switch to heat pumps.",
-      "The substantive difference from tax deductions is the mechanism: the contribution is paid directly by the GSE, instead of being recovered over several years as a deduction. The key figure: up to 65% of eligible expenditure.",
-      "Main features: administration by the GSE, support for replacing existing heating systems — heat pumps included — a broad range of beneficiaries covering private individuals, businesses and public administrations, and operation through Portaltermico 3.0. For specific public-sector projects the support can reach, under certain conditions, up to 100%.",
-      "For anyone looking to recover the initial investment quickly, a direct contribution is more attractive than a multi-year deduction. For manufacturers and installers, “how much Conto Termico recognises” becomes a concrete selling point alongside product efficiency."
-    ],
-    "sourceNoteEn": "The official conditions are set by the GSE (Conto Termico 3.0 decree) — the percentages depend on the specific case. July 2026."
-  }
+ {
+  "slug": "2026-09-catalogo",
+  "date": "2026-08-25",
+  "image": "it-2026-09-catalogo.webp",
+  "title": "10 919 pompe di calore in catalogo, 4 151 confermate nel catalogo GSE",
+  "excerpt": "Il catalogo per il mercato italiano conta 10 919 modelli di 304 produttori. R32 e R290 coprono insieme oltre metà delle voci.",
+  "body": [
+   "Il catalogo per il mercato italiano conta oggi 10 919 modelli di pompe di calore da 304 produttori. Di questi, 4 151 risultano confermati nel catalogo GSE degli apparecchi prequalificati del Conto Termico.",
+   "Nella distribuzione dei refrigeranti l'R32 è al 30 per cento e l'R290 al 25 per cento: insieme coprono oltre metà del catalogo. L'R410A si ferma all'11 per cento, gli altri refrigeranti al 34.",
+   "Una precisazione sul catalogo GSE: solo il catalogo III.A riguarda le pompe di calore. Il III.B elenca sistemi ibridi, che non costituiscono evidenza per una pompa di calore autonoma, e il III.E riguarda la produzione di acqua calda sanitaria.",
+   "Segnaliamo un modello come confermato soltanto quando la corrispondenza si regge su un'identità certa. Negli altri casi compare «verifica richiesta»: è un'informazione sul nostro abbinamento, non la prova che l'apparecchio sia assente dal catalogo.",
+   "I dati sono aggiornati ogni mese da fonti ufficiali."
+  ],
+  "sourceNote": "Dati del catalogo HeatPump DB aggiornati al 25/08/2026. Gli incentivi dipendono dai criteri di programma — verifica le condizioni vigenti prima di preventivare.",
+  "titleEn": "10,919 heat pumps in the catalogue, 4,151 confirmed in the GSE catalogue",
+  "excerptEn": "The Italian catalogue holds 10,919 models from 304 manufacturers. R32 and R290 together cover more than half of it.",
+  "bodyEn": [
+   "The catalogue for the Italian market currently holds 10,919 heat pump models from 304 manufacturers. Of those, 4,151 are confirmed in the GSE catalogue of pre-qualified appliances under Conto Termico.",
+   "In the refrigerant mix, R32 sits at 30 percent and R290 at 25 percent: together more than half the catalogue. R410A accounts for 11 percent and other refrigerants for 34.",
+   "One clarification about the GSE catalogue: only catalogue III.A covers heat pumps. III.B lists hybrid systems, which are not evidence for a standalone heat pump, and III.E covers domestic hot water.",
+   "We mark a model as confirmed only where the match rests on certain identity. Everything else reads verification required: that is a statement about our matching, not proof that the appliance is absent from the catalogue.",
+   "The data is refreshed monthly from official sources."
+  ],
+  "sourceNoteEn": "HeatPump DB catalogue data as at 25/08/2026. Incentives depend on programme criteria — verify current conditions before quoting."
+ },
+ {
+  "slug": "2026-08-mercato-caldaie",
+  "date": "2026-08-13",
+  "image": "it-2026-08-mercato-caldaie.webp",
+  "title": "Caldaie murali: −15,7% in un anno, oltre 140.000 unità in meno",
+  "excerpt": "Il 2025 è il primo anno pieno senza incentivi per le caldaie a combustibile fossile. L'Italia non pubblica però un totale di mercato.",
+  "body": [
+   "Nel 2025 le vendite di caldaie murali in Italia sono scese a 769.090 unità, contro 911.899 nel 2024: −15,7%, oltre 140.000 unità in meno. Anche le caldaie a basamento calano (da 8.342 a 6.340) e gli scaldacqua in pompa di calore passano da 23.516 a 22.916.",
+   "La causa più credibile è normativa: la Legge di Bilancio 2025 ha escluso le caldaie a combustibile fossile autonome da Ecobonus e Bonus Casa, e il 2025 è il primo anno pieno senza quel sostegno.",
+   "Sul fronte pompe di calore il quadro italiano è meno leggibile di quanto ci si aspetterebbe, e vale la pena dirlo apertamente: Assotermica pubblica i volumi delle caldaie, Assoclima pubblica solo variazioni percentuali a panel costante, ed EHPA conta anche l'aria-aria (423.000 unità in Italia nel 2025). Nessuna delle tre pubblica una quota di mercato delle pompe di calore, e sommare basi diverse la gonfierebbe di diverse volte. Per questo la quota non compare su questa scheda.",
+   "La direzione del 2025 secondo Assoclima: pompe di calore idroniche fino a 10 kW in calo del 4,4% a volume, fascia 18–50 kW in crescita dell'11,6%, monosplit aria-aria +16%. Assoclima attribuisce il calo residenziale alla ristrutturazione degli incentivi e all'attesa del Conto Termico 3.0. Per il 2026 né Assotermica né Assoclima pubblicano una previsione numerica."
+  ],
+  "sourceNote": "Dati: Assotermica (ANIMA Confindustria), comunicato del 24.03.2026, rilevazione a panel costante; Assoclima, comunicato del 25.03.2026; EHPA, dati di mercato 2026. Le percentuali Assotermica sono a panel costante mentre i valori assoluti sono totali: i due dati non sempre si dividono esattamente.",
+  "titleEn": "Italy's wall-hung boilers: −15.7% in a year, over 140,000 units fewer",
+  "excerptEn": "2025 was the first full year without incentives for fossil-fuel boilers. Italy publishes no consolidated heating market total.",
+  "bodyEn": [
+   "Wall-hung boiler sales in Italy fell to 769,090 units in 2025 from 911,899 in 2024: −15.7 per cent, more than 140,000 units fewer. Floor-standing boilers also declined (8,342 to 6,340) and heat pump water heaters went from 23,516 to 22,916.",
+   "The most credible cause is regulatory: the 2025 Budget Law removed standalone fossil-fuel boilers from Ecobonus and Bonus Casa eligibility, and 2025 is the first full year without that support.",
+   "On heat pumps the Italian picture is less legible than one would expect, and it is worth saying so plainly: Assotermica publishes boiler volumes, Assoclima publishes only percentage changes at constant panel, and EHPA counts air-to-air as well (423,000 units in Italy in 2025). None of the three publishes a heat pump market share, and adding different bases together would inflate it several times over. That is why no share appears on this card.",
+   "The direction of 2025 according to Assoclima: hydronic heat pumps up to 10 kW down 4.4 per cent by volume, the 18–50 kW band up 11.6 per cent, and air-to-air monosplit units up 16 per cent. Assoclima attributes the residential dip to the restructuring of incentives and buyers waiting for Conto Termico 3.0. For 2026 neither Assotermica nor Assoclima publishes a numerical forecast."
+  ],
+  "sourceNoteEn": "Data: Assotermica (ANIMA Confindustria) release of 24 Mar 2026, survey at constant panel; Assoclima release of 25 Mar 2026; EHPA market data 2026. Assotermica's percentages are at constant panel while the absolute values are totals, so the two do not always divide exactly."
+ },
+ {
+  "slug": "2026-08-scadenza-2027",
+  "date": "2026-08-12",
+  "image": "it-2026-08-scadenza-2027.webp",
+  "title": "Il 2026 è l'ultimo anno delle aliquote piene",
+  "excerpt": "Dal 2027 le detrazioni scendono: Conto Termico 3.0 ed Ecobonus restano ai livelli attuali solo fino al 31 dicembre 2026.",
+  "body": [
+   "Il quadro italiano degli incentivi per le pompe di calore è in una fase di transizione: il 2026 è l'ultimo anno in cui si applicano diverse aliquote vantaggiose, prima delle riduzioni previste dal 2027.",
+   "Il Conto Termico 3.0, in vigore dal 25 dicembre 2025 e gestito dal GSE, eroga contributi diretti fino al 65% delle spese ammissibili per i soggetti privati; per le Pubbliche Amministrazioni — in particolare scuole e ospedali in comuni sotto i 15.000 abitanti — il rimborso può arrivare al 100%. I pagamenti avvengono in un'unica soluzione fino a 15.000 euro e in due-cinque rate annuali per importi superiori. Dal 15 aprile 2026 un catalogo di apparecchi pre-qualificati semplifica la domanda validando in anticipo la conformità tecnica.",
+   "L'Ecobonus 2026 mantiene una detrazione del 50% sulla prima casa e del 36% sugli altri immobili, su una spesa massima di 30.000 euro per l'installazione di una pompa di calore, recuperata in dieci quote annuali. Il Bonus Ristrutturazioni offre percentuali analoghe con un tetto di spesa più elevato, fino a 96.000 euro.",
+   "La scadenza è il punto pratico: dal 2027 le aliquote dell'Ecobonus sono previste in calo al 36% per la prima casa e al 30% per gli altri immobili. Per assicurarsi le condizioni attuali occorre completare i lavori ammissibili e presentare la documentazione entro la fine del 2026."
+  ],
+  "sourceNote": "Le condizioni ufficiali sono definite dal GSE e dalla normativa fiscale vigente; le aliquote dipendono dal caso specifico. Agosto 2026.",
+  "titleEn": "2026 is the last year of the full incentive rates",
+  "excerptEn": "From 2027 the tax deductions fall: Conto Termico 3.0 and the Ecobonus hold their current levels only until 31 December 2026.",
+  "bodyEn": [
+   "Italy's incentive framework for heat pumps is in transition: 2026 is the last year in which several favourable rates apply, ahead of the reductions scheduled from 2027.",
+   "Conto Termico 3.0, in force since 25 December 2025 and administered by the GSE, pays direct contributions of up to 65% of eligible expenditure for private applicants; for public administrations — in particular schools and hospitals in municipalities under 15,000 inhabitants — reimbursement can reach 100%. Payment is made in a single instalment up to €15,000, and in two to five annual instalments above that. Since 15 April 2026 a catalogue of pre-qualified appliances simplifies applications by validating technical compliance in advance.",
+   "The 2026 Ecobonus keeps a 50% deduction on a principal residence and 36% on other properties, on maximum expenditure of €30,000 for installing a heat pump, recovered over ten annual instalments. The Bonus Ristrutturazioni offers comparable rates with a higher spending cap, up to €96,000.",
+   "The deadline is the practical point: from 2027 the Ecobonus rates are expected to fall to 36% for a principal residence and 30% for other properties. Securing today's conditions means completing eligible work and filing the documentation before the end of 2026."
+  ],
+  "sourceNoteEn": "The official conditions are set by the GSE and by the tax legislation in force; the rates depend on the specific case. August 2026."
+ },
+ {
+  "slug": "2026-07-conto-termico-3",
+  "date": "2026-07-31",
+  "title": "Conto Termico 3.0: incentivo diretto fino al 65% per le pompe di calore",
+  "image": "it-2026-07-conto-termico-3.webp",
+  "excerpt": "Il Conto Termico 3.0 si conferma lo strumento diretto di riferimento per la transizione alle pompe di calore: contributo erogato dal GSE, fino al 65% della spesa ammissibile.",
+  "body": [
+   "Per il mercato italiano, la cornice più rilevante di luglio è il consolidamento del Conto Termico 3.0 come principale incentivo diretto per il passaggio alle pompe di calore.",
+   "La differenza sostanziale rispetto alle detrazioni fiscali è il meccanismo: il contributo viene erogato direttamente dal GSE, invece di essere recuperato in più anni come detrazione. Il numero chiave: fino al 65% della spesa ammissibile.",
+   "Caratteristiche principali: gestione a cura del GSE, sostegno alla sostituzione degli impianti di riscaldamento esistenti — pompe di calore incluse —, una platea ampia che comprende privati, imprese e pubbliche amministrazioni, operatività tramite il Portaltermico 3.0. Per specifici progetti del settore pubblico il sostegno può arrivare, a determinate condizioni, fino al 100%.",
+   "Per chi vuole recuperare rapidamente l'investimento iniziale, il contributo diretto è più attraente della detrazione pluriennale. Per produttori e installatori, «quanto riconosce il Conto Termico» diventa un argomento di vendita concreto, accanto all'efficienza del prodotto."
+  ],
+  "sourceNote": "Le condizioni ufficiali sono definite dal GSE (D.M. Conto Termico 3.0) — le percentuali dipendono dal caso specifico. Luglio 2026.",
+  "titleEn": "Conto Termico 3.0: direct incentive of up to 65% for heat pumps",
+  "excerptEn": "Conto Termico 3.0 is confirmed as the reference direct instrument for the switch to heat pumps: paid out by the GSE, up to 65% of eligible expenditure.",
+  "bodyEn": [
+   "For the Italian market, July's most relevant framework is the consolidation of Conto Termico 3.0 as the principal direct incentive for the switch to heat pumps.",
+   "The substantive difference from tax deductions is the mechanism: the contribution is paid directly by the GSE, instead of being recovered over several years as a deduction. The key figure: up to 65% of eligible expenditure.",
+   "Main features: administration by the GSE, support for replacing existing heating systems — heat pumps included — a broad range of beneficiaries covering private individuals, businesses and public administrations, and operation through Portaltermico 3.0. For specific public-sector projects the support can reach, under certain conditions, up to 100%.",
+   "For anyone looking to recover the initial investment quickly, a direct contribution is more attractive than a multi-year deduction. For manufacturers and installers, “how much Conto Termico recognises” becomes a concrete selling point alongside product efficiency."
+  ],
+  "sourceNoteEn": "The official conditions are set by the GSE (Conto Termico 3.0 decree) — the percentages depend on the specific case. July 2026."
+ }
 ]

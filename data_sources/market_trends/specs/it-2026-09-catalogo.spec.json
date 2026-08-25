@@ -1,0 +1,91 @@
+{
+  "country": "IT",
+  "countryLabel": "Italia",
+  "month": "SETTEMBRE 2026",
+  "motif": "chart",
+  "titleSize": 46,
+  "title": [
+    "10 919 pompe di calore",
+    "in catalogo"
+  ],
+  "sub": "4 151 confermate nel catalogo GSE.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "10 919",
+          "label": "modelli in catalogo"
+        },
+        {
+          "value": "4 151",
+          "label": "confermate nel catalogo GSE"
+        },
+        {
+          "value": "304",
+          "label": "produttori",
+          "accent": 2
+        }
+      ]
+    },
+    [
+      {
+        "type": "bars",
+        "flex": 1,
+        "icon": "chart",
+        "title": "Refrigeranti",
+        "items": [
+          {
+            "label": "R32",
+            "value": "30 %",
+            "v": 30,
+            "hi": true
+          },
+          {
+            "label": "R290",
+            "value": "25 %",
+            "v": 25,
+            "hi": true
+          },
+          {
+            "label": "R410A",
+            "value": "11 %",
+            "v": 11
+          },
+          {
+            "label": "altri",
+            "value": "34 %",
+            "v": 34
+          }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "Conto Termico",
+        "rows": [
+          {
+            "label": "Catalogo III.A — pompe di calore"
+          },
+          {
+            "label": "Dati aggiornati ogni mese"
+          },
+          {
+            "no": true,
+            "label": "Mancata conferma non significa assenza dal catalogo"
+          }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Aggiornamento",
+      "icon": "bulb",
+      "lines": [
+        "Dati aggiornati ogni mese da fonti ufficiali."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Italy Editorial Team"
+}

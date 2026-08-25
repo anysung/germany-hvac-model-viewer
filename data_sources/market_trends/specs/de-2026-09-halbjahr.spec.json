@@ -1,0 +1,78 @@
+{
+  "country": "DE",
+  "countryLabel": "Deutschland",
+  "month": "SEPTEMBER 2026",
+  "motif": "chart",
+  "titleSize": 46,
+  "title": [
+    "195.000 Wärmepumpen",
+    "im ersten Halbjahr"
+  ],
+  "sub": "+40 % gegenüber dem Vorjahreszeitraum.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "195.000",
+          "label": "Wärmepumpen H1 2026"
+        },
+        {
+          "value": "+40 %",
+          "label": "gegenüber H1 2025"
+        },
+        {
+          "value": "≈2 Mio.",
+          "label": "Bestand in Deutschland",
+          "accent": 2
+        }
+      ]
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "Wichtig zur Einordnung",
+        "rows": [
+          {
+            "label": "Absatz an Großhandel und Fachhandwerk"
+          },
+          {
+            "label": "BWP/BDH-Absatzstatistik, H1 2026"
+          },
+          {
+            "no": true,
+            "label": "Keine Installationszahlen beim Endkunden"
+          }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "chart",
+        "title": "Die Branche",
+        "rows": [
+          {
+            "label": "≈100.000 Beschäftigte"
+          },
+          {
+            "label": "≈3,5 Mrd. € Umsatz"
+          },
+          {
+            "label": "≈1.400 Mitgliedsunternehmen"
+          }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Quelle",
+      "icon": "bulb",
+      "lines": [
+        "BWP-Pressemitteilung vom 06.08.2026, BWP/BDH-Absatzstatistik."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB Germany Editorial Team"
+}

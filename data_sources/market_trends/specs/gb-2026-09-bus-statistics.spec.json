@@ -1,0 +1,79 @@
+{
+  "country": "GB",
+  "countryLabel": "United Kingdom",
+  "month": "SEPTEMBER 2026",
+  "motif": "cal",
+  "titleSize": 46,
+  "title": [
+    "New Boiler Upgrade",
+    "Scheme figures are due"
+  ],
+  "sub": "DESNZ publishes on 27 August 2026, 09:30.",
+  "sections": [
+    {
+      "type": "stats",
+      "items": [
+        {
+          "value": "27 Aug",
+          "label": "DESNZ release",
+          "note": "09:30, confirmed"
+        },
+        {
+          "value": "23 Jul",
+          "label": "last PEL update"
+        },
+        {
+          "value": "528",
+          "label": "PEL-confirmed models here",
+          "accent": 2
+        }
+      ]
+    },
+    [
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "doc",
+        "title": "What lands",
+        "rows": [
+          {
+            "label": "Boiler Upgrade Scheme statistics"
+          },
+          {
+            "label": "Published by DESNZ on gov.uk"
+          },
+          {
+            "label": "Release date confirmed, not provisional"
+          }
+        ]
+      },
+      {
+        "type": "checks",
+        "flex": 1,
+        "icon": "search",
+        "title": "On the PEL",
+        "rows": [
+          {
+            "label": "PEL unchanged since 23 July 2026"
+          },
+          {
+            "label": "MCS id shown on every confirmed match"
+          },
+          {
+            "no": true,
+            "label": "A missing match is our matching, not the list"
+          }
+        ]
+      }
+    ],
+    {
+      "type": "fazit",
+      "title": "Before you quote",
+      "icon": "bulb",
+      "lines": [
+        "Check PEL status and MCS id per model, not per range."
+      ]
+    }
+  ],
+  "footer": "HeatPump DB UK Editorial Team"
+}

@@ -1,71 +1,94 @@
 [
-  {
-    "slug": "2026-08-heizungsmarkt",
-    "date": "2026-08-13",
-    "image": "de-2026-08-heizungsmarkt.webp",
-    "title": "Fast jede zweite neue Heizung ist eine Wärmepumpe",
-    "excerpt": "627.000 Wärmeerzeuger 2025 — der niedrigste Absatz seit 15 Jahren. 299.000 davon waren Wärmepumpen.",
-    "body": [
-      "Der deutsche Heizungsmarkt ist 2025 auf 627.000 abgesetzte Wärmeerzeuger gefallen, den niedrigsten Stand seit 15 Jahren. Im selben Jahr stieg der Wärmepumpen-Absatz um 55 Prozent auf 299.000 Geräte — fast die Hälfte des gesamten Marktes. Zum Vergleich: 2021 lag der Anteil bei 16,6 Prozent.",
-      "Die Reihe zeigt zwei Bewegungen gleichzeitig. Der Gesamtmarkt schwoll 2023 auf 1.308.500 Geräte an — ein Vorzieheffekt vor der Heizungsgesetz-Debatte — und halbierte sich danach fast. Die Wärmepumpe hat diesen Einbruch zwar mitgemacht (2024: 193.000), sich aber schneller erholt. Der steigende Anteil ist damit zum Teil ein Nenner-Effekt: Gas fiel 2025 um 33 Prozent auf 276.500 Geräte, Öl um 74 Prozent auf 22.500.",
-      "Für die Einordnung sind zwei Punkte wichtig. Erstens handelt es sich um Absatzzahlen an Großhandel und Fachhandwerk, nicht um Installationszahlen — eine bundesweite Installationsstatistik veröffentlicht in Deutschland niemand. Zweitens sind Trinkwasser-Wärmepumpen (49.500 Geräte, +20 Prozent) in diesen Zahlen nicht enthalten.",
-      "Der Jahresauftakt 2026 setzt den Trend fort: Im ersten Halbjahr wurden 194.500 Wärmepumpen abgesetzt, 40 Prozent mehr als im Vorjahreszeitraum, bei einem Marktanteil von rund 55 Prozent. Die BWP-Branchenstudie 2026 erwartet im Basisszenario 332.500 Wärmepumpen für 2026 und 369.500 für 2027."
-    ],
-    "sourceNote": "Absatzzahlen: BDH-Absatzstatistik (31.01.2026) und BDH/BWP-Wärmepumpengrafik (01/2026), Halbjahreszahlen vom 11.08.2026. Prognose: BWP-Branchenstudie 2026 (30.03.2026), Basisszenario. Anteile: eigene Berechnung aus den veröffentlichten Werten. Alle Angaben ohne Gewähr.",
-    "titleEn": "Nearly every second new heating system in Germany is a heat pump",
-    "excerptEn": "627,000 heat generators in 2025 — the lowest sales in 15 years. 299,000 of them were heat pumps.",
-    "bodyEn": [
-      "Germany's heating market fell to 627,000 heat generators sold in 2025, the lowest level in 15 years. In the same year heat pump sales rose 55 per cent to 299,000 units — close to half the entire market. For comparison, the share stood at 16.6 per cent in 2021.",
-      "The series shows two movements at once. The total market swelled to 1,308,500 units in 2023, a pull-forward ahead of the heating-law debate, then almost halved. Heat pumps fell with it (193,000 in 2024) but recovered faster. The rising share is therefore partly a denominator effect: gas fell 33 per cent to 276,500 units in 2025 and oil 74 per cent to 22,500.",
-      "Two points matter for reading these figures. First, they are sales to wholesalers and installers, not installations — no body publishes a national installation count for Germany. Second, domestic hot water heat pumps (49,500 units, up 20 per cent) are not included.",
-      "2026 has continued the trend: 194,500 heat pumps were sold in the first half, 40 per cent more than a year earlier, at a market share of roughly 55 per cent. The BWP industry study 2026 expects 332,500 heat pumps in its base case for 2026 and 369,500 for 2027."
-    ],
-    "sourceNoteEn": "Sales figures: BDH sales statistics (31 Jan 2026) and the BDH/BWP heat pump chart (Jan 2026); half-year figures 11 Aug 2026. Forecast: BWP industry study 2026 (30 Mar 2026), base scenario. Shares: our own calculation from the published values. All figures without warranty."
-  },
-  {
-    "slug": "2026-08-marktrekord",
-    "date": "2026-08-12",
-    "image": "de-2026-08-marktrekord.webp",
-    "title": "Wärmepumpe ist das meistverkaufte Heizsystem Deutschlands",
-    "excerpt": "299.000 verkaufte Heizungswärmepumpen 2025, ein Plus von 55 Prozent — und trotzdem bleibt das Regierungsziel weit entfernt.",
-    "body": [
-      "Der deutsche Wärmepumpenmarkt hat sich 2025 deutlich erholt: rund 299.000 verkaufte Heizungswärmepumpen bedeuten ein Plus von 55 Prozent gegenüber dem Vorjahr. Damit ist 2025 nach dem Rekordjahr 2023 das zweitbeste Absatzjahr — und die Wärmepumpe mit 48 Prozent Anteil das meistverkaufte Heizsystem am gesamten Heizungsmarkt.",
-      "Luft/Wasser-Geräte tragen diesen Markt praktisch allein: Sie machten 2025 rund 95 Prozent der Verkäufe aus. Als Treiber der Erholung gelten stabilisierte Förderbedingungen, mehr Planungssicherheit für Eigentümer und steigende CO₂-Kosten für fossile Brennstoffe — nachdem 2024 unter politischer Unsicherheit eingebrochen war.",
-      "Für 2026 erwartet der Bundesverband Wärmepumpe (BWP) rund 332.500 Geräte im Basisszenario und bis zu 410.000 im optimistischen Fall. Der Bestand lag Ende 2025 bei etwa 1,9 Millionen Anlagen und dürfte Anfang Mai 2026 die Zwei-Millionen-Marke überschritten haben.",
-      "Die Einordnung bleibt nüchtern: Das Ziel von 600.000 Installationen pro Jahr verlangt gegenüber dem heutigen Niveau annähernd eine Verdopplung. Branchenvertreter nennen dafür drei Bedingungen — verlässliche politische Rahmenbedingungen, eine ausreichende Fachkräftebasis und ein besseres Strom-Gas-Preisverhältnis."
-    ],
-    "sourceNote": "Marktzahlen: Bundesverband Wärmepumpe (BWP) und Statista, Stand August 2026. Alle Angaben ohne Gewähr.",
-    "titleEn": "The heat pump is now Germany's best-selling heating system",
-    "excerptEn": "299,000 heat pumps sold in 2025, up 55 per cent — and the government target still looks a long way off.",
-    "bodyEn": [
-      "The German heat pump market recovered sharply in 2025: around 299,000 heating heat pumps were sold, 55 per cent more than the year before. That makes 2025 the second-best sales year after the record of 2023 — and with a 48 per cent share, the heat pump is now the best-selling heating system across the whole heating market.",
-      "Air-to-water units carry that market almost single-handedly, accounting for roughly 95 per cent of 2025 sales. The recovery is attributed to stabilised funding conditions, greater planning certainty for owners and rising CO₂ costs for fossil fuels — after 2024 fell back under policy uncertainty.",
-      "For 2026 the German Heat Pump Association (BWP) expects about 332,500 units in its base case and up to 410,000 in an optimistic one. The installed base stood at roughly 1.9 million at the end of 2025 and is expected to have passed two million in early May 2026.",
-      "The sober reading: the target of 600,000 installations a year would require installation rates to roughly double from today. Industry representatives name three conditions for that — reliable policy, a sufficient skilled-trade base, and a better electricity-to-gas price ratio."
-    ],
-    "sourceNoteEn": "Market figures: German Heat Pump Association (BWP) and Statista, as of August 2026. All figures without warranty."
-  },
-  {
-    "slug": "2026-07-beg-reform",
-    "date": "2026-07-21",
-    "title": "BEG-Reform für Wärmepumpen ab 21. Juli 2026",
-    "image": "de-2026-07-beg-reform.webp",
-    "excerpt": "Die Förderung bleibt zentral — aber der Schwerpunkt verlagert sich von Technik-Boni hin zu einkommensabhängiger Unterstützung.",
-    "body": [
-      "Zum 21. Juli 2026 ändert sich die Struktur der Wärmepumpen-Förderung in der Bundesförderung für effiziente Gebäude (BEG). Entscheidend ist: Die Förderung wird nicht zurückgefahren und verschwindet nicht — ihr Schwerpunkt wandert von Boni für die Technik hin zu einer sozial gezielteren, einkommensabhängigen Unterstützung.",
-      "Konkret sinkt der förderfähige Kostenrahmen für das erste Wohnhaus von 30.000 € auf 28.000 €. Der Klimageschwindigkeitsbonus wird von 20 % auf 16 % reduziert, und der bisherige Effizienzbonus von 5 % entfällt.",
-      "Neu ist ein gestaffelter Einkommensbonus: Haushalte mit einem zu versteuernden Einkommen bis 30.000 € erhalten zusätzlich 40 %, bis 40.000 € noch 30 % und bis 50.000 € noch 10 %. Hinzu kommt ein Familienzuschlag von +10.000 € auf die Einkommensgrenze. Für selbstnutzende Eigentümer mit niedrigem Einkommen sind damit in der Summe bis zu 80 % Förderung möglich.",
-      "Für Fachbetriebe bedeutet die Reform vor allem eines: Die Beratung wird wichtiger. Nicht mehr allein die Produkteffizienz entscheidet über die optimale Förderung, sondern die Kombination aus Einkommen, Familiensituation und Gesamtkosten der Installation."
-    ],
-    "sourceNote": "Alle Angaben ohne Gewähr — maßgeblich sind die offiziellen Förderbedingungen von KfW und BAFA. Stand: Juli 2026.",
-    "titleEn": "BEG reform for heat pumps from 21 July 2026",
-    "excerptEn": "Funding stays central — but the emphasis shifts from technology bonuses to income-related support.",
-    "bodyEn": [
-      "On 21 July 2026 the structure of heat pump funding under Germany's Federal Funding for Efficient Buildings (BEG) changes. The decisive point: funding is not being wound down and is not disappearing — its emphasis moves from bonuses for the technology toward socially targeted, income-related support.",
-      "In concrete terms, the eligible cost ceiling for the first residential building falls from €30,000 to €28,000. The climate speed bonus is reduced from 20% to 16%, and the previous efficiency bonus of 5% is discontinued.",
-      "New is a tiered income bonus: households with taxable income up to €30,000 receive an additional 40%, up to €40,000 a further 30%, and up to €50,000 a further 10%. On top of this comes a family supplement of +€10,000 on the income threshold. For owner-occupiers on a low income, this makes a total of up to 80% funding possible.",
-      "For trade businesses, the reform means one thing above all: advice becomes more important. Product efficiency alone no longer determines the optimal funding — it is the combination of income, family situation and the total cost of the installation."
-    ],
-    "sourceNoteEn": "All figures without warranty — the official funding conditions of KfW and BAFA prevail. As of July 2026."
-  }
+ {
+  "slug": "2026-09-halbjahr",
+  "date": "2026-08-25",
+  "image": "de-2026-09-halbjahr.webp",
+  "title": "195.000 Wärmepumpen im ersten Halbjahr",
+  "excerpt": "Der Absatz stieg im ersten Halbjahr 2026 um 40 Prozent auf 195.000 Geräte. Entscheidend für die Einordnung: es sind Absatzzahlen an den Handel, keine Installationszahlen.",
+  "body": [
+   "Der Bundesverband Wärmepumpe hat für das erste Halbjahr 2026 einen Absatz von 195.000 Wärmepumpen gemeldet — ein Plus von 40 Prozent gegenüber dem Vorjahreszeitraum. Die Zahl stammt aus der gemeinsamen Absatzstatistik von BWP und BDH.",
+   "Für die Einordnung ist eine Unterscheidung wesentlich, die leicht überlesen wird: es handelt sich um Lieferungen der Hersteller an Großhandel und Fachhandwerk. Es sind ausdrücklich keine Installationszahlen beim Endkunden. Wer die Zahl in Kundengesprächen verwendet, sollte diesen Zusatz mitliefern.",
+   "Zum Umfeld nennt der Verband einen Bestand von knapp zwei Millionen Wärmepumpen in Deutschland, rund 100.000 Beschäftigte in der Branche und einen Jahresumsatz von etwa 3,5 Milliarden Euro bei rund 1.400 Mitgliedsunternehmen.",
+   "Als Treiber benennt der BWP das Bewusstsein für Risiken der fossilen Versorgung sowie die Bundesförderung für effiziente Gebäude, deren verlässliche Fortführung bis 2030 der Verband ausdrücklich begrüßt."
+  ],
+  "sourceNote": "Quelle: BWP-Pressemitteilung vom 06.08.2026, BWP/BDH-Absatzstatistik. Absatz an den Handel, keine Installationszahlen.",
+  "titleEn": "195,000 heat pumps in the first half-year",
+  "excerptEn": "Sales rose 40 percent in H1 2026 to 195,000 units. The qualifier that matters: these are deliveries to the trade, not installations.",
+  "bodyEn": [
+   "The German Heat Pump Association (BWP) reports 195,000 heat pumps sold in the first half of 2026 — up 40 percent on the same period last year. The figure comes from the joint BWP/BDH sales statistics.",
+   "One distinction matters for reading it correctly, and is easily missed: these are manufacturer deliveries to wholesalers and the specialist trade. They are explicitly not installations at end customers. Anyone quoting the number to a client should carry that qualifier with it.",
+   "For context, the association puts the installed base at just under two million heat pumps in Germany, the sector at around 100,000 people and roughly €3.5bn in annual turnover across some 1,400 member companies.",
+   "BWP attributes the growth to awareness of fossil-supply risk and to the federal building-efficiency programme, whose reliable continuation to 2030 the association explicitly welcomes."
+  ],
+  "sourceNoteEn": "Source: BWP press release of 06.08.2026, BWP/BDH sales statistics. Sales to the trade, not installation figures."
+ },
+ {
+  "slug": "2026-08-heizungsmarkt",
+  "date": "2026-08-13",
+  "image": "de-2026-08-heizungsmarkt.webp",
+  "title": "Fast jede zweite neue Heizung ist eine Wärmepumpe",
+  "excerpt": "627.000 Wärmeerzeuger 2025 — der niedrigste Absatz seit 15 Jahren. 299.000 davon waren Wärmepumpen.",
+  "body": [
+   "Der deutsche Heizungsmarkt ist 2025 auf 627.000 abgesetzte Wärmeerzeuger gefallen, den niedrigsten Stand seit 15 Jahren. Im selben Jahr stieg der Wärmepumpen-Absatz um 55 Prozent auf 299.000 Geräte — fast die Hälfte des gesamten Marktes. Zum Vergleich: 2021 lag der Anteil bei 16,6 Prozent.",
+   "Die Reihe zeigt zwei Bewegungen gleichzeitig. Der Gesamtmarkt schwoll 2023 auf 1.308.500 Geräte an — ein Vorzieheffekt vor der Heizungsgesetz-Debatte — und halbierte sich danach fast. Die Wärmepumpe hat diesen Einbruch zwar mitgemacht (2024: 193.000), sich aber schneller erholt. Der steigende Anteil ist damit zum Teil ein Nenner-Effekt: Gas fiel 2025 um 33 Prozent auf 276.500 Geräte, Öl um 74 Prozent auf 22.500.",
+   "Für die Einordnung sind zwei Punkte wichtig. Erstens handelt es sich um Absatzzahlen an Großhandel und Fachhandwerk, nicht um Installationszahlen — eine bundesweite Installationsstatistik veröffentlicht in Deutschland niemand. Zweitens sind Trinkwasser-Wärmepumpen (49.500 Geräte, +20 Prozent) in diesen Zahlen nicht enthalten.",
+   "Der Jahresauftakt 2026 setzt den Trend fort: Im ersten Halbjahr wurden 194.500 Wärmepumpen abgesetzt, 40 Prozent mehr als im Vorjahreszeitraum, bei einem Marktanteil von rund 55 Prozent. Die BWP-Branchenstudie 2026 erwartet im Basisszenario 332.500 Wärmepumpen für 2026 und 369.500 für 2027."
+  ],
+  "sourceNote": "Absatzzahlen: BDH-Absatzstatistik (31.01.2026) und BDH/BWP-Wärmepumpengrafik (01/2026), Halbjahreszahlen vom 11.08.2026. Prognose: BWP-Branchenstudie 2026 (30.03.2026), Basisszenario. Anteile: eigene Berechnung aus den veröffentlichten Werten. Alle Angaben ohne Gewähr.",
+  "titleEn": "Nearly every second new heating system in Germany is a heat pump",
+  "excerptEn": "627,000 heat generators in 2025 — the lowest sales in 15 years. 299,000 of them were heat pumps.",
+  "bodyEn": [
+   "Germany's heating market fell to 627,000 heat generators sold in 2025, the lowest level in 15 years. In the same year heat pump sales rose 55 per cent to 299,000 units — close to half the entire market. For comparison, the share stood at 16.6 per cent in 2021.",
+   "The series shows two movements at once. The total market swelled to 1,308,500 units in 2023, a pull-forward ahead of the heating-law debate, then almost halved. Heat pumps fell with it (193,000 in 2024) but recovered faster. The rising share is therefore partly a denominator effect: gas fell 33 per cent to 276,500 units in 2025 and oil 74 per cent to 22,500.",
+   "Two points matter for reading these figures. First, they are sales to wholesalers and installers, not installations — no body publishes a national installation count for Germany. Second, domestic hot water heat pumps (49,500 units, up 20 per cent) are not included.",
+   "2026 has continued the trend: 194,500 heat pumps were sold in the first half, 40 per cent more than a year earlier, at a market share of roughly 55 per cent. The BWP industry study 2026 expects 332,500 heat pumps in its base case for 2026 and 369,500 for 2027."
+  ],
+  "sourceNoteEn": "Sales figures: BDH sales statistics (31 Jan 2026) and the BDH/BWP heat pump chart (Jan 2026); half-year figures 11 Aug 2026. Forecast: BWP industry study 2026 (30 Mar 2026), base scenario. Shares: our own calculation from the published values. All figures without warranty."
+ },
+ {
+  "slug": "2026-08-marktrekord",
+  "date": "2026-08-12",
+  "image": "de-2026-08-marktrekord.webp",
+  "title": "Wärmepumpe ist das meistverkaufte Heizsystem Deutschlands",
+  "excerpt": "299.000 verkaufte Heizungswärmepumpen 2025, ein Plus von 55 Prozent — und trotzdem bleibt das Regierungsziel weit entfernt.",
+  "body": [
+   "Der deutsche Wärmepumpenmarkt hat sich 2025 deutlich erholt: rund 299.000 verkaufte Heizungswärmepumpen bedeuten ein Plus von 55 Prozent gegenüber dem Vorjahr. Damit ist 2025 nach dem Rekordjahr 2023 das zweitbeste Absatzjahr — und die Wärmepumpe mit 48 Prozent Anteil das meistverkaufte Heizsystem am gesamten Heizungsmarkt.",
+   "Luft/Wasser-Geräte tragen diesen Markt praktisch allein: Sie machten 2025 rund 95 Prozent der Verkäufe aus. Als Treiber der Erholung gelten stabilisierte Förderbedingungen, mehr Planungssicherheit für Eigentümer und steigende CO₂-Kosten für fossile Brennstoffe — nachdem 2024 unter politischer Unsicherheit eingebrochen war.",
+   "Für 2026 erwartet der Bundesverband Wärmepumpe (BWP) rund 332.500 Geräte im Basisszenario und bis zu 410.000 im optimistischen Fall. Der Bestand lag Ende 2025 bei etwa 1,9 Millionen Anlagen und dürfte Anfang Mai 2026 die Zwei-Millionen-Marke überschritten haben.",
+   "Die Einordnung bleibt nüchtern: Das Ziel von 600.000 Installationen pro Jahr verlangt gegenüber dem heutigen Niveau annähernd eine Verdopplung. Branchenvertreter nennen dafür drei Bedingungen — verlässliche politische Rahmenbedingungen, eine ausreichende Fachkräftebasis und ein besseres Strom-Gas-Preisverhältnis."
+  ],
+  "sourceNote": "Marktzahlen: Bundesverband Wärmepumpe (BWP) und Statista, Stand August 2026. Alle Angaben ohne Gewähr.",
+  "titleEn": "The heat pump is now Germany's best-selling heating system",
+  "excerptEn": "299,000 heat pumps sold in 2025, up 55 per cent — and the government target still looks a long way off.",
+  "bodyEn": [
+   "The German heat pump market recovered sharply in 2025: around 299,000 heating heat pumps were sold, 55 per cent more than the year before. That makes 2025 the second-best sales year after the record of 2023 — and with a 48 per cent share, the heat pump is now the best-selling heating system across the whole heating market.",
+   "Air-to-water units carry that market almost single-handedly, accounting for roughly 95 per cent of 2025 sales. The recovery is attributed to stabilised funding conditions, greater planning certainty for owners and rising CO₂ costs for fossil fuels — after 2024 fell back under policy uncertainty.",
+   "For 2026 the German Heat Pump Association (BWP) expects about 332,500 units in its base case and up to 410,000 in an optimistic one. The installed base stood at roughly 1.9 million at the end of 2025 and is expected to have passed two million in early May 2026.",
+   "The sober reading: the target of 600,000 installations a year would require installation rates to roughly double from today. Industry representatives name three conditions for that — reliable policy, a sufficient skilled-trade base, and a better electricity-to-gas price ratio."
+  ],
+  "sourceNoteEn": "Market figures: German Heat Pump Association (BWP) and Statista, as of August 2026. All figures without warranty."
+ },
+ {
+  "slug": "2026-07-beg-reform",
+  "date": "2026-07-21",
+  "title": "BEG-Reform für Wärmepumpen ab 21. Juli 2026",
+  "image": "de-2026-07-beg-reform.webp",
+  "excerpt": "Die Förderung bleibt zentral — aber der Schwerpunkt verlagert sich von Technik-Boni hin zu einkommensabhängiger Unterstützung.",
+  "body": [
+   "Zum 21. Juli 2026 ändert sich die Struktur der Wärmepumpen-Förderung in der Bundesförderung für effiziente Gebäude (BEG). Entscheidend ist: Die Förderung wird nicht zurückgefahren und verschwindet nicht — ihr Schwerpunkt wandert von Boni für die Technik hin zu einer sozial gezielteren, einkommensabhängigen Unterstützung.",
+   "Konkret sinkt der förderfähige Kostenrahmen für das erste Wohnhaus von 30.000 € auf 28.000 €. Der Klimageschwindigkeitsbonus wird von 20 % auf 16 % reduziert, und der bisherige Effizienzbonus von 5 % entfällt.",
+   "Neu ist ein gestaffelter Einkommensbonus: Haushalte mit einem zu versteuernden Einkommen bis 30.000 € erhalten zusätzlich 40 %, bis 40.000 € noch 30 % und bis 50.000 € noch 10 %. Hinzu kommt ein Familienzuschlag von +10.000 € auf die Einkommensgrenze. Für selbstnutzende Eigentümer mit niedrigem Einkommen sind damit in der Summe bis zu 80 % Förderung möglich.",
+   "Für Fachbetriebe bedeutet die Reform vor allem eines: Die Beratung wird wichtiger. Nicht mehr allein die Produkteffizienz entscheidet über die optimale Förderung, sondern die Kombination aus Einkommen, Familiensituation und Gesamtkosten der Installation."
+  ],
+  "sourceNote": "Alle Angaben ohne Gewähr — maßgeblich sind die offiziellen Förderbedingungen von KfW und BAFA. Stand: Juli 2026.",
+  "titleEn": "BEG reform for heat pumps from 21 July 2026",
+  "excerptEn": "Funding stays central — but the emphasis shifts from technology bonuses to income-related support.",
+  "bodyEn": [
+   "On 21 July 2026 the structure of heat pump funding under Germany's Federal Funding for Efficient Buildings (BEG) changes. The decisive point: funding is not being wound down and is not disappearing — its emphasis moves from bonuses for the technology toward socially targeted, income-related support.",
+   "In concrete terms, the eligible cost ceiling for the first residential building falls from €30,000 to €28,000. The climate speed bonus is reduced from 20% to 16%, and the previous efficiency bonus of 5% is discontinued.",
+   "New is a tiered income bonus: households with taxable income up to €30,000 receive an additional 40%, up to €40,000 a further 30%, and up to €50,000 a further 10%. On top of this comes a family supplement of +€10,000 on the income threshold. For owner-occupiers on a low income, this makes a total of up to 80% funding possible.",
+   "For trade businesses, the reform means one thing above all: advice becomes more important. Product efficiency alone no longer determines the optimal funding — it is the combination of income, family situation and the total cost of the installation."
+  ],
+  "sourceNoteEn": "All figures without warranty — the official funding conditions of KfW and BAFA prevail. As of July 2026."
+ }
 ]
