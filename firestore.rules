@@ -166,7 +166,10 @@ service cloud.firestore {
         (
           request.resource.data.diff(resource.data).affectedKeys()
             .hasOnly(['firstName', 'lastName', 'companyName', 'companyType',
-                      'companyTypeOther', 'companyCity', 'companyWebsite'])
+                      'companyTypeOther', 'companyCity', 'companyWebsite',
+                      // Job function, asked in the onboarding sheet and
+                      // editable on the Account page (2026-08-31).
+                      'jobRole'])
         ) ||
         // Free-access grant redemption: an admin-issued grant for this email
         // may self-activate the account with exactly the granted plan/window.

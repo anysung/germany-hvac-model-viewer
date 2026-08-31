@@ -19,6 +19,7 @@ import { shortDate } from '../model';
 import { Organization, SupportTicket, TicketCategory, User } from '../../types';
 import { createTicket, getMyTickets, userReply, deleteMyTicket } from '../../services/supportService';
 import { COMPANY_TYPES, COMPANY_TYPE_OTHER_MAX, normalizeCompanyType } from '../../config/companyTypes';
+import { JOB_ROLES, jobRoleLabel } from '../../config/jobRoles';
 import { LEGAL_ROUTES, LegalDoc } from '../../config/legal';
 import { LEGAL_NAV } from '../../legal/LegalPage';
 import { normalizeWebsite, trim, websiteHref } from '../../utils/profile';
@@ -227,6 +228,10 @@ export const PersonalProfileCard: React.FC<{ app: HpApp; org: Organization | nul
   const [editing, setEditing] = useState(false);
   const [first, setFirst] = useState(user.firstName ?? '');
   const [last, setLast] = useState(user.lastName ?? '');
+  /* Job function — the third onboarding question, editable here for anyone who
+     skipped the sheet or changed roles. Optional: an empty value is saved as
+     empty rather than blocking the form. */
+  const [role, setRole] = useState(user.jobRole ?? '');
   const [busy, setBusy] = useState(false);
 
   const typeCode = normalizeCompanyType(org?.companyType);
@@ -237,8 +242,9 @@ export const PersonalProfileCard: React.FC<{ app: HpApp; org: Organization | nul
     if (isPreview) { app.notify(t.account.previewOnly); setEditing(false); return; }
     setBusy(true);
     try {
-      await updateMyProfile(user.id, { firstName: trim(first), lastName: trim(last) });
-      app.patchUser({ firstName: trim(first), lastName: trim(last) });
+      const patch = { firstName: trim(first), lastName: trim(last), jobRole: role };
+      await updateMyProfile(user.id, patch);
+      app.patchUser(patch);
       app.notify(t.account.savedOk);
       setEditing(false);
     } catch { app.notify(t.account.saveFailed); } finally { setBusy(false); }
@@ -251,7 +257,8 @@ export const PersonalProfileCard: React.FC<{ app: HpApp; org: Organization | nul
       {!editing ? (
         <>
           <Row label={t.account.fFirstName} value={user.firstName} />
-          <Row label={t.account.fLastName} value={user.lastName} last />
+          <Row label={t.account.fLastName} value={user.lastName} />
+          <Row label={t.account.fJobRole} value={user.jobRole ? jobRoleLabel(user.jobRole, app.lang) : '—'} last />
           <span className="hp-press" onClick={() => setEditing(true)} style={{ fontSize: 12.5, color: '#0066cc', cursor: 'pointer', margin: '8px 0 4px' }}>
             {t.account.editProfile}
           </span>
@@ -262,6 +269,11 @@ export const PersonalProfileCard: React.FC<{ app: HpApp; org: Organization | nul
           <input style={input} value={first} onChange={e => setFirst(e.target.value)} />
           <label style={sectionLabel}>{t.account.fLastName}</label>
           <input style={input} value={last} onChange={e => setLast(e.target.value)} />
+          <label style={sectionLabel}>{t.account.fJobRole}</label>
+          <select style={input} value={role} onChange={e => setRole(e.target.value)}>
+            <option value="">—</option>
+            {JOB_ROLES.map(code => <option key={code} value={code}>{jobRoleLabel(code, app.lang)}</option>)}
+          </select>
           <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
             <span className="hp-press" onClick={save} style={{ ...btn(true), opacity: busy ? 0.6 : 1 }}>{t.account.saveBtn}</span>
             <span className="hp-press" onClick={() => setEditing(false)} style={btn()}>{t.account.cancelBtn}</span>

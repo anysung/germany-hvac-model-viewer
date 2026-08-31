@@ -13,7 +13,7 @@ import { getMyOrg } from './services/subscriptionService';
 import { Organization } from './types';
 import {
   SUB_PLANS, SUB_PLAN_CODES, SUB_PLAN_NAMES, BILLING_TERMS, TERM_NAMES,
-  formatEur, perMonth, checkoutConfigured, BillingTerm, SubPlanCode,
+  formatEur, perMonth, checkoutConfigured, BillingTerm, SubPlanCode, isTeamPlan,
 } from './config/subscriptionPlans';
 import { openCheckout, captureCouponFromUrl } from './services/paddleService';
 import { HpiqApp } from './hpiq/HpiqApp';
@@ -30,7 +30,7 @@ import { PUBLIC_ENV } from './config/env';
 import { REGISTRATION_OPEN, REGISTRATION_REOPEN_DATE } from './config/registration';
 import { captureSignupRef } from './services/signupRef';
 import { MaintenanceGate } from './components/MaintenanceGate';
-import { BillingProfileForm, billingProfileComplete } from './components/BillingProfileForm';
+import { TeamNameGate, nameNeededForCheckout, OnboardingSheet, hasDisplayName } from './components/OnboardingSheet';
 
 // Attribution: catch ?ref= before any routing can strip it.
 captureSignupRef();
@@ -110,13 +110,13 @@ const SubscribeGate: React.FC<{
   const [busy, setBusy] = useState(false);
   const hadTrial = !!user.trialEndsAt;
 
-  // Ask for the account details we still lack BEFORE handing over to Paddle —
-  // once, and only when something is missing (BillingProfileForm explains why
-  // this is the moment rather than signup or mid-trial).
+  // The only thing that may still stop a checkout: a Team plan bought by
+  // someone with no name on file (see nameNeededForCheckout). Everything else
+  // Paddle collects itself.
   const [profileFor, setProfileFor] = useState<SubPlanCode | null>(null);
 
   const subscribe = async (plan: SubPlanCode) => {
-    if (!billingProfileComplete(user)) { setProfileFor(plan); return; }
+    if (nameNeededForCheckout(user, isTeamPlan(plan))) { setProfileFor(plan); return; }
     try { await openCheckout(user, plan, term); }
     catch { alert(t.subReqComingSoon); }
   };
@@ -195,7 +195,7 @@ const SubscribeGate: React.FC<{
         <LegalFooter language={language} dark />
       </GlassCard>
       {profileFor && (
-        <BillingProfileForm
+        <TeamNameGate
           language={language}
           user={user}
           onSaved={(patch) => {
@@ -217,6 +217,11 @@ const SubscribeGate: React.FC<{
 const AppInner: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>(IS_ADMIN_BUILD ? 'LOGIN' : 'LANDING');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  /* Onboarding sheet — the three questions, shown once. The "seen" mark is
+     per-device localStorage rather than a profile field on purpose: it is a UI
+     convenience, and giving it a Firestore field would mean another writable
+     key in the security rules for something that does not need protecting. */
+  const [showOnboarding, setShowOnboarding] = useState(false);
   // One-email-one-country redirect screen: { country } for a login/social block
   // (registered elsewhere), or null-country for a signup with an existing email.
   const [mismatch, setMismatch] = useState<{ country: string | null } | null>(null);
@@ -599,8 +604,11 @@ const AppInner: React.FC = () => {
       // User closed/cancelled the popup — not an error worth alerting.
       if (err?.code === 'auth/popup-closed-by-user' || err?.code === 'auth/cancelled-popup-request') return;
       if (err?.message === 'terms-declined') { alert(t.termsDeclined); return; }
-      // Social is a login method only — an unknown identity is not a signup.
-      if (err?.message === 'no-account') { alert(t.socialNoAccount); return; }
+      // Kill switch: social creates accounts now, so it has to be closable too.
+      if (err?.message === 'registration-closed') { setCurrentView('SIGNUP'); return; }
+      // Apple can be set to withhold the address; without one there is no
+      // account key and no way to reach the person.
+      if (err?.message === 'no-email-from-provider') { alert(t.socialNoEmail); return; }
       if (!routeAuthError(err)) alert(err.message);
     } finally {
       setIsLoading(false);
@@ -623,7 +631,8 @@ const AppInner: React.FC = () => {
         // 'active' → onUserChange routes into the app; null → nothing pending.
       } catch (err: any) {
         if (err?.message === 'terms-declined') { alert(t.termsDeclined); return; }
-        if (err?.message === 'no-account') { alert(t.socialNoAccount); return; }
+        if (err?.message === 'registration-closed') { setCurrentView('SIGNUP'); return; }
+        if (err?.message === 'no-email-from-provider') { alert(t.socialNoEmail); return; }
         if (!routeAuthError(err) && err?.message) alert(err.message);
       }
     })();
@@ -926,9 +935,6 @@ const AppInner: React.FC = () => {
             <span className="text-xs text-white/40">{t.orContinueWith}</span>
             <span className="flex-1 h-px bg-white/10" />
           </div>
-          {/* Read this BEFORE reaching for a button, not after — social signs
-              you in, it does not sign you up. */}
-          <p className="mb-3 text-center text-xs text-white/40">{t.socialLoginOnly}</p>
           <div className="flex flex-col gap-3">
             <button type="button" onClick={() => handleSocialLogin('google')} disabled={isLoading} className={socialBtn}>
               <GoogleIcon /> {t.continueGoogle}
@@ -996,6 +1002,24 @@ const AppInner: React.FC = () => {
         <GlassCard className="w-full max-w-2xl p-8 hp-fade-up">
           <button onClick={() => setCurrentView('LANDING')} className="text-white/40 hover:text-white text-sm mb-6 transition-colors">← {t.back}</button>
           <h2 className="text-2xl font-bold text-white mb-1">{t.createAccount}</h2>
+          {/* Providers first. Both return a verified email, so these paths skip
+              the verification mail entirely and land straight in the product —
+              which is the whole reason social signup was reopened. The email
+              form stays visible below rather than behind a second click: it is
+              still the path an invited colleague and every existing test use. */}
+          <div className="flex flex-col gap-3 mt-5" data-testid="signup-providers">
+            <button type="button" onClick={() => handleSocialLogin('google')} disabled={isLoading} className={socialBtn} data-testid="su-google">
+              <GoogleIcon /> {t.continueGoogle}
+            </button>
+            <button type="button" onClick={() => handleSocialLogin('apple')} disabled={isLoading} className={socialBtn} data-testid="su-apple">
+              <AppleIcon /> {t.continueApple}
+            </button>
+          </div>
+          <div className="flex items-center gap-3 mt-6 mb-5">
+            <span className="flex-1 h-px bg-white/10" />
+            <span className="text-xs text-white/40">{t.orContinueWith}</span>
+            <span className="flex-1 h-px bg-white/10" />
+          </div>
           <SignupForm t={t} language={language} isLoading={isLoading} onSubmit={handleSignup} />
           <p className="mt-6 text-center text-sm text-white/45">
             {t.authHaveAccount}{' '}
@@ -1114,6 +1138,16 @@ const AppInner: React.FC = () => {
       />
     );
   }
+  /* Show it when the account has answered NOTHING yet — a profile filled by
+     an invitation or an earlier session is left alone. */
+  const onboardingKey = currentUser ? `hpdb.onboarded.${currentUser.id}` : '';
+  const onboardingDue = !!currentUser
+    && currentView === 'APP'
+    && !hasDisplayName(currentUser)
+    && !currentUser.companyType
+    && !currentUser.jobRole
+    && (() => { try { return !localStorage.getItem(onboardingKey); } catch { return false; } })();
+
   if (currentView === 'APP' && currentUser) {
     // Day-8 gate (data-driven: only accounts the server stamped with a window
     // can ever expire; admins and legacy accounts never see this). The server
@@ -1134,6 +1168,7 @@ const AppInner: React.FC = () => {
     // HeatPump DB shell owns its own language toggle (DE|EN in the global nav) —
     // no floating switcher overlay here.
     return (
+      <>
       <HpiqApp
         user={currentUser}
         onLogout={handleLogout}
@@ -1145,6 +1180,22 @@ const AppInner: React.FC = () => {
         setLanguage={setLanguage}
         sessionGraceUntil={sessionGraceUntil}
       />
+      {(showOnboarding || onboardingDue) && (
+        <OnboardingSheet
+          language={language}
+          user={currentUser}
+          onDone={(patch) => {
+            try { localStorage.setItem(onboardingKey, '1'); } catch { /* private mode */ }
+            setShowOnboarding(false);
+            setCurrentUser({ ...currentUser, ...patch } as User);
+          }}
+          onSkip={() => {
+            try { localStorage.setItem(onboardingKey, '1'); } catch { /* private mode */ }
+            setShowOnboarding(false);
+          }}
+        />
+      )}
+      </>
     );
   }
 

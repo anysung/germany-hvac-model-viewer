@@ -234,6 +234,12 @@ export interface NewsItem {
    *  on their own date rather than waiting for someone to unpin them. Absent =
    *  pinned indefinitely (how the first editions were written). */
   pinnedUntil?: string;
+  /** The article's full ordered picture set, when it has more than one — an
+   *  infographic series, a before/after pair. `imageUrl` stays the LEAD image
+   *  (cards, social previews, the PDF), and images[0] is the same file; a
+   *  reader with one picture has no `images` at all and renders as it always
+   *  did. Shown by src/hpiq/NewsGallery.tsx. */
+  images?: string[];
   /** Keeps this article's imageUrl out of the deterministic pool rotation.
    *  scripts/news/backfill-news-images.mjs reassigns EVERY article's image on
    *  each run; an article whose picture is the point (a report cover) must be
@@ -304,7 +310,9 @@ export type Language = 'en' | 'de' | 'fr' | 'pl' | 'it';
  * ('Installer', 'Private Individual'); normalizeCompanyType() maps those on read.
  */
 export type CompanyType = string;
-/** @deprecated Job role is no longer collected. Legacy documents may still carry it. */
+/** Job function — collected again from 2026-08-31 in the onboarding sheet, and
+ *  editable on the Account page. Always optional: the sheet can be skipped.
+ *  Codes live in config/jobRoles.ts. */
 export type JobRole = string;
 
 /**

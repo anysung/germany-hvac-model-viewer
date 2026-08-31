@@ -30,6 +30,7 @@ import {
 import { auth, db } from '../firebase';
 import { User, ActivityLog, UserSubscription, UserGrant } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
+import { REGISTRATION_OPEN } from '../config/registration';
 import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey, getOrg } from './subscriptionService';
 import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
 import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
@@ -341,7 +342,7 @@ export const registerInvitedMember = async (
 /** Self-service profile edit (own document, whitelisted fields only). */
 export const updateMyProfile = async (
   uid: string,
-  patch: Partial<Pick<User, 'firstName' | 'lastName' | 'companyName' | 'companyType' | 'companyTypeOther' | 'companyCity' | 'companyWebsite'>>,
+  patch: Partial<Pick<User, 'firstName' | 'lastName' | 'companyName' | 'companyType' | 'companyTypeOther' | 'companyCity' | 'companyWebsite' | 'jobRole'>>,
 ): Promise<void> => {
   // Send '' rather than dropping cleared optional fields, so the user can empty them.
   const clean: Record<string, any> = {};
@@ -486,25 +487,29 @@ export const unlinkSignInProvider = async (providerId: string): Promise<void> =>
   await unlink(u, providerId);
 };
 
-// --- Social login (Google / Apple via Firebase popup) ---
-// SOCIAL IS A LOGIN METHOD, NOT A REGISTRATION METHOD (owner decision,
-// 2026-08-04). This is a B2B service: the account IS the company email — team
-// seats, invoices and the once-per-email trial all hang off it, and there is
-// deliberately no way to change it afterwards (see updateMyProfile's field
-// whitelist). Signing up with a personal Google identity therefore produces an
-// account that cannot be corrected without deleting it, and deletion burns the
-// email's one free trial for a year. So an unknown provider identity is
-// REFUSED here and told to register with a company email first; Google/Apple
-// are then linked from the Account page, where the profile already exists.
+// --- Social sign-in (Google / Apple via Firebase popup) ---
+// SOCIAL CREATES ACCOUNTS (owner decision, 2026-08-31 — reversing 2026-08-04).
+// The 08-04 rule made social a login-only method because the account IS the
+// company email and there is no way to change it afterwards, so a personal
+// Google identity produced an uncorrectable account. What settled it: both
+// providers return a VERIFIED email on first authorisation, that email is what
+// we register, and a wrong one is recoverable by deleting the account before
+// it matters. Weighed against a signup funnel that produced one registration,
+// the friction cost more than the risk.
 //
-// This also makes REGISTRATION_OPEN meaningful: email/password signup is now
-// the only path that creates an account, so the one flag closes all of them.
+// Two things follow, and both are load-bearing:
+//  1. REGISTRATION_OPEN is checked HERE, not only in the UI. Social is now a
+//     second account-creating path, and a kill switch that only hides a form
+//     would leave it wide open.
+//  2. Apple returns the email and the display name ONLY on the first
+//     authorisation. finishProviderSignIn persists them at that moment —
+//     there is no second chance to read them.
 export const loginWithProvider = async (
   providerName: 'google' | 'apple',
-  /** Unused since social registration was removed — kept so the redirect and
-   *  popup callers keep the same shape as the email flow. */
+  /** Shown to a first-time identity before the account is created. Declining
+   *  aborts the signup — consent is a precondition, not a follow-up. */
   confirmTerms?: () => Promise<void>,
-): Promise<'active' | 'pending-created' | 'redirecting'> => {
+): Promise<'active' | 'pending-created' | 'verify-email' | 'redirecting'> => {
   const provider =
     providerName === 'google'
       ? new GoogleAuthProvider()
@@ -536,7 +541,7 @@ export const loginWithProvider = async (
  *  (terms gate for first-timers, approval checks, status routing). */
 export const completeRedirectSignIn = async (
   confirmTerms?: () => Promise<void>,
-): Promise<'active' | 'pending-created' | null> => {
+): Promise<'active' | 'pending-created' | 'verify-email' | null> => {
   const cred = await getRedirectResult(auth);
   if (!cred) return null;
   const providerName = cred.providerId === 'apple.com' ? 'apple' : 'google';
@@ -548,7 +553,7 @@ const finishProviderSignIn = async (
   fbUser: FirebaseUser,
   providerName: 'google' | 'apple',
   confirmTerms?: () => Promise<void>,
-): Promise<'active' | 'pending-created'> => {
+): Promise<'active' | 'pending-created' | 'verify-email'> => {
   const uid = fbUser.uid;
   const email = fbUser.email || '';
   const providerLabel = providerName === 'google' ? 'Google' : 'Apple';
@@ -570,11 +575,65 @@ const finishProviderSignIn = async (
       await logActivity(uid, 'LOGIN', `Owner logged in via ${providerLabel} (profile created)`, email, 'Christopher Sung');
       return 'active';
     }
-    // No profile → this provider identity was never registered. Social does not
-    // create accounts (see loginWithProvider). Sign the Firebase user back out
-    // so no orphan session survives, and let the caller explain how to join.
-    await signOut(auth);
-    throw new Error('no-account');
+    // No profile → first time this identity has been here. Create the account.
+    if (!REGISTRATION_OPEN) {
+      // The kill switch has to close this path too, or "registration closed"
+      // means only "the form is hidden".
+      await signOut(auth);
+      throw new Error('registration-closed');
+    }
+    if (!email) {
+      // Apple can be configured to withhold the email; without one there is no
+      // account key, no invoice address and no way to reach the person.
+      await signOut(auth);
+      throw new Error('no-email-from-provider');
+    }
+    // Consent first: an account must not exist before the terms are accepted.
+    if (confirmTerms) {
+      try { await confirmTerms(); }
+      catch { await signOut(auth); throw new Error('terms-declined'); }
+    }
+
+    // Apple hands over the display name on the FIRST authorisation only, so it
+    // is split and stored now. Google keeps returning it, but the same code
+    // covers both. A name is never invented — an empty one is left empty and
+    // asked for later (onboarding, or before a team subscription).
+    const parts = String(fbUser.displayName || '').trim().split(/\s+/).filter(Boolean);
+    const firstName = parts.length ? parts[0] : '';
+    const lastName = parts.length > 1 ? parts.slice(1).join(' ') : '';
+
+    const created: User = {
+      id: uid,
+      email,
+      firstName, lastName,
+      companyName: '',
+      companyType: '',
+      country: ACTIVE_COUNTRY.code,
+      isActive: false,
+      status: 'pending',
+      registeredAt: new Date().toISOString(),
+      ...consentFields(),
+      role: 'user',
+      plan: 'standard',
+      ...compact({ signupRef: pendingSignupRef() }),
+    } as User;
+    await setDoc(userDocRef, created);
+    await logActivity(uid, 'REGISTER_PENDING', `Registration via ${providerLabel}: ${email}`, email, `${firstName} ${lastName}`.trim());
+
+    const redeemed = await redeemFreeGrantIfAny(created);
+    if (redeemed) {
+      if (TRIAL_FLOW_ENABLED) finalizeSignupFn().catch(() => {});
+      return 'active';
+    }
+    if (TRIAL_FLOW_ENABLED) {
+      // The provider already verified the email, so the server can activate
+      // now — no verification mail, no waiting screen. This is the whole point
+      // of allowing social signup.
+      const fin = await tryFinalizeSignup();
+      if (fin.state === 'active') return 'active';
+      throw new Error(VERIFY_EMAIL_SENTINEL);
+    }
+    return 'pending-created';
   }
 
   let userData = {

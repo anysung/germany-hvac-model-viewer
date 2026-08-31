@@ -72,6 +72,17 @@ await check('user may edit their own name + company fields', async () => {
     companyTypeOther: '', companyCity: 'Berlin', companyWebsite: 'new.example',
   }));
 });
+await check('user may set their job role (onboarding sheet + Account page)', async () => {
+  // Added to the rules allowlist 2026-08-31 with the onboarding sheet. The
+  // client whitelist alone would not be enough — the rules decide.
+  await assertSucceeds(updateDoc(doc(as(STRANGER), 'users', STRANGER.uid), { jobRole: 'product' }));
+});
+await check('an unlisted profile field is still refused', async () => {
+  // Guards the allowlist itself: widening it must be a deliberate edit, not a
+  // side effect of adding jobRole.
+  await assertFails(updateDoc(doc(as(STRANGER), 'users', STRANGER.uid), { signupRef: 'li' }));
+  await assertFails(updateDoc(doc(as(STRANGER), 'users', STRANGER.uid), { trialEndsAt: 'later' }));
+});
 await check('profile edit cannot smuggle in a subscription', async () => {
   await assertFails(updateDoc(doc(as(STRANGER), 'users', STRANGER.uid), {
     companyName: 'X',

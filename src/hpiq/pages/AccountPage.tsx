@@ -7,7 +7,7 @@ import { getSessionId, revokeSessionFn, revokeOtherSessionsFn, signOutEverywhere
 import { tsToMillis } from '../../config/entitlement';
 import { requestDeletion } from '../../services/adminService';
 import { openCheckout, checkoutConfigured } from '../../services/paddleService';
-import { BillingProfileForm, billingProfileComplete } from '../../components/BillingProfileForm';
+import { TeamNameGate, nameNeededForCheckout } from '../../components/OnboardingSheet';
 import { TRIAL_FLOW_ENABLED, createTeamOrgFn, deleteAccountFn, cancelSubscriptionFn, billingPortalFn } from '../../services/billingFnService';
 import { accessInfo } from '../../config/entitlement';
 import {
@@ -101,9 +101,9 @@ const PlanPicker: React.FC<{
     if (isPreview) { app.notify(t.account.previewOnly); return; }
     if (mode === 'checkout') {
       if (!checkoutConfigured(plan, term)) { app.notify(s.notConfigured); return; }
-      // The account details we no longer ask for at signup are collected here,
-      // once, before Paddle takes over (see BillingProfileForm).
-      if (!billingProfileComplete(app.user)) { setProfileFor(plan); return; }
+      // Only a Team plan still stops here, and only for a missing name — the
+      // invitation mail has to say who is inviting. Paddle collects the rest.
+      if (nameNeededForCheckout(app.user, isTeamPlan(plan))) { setProfileFor(plan); return; }
       openCheckout(app.user, plan, term).catch(() => app.notify(s.notConfigured));
       return;
     }
@@ -140,7 +140,7 @@ const PlanPicker: React.FC<{
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       {profileFor && (
-        <BillingProfileForm
+        <TeamNameGate
           language={app.lang as any}
           user={app.user}
           onSaved={(patch) => {
