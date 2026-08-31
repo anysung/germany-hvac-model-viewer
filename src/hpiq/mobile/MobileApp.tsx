@@ -31,6 +31,7 @@ import { DataSheetDoc } from '../pages/DataSheetPage';
 import { showInstallUi, canPromptInstall, isIos, promptInstall, onInstallStateChange } from '../pwaInstall';
 import { shortDate } from '../model';
 import { NEWS_SERIF, localizedNews, newsEyebrow, articleDeepLink, emailArticleHref, makeArticlePdf } from '../newsModel';
+import { NewsGallery, galleryOf } from '../NewsGallery';
 import { printPdfViaShareSheet } from '../pdf/deliverPdf';
 
 type MTab = Extract<HpPage, 'find' | 'products' | 'bafa' | 'datasheet' | 'news' | 'account' | 'label'> | 'guide';
@@ -489,7 +490,7 @@ const MobileNews: React.FC<{ app: HpApp }> = ({ app }) => {
         </div>
 
         {/* hero */}
-        {open.imageUrl && <img src={open.imageUrl} alt="" style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 3, marginTop: 16 }} />}
+        <NewsGallery images={galleryOf(open)} marginTop={16} />
 
         {/* serif body */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 15, marginTop: 18 }}>

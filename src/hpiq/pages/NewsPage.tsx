@@ -18,6 +18,7 @@ import { tr } from '../i18n';
 import { FD } from '../ui';
 import { BrandLogo, WavingFlag } from '../../components/BrandLogo';
 import { MARKET_ICON_32 } from '../market';
+import { NewsGallery, galleryOf } from '../NewsGallery';
 import {
   NEWS_SERIF, categoryOf, localizedNews, localizedCta, newsEyebrow,
   articleDeepLink, emailArticleHref, makeArticlePdf,
@@ -195,9 +196,7 @@ export const NewsPage: React.FC<{ app: HpApp }> = ({ app }) => {
           </div>
 
           {/* hero image */}
-          {reader.imageUrl && (
-            <img src={reader.imageUrl} alt="" style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 3, marginTop: 22 }} />
-          )}
+          <NewsGallery images={galleryOf(reader)} />
 
           {/* body — comfortable serif measure */}
           <div style={{ maxWidth: 700, width: '100%', margin: '30px auto 0', display: 'flex', flexDirection: 'column', gap: 22 }}>

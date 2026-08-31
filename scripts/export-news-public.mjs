@@ -78,6 +78,10 @@ for (const cc of codes) {
       titleEn: val(f.title) ?? '',
       summaryEn: val(f.summary) ?? '',
       imageUrl: val(f.imageUrl) ?? '',
+      // The gallery, when the article has one. Carried through so the public
+      // page shows every panel — an infographic series that loses three of its
+      // four parts on the crawlable copy is worse than not publishing it.
+      images: (f.images?.arrayValue?.values ?? []).map((v) => val(v)).filter(Boolean),
       author: val(f.author) ?? 'HeatPump DataBase (Europe)',
       // Special Report announcements: they lead the public archive the same
       // way they lead the in-app feed, and they carry the one link the piece

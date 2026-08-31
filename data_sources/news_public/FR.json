@@ -1,6 +1,6 @@
 {
   "market": "FR",
-  "generatedAt": "2026-08-16T11:59:44.544Z",
+  "generatedAt": "2026-08-31T12:24:30.884Z",
   "items": [
     {
       "id": "news-20260816-fr-sr1",
@@ -12,6 +12,7 @@
       "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
       "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
       "imageUrl": "/special-report/img/special-report-2026-08-fr.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": true,
       "ctaUrl": "https://www.heatpumpdb.fr/special-report/2026-08/",
@@ -32,6 +33,91 @@
       ]
     },
     {
+      "id": "news-20260831-fr-002",
+      "date": "2026-08-31T09:00:00Z",
+      "category": "FUNDING",
+      "title": "Agrément PAC : ce que l'installateur doit réellement faire — CEE de base, bonification ×5 et date qui décide",
+      "summary": "Une PAC non agréée ne perd pas les CEE : la prime de base reste due dès lors que les critères techniques des fiches BAR-TH-171/172 sont respectés. Ce que l'agrément conditionne, c'est la bonification Coup de pouce ×5. L'éligibilité s'apprécie à la date d'acceptation du devis, et le numéro d'agrément est obligatoire sur la facture, l'attestation sur l'honneur et au dépôt Emmy.",
+      "body": "Le point le plus souvent mal lu du régime d'agrément applicable aux opérations engagées à compter du 1er septembre 2026 est ce qui arrive à une pompe à chaleur absente du registre. Elle ne perd pas les certificats d'économies d'énergie. Dès lors que les critères techniques des fiches d'opération standardisée BAR-TH-171 et BAR-TH-172 sont respectés, la prime CEE de base reste due, que le modèle soit agréé ou non. Ce que l'agrément conditionne, c'est le coefficient multiplicateur de 5 de la bonification « Coup de pouce Chauffage », versée lorsqu'une chaudière individuelle au charbon, au fioul ou au gaz est déposée et remplacée dans une résidence principale. Avant le 1er septembre, cette bonification n'exigeait pas de modèle agréé ; à partir de cette date, elle l'exige. Le reste du dispositif est inchangé.\n\nMaPrimeRénov' relève d'une autre logique. En septembre 2026, le dispositif de l'Anah n'est pas adossé à ce registre et continue d'être apprécié selon ses propres critères techniques.\n\nLa date qui décide n'est ni la date de pose ni la date d'achèvement. C'est la date d'engagement de l'opération, qui correspond en pratique à la date d'acceptation du devis par le client. Deux conséquences en découlent, et elles vont en sens inverse. Si le modèle était agréé le jour de la signature et que l'agrément est retiré avant l'installation, la bonification reste acquise : l'éligibilité s'apprécie à la date d'engagement et une perte ultérieure ne la remet pas en cause rétroactivement. Si le modèle n'était pas agréé le jour de la signature et l'est devenu ensuite, la bonification n'est pas acquise avec ce devis ; la voie sûre est de l'annuler formellement et d'en établir un nouveau, daté après la publication de l'agrément. Les devis acceptés jusqu'au 31 août 2026 conservent les anciennes règles, même si les travaux ont lieu plus tard.\n\nLe champ d'application est plus étroit que les discussions ne le laissent penser. Le régime vise les PAC individuelles air/eau au titre de la fiche BAR-TH-171 et les PAC individuelles eau/eau ou eau glycolée/eau au titre de la fiche BAR-TH-172. Les PAC air/air n'y sont pas soumises : elles relèvent d'une autre fiche, BAR-TH-129, et n'ont jamais fait partie du Coup de pouce Chauffage pour remplacement de chaudière. Leur absence du registre n'est pas un refus d'agrément — c'est la différence entre être hors du champ du décret et avoir déposé un dossier rejeté.\n\nOù le numéro d'agrément doit figurer mérite d'être dit précisément, car les documents n'ont pas le même poids juridique. Sur la facture, preuve de réalisation des travaux, le numéro est obligatoire et son absence peut entraîner le rejet du dossier CEE. Sur l'attestation sur l'honneur signée par le professionnel et contresignée par le bénéficiaire, il est obligatoire. Au dépôt sur le registre Emmy, le demandeur de CEE doit le saisir. Sur le devis, il est recommandé par l'ADEME et par la profession plutôt qu'explicitement imposé par les textes — mais le devis doit identifier l'équipement de façon suffisamment précise, par marque, référence commerciale et puissance, pour établir que ce modèle était agréé le jour de l'acceptation, et certains délégataires CEE exigent le numéro à ce stade au titre de leur propre contrôle. L'inscrire dès le devis est le moyen pratique d'éviter le débat ensuite.\n\nL'agrément repose sur deux exigences cumulatives : une certification tierce partie — Heat Pump KEYMARK, NF PAC, Eurovent Certified Performance ou équivalent — délivrée par un organisme établi dans l'Espace économique européen et accrédité selon la norme NF EN ISO/CEI 17065 ; et un assemblage final dans l'EEE, celui du circuit frigorifique pour un monobloc, celui d'au moins un sous-ensemble de ce circuit pour un split. Un fabricant qui ne satisfait pas encore ces conditions peut obtenir un agrément transitoire sur présentation d'un plan d'investissement crédible, valable un an au plus et renouvelable une seule fois ; tout agrément transitoire est réputé invalide à compter du 31 décembre 2028.\n\nUn détail du registre lui-même prête facilement à confusion. La relève des dossiers déposés par les fabricants a lieu le 15 de chaque mois à 12 h, reportée au premier jour ouvrable suivant si le 15 tombe un samedi, un dimanche ou un jour férié. C'est une date de clôture des dépôts, pas la date à laquelle la liste est mise à jour. L'ADEME instruit les dossiers après chaque relève, et les décisions — ajouts, retraits, modifications — sont publiées une fois l'instruction achevée. Les agréments peuvent donc évoluer à tout moment, et une vérification faite il y a deux mois ne répond pas d'un devis signé aujourd'hui. L'ADEME et les ministères peuvent par ailleurs contrôler les justificatifs et mener des audits sur site pendant deux ans après l'agrément, lequel peut être retiré si les conditions ne sont plus réunies.\n\nEn pratique, tout cela se ramène à une courte routine au stade du devis. Vérifier que l'installation existante est bien une chaudière au charbon, au fioul ou au gaz destinée à être déposée, et que le logement est la résidence principale du client : ce sont les conditions de base du Coup de pouce lui-même. Rechercher sur le registre officiel la référence commerciale exacte de l'appareil que vous comptez fournir — la référence entière, pas la marque, car l'agrément est délivré modèle par modèle et deux modèles d'un même fabricant peuvent avoir des statuts différents. Vérifier s'il s'agit d'un agrément de droit commun ou d'un agrément transitoire encore valide. Noter le numéro et le porter, avec la marque, le modèle et l'efficacité saisonnière, sur le devis. Faire signer le client et confirmer que l'agrément est valide ce jour-là. Sur le chantier, vérifier que l'appareil posé est bien le même modèle et, pour un split, le même couple unité intérieure / unité extérieure. Reporter enfin le numéro sur la facture et sur l'attestation sur l'honneur, avec le type de combustible de la chaudière déposée. Conserver la preuve de la vérification — une capture d'écran datée — ne coûte rien et tranche toute question ultérieure sur ce que disait le registre.\n\nCet article décrit un cadre réglementaire. Il ne vaut pas confirmation d'éligibilité pour un projet ou un modèle donné : en cas de doute sur un dossier précis, l'éligibilité doit être vérifiée auprès de l'ADEME et du texte en vigueur avant l'établissement du devis.",
+      "titleEn": "Agrément PAC: what an installer actually has to do — base CEE, the ×5 bonus, and the date that decides",
+      "summaryEn": "An unapproved heat pump does not lose the CEE certificate scheme: the base premium continues where the technical criteria of BAR-TH-171/172 are met. What the agrément conditions is the ×5 Coup de pouce Chauffage bonus. Eligibility is assessed on the date the quotation is accepted, and the agrément number is legally required on the invoice, the sworn statement and the Emmy filing.",
+      "imageUrl": "/news-images/fr-cee-agrement-01.webp",
+      "images": [
+        "/news-images/fr-cee-agrement-01.webp",
+        "/news-images/fr-cee-agrement-02.webp",
+        "/news-images/fr-cee-agrement-03.webp",
+        "/news-images/fr-cee-agrement-04.webp",
+        "/news-images/fr-cee-agrement-05.webp",
+        "/news-images/fr-cee-agrement-06.webp",
+        "/news-images/fr-cee-agrement-07.webp",
+        "/news-images/fr-cee-agrement-08.webp"
+      ],
+      "author": "HeatPump DB France Editorial Team",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Décret n° 2026-413 du 29 mai 2026",
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054151822"
+        },
+        {
+          "title": "Arrêté du 29 mai 2026 — conditions d'agrément",
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054151992"
+        },
+        {
+          "title": "Arrêté du 29 mai 2026 — bonifications CEE / Coup de pouce",
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054152008"
+        },
+        {
+          "title": "Arrêté du 2 juillet 2026 — première liste des PAC agréées",
+          "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054388298"
+        },
+        {
+          "title": "ADEME — registre des PAC agréées (Bonus PAC)",
+          "url": "https://bonus-pac.ademe.fr/"
+        },
+        {
+          "title": "Ministère de la Transition écologique — Coup de pouce Chauffage",
+          "url": "https://www.ecologie.gouv.fr/politiques-publiques/coup-pouce-chauffage"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-fr-001",
+      "date": "2026-08-31T00:00:00Z",
+      "category": "FUNDING",
+      "title": "France : les modèles de pompes à chaleur devront être agréés au 1er septembre pour ouvrir le Coup de pouce",
+      "summary": "À partir du 1er septembre 2026, un modèle de pompe à chaleur devra disposer d'un agrément officiel pour ouvrir droit à la bonification « Coup de pouce Chauffage » sur les fiches BAR-TH-171 et BAR-TH-172. Le numéro d'agrément devra figurer sur le devis, la facture, l'attestation sur l'honneur et au dépôt Emmy.",
+      "body": "À partir du 1er septembre 2026, un modèle de pompe à chaleur devra disposer d'un agrément officiel pour ouvrir droit à la bonification « Coup de pouce Chauffage » des certificats d'économies d'énergie (CEE). L'agrément est délivré par arrêté conjoint des ministres chargés de l'industrie et de l'énergie, après avis de l'ADEME ; le registre des modèles agréés est publié par l'ADEME.\n\nUn modèle non agréé ne perd pas les CEE : dès lors que les critères techniques des deux fiches sont respectés, la prime de base reste due, et c'est la seule bonification ×5 que l'agrément conditionne. Le dispositif ne vise que les pompes à chaleur individuelles de type air/eau, eau/eau ou eau glycolée/eau, relevant des fiches d'opération standardisée BAR-TH-171 et BAR-TH-172. Les PAC air/air ne sont pas couvertes par le dispositif d'agrément. Ce n'est pas la même chose que d'être « refusées » : une PAC air/air absente du registre est simplement hors du champ d'application.\n\nL'agrément repose sur deux exigences cumulatives. D'abord une certification tierce partie — Heat Pump KEYMARK, NF PAC, Eurovent Certified Performance (LCP-HP) ou une certification équivalente, délivrée par un organisme établi dans l'Espace économique européen et accrédité selon la norme NF EN ISO/CEI 17065. Ensuite un assemblage final dans l'EEE : pour un équipement monobloc, l'assemblage final du circuit frigorifique ; pour un équipement split, l'assemblage final d'au moins un sous-ensemble de ce circuit. Le cadre est fixé par le décret n° 2026-413 du 29 mai 2026 et l'arrêté du même jour.\n\nLa date qui compte est la date d'engagement de l'opération, qui correspond en pratique à la date d'acceptation du devis par le bénéficiaire. C'est à cette date que la détention de l'agrément est appréciée. D'après les textes, un modèle agréé à cette date conserve le bénéfice de la bonification même si l'agrément est perdu par la suite ; à l'inverse, un devis accepté avant l'agrément du modèle n'en bénéficie pas. Le calendrier de signature devient donc un paramètre commercial, et pas seulement administratif.\n\nLe numéro d'agrément du modèle installé est obligatoire sur la facture, sur l'attestation sur l'honneur signée par le professionnel et contresignée par le bénéficiaire, et au dépôt sur le registre Emmy. Sur le devis, il est recommandé plutôt qu'explicitement imposé par les textes — mais le devis doit identifier le modèle assez précisément pour établir qu'il était agréé le jour de son acceptation, si bien que l'y inscrire est la voie pratique. La qualification RGE reste par ailleurs requise pour faire bénéficier le client des aides financières.\n\nLe registre n'est pas une liste figée. Les dossiers déposés par les fabricants font l'objet d'une relève mensuelle le 15 de chaque mois à 12 h, reportée au premier jour ouvrable suivant si le 15 tombe un samedi, un dimanche ou un jour férié, Il s'agit d'une date de clôture des dépôts, non de la date de mise à jour de la liste : l'ADEME instruit les dossiers après chaque relève et les décisions sont publiées une fois l'instruction achevée. Deux conséquences pratiques : un modèle absent aujourd'hui peut être agréé le mois suivant, et toute vérification doit être datée — un contrôle effectué en septembre ne répond pas d'un devis signé en novembre.\n\nUn fabricant dont un modèle ne satisfait pas encore les conditions de droit commun peut obtenir un agrément transitoire, s'il présente un plan d'investissement crédible permettant d'y parvenir, typiquement la création ou l'extension d'un site d'assemblage dans l'EEE. Sa durée ne peut excéder un an, renouvelable une seule fois pour un an au maximum, et tout agrément transitoire est réputé invalide à compter du 31 décembre 2028, quelle que soit sa date de délivrance.\n\nUne nuance juridique mérite l'attention. L'ADEME indique que les modèles figurant sur sa page sont les produits éligibles à date, et que la liste faisant foi du point de vue de l'obtention des aides — laquelle tient compte des périodes transitoires éventuelles — est celle de l'arrêté dans sa version en vigueur. La page en ligne est l'outil de travail ; l'arrêté est l'instrument juridique.\n\nCet article décrit un cadre réglementaire. Il ne vaut pas confirmation d'éligibilité pour un projet ou un modèle donné : en cas de doute sur un dossier précis, l'éligibilité doit être vérifiée auprès de l'ADEME et du texte en vigueur avant l'établissement du devis.",
+      "titleEn": "France: heat pump models need an official agrément from 1 September to open the Coup de pouce bonus",
+      "summaryEn": "From 1 September 2026 a heat pump model must hold an official agrément for a project to qualify for the Coup de pouce Chauffage bonification on the BAR-TH-171 and BAR-TH-172 CEE operations. The agrément number has to appear on the quotation, the invoice, the sworn statement and at the Emmy filing.",
+      "imageUrl": "/news-images/fr-policy-04.webp",
+      "images": [],
+      "author": "HeatPump DB France Editorial Team",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "ADEME — Agrément des pompes à chaleur",
+          "url": "https://bonus-pac.ademe.fr/"
+        },
+        {
+          "title": "Décret n° 2026-413 du 29 mai 2026",
+          "url": "https://www.legifrance.gouv.fr/"
+        },
+        {
+          "title": "Arrêté du 29 mai 2026",
+          "url": "https://www.legifrance.gouv.fr/"
+        },
+        {
+          "title": "Fiches d'opération standardisée BAR-TH-171 et BAR-TH-172",
+          "url": "https://www.ecologie.gouv.fr/politiques-publiques/dispositif-certificats-deconomies-denergie"
+        }
+      ]
+    },
+    {
       "id": "news-20260802-fr-001",
       "date": "2026-08-02T00:00:00Z",
       "category": "FUNDING",
@@ -41,6 +127,7 @@
       "titleEn": "MaPrimeRénov' Reforms Streamline Paths, Introduce New Hurdles for Heat Pump Installations",
       "summaryEn": "France's primary energy renovation aid, MaPrimeRénov', has undergone significant reforms for 2026, aiming to channel efforts towards comprehensive renovations while adjusting eligibility and processing for individual works. The changes, effective from January 1st and February 23rd, 2026, introduce mandatory accompaniment for major projects and exclude certain single-action works, directly impacting homeowners planning heat pump installations.",
       "imageUrl": "/news-images/fr-policy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -74,6 +161,7 @@
       "titleEn": "French Heat Pump Market Stabilizes in 2025, Maintains European Leadership",
       "summaryEn": "France solidified its position as Europe's leading heat pump market in 2025, with over 1.08 million units sold, despite a nuanced stabilization following a challenging 2024. While air-to-air systems saw sustained demand driven by summer heatwaves, the air-to-water segment experienced modest growth, and geothermal installations remained a niche, according to recent market analyses.",
       "imageUrl": "/news-images/common-energy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -107,6 +195,7 @@
       "titleEn": "France Toughens RGE Certification with 2026-2027 Reform for Enhanced Quality and Consumer Trust",
       "summaryEn": "France is implementing a substantial reform of its RGE (Reconnu Garant de l'Environnement) certification system, with new rules already in effect and further changes coming in 2027. These reforms introduce reinforced controls, stricter auditing processes, and clear sanction mechanisms, aiming to elevate the quality of energy renovation works, combat fraud, and bolster consumer confidence in qualified installers, particularly for heat pump installations.",
       "imageUrl": "/news-images/common-install-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -140,6 +229,7 @@
       "titleEn": "RE2020 Drives French Heat Pump Innovation Towards Lower Carbon and Enhanced Summer Comfort",
       "summaryEn": "France's RE2020 environmental regulation, in effect since 2022 for new homes and expanded in 2026, is profoundly shaping the building sector by prioritizing low-carbon solutions and improved summer comfort. Heat pumps are emerging as a pivotal technology to meet these ambitious targets, driven by stricter carbon emission thresholds and a revised DPE calculation method.",
       "imageUrl": "/news-images/common-energy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -173,6 +263,7 @@
       "titleEn": "France Introduces Major CEE Boost for Approved Heat Pumps Amidst MaPrimeRénov' Reforms",
       "summaryEn": "France is set to significantly increase financial incentives for heat pump installations with a five-fold multiplication of Certificats d'Économies d'Énergie (CEE) primes for a list of approved models starting September 2026. This pivotal change coincides with new restrictions under MaPrimeRénov', particularly impacting renovations that include gas heating.",
       "imageUrl": "/news-images/fr-policy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -206,6 +297,7 @@
       "titleEn": "French Heat Pump Market Dips in 2025 Despite European Rebound",
       "summaryEn": "The French heat pump market experienced a decline in sales during 2025, a trend that runs counter to the broader European rebound of over 10% growth. This downturn in France, while still maintaining its position as Europe's largest market, is primarily attributed to persistent regulatory instability and a challenging economic climate.",
       "imageUrl": "/news-images/common-market-02-factory-layoff.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -239,6 +331,7 @@
       "titleEn": "ADEME Confirms Heat Pump Efficacy as RGE Certification Undergoes Strict Reform",
       "summaryEn": "Recent studies by the French Agency for Ecological Transition (ADEME) reinforce that heat pumps deliver high performance and significant energy savings when properly installed. This validation coincides with the implementation of stricter controls and enforcement for the 'Reconnu Garant de l'Environnement' (RGE) certification, vital for installers to qualify projects for government subsidies.",
       "imageUrl": "/news-images/common-install-04.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -272,6 +365,7 @@
       "titleEn": "French Heat Pump Aid Schemes Evolve with Stricter Conditions and European Focus",
       "summaryEn": "France's primary heat pump incentives, MaPrimeRénov' and the CEE-backed 'Coup de pouce Chauffage', are undergoing significant revisions in 2026, introducing more stringent eligibility for global renovations and a new mandate for European-manufactured equipment to qualify for enhanced CEE benefits starting September 1.",
       "imageUrl": "/news-images/fr-policy-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -305,6 +399,7 @@
       "titleEn": "French Heat Pump Market Stagnates in 2025 Amidst Policy Instability, Contrasting European Growth",
       "summaryEn": "While the European heat pump market recorded an 11% increase in sales in 2025, the French market, despite remaining the continent's largest, experienced a slight downturn, largely attributed to unstable regulatory frameworks and fluctuating energy prices.",
       "imageUrl": "/news-images/common-market-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -338,6 +433,7 @@
       "titleEn": "Natural Refrigerants and Smart Technologies Drive Heat Pump Innovation in France",
       "summaryEn": "The French heat pump sector is seeing significant technological advancements driven by new F-Gas regulations, a strong push towards natural refrigerants like R290, increasingly strict noise emission standards, and the integration of smart, connected functionalities for enhanced energy management.",
       "imageUrl": "/news-images/common-tech-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -371,6 +467,7 @@
       "titleEn": "Heat Pump Subsidies Evolve in France: MaPrimeRénov' and CEE Undergo Key Changes in 2026",
       "summaryEn": "France's key financial aids for heat pump installations, MaPrimeRénov' and the Certificats d'Économies d'Énergie (CEE), are undergoing significant modifications in 2026. Installers and homeowners must be aware of updated eligibility criteria, income bands, and the new European manufacturing requirement for boosted CEE primes starting September 1st.",
       "imageUrl": "/news-images/fr-policy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -404,6 +501,7 @@
       "titleEn": "RE2020 Drives Heat Pump Dominance in French New Construction Market",
       "summaryEn": "The French Environmental Regulation 2020 (RE2020) has profoundly reshaped the new construction landscape, making heat pumps the undeniable choice for nearly all individual homes. By imposing stringent carbon emission limits and energy consumption targets, RE2020 has positioned heat pumps as the most effective and compliant heating and cooling solution.",
       "imageUrl": "/news-images/common-energy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -437,6 +535,7 @@
       "titleEn": "Navigating the Future: R290 Refrigerants and Sound Management in Heat Pump Installations",
       "summaryEn": "The heat pump industry is undergoing a significant technological shift with the increasing adoption of R290 (propane) as a natural refrigerant, driven by evolving F-Gas regulations. Concurrently, managing sound power remains a critical consideration for installers, with strict noise emergence rules in place to ensure neighborhood tranquility.",
       "imageUrl": "/news-images/common-tech-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",

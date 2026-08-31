@@ -281,6 +281,109 @@
    "category": "policy",
    "topic_ko": "주택상담",
    "desc_ko": "주택상담_(가정용_보조금_서류검토)"
+  },
+  {
+   "file": "fr-policy-04.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "견적서작성",
+   "desc_ko": "견적서작성_(주방테이블_설치기사_견적서_기입)"
+  },
+  {
+   "file": "fr-agrement-01.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "제도변경",
+   "desc_ko": "제도변경_(9월1일_전후_기본CEE와_Coup_de_pouce_비교표)",
+   "note": "fr-cee-agrement-01~08 시리즈로 대체됨(2026-08-31). 파일은 배포 상태라 남겨 둡니다."
+  },
+  {
+   "file": "fr-agrement-02.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "기준일",
+   "desc_ko": "기준일_(견적수락일_타임라인과_사례_A·B)",
+   "note": "fr-cee-agrement-01~08 시리즈로 대체됨(2026-08-31). 파일은 배포 상태라 남겨 둡니다."
+  },
+  {
+   "file": "fr-agrement-03.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "적용범위",
+   "desc_ko": "적용범위_(대상기기와_승인번호_기재_문서)",
+   "note": "fr-cee-agrement-01~08 시리즈로 대체됨(2026-08-31). 파일은 배포 상태라 남겨 둡니다."
+  },
+  {
+   "file": "fr-agrement-04.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "등록부",
+   "desc_ko": "등록부_(ADEME_심사절차와_설치업체_체크리스트)",
+   "note": "fr-cee-agrement-01~08 시리즈로 대체됨(2026-08-31). 파일은 배포 상태라 남겨 둡니다."
+  },
+  {
+   "file": "fr-cee-agrement-01.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "제도변경",
+   "desc_ko": "제도변경_(기본CEE_유지와_Coup_de_pouce_x5_승인요건)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-02.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "기준일",
+   "desc_ko": "기준일_(견적수락일_흐름도_설치일_아님)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-03.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "사례A",
+   "desc_ko": "사례A_(승인상태로_계약_후_승인철회_보너스_유지)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-04.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "사례B",
+   "desc_ko": "사례B_(비승인_계약_후_승인_보너스_불가)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-05.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "적용범위",
+   "desc_ko": "적용범위_(air-eau·eau-eau·eau_glycolée_대상_air-air_적용외)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-06.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "서류",
+   "desc_ko": "서류_(devis_권고_facture·AH·Emmy_의무)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-07.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "등록부",
+   "desc_ko": "등록부_(15일_접수마감_심사후_갱신)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
+  },
+  {
+   "file": "fr-cee-agrement-08.webp",
+   "scope": "FR",
+   "category": "policy",
+   "topic_ko": "체크리스트",
+   "desc_ko": "체크리스트_(견적서명_직전_6단계_확인)",
+   "note": "인포그래픽 시리즈(8장) — 특정 기사 전용이므로 로테이션 풀에는 넣지 않습니다."
   }
  ]
 }

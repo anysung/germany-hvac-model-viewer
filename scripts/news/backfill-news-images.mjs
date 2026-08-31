@@ -34,7 +34,7 @@ const NEWS_IMAGE_POOLS = {
   policy: {
     DE: ['de-policy-01.webp', 'de-policy-02.webp', 'de-policy-03.webp'],
     GB: ['uk-policy-01.webp', 'uk-policy-02.webp', 'uk-policy-03.webp'],
-    FR: ['fr-policy-01.webp', 'fr-policy-02.webp', 'fr-policy-03.webp'],
+    FR: ['fr-policy-01.webp', 'fr-policy-02.webp', 'fr-policy-03.webp', 'fr-policy-04.webp'],
     PL: ['pl-policy-01.webp', 'pl-policy-02.webp', 'pl-policy-03.webp'],
     IT: ['it-policy-01.webp', 'it-policy-02.webp', 'it-policy-03.webp'],
     EU: ['eu-policy-01.webp', 'eu-policy-02.webp', 'eu-policy-03.webp'],

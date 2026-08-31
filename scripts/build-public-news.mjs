@@ -134,6 +134,30 @@ const CSS = `
   h1 { font-size:clamp(24px,4.4vw,34px); line-height:1.22; letter-spacing:-.02em; margin-top:8px; }
   .meta { margin-top:10px; font-size:13px; color:var(--mut); }
   .lede { margin-top:16px; font-size:16.5px; color:#3a3a3e; }
+  /* Gallery. The track is the scroller; snap points make the swipe land on a
+     panel, and the dots are anchors so navigation survives with scripting off. */
+  .gal { margin:22px 0 0; }
+  .gal.one img, .gal .track img { width:100%; height:auto; display:block; border-radius:4px; }
+  .gal .track { display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
+    border-radius:4px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .gal .track::-webkit-scrollbar { display:none; }
+  .gal .track img { flex:0 0 100%; scroll-snap-align:start; }
+  .gal .dots { display:flex; justify-content:center; gap:2px; margin-top:2px; }
+  /* 탭 영역 44px — 손가락이 닿는 크기다. 보이는 점은 9px 그대로이고
+     여백만 키웠으므로 레이아웃은 달라지지 않는다. */
+  .gal .dots a { display:flex; align-items:center; justify-content:center;
+    width:44px; height:44px; }
+  .gal .dots span { display:block; width:9px; height:9px; border-radius:50%;
+    background:#c9ccd1; transition:background .18s ease; }
+  .gal .dots a:hover span, .gal .dots a:focus span { background:#8a9099; }
+  /* 현재 위치 표시. 이미지는 .track 안에 있고 점은 그 형제라, 이미지에서
+     점으로 바로 이어지는 선택자가 없다 — :has() 로 track 을 거쳐 간다.
+     지원하지 않는 브라우저에서는 점이 채워지지 않을 뿐 이동은 그대로 된다. */
+  .gal .dots a:first-child span { background:#1d1d1f; width:22px; border-radius:5px; }
+  .gal.js .dots a span { background:#c9ccd1; width:9px; border-radius:50%; }
+  .gal.js .dots a.on span { background:#1d1d1f; width:22px; border-radius:5px; }
+  .gal .track:has(:target) ~ .dots a:first-child span { background:#c9ccd1; width:9px; border-radius:50%; }
+  /* 패널별 활성 점 규칙은 기사마다 생성됩니다 — gallery() 참조 */
   .body { margin-top:22px; }
   .body p { margin-bottom:15px; font-size:15.5px; color:#26262a; }
   .card { display:block; padding:16px 0; border-bottom:1px solid var(--line); }
@@ -215,6 +239,62 @@ ${body}
 mkdirSync(join(OUT_DIR, 'news'), { recursive: true });
 
 /* ── Article pages ── */
+/**
+ * The article's pictures. One image renders as a plain figure; several render
+ * as a swipeable track with numbered jump links under it.
+ *
+ * NO JAVASCRIPT ON PURPOSE. This is the crawlable copy of the article: every
+ * panel has to be in the HTML whether or not a script runs, and the navigation
+ * has to work for a reader with scripting off. CSS scroll-snap gives the swipe
+ * and the arrows are anchor links to the panels — the browser scrolls the
+ * track to the target, which is the same movement a button would have made.
+ */
+const gallery = (a) => {
+  const imgs = (a.images?.length ? a.images : a.imageUrl ? [a.imageUrl] : []).filter(Boolean);
+  if (!imgs.length) return '';
+  const id = (i) => `p${i + 1}`;
+  if (imgs.length === 1) {
+    return `<figure class="gal one"><img src="${esc(imgs[0])}" alt="" loading="lazy"></figure>`;
+  }
+  /* 점 상태 규칙을 패널 수에 맞춰 만든다. 고정 개수로 두면 장수가 늘어난
+     기사에서 마지막 점들이 조용히 죽는다. */
+  const dotRules = imgs.map((_, i) =>
+    `.gal .track:has(#${id(i)}:target) ~ .dots a:nth-child(${i + 1}) span`
+  ).join(',\n      ') + ' { background:#1d1d1f; width:22px; border-radius:50px; }';
+  return `<style>\n      ${dotRules}\n    </style>
+  <figure class="gal">
+    <div class="track">
+      ${imgs.map((src, i) => `<img id="${id(i)}" src="${esc(src)}" alt="" loading="${i ? 'lazy' : 'eager'}">`).join('\n      ')}
+    </div>
+    <nav class="dots" aria-label="Images">
+      ${imgs.map((_, i) => `<a href="#${id(i)}" aria-label="Image ${i + 1} / ${imgs.length}"><span></span></a>`).join('\n      ')}
+    </nav>
+  </figure>
+  <script>
+  /* 점진적 향상. 스크립트가 없으면 위의 앵커가 그대로 동작한다(세로 점프는 있다).
+     있으면 가로 이동만 시키고, 스와이프에도 점이 따라온다. */
+  (function () {
+    document.querySelectorAll('.gal').forEach(function (gal) {
+      var track = gal.querySelector('.track');
+      var dots = gal.querySelectorAll('.dots a');
+      if (!track || dots.length < 2) return;
+      function mark() {
+        var i = Math.round(track.scrollLeft / (track.clientWidth || 1));
+        dots.forEach(function (d, n) { d.classList.toggle('on', n === i); });
+      }
+      dots.forEach(function (d, n) {
+        d.addEventListener('click', function (e) {
+          e.preventDefault();
+          track.scrollTo({ left: n * track.clientWidth, behavior: 'smooth' });
+        });
+      });
+      track.addEventListener('scroll', mark, { passive: true });
+      gal.classList.add('js'); mark();
+    });
+  })();
+  </script>`;
+};
+
 for (const a of items) {
   const paras = String(a.body).split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   const cta = ctaFor(a.category);
@@ -248,12 +328,15 @@ for (const a of items) {
       { '@type': 'ListItem', position: 3, name: a.title },
     ],
   }];
+
+
   const body = `
   <a class="crumb" href="/news/">← ${esc(M.all)}</a>
   <span class="eyebrow">${esc(a.category)}</span>
   <h1>${esc(a.title)}</h1>
   <p class="meta">${esc(M.published)} ${esc(fmtDate(a.date))} · ${esc(a.author)}</p>
   <p class="lede">${esc(a.summary)}</p>
+  ${gallery(a)}
   <div class="body">
     ${paras.map((p) => `<p>${esc(p)}</p>`).join('\n    ')}
   </div>
@@ -343,11 +426,15 @@ const urls = [
     : []),
   { loc: `${M.host}/news/`, freq: 'weekly' },
   ...items.map((a) => ({ loc: `${M.host}/news/${slug(a.id)}.html`, freq: 'yearly', lastmod: String(a.date).slice(0, 10) })),
-  { loc: `${M.host}/pricing`, freq: 'monthly' },
-  { loc: `${M.host}/privacy`, freq: 'yearly' },
-  { loc: `${M.host}/terms`, freq: 'yearly' },
-  { loc: `${M.host}/refund-policy`, freq: 'yearly' },
-  { loc: `${M.host}/imprint`, freq: 'yearly' },
+  /* /pricing, /privacy, /terms, /refund-policy and /imprint are NOT listed.
+     They are SPA routes: the server returns the same index.html for all five,
+     so a crawler sees five byte-identical 289-character pages carrying the
+     same <title>. Listing them does not get them indexed — it teaches Google
+     that this sitemap points at duplicates, and on a young domain the crawl
+     budget that buys costs the real articles in the same file. GSC confirmed
+     the damage on 2026-08-31: every FR URL sat in "Discovered – currently not
+     indexed" with last-crawl "N/A", i.e. never fetched at all.
+     If these pages ever need to rank, they have to become real HTML first. */
 ];
 writeFileSync(join(OUT_DIR, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`
