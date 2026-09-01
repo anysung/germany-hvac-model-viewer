@@ -16,7 +16,9 @@ import { ManufacturerFacet } from '../MfrFacet';
 // column, misaligning the numeric columns row-by-row. minmax(0, fr) pins the
 // division to the container width alone; the status floor keeps pills legible
 // on narrow screens (same floor in every row → still aligned).
-const GRID = '34px minmax(0, 2.2fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 0.8fr) minmax(0, 0.7fr) minmax(0, 0.7fr) minmax(150px, 1.2fr)';
+const GRID = '34px minmax(0, 2fr) minmax(0, 1fr) minmax(0, 0.85fr) minmax(0, 0.85fr) minmax(0, 0.75fr) minmax(0, 0.75fr) minmax(165px, 1.2fr)';
+/** Header cell: never paint across the neighbouring column. */
+const TH: React.CSSProperties = { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 };
 const PAGE_SIZE = 100;
 
 const SkeletonRow: React.FC<{ widths: string[]; dim?: boolean }> = ({ widths, dim }) => (
@@ -167,7 +169,7 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
         {/* Segment choice — step ONE of any search, so it must read as a real
             control: larger type, a visible border and a hover state (the old
             hairline pill looked like a static label — 2026-07-27). */}
-        <div style={{ display: 'flex', border: '1.5px solid #b0b0b6', borderRadius: 999, overflow: 'hidden', fontSize: 14, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
+        <div style={{ display: 'flex', flex: 'none', border: '1.5px solid #b0b0b6', borderRadius: 999, overflow: 'hidden', fontSize: 14, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
           {(['residential', 'commercial'] as const).map(s => {
             const on = app.segment === s;
             return (
@@ -185,29 +187,23 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
             );
           })}
         </div>
-        {/* The site's own segmentation rule — small, secondary, always visible. */}
-        <span style={{ fontSize: 11.5, color: '#7a7a7a', lineHeight: 1.4 }} data-testid="segment-note">
-          {t.products.segmentNote}
+        {/* The site's own segmentation rule — disclosed one hover away. The full
+            sentence stays in the DOM (tooltip child), so the disclosure test and
+            a screen reader both still find it. */}
+        <span className="hp-info" data-testid="segment-note" onClick={() => app.notify(t.products.segmentNote)}>
+          i
+          <span className="hp-info-tip">{t.products.segmentNote}</span>
         </span>
         {app.unclassifiedCount > 0 && (
           <span style={{ fontSize: 11.5, color: '#9a6b00', lineHeight: 1.4 }} data-testid="unclassified-note">
             {t.products.unclassifiedNote(app.unclassifiedCount.toLocaleString(t.locale))}
           </span>
         )}
-        <span style={{ marginLeft: 'auto', fontSize: 13, color: '#7a7a7a', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
-          <span>{t.products.countLine(fmtInt(filteredTotal), fmtInt(store?.total ?? 0), app.segment)}</span>
-          {/* IT: the catalogue mixes two sources — say so instead of one undifferentiated count. */}
-          {LOCAL_LISTING_SOURCE === 'GSE' && store && store.all.some(v => v.raw.gse_match_method === 'gse_native') && (
-            <span style={{ fontSize: 11 }} data-testid="source-mix-note">
-              {t.products.countGse(
-                fmtInt(store.all.filter(v => v.raw.gse_match_method === 'gse_native').length),
-                fmtInt(store.all.filter(v => v.raw.gse_match_method !== 'gse_native').length),
-              )}
-            </span>
-          )}
+        <span style={{ marginLeft: 'auto', fontSize: 13, color: '#7a7a7a', whiteSpace: 'nowrap' }}>
+          {t.products.countLine(fmtInt(filteredTotal), fmtInt(store?.total ?? 0), app.segment)}
         </span>
-        <div style={{ position: 'relative' }}>
-          <span onClick={() => setSortOpen(o => !o)} data-testid="sort-trigger" style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+        <div style={{ position: 'relative', flex: 'none' }}>
+          <span onClick={() => setSortOpen(o => !o)} data-testid="sort-trigger" style={{ fontSize: 13, display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', whiteSpace: 'nowrap' }}>
             {t.products.sortPrefix} {t.products.sortLabels[sort]} <ChevronDown />
           </span>
           {sortOpen && (
@@ -320,6 +316,22 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
               )}
             </div>
 
+            {/* IT has no "listed only" filter (a discovery trap — see CLAUDE.md),
+                so its source-mix disclosure and snapshot date live here instead
+                of a third toolbar line. */}
+            {!app.listingFilterOffered && LOCAL_LISTING_SOURCE === 'GSE' && store && store.all.some(v => v.raw.gse_match_method === 'gse_native') && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, borderTop: '1px solid #f0f0f0', paddingTop: 10, marginTop: 'auto' }}>
+                <span style={{ fontSize: 11, color: '#7a7a7a', lineHeight: 1.5 }} data-testid="source-mix-note">
+                  {t.products.countGse(
+                    fmtInt(store.all.filter(v => v.raw.gse_match_method === 'gse_native').length),
+                    fmtInt(store.all.filter(v => v.raw.gse_match_method !== 'gse_native').length),
+                  )}
+                </span>
+                <span style={{ fontSize: 11, color: '#7a7a7a' }}>
+                  {t.products.bafaUpdated} <span style={{ fontWeight: 600 }}>{app.bafaSnapshotDate}</span>
+                </span>
+              </div>
+            )}
             {app.listingFilterOffered && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <span style={sectionLabel}>{t.products.funding}</span>
@@ -423,12 +435,14 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: GRID, gap: '0 12px', alignItems: 'center', padding: '10px 20px', borderBottom: '1px solid rgba(0,0,0,.08)', fontSize: 10.5, fontWeight: 600, letterSpacing: '.05em', color: '#7a7a7a', flex: 'none' }}>
-              <span /><span>{t.products.th.model}</span><span>{t.products.manufacturer}</span>
-              <span style={sort === 'kwAsc' || sort === 'kwDesc' ? { color: '#1d1d1f' } : undefined}>{t.products.th.kw}{sort === 'kwDesc' ? ' ↓' : sort === 'kwAsc' ? ' ↑' : ''}</span>
-              <span style={sort === 'cop2' ? { color: '#1d1d1f' } : undefined}>{t.products.th.cop2}{sort === 'cop2' ? ' ↓' : ''}</span>
-              <span style={sort === 'scop' ? { color: '#1d1d1f' } : undefined}>{t.products.th.scop}{sort === 'scop' ? ' ↓' : ''}</span>
-              <span style={sort === 'noise' ? { color: '#1d1d1f' } : undefined}>{t.products.th.noise}{sort === 'noise' ? ' ↑' : ''}</span>
-              <span>{t.products.th.status}</span>
+              {/* th: ellipsis, never paint into the neighbour — RUMOROSITÀ used
+                  to run straight into STATO. */}
+              <span /><span style={TH}>{t.products.th.model}</span><span style={TH}>{t.products.manufacturer}</span>
+              <span style={{ ...TH, ...(sort === 'kwAsc' || sort === 'kwDesc' ? { color: '#1d1d1f' } : {}) }}>{t.products.th.kw}{sort === 'kwDesc' ? ' ↓' : sort === 'kwAsc' ? ' ↑' : ''}</span>
+              <span style={{ ...TH, ...(sort === 'cop2' ? { color: '#1d1d1f' } : {}) }}>{t.products.th.cop2}{sort === 'cop2' ? ' ↓' : ''}</span>
+              <span style={{ ...TH, ...(sort === 'scop' ? { color: '#1d1d1f' } : {}) }}>{t.products.th.scop}{sort === 'scop' ? ' ↓' : ''}</span>
+              <span style={{ ...TH, ...(sort === 'noise' ? { color: '#1d1d1f' } : {}) }}>{t.products.th.noise}{sort === 'noise' ? ' ↑' : ''}</span>
+              <span style={TH}>{t.products.th.status}</span>
             </div>
 
             <div ref={scrollerRef} style={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
@@ -455,15 +469,14 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                       <span style={{ fontSize: 11, color: '#7a7a7a' }}>{SOURCE_ID_ABBR} {r.sourceId}</span>
                     </span>
                     <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.mfr}</span>
-                    <span data-testid="row-kw">{r.ratedKw}</span>
-                    <span style={{ fontWeight: 600 }}>{r.cop2}</span>
-                    <span>{r.scop}</span>
-                    <span>{r.noise === '—' ? '—' : `${r.noise} dB`}</span>
+                    <span data-testid="row-kw" style={{ whiteSpace: 'nowrap' }}>{r.ratedKw}</span>
+                    <span style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.cop2}</span>
+                    <span style={{ whiteSpace: 'nowrap' }}>{r.scop}</span>
+                    <span style={{ whiteSpace: 'nowrap' }}>{r.noise === '—' ? '—' : `${r.noise} dB`}</span>
                     <span style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
                       {/* No national list in this market → say nothing about listing. */}
                       <ListingChip raw={r.raw} t={t} />
                       {r.eprel && <span style={{ border: '1px solid #e0e0e0', borderRadius: 999, padding: '2px 9px', fontSize: 10.5, background: '#fff' }}>{r.label}</span>}
-                      <span style={{ border: '1px solid #e0e0e0', borderRadius: 999, padding: '2px 9px', fontSize: 10.5, background: '#fff' }}>{t.products.chipSheet}</span>
                     </span>
                   </div>
                 );
@@ -503,7 +516,7 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                     [t.products.inspSpecs.cop7, sel.cop7],
                     [t.products.inspSpecs.cop2, sel.cop2],
                     [t.products.inspSpecs.copm7, sel.copm7],
-                    [t.products.inspSpecs.ref, sel.refKg === '—' ? sel.ref : `${sel.ref} · ${sel.refKg} kg`],
+                    [t.products.inspSpecs.ref, sel.ref],
                     [t.products.inspSpecs.noise, sel.noise === '—' ? '—' : `${sel.noise} dB(A)`],
                     [t.products.inspSpecs.type, sel.installType],
                   ] as [string, string][]).map(([label, value]) => (

@@ -249,3 +249,23 @@
 
 /* Products segment toggle: hover feedback on the unselected half. */
 .hp-seg-off:hover { background: #f0f0f2; }
+
+/* ⓘ disclosure: the full sentence lives in the DOM (screen readers, tests)
+   and appears on hover; on touch the same click raises it as a toast. */
+.hp-info {
+  position: relative;
+  width: 18px; height: 18px; flex: none;
+  border: 1px solid #c6c6cc; border-radius: 50%;
+  color: #7a7a7a; font-size: 11px; font-weight: 600; font-style: italic;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: default; user-select: none;
+}
+.hp-info .hp-info-tip {
+  display: none;
+  position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  z-index: 80; width: 320px; max-width: 70vw;
+  background: #1d1d1f; color: #fff; border-radius: 8px; padding: 9px 13px;
+  font-size: 12px; font-style: normal; font-weight: 400; line-height: 1.5;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+.hp-info:hover .hp-info-tip { display: block; }
