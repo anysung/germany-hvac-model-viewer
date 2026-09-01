@@ -91,8 +91,12 @@
 orchestrator: DE first, then FR/GB/PL derive from the built DE datasets; optional
 matcher overlays; freshness + shrink-guard verification; `--deploy` ships all
 sites in one atomic call). Never hand-run builders for production updates —
-see `docs/UPDATE_PIPELINE.md` for the graph, schedule (monthly, 2nd, 03:00
-Europe/Berlin, attended) and the country-expansion checklist.
+see `docs/UPDATE_PIPELINE.md` for the graph, schedule (monthly, **1st,
+00:00–07:00 Europe/Berlin, UNATTENDED** via `scripts/monthly-maintenance.mjs`
+behind a maintenance notice; two launchd jobs drive it and their candidate
+hours must be rechecked whenever the Mac changes timezone) and the
+country-expansion checklist. News runs INSIDE that window, not on its own
+scheduler.
 `build-master-seed` is SELF-ACCUMULATING: it unions previous master seeds so
 cleaning parsed/raw folders never drops products (regression 2026-07-12).
 **PL and IT have the same guard since 2026-08-12** (`scripts/pl/build-zum-master-seed.mjs`,
@@ -137,7 +141,17 @@ assumption that gitignored means disposable — keep at least the newest seed.
   them back into a builder.
 - **PL pipeline** (`scripts/pl/`) — canonical baseline + **Lista ZUM listing overlay**
   (PEL rules verbatim): `fetch-zum.mjs` (public grid + detail pages, facts only, no
-  attachments, ≥1.5s politeness) → `parse-zum.mjs` → `match-canonical-to-zum.mjs` →
+  attachments, **≥1.5s politeness — keep it there**; the crawl went from 5h14m to
+  ~17 min by asking for LESS, not faster: the removed/suspended tab (7,100 of
+  10,232 ids) gets NO detail page because parse-zum builds those from the grid
+  row and never opens one, and an unchanged entry's detail page is CARRIED
+  FORWARD from the previous snapshot. The grid is always re-fetched in full so
+  listing state is never carried; EX membership always forces a fresh fetch; a
+  rolling 1/6 re-verifies the whole register from source every six months; a
+  carried page records the month it was REALLY fetched, transitively, and
+  parse-zum stamps that on every record as `detail_snapshot`/`detail_fetched_at`.
+  `--no-reuse` restores the full crawl. Guarded by
+  `tests/zum-carry-forward.unit.mjs`) → `parse-zum.mjs` → `match-canonical-to-zum.mjs` →
   `build-app-products-pl.mjs`. Confirming methods only (manufacturer_official,
   eprel_exact/bridge, exact model/code, capacity-resolved identity, registry-published
   alias); fuzzy/family/ODU-only never confirm. States: `confirmed` → "Na liście ZUM" +

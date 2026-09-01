@@ -84,14 +84,28 @@ npm aliases: `npm run update:all` / `npm run update:all:deploy`.
   rebuilt on data-only updates on purpose: the landing-page catalogue
   counts (`__MARKET_STATS__`) are baked at build time from the dataset
   files and would otherwise go stale.
-- **When**: monthly, **2nd of the month, 03:00–05:00 Europe/Berlin**, run
-  manually (attended). Rationale: the news Cloud Scheduler fires on the 1st
-  03:00; sources publish around month start; the 2nd gives BAFA/Ofgem a day
-  of slack; the night window minimizes user impact across DE/UK/FR timezones
-  (max 1h offset). Attended (not cron) while data volumes still shift —
-  the operator reads the shrink-guard/summary before `--deploy`.
-- **News is independent**: the Cloud Function handles `countries/<code>`
-  news/policies on its own schedule; no coupling with this pipeline.
+- **When**: monthly, **the midnight that ends the month** — 1st of the month,
+  **00:00–07:00 Europe/Berlin**, UNATTENDED, driven by
+  `scripts/monthly-maintenance.mjs` behind a maintenance notice. The point of
+  starting at that midnight is that every market opens the new month on data
+  fetched for that month; sources publish around month end, and a night window
+  across DE/UK/FR/PL/IT costs the fewest readers (max 1h offset).
+  Two launchd jobs on the owner's Mac drive it — `com.heatpumpdb.maintenance.run`
+  (00:05) and `…close` (the 07:00 guard). They schedule in the MAC's local time,
+  so each fires on every hour that could be the Berlin hour and `--if-window`
+  picks the real one. **When the Mac changes timezone, check those candidate
+  hours**: they silently stopped matching once and the September 2026 window
+  never opened — four firings, four "not the window", no data update and no
+  news for a month.
+- **Window length (owner, 2026-09-01): seven hours, because Poland sets it.**
+  Lista ZUM is fetched one public detail page at a time at ≥1.5 s; refetching
+  the whole register is over five hours by itself. Four hours could not finish
+  such a month, and a window that cannot finish is worse than a long one — the
+  guard lifts the notice on last month's data.
+- **News is NOT independent.** It runs inside this window (step 3), after the
+  database it describes. There is no separate news scheduler — the only Cloud
+  Scheduler job in the project is `trial-reminders-daily`. If the window does
+  not open, no news is published either.
 
 ### 4a. Publishing the news archive (after each news cycle)
 

@@ -3,8 +3,15 @@
  * monthly-maintenance.mjs — the unattended monthly window.
  *
  * 00:00 Europe/Berlin on the 1st: the service goes down with a notice.
- * 00:05: this runs. Everything must be finished by 04:00, or the window closes
+ * 00:05: this runs. Everything must be finished by 07:00, or the window closes
  * itself on the version that was already live.
+ *
+ * WHY SEVEN HOURS AND NOT FOUR (owner, 2026-09-01)
+ * Poland is the long pole: Lista ZUM is fetched one public detail page at a
+ * time at >=1.5s, and re-fetching the whole register takes over five hours on
+ * its own. Four hours was never enough for a month that had to refetch it, and
+ * a window that cannot finish is worse than a long one — it ends with the
+ * guard restoring last month's data behind a notice nobody asked for.
  *
  * WHY A WINDOW AT ALL
  * Datasets, news and the deployed sites have to move together. A visitor who
@@ -32,7 +39,7 @@
  *
  * ON FAILURE the run stops where it is, writes what happened, tells the owner,
  * and LEAVES THE NOTICE UP so nobody meets a half-updated service. It does not
- * decide anything by itself. If no instruction arrives, the 03:00 closer
+ * decide anything by itself. If no instruction arrives, the 07:00 closer
  * (--close) lifts the notice on whatever was last serving.
  *
  * EPREL IS crawled here. It was left out on the assumption that 45k records
@@ -43,7 +50,7 @@
  * on with last month's snapshot rather than holding the catalogue back.
  *
  *   node scripts/monthly-maintenance.mjs --run        the window
- *   node scripts/monthly-maintenance.mjs --close      lift the notice (04:00 guard)
+ *   node scripts/monthly-maintenance.mjs --close      lift the notice (07:00 guard)
  *   node scripts/monthly-maintenance.mjs --status     what happened last time
  *   node scripts/monthly-maintenance.mjs --run --dry-run
  */
@@ -58,6 +65,13 @@ const FS = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(d
 const STATE_DIR = join(ROOT, '.maintenance');
 const STATE = join(STATE_DIR, 'state.json');
 const LOG_DIR = join(ROOT, '.maintenance', 'logs');
+
+/** When the guard lifts the notice, Europe/Berlin. ONE constant: the closer's
+ *  window check and the deadline printed at the start of a run both read it,
+ *  so a change here cannot leave the two disagreeing about when the window
+ *  ends. The launchd close plist fires on the candidate hours for this value
+ *  (see ~/Library/LaunchAgents/com.heatpumpdb.maintenance.close.plist). */
+const CLOSE_HOUR = 7;
 
 const args = process.argv.slice(2);
 const DRY = args.includes('--dry-run');
@@ -173,7 +187,7 @@ function step(name, cmd, { fatal = true } = {}) {
    would run an hour early or late for half the year. */
 if (args.includes('--if-window')) {
   const b = berlinParts();
-  const wantHour = MODE === 'close' ? 4 : 0;
+  const wantHour = MODE === 'close' ? CLOSE_HOUR : 0;
   const ok = b.day === 1 && b.hour === wantHour;
   if (!ok) {
     console.log(`not the window (Berlin ${b.date} ${String(b.hour).padStart(2, '0')}:${String(b.minute).padStart(2, '0')}) — exiting`);
@@ -189,7 +203,7 @@ if (MODE === 'status') {
   process.exit(0);
 }
 
-/* ── close: the 04:00 guard ──────────────────────────────────────────────── */
+/* ── close: the 07:00 guard ──────────────────────────────────────────────── */
 if (MODE === 'close') {
   const s = loadState();
   // Ask the SERVICE, never this machine's memory. A state file that says "done"
@@ -214,8 +228,8 @@ if (MODE === 'close') {
 }
 
 /* ── run ─────────────────────────────────────────────────────────────────── */
-const until = berlinISOToday(4, 0);
-say(`monthly window ${runId} — must finish by 04:00 Europe/Berlin (${until})`);
+const until = berlinISOToday(CLOSE_HOUR, 0);
+say(`monthly window ${runId} — must finish by ${String(CLOSE_HOUR).padStart(2, '0')}:00 Europe/Berlin (${until})`);
 saveState({ phase: 'starting' });
 
 try {
@@ -285,7 +299,7 @@ try {
   saveState({ ...s, phase: 'failed', failedStep: s.step ?? 'unknown', error: String(err.message ?? err) });
   say(`STOPPED: ${err.message ?? err}`);
   say('The notice stays UP and nothing further runs. Waiting for the owner.');
-  say(`If no instruction arrives, the 04:00 guard restores service on the previous version.`);
+  say(`If no instruction arrives, the ${String(CLOSE_HOUR).padStart(2, '0')}:00 guard restores service on the previous version.`);
   say(`log: ${LOG}`);
   process.exit(1);
 }

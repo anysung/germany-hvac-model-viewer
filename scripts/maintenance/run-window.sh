@@ -11,7 +11,7 @@
 # schedule correct across European summer time.
 set -uo pipefail
 
-export PATH="/Users/christophersung/.nvm/versions/node/v20.19.6/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/Users/christophersung/.nvm/versions/node/v22.22.3/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 REPO="/Users/christophersung/heatpumpdb-app"
 
 # Keys are NOT sourced here. monthly-maintenance.mjs reads .env, .env.local and

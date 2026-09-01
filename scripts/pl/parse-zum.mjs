@@ -116,6 +116,20 @@ function parseDetail(html, zumId) {
 
 /* ── Load grid rows ─────────────────────────────────────────────────────── */
 const grid = JSON.parse(fs.readFileSync(path.join(RAW, 'grid-rows.json'), 'utf8'));
+
+/* Detail pages may have been CARRIED FORWARD from an earlier snapshot when the
+   entry's grid row was unchanged (see fetch-zum.mjs). Listing state is always
+   this month's — the grid is re-fetched in full — but a specification read from
+   a carried page is evidence from the month it was actually fetched in, and
+   that is what every entry is stamped with below. A snapshot that predates the
+   carry-forward record simply fetched everything itself. */
+const carried = (() => {
+  try {
+    const p = JSON.parse(fs.readFileSync(path.join(RAW, 'detail-provenance.json'), 'utf8'));
+    return new Map(Object.entries(p.carried ?? {}));
+  } catch { return new Map(); }
+})();
+const detailOrigin = (id) => carried.get(id) ?? { snapshot: SNAPSHOT, fetched_at: null };
 const HP_TABS = ['PW', 'PWX', 'PU', 'PG', 'PP'];
 const HP_PREFIXES = ['PW', 'PU', 'PG', 'PP'];
 const idRe = /^[A-Z]{2,3}-\d+/;
@@ -164,12 +178,15 @@ for (const [id, base] of activeById) {
       product_name: base.grid_product_name,
       higher_class: higherClassIds.has(id),
       detail_ok: false,
+      detail_snapshot: null,
+      detail_fetched_at: null,
       status: 'active',
     });
     continue;
   }
   const d = parseDetail(fs.readFileSync(file, 'utf8'), id);
   if (!d.detail_ok) badDetail++;
+  const origin = detailOrigin(id);
   entries.push({
     ...base,
     ...d,
@@ -177,6 +194,10 @@ for (const [id, base] of activeById) {
     model: d.model ?? base.grid_model,
     product_name: d.product_name ?? base.grid_product_name,
     higher_class: higherClassIds.has(id),
+    // Which run this entry's SPECIFICATIONS come from. Equal to the snapshot
+    // for a page fetched this month; earlier for a carried one.
+    detail_snapshot: origin.snapshot,
+    detail_fetched_at: origin.fetched_at,
     status: 'active',
   });
 }
@@ -195,6 +216,10 @@ const summary = {
   generated_at: new Date().toISOString(),
   source: 'https://lista-zum.ios.edu.pl (Lista ZUM, IOŚ-PIB) — public pages, facts only',
   active_unique: activeById.size,
+  detail_fetched_this_snapshot: entries.filter(e => e.detail_snapshot === SNAPSHOT).length,
+  detail_carried_forward: entries.filter(e => e.detail_snapshot && e.detail_snapshot !== SNAPSHOT).length,
+  detail_oldest_snapshot: entries.reduce((a, e) =>
+    e.detail_snapshot && (a === null || e.detail_snapshot < a) ? e.detail_snapshot : a, null),
   by_category: entries.reduce((a, e) => { a[e.category] = (a[e.category] ?? 0) + 1; return a; }, {}),
   higher_class: entries.filter(e => e.higher_class).length,
   with_eprel: entries.filter(e => e.eprel_number).length,
