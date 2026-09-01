@@ -226,9 +226,9 @@ export function buildDataSheetPdf({ v, t, sections, isLabelMode, sourceAbbr, isG
     doc.setFillColor(TILE[0], TILE[1], TILE[2]);
     doc.roundedRect(x, y, tileW, tileH, 1.6, 1.6, 'F');
     setFont(11.5, true, INK);
-    doc.text(ascii(val), x + 4, y + 6);
+    doc.text(ascii(val), x + tileW / 2, y + 6, { align: 'center' });
     setFont(6, false, MUTED);
-    doc.text(ascii(lbl.toUpperCase()), x + 4, y + 9.7);
+    doc.text(ascii(lbl.toUpperCase()), x + tileW / 2, y + 9.7, { align: 'center' });
   });
   y += tileH + 5.5;
 
@@ -249,9 +249,15 @@ export function buildDataSheetPdf({ v, t, sections, isLabelMode, sourceAbbr, isG
   const fieldGrid = (cells: [string, string, number | null][]) => {
     for (let i = 0; i < cells.length; i += 2) {
       const row = cells.slice(i, i + 2);
+      // The value is indented to where the LABEL starts — after the "[n] "
+      // marker — mirroring the on-screen sheet (owner, 2026-09-02). The
+      // indent is measured in the marker's own font, so a two-digit note
+      // number indents exactly as far as it prints.
+      setFont(6, false, MUTED);
+      const indents = row.map(([, , note]) => (note != null ? doc.getTextWidth(ascii(`[${note}] `)) : 0));
       // measure the tallest cell in this row (values can wrap)
       setFont(9.5, true, INK);   // measure with the font the values are drawn in
-      const wrapped = row.map(([, val]) => doc.splitTextToSize(ascii(val), COL_W - 2) as string[]);
+      const wrapped = row.map(([, val], c) => doc.splitTextToSize(ascii(val), COL_W - 2 - indents[c]) as string[]);
       const rowH = 4 + Math.max(...wrapped.map(w => w.length)) * 4.6 + 2;
       need(rowH);
       row.forEach(([label, , note], c) => {
@@ -260,7 +266,7 @@ export function buildDataSheetPdf({ v, t, sections, isLabelMode, sourceAbbr, isG
         const prefix = note != null ? `[${note}] ` : '';
         doc.text(ascii(prefix + label.toUpperCase()), x, y + 2.8);
         setFont(9.5, true, INK);
-        wrapped[c].forEach((ln, li) => doc.text(ln, x, y + 7 + li * 4.6));
+        wrapped[c].forEach((ln, li) => doc.text(ln, x + indents[c], y + 7 + li * 4.6));
         doc.setDrawColor(HAIR[0], HAIR[1], HAIR[2]);
         doc.setLineWidth(0.2);
         doc.line(x, y + rowH - 1, x + COL_W, y + rowH - 1);

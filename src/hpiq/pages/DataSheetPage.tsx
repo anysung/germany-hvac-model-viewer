@@ -14,13 +14,17 @@ const MONO = 'ui-monospace, Menlo, monospace';
 
 /** Two-column spec cell: label above value — fills the sheet width without
  *  the empty middle a justify-between row leaves. */
+/** The [n] marker's column width — the label starts after it, and the value is
+ *  indented to the LABEL, not to the number (owner, 2026-09-02: values lined
+ *  up under the markers read as a second column of numbers). */
+const NOTE_W = 27;
 const FieldCell: React.FC<{ label: string; value: string; note?: number; span?: boolean }> = ({ label, value, note, span }) => (
   <div className="ds-cell" style={{ gridColumn: span ? '1 / -1' : undefined, display: 'flex', flexDirection: 'column', gap: 4, padding: '11px 0 10px', borderBottom: '1px solid #ececf0', breakInside: 'avoid' }}>
-    <span className="ds-cell-label" style={{ fontSize: 10.5, letterSpacing: '.05em', textTransform: 'uppercase', color: '#7a7a7a' }}>
-      {note != null && <span style={{ fontFamily: MONO, fontSize: 9.5, color: '#b6b6bc', marginRight: 6 }}>[{note}]</span>}
-      {label}
+    <span className="ds-cell-label" style={{ display: 'flex', fontSize: 10.5, letterSpacing: '.05em', textTransform: 'uppercase', color: '#7a7a7a' }}>
+      {note != null && <span style={{ fontFamily: MONO, fontSize: 9.5, color: '#b6b6bc', flex: `0 0 ${NOTE_W}px` }}>[{note}]</span>}
+      <span style={{ minWidth: 0 }}>{label}</span>
     </span>
-    <span className="ds-cell-value" style={{ fontSize: 15, fontWeight: 600, letterSpacing: '-0.1px' }}>{value}</span>
+    <span className="ds-cell-value" style={{ fontSize: 15, fontWeight: 600, letterSpacing: '-0.1px', paddingLeft: note != null ? NOTE_W : 0 }}>{value}</span>
   </div>
 );
 
@@ -142,7 +146,7 @@ export const DataSheetDoc: React.FC<{ app: HpApp }> = ({ app }) => {
                   [dsp.cop7, t.ds.stat.cop],
                   [dsp.label, t.ds.stat.cls],
                 ] as [string, string][]).map(([v, l]) => (
-                  <div key={l} className="ds-stat" style={{ background: '#f5f5f7', borderRadius: 8, padding: '13px 14px', display: 'flex', flexDirection: 'column', gap: 3, breakInside: 'avoid' }}>
+                  <div key={l} className="ds-stat" style={{ background: '#f5f5f7', borderRadius: 8, padding: '13px 14px', display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'center', textAlign: 'center', breakInside: 'avoid' }}>
                     <span className="ds-stat-value" style={{ fontFamily: FD, fontSize: 21, fontWeight: 700, letterSpacing: '-0.3px' }}>{v}</span>
                     <span style={{ fontSize: 10, letterSpacing: '.06em', color: '#7a7a7a', textTransform: 'uppercase' }}>{l}</span>
                   </div>
@@ -179,10 +183,22 @@ export const DataSheetDoc: React.FC<{ app: HpApp }> = ({ app }) => {
                       <span style={{ fontSize: 9.5, color: '#7a7a7a' }}>W35</span>
                     </div>
                     <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8, fontSize: 13.5 }}>
-                      <span><span style={{ fontFamily: MONO, fontSize: 10, color: '#b6b6bc', marginRight: 7 }}>[{n('classW35')}]</span><span style={{ color: '#7a7a7a' }}>{t.ds.f.clsW35}</span> <strong style={{ fontWeight: 600 }}>{dsp.label}</strong></span>
-                      <span><span style={{ fontFamily: MONO, fontSize: 10, color: '#b6b6bc', marginRight: 7 }}>[{n('classW55')}]</span><span style={{ color: '#7a7a7a' }}>{t.ds.f.clsW55}</span> <strong style={{ fontWeight: 600 }}>{dsp.labelMed}</strong></span>
-                      <span><span style={{ fontFamily: MONO, fontSize: 10, color: '#b6b6bc', marginRight: 7 }}>[{n('eprelReg')}]</span><span style={{ color: '#7a7a7a' }}>{t.ds.f.eprelReg}</span> <strong style={{ fontWeight: 600 }}>{dsp.eprel ? dsp.eprelId : t.ds.f.eprelNone}</strong></span>
-                      <span><span style={{ color: '#7a7a7a', marginLeft: 25 }}>{t.ds.f.infoSheet}</span> <strong style={{ fontWeight: 600 }}>{dsp.eprel ? t.ds.f.available : '—'}</strong></span>
+                      {/* Hanging indent: the marker owns a fixed column, so a
+                          localized label that wraps (Polish easily does) folds
+                          under ITS OWN first word — not under the number. */}
+                      {([
+                        [n('classW35'), t.ds.f.clsW35, dsp.label],
+                        [n('classW55'), t.ds.f.clsW55, dsp.labelMed],
+                        [n('eprelReg'), t.ds.f.eprelReg, dsp.eprel ? dsp.eprelId : t.ds.f.eprelNone],
+                        [null, t.ds.f.infoSheet, dsp.eprel ? t.ds.f.available : '—'],
+                      ] as [number | null, string, string][]).map(([num, label, value], i) => (
+                        <span key={i} style={{ display: 'flex' }}>
+                          <span style={{ fontFamily: MONO, fontSize: 10, color: '#b6b6bc', flex: `0 0 ${NOTE_W}px` }}>{num != null ? `[${num}]` : ''}</span>
+                          <span style={{ minWidth: 0 }}>
+                            <span style={{ color: '#7a7a7a' }}>{label}</span> <strong style={{ fontWeight: 600 }}>{value}</strong>
+                          </span>
+                        </span>
+                      ))}
                     </div>
                     <EnergyScale current={dsp.label} />
                   </div>
