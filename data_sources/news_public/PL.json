@@ -1,6 +1,6 @@
 {
   "market": "PL",
-  "generatedAt": "2026-08-16T11:59:44.613Z",
+  "generatedAt": "2026-09-01T14:31:50.071Z",
   "items": [
     {
       "id": "news-20260816-pl-sr1",
@@ -12,6 +12,7 @@
       "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
       "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
       "imageUrl": "/special-report/img/special-report-2026-08-pl.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": true,
       "ctaUrl": "https://www.heatpumpdb.pl/special-report/2026-08/",
@@ -36,6 +37,142 @@
       ]
     },
     {
+      "id": "news-20260901-pl-001",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Program Czyste Powietrze Zwiększa Wsparcie dla Pomp Ciepła dzięki Ulepszonym Dotacjom",
+      "summary": "Od 20 lipca 2026 roku weszły w życie znaczące zmiany w sztandarowym polskim programie „Czyste Powietrze”, które ułatwiają dostęp do dotacji i zwiększają wsparcie finansowe na instalację pomp ciepła oraz kompleksową termomodernizację w istniejących domach jednorodzinnych. Celem tych reform jest przyspieszenie poprawy efektywności energetycznej w całym kraju.",
+      "body": "Program „Czyste Powietrze”, zarządzany przez Narodowy Fundusz Ochrony Środowiska i Gospodarki Wodnej (NFOŚiGW), przeszedł kluczowe zmiany mające na celu usprawnienie dostępu do środków dla właścicieli domów. Od 20 lipca 2026 roku beneficjenci mogą liczyć na łatwiejszy dostęp do dotacji oraz na zwiększone wsparcie finansowe na kluczowe prace termomodernizacyjne, takie jak izolacja, wymiana okien i montaż energooszczędnych systemów grzewczych, w tym pomp ciepła.\n\nMaksymalne kwoty dotacji na poszczególne zadania termomodernizacyjne, takie jak ulepszenie przegród budowlanych oraz wymiana drzwi zewnętrznych czy bram garażowych, wzrosły o 10% w ramach indywidualnych limitów. Chociaż ogólna maksymalna kwota wsparcia na termomodernizację pozostaje na poziomie 83 000 zł dla najwyższego poziomu dofinansowania, te korekty mają zapewnić bardziej znaczącą pomoc w modernizacji komponentów.\n\nZgodnie ze zaktualizowanymi zasadami, uczestnicy programu będą mieli również więcej czasu na ukończenie swoich projektów modernizacyjnych, co zapewnia większą elastyczność i zmniejsza presję na właścicieli domów i instalatorów. Program jest skierowany do właścicieli i współwłaścicieli istniejących budynków mieszkalnych jednorodzinnych, co odróżnia go od inicjatyw przeznaczonych dla nowych budownictw.\n\nWarto zaznaczyć, że zgodnie z polityką Unii Europejskiej, od stycznia 2025 roku zaprzestano udzielania zachęt finansowych na zakup i instalację kotłów na paliwa kopalne we wszystkich programach, w tym w „Czystym Powietrzu”. Podkreśla to zdecydowane zaangażowanie programu w promowanie czystszych, odnawialnych rozwiązań grzewczych, takich jak pompy ciepła.\n\nPonadto, dotacje z programu „Czyste Powietrze” można łączyć z ulgą termomodernizacyjną. Właściciele domów mogą odliczyć od dochodu tę część kosztów inwestycji, która nie została pokryta dotacją, co stanowi warstwową zachętę finansową do znaczących modernizacji energetycznych.",
+      "titleEn": "Czyste Powietrze Program Boosts Support for Heat Pump Installations with Enhanced Grants",
+      "summaryEn": "Poland's flagship \"Czyste Powietrze\" program has introduced significant changes effective July 20, 2026, making grants more accessible and increasing financial support for heat pump installations and comprehensive thermal modernization in existing single-family homes. These reforms aim to accelerate energy efficiency improvements across the country.",
+      "imageUrl": "/news-images/pl-policy-01.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Higher funding and simpler rules - changes to the Clean Air Programme have come into force - Ministry of Climate and Environment - Gov.pl",
+          "url": "https://www.gov.pl/web/climate/higher-funding-and-simpler-rules--changes-to-the-clean-air-programme-have-come-into-force"
+        },
+        {
+          "title": "Dofinansowanie na pompę ciepła 2026 - Moje Ciepło, Czyste Powietrze: kwoty, warunki, jak złożyć wniosek",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXt3hBcVIgT-9ixKJycJ84uiELiDQWYB7d4gC42itLH45OKBlO8s05ouPu43wOnzM7R8Qzn6HnNnDVAcF7qsjPCSZEwGoy3hmD7W9WQ5kzvZPutNrUck4HEcYPbbsdJMZNWma6DtMyUX4qm2S9J0EGe4lkcsniBo8Hgq0x-BNT6Usm6IFGB26zu_vvFjE-xR3W03ug63bWUOuxYTBnjM3Vypmm6kmps8w4kVsiLBRbmrXXkbjGwuZn81o=="
+        },
+        {
+          "title": "Poland I CA EPBD",
+          "url": "https://www.ca-epbd.eu/countries/poland"
+        },
+        {
+          "title": "Ulga termomodernizacyjna 2026 - odlicz do 53 000 zł",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEx73V62vzANEKYL6mTSbdG-1pWJvJHhE202e4ELkMmhknIk8Hw5feb1xKphjFv1U_lWCDaeBSY4bCJDzYZu28rPeAHOgWTkjWbVtSt5-dkfuOAZowwtHBf4CY1R8MAGD_05cuLNuGS3KugmDHIA6LhAMNED91hlg=="
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-pl-002",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "MARKET",
+      "title": "Polski Rynek Pomp Ciepła Odzyskuje Siły Wśród Zmian Politycznych i Boomu Produkcyjnego",
+      "summary": "Polski rynek pomp ciepła wykazuje znaczącą odporność, odnotowując średni wzrost sprzedaży o 25% w I kwartale 2026 roku na głównych rynkach europejskich. To ożywienie następuje po trudnym roku 2025, w którym sprzedaż spadła o 38,8%, i jest dodatkowo wzmocnione przez duże inwestycje produkcyjne w Polsce, sygnalizując solidne perspektywy długoterminowe.",
+      "body": "Po trudnym okresie charakteryzującym się reformami dotacyjnymi i niepewnością makroekonomiczną, polski rynek pomp ciepła dynamicznie się ożywia. Sprzedaż mieszkaniowych pomp ciepła w Polsce, podobnie jak we Francji i Niemczech, odnotowała średni wzrost o 25% w pierwszym kwartale 2026 roku. Stanowi to znaczące odzyskanie po spadku sprzedaży jednostkowej w Polsce o 38,8% do 124 660 sztuk w poprzednim roku.\n\nWartość rynkowa pomp ciepła w Polsce osiągnęła 757,42 miliona USD w 2026 roku, z prognozami wskazującymi na dalszy wzrost ze skumulowanym rocznym wskaźnikiem wzrostu (CAGR) na poziomie 3,78% do 2031 roku, osiągając 911,72 miliona USD. Systemy powietrze-woda pozostają najpopularniejszym wyborem, stanowiąc ponad połowę wszystkich sprzedanych jednostek w 2025 roku.\n\nKluczem do długoterminowej stabilności i wzrostu rynku jest wzrost lokalnej produkcji. Daikin, światowy lider w technologii HVAC-R, otworzył w maju 2026 roku nową fabrykę pomp ciepła w regionie łódzkim. Ta znacząca inwestycja, szacowana na prawie 300 milionów USD, wzmacnia zdolności produkcyjne Europy i ma na celu zaspokojenie rosnącego zapotrzebowania na zrównoważone rozwiązania grzewcze.\n\nPomimo pozytywnych trendów, rynek nadal mierzy się z wyzwaniami. Niedobory instalatorów wciąż stanowią znaczącą barierę dla przyspieszonego rozwoju, co podkreślają obserwatorzy branży. Dodatkowo, problemy takie jak słabe sieci niskiego napięcia i długie kolejki przyłączeniowe mogą zwiększyć koszty projektów o tysiące dolarów i opóźnić instalacje nawet o 18 miesięcy.\n\nJednak rosnące ceny energii, ze wzrostem kosztów gazu i ciepła sieciowego odpowiednio o 54% i 31% do 2025 roku, skróciły okres zwrotu inwestycji w pompy ciepła do mniej niż dziesięciu lat dla wielu gospodarstw domowych. Ta zachęta ekonomiczna, w połączeniu ze strukturalnymi wymogami dekarbonizacyjnymi Unii Europejskiej, odbudowuje solidne podstawy dla średnioterminowego wzrostu.",
+      "titleEn": "Polish Heat Pump Market Shows Resilience Amid Policy Shifts and Production Boom",
+      "summaryEn": "The Polish heat pump market is demonstrating significant resilience, posting a 25% average sales growth in Q1 2026 across major European markets. This recovery follows a challenging 2025, which saw sales drop by 38.8%, and is further bolstered by major manufacturing investments within Poland, signaling a robust long-term outlook.",
+      "imageUrl": "/news-images/common-market-03.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Poland Heat Pump Market Size, Share & 2031 Growth Trends Report - Mordor Intelligence",
+          "url": "https://www.mordorintelligence.com/industry-reports/poland-heat-pump-market"
+        },
+        {
+          "title": "Poland HVAC Market, Share, and Trends Analysis Report – Industry Overview and Forecast to 2033",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXdoCOrMNoakxhQTNR87tDN9sulwKzgV0RWV13rxX6hS9Aa1QylvNl2rKjN3AqBOo2h3mzHkqHfrZOH9HDQNX3kLIQgZ3GraLsCobSEj5S44oUu58oA8LKP4et-ZqaREjxJVwGTlO-4Afd_J8zj4_zyvkiWsyrLuvJ4paxWjc=="
+        },
+        {
+          "title": "Energy crisis sees rise in heat pump sales",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUmkN7FymO4iKwVHC9vmANx4mEF-uE4_70rqm-7PdFR_mZuL_dUDh7cLx9FG3XSoCov-E9cj3xROYvfrvbm8g1ucNhm7de3dZ8TSve9g-aJtRVKQJErNDri-dbsvXrh83J2ER85kAVKoX3M36k4Qp2BgfIllOHsvfCHfNNJgjnmKdCq9L2FIgsHxIwMBJV5yaxVQutz8kN-z8=="
+        },
+        {
+          "title": "Daikin's Polish heat pump factory investment recognised by Financial Times' fDi Intelligence",
+          "url": "https://www.daikin-ce.com/en_us/press-releases/2026/financial-times-investment-award.html"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-pl-003",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "TECHNOLOGY",
+      "title": "Rozporządzenie F-gazowe Przekształca Rynek Pomp Ciepła: Bardziej Rygorystyczne Zasady dla Czynników Chłodniczych i Instalatorów",
+      "summary": "Unijne rozporządzenie F-gazowe (UE 2024/573) znacząco wpływa na sektor pomp ciepła w Polsce, wprowadzając od 1 stycznia 2026 roku zakaz serwisowania stacjonarnych systemów klimatyzacyjnych i pomp ciepła wykorzystujących czynniki chłodnicze o wysokim potencjale tworzenia efektu cieplarnianego (GWP). Ten ruch, wraz z nadchodzącymi limitami GWP dla nowych instalacji i obowiązkowymi aktualizacjami certyfikatów dla personelu, wymaga szybkiej adaptacji w całej branży.",
+      "body": "Od 1 stycznia 2026 roku weszło w życie kluczowe postanowienie rozporządzenia F-gazowego UE, zakazujące serwisowania stacjonarnych systemów klimatyzacyjnych i pomp ciepła, które wykorzystują czynniki chłodnicze o potencjale tworzenia efektu cieplarnianego (GWP) równym lub wyższym niż 2500. Chociaż nadal dozwolone jest użycie odzyskanych lub poddanych recyklingowi czynników chłodniczych, zakaz dotyczy przede wszystkim starszych systemów opartych na substancjach takich jak R404A i R507A w niektórych niszowych zastosowaniach.\n\nRamy regulacyjne stają się coraz bardziej rygorystyczne, z nowymi limitami GWP dla czynników chłodniczych w nowych instalacjach pomp ciepła, które mają obowiązywać od 1 stycznia 2027 roku. Co istotne, jednostki typu monoblok i autonomiczne o mocy do 12 kW będą podlegać limitowi GWP wynoszącemu 150. W dalszej perspektywie, całkowity zakaz stosowania czynników chłodniczych F-gazowych w nowych jednostkach monoblokowych o mocy poniżej 12 kW przewidziany jest na 2032 rok, a dla systemów split na 2035 rok.\n\nTe surowe środki mają na celu przyspieszenie przejścia na alternatywy o niższym GWP, takie jak R290 (propan). Branża wyraziła jednak obawy co do szybkości tej transformacji, zwłaszcza w odniesieniu do dostępności odpowiednich, niskogazowych, wysokociśnieniowych czynników chłodniczych dla małych systemów split oraz związanych z tym implikacji bezpieczeństwa i odpowiedzialności w przypadku stosowania łatwopalnych alternatyw.\n\nOprócz przepisów dotyczących sprzętu, rozporządzenie F-gazowe nakłada również obowiązek aktualizacji certyfikatów personelu. Wszystkie posiadane certyfikaty F-gazowe dla techników będą wymagały aktualizacji do 12 marca 2029 roku, aby potwierdzić kwalifikacje w zakresie alternatywnych czynników chłodniczych, w tym łatwopalnych, dwutlenku węgla i amoniaku. Polska jest obecnie w trakcie uchwalania krajowej ustawy F-gazowej, aby w pełni wdrożyć te nowe zasady certyfikacji, które określą procedury szkoleń odświeżających lub ponownej oceny.\n\nSkumulowany efekt tych regulacji to znaczący impuls do innowacji i szkoleń na polskim rynku pomp ciepła, zachęcający producentów do rozwoju, a instalatorów do wdrażania technologii zgodnych z ambitnymi celami dekarbonizacyjnymi Europy.",
+      "titleEn": "F-Gas Regulation Reshapes Heat Pump Landscape: Stricter Rules for Refrigerants and Installers",
+      "summaryEn": "The European Union's F-gas Regulation (EU 2024/573) is significantly impacting the heat pump sector in Poland, with a service ban on high Global Warming Potential (GWP) refrigerants for stationary systems taking effect from January 1, 2026. This move, alongside upcoming GWP limits for new installations and mandatory certification updates for personnel, necessitates rapid adaptation across the industry.",
+      "imageUrl": "/news-images/common-tech-03.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "F-Gas phase-down 2026: deadlines & retrofits | IFRA Refrigeration",
+          "url": "https://ifra-kaelte.de/en/news/f-gas-phase-down-roadmap/"
+        },
+        {
+          "title": "F-Gas Regulation - HFC phase-down - Timeline - Danfoss",
+          "url": "https://www.danfoss.com/en/about-danfoss/our-businesses/cooling/refrigerants-and-energy-efficiency/hfc-phase-down/danfoss-on-f-gas-regulation/"
+        },
+        {
+          "title": "The New F-gas Certification — Upcoming Changes and the Market Outlook | Refrigerants and Training - PROZON Foundation",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEOn4_yjsqTaVoYAl24mvgqivM2RkEK4f5L9xC9Oa1WPPR0co3_-wcVyaP8J4l4KiALK2tCGdC4jc9Aio2d-2xNAyLCHgXt1-RCt5moBqG5dPsycbkE0XK_pOhLr33QjtYUm37ZLpaKIt25pix4SKoz2P43AUEkvitPTn27dICVKrArw9KAgaLXMcLAYIud6-KQsG44FlzoVg=="
+        },
+        {
+          "title": "EU heat pump policy: F-gas regulations & key deadlines - Grundfos",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWo4WcB5uKctRsnTgyHq7eec1QXgDU90lkQupGFSq5ZeOPZRD0KYDkv6EfhZNeLR-yBd-ES-iNREhKpREy1fZyT8843D9_1AGljA4ofTm64jW7JDPJ2RHAOo_TLg2izsBvQUO6eRAcENPZ4wvPxLQGEk-BJN1KizKdm_gBzDtBxe0qCyz1BwGYJt1vsGQ=="
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-pl-004",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Program Moje Ciepło Napędza Adaptację Pomp Ciepła w Nowych Energooszczędnych Domach",
+      "summary": "Polski program „Moje Ciepło” pozostaje kamieniem węgielnym w promowaniu instalacji pomp ciepła w nowo wybudowanych, energooszczędnych domach jednorodzinnych. Przyjmowanie wniosków do końca 2026 roku, inicjatywa ta oferuje znaczne dotacje, wzmacniając zaangażowanie kraju w zrównoważone budownictwo i redukcję emisji dwutlenku węgla.",
+      "body": "Program „Moje Ciepło”, kluczowa inicjatywa Narodowego Funduszu Ochrony Środowiska i Gospodarki Wodnej (NFOŚiGW), aktywnie wspiera właścicieli domów, którzy wybierają ekologiczne rozwiązania grzewcze dla swoich nowych rezydencji. Program jest skierowany do osób fizycznych będących właścicielami lub współwłaścicielami nowo wybudowanych domów jednorodzinnych, które spełniają podwyższone standardy efektywności energetycznej.\n\nZgodnie z warunkami programu, kwalifikujące się budynki musiały otrzymać pozwolenie na użytkowanie nie wcześniej niż w 2021 roku lub są w trakcie budowy. Kluczowym wymogiem technicznym dla uzyskania dofinansowania jest osiągnięcie przez budynek wskaźnika energii pierwotnej (EP) nieprzekraczającego 55 kWh/(m²·rok), co musi być potwierdzone świadectwem charakterystyki energetycznej.\n\n„Moje Ciepło” oferuje znaczące zachęty finansowe, pokrywając do 30% kosztów kwalifikowanych dla standardowych wnioskodawców. Dla posiadaczy Karty Dużej Rodziny, dotacja wzrasta do 45% kwalifikowanych wydatków. Maksymalne kwoty dotacji są atrakcyjne, sięgając do 7 000 zł dla pomp ciepła powietrze-woda i aż 21 000 zł dla gruntowych pomp ciepła, szczególnie dla tych spełniających kryteria klasy energetycznej A++ i posiadaczy KDR.\n\nBudżet programu wynosi 600 milionów złotych, a wnioski są przyjmowane w trybie ciągłym za pośrednictwem elektronicznego systemu (GWD) do 31 grudnia 2026 roku lub do wyczerpania alokowanych środków. Ten program refundacji wymaga od wnioskodawców najpierw zakończenia inwestycji, a następnie złożenia wniosku, co upraszcza proces dla wielu właścicieli domów.\n\nKoncentrując się wyłącznie na nowych budowach i technologii wysokosprawnych pomp ciepła, „Moje Ciepło” odgrywa kluczową rolę w kształtowaniu przyszłego krajobrazu energetycznego Polski, zachęcając do przyjęcia odnawialnych źródeł energii już od początkowych etapów cyklu życia budynku.",
+      "titleEn": "Moje Ciepło Program Drives Heat Pump Adoption in New Energy-Efficient Homes",
+      "summaryEn": "Poland's \"Moje Ciepło\" program continues to be a cornerstone for promoting heat pump installations in newly built, energy-efficient single-family homes. With applications accepted until the end of 2026, the initiative provides substantial grants, reinforcing the nation's commitment to sustainable construction and reduced carbon emissions.",
+      "imageUrl": "/news-images/pl-policy-02.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Moje Ciepło 2026 — Program priorytetowy Moje Ciepło: nabory, budżet, jak aplikować | Atlas Dotacji",
+          "url": "https://atlasdotacji.pl/programy/moje-cieplo"
+        },
+        {
+          "title": "Dofinansowanie do pompy ciepła 2026. Sprawdź, jak obniżyć koszt inwestycji - InstalacjeBudowlane.pl",
+          "url": "https://www.instalacjebudowlane.pl/13458-23-84-moje-cieplo-2026--dofinansowanie-nawet-7-000-zl-na-pompe-ciepla.html"
+        },
+        {
+          "title": "Program „Moje Ciepło” w 2026 roku – dotacje, warunki i wniosek krok po kroku",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8s-ye3DPdepRkL6uGZqHlNQmY4p4RLEm7MYB8vZfvXuCBdNcEOMpV-xqeFY0p3oWqB_K4uVjAFqFs_ynIwzZXgNV6Y7lkKiSgvK0MhsIdLa7Tdxvj4InJfFkJAKXjt4036zFZD5k1ks2A0Aq7WGZisDx24mHCMnw5JEIpJOYnn4hs5xA=="
+        },
+        {
+          "title": "Moje Ciepło 2026 – dotacja do 21 000 zł na pompę ciepła w nowym domu - SprawdzCo",
+          "url": "https://sprawdzco.pl/modernizacja-domu/zrodla-ciepla/moje-cieplo-2026/"
+        }
+      ]
+    },
+    {
       "id": "news-20260802-pl-001",
       "date": "2026-08-02T00:00:00Z",
       "category": "FUNDING",
@@ -45,6 +182,7 @@
       "titleEn": "Czyste Powietrze Program Undergoes Significant Reforms Effective July 20, 2026",
       "summaryEn": "Poland's flagship 'Czyste Powietrze' (Clean Air) program has introduced substantial reforms as of July 20, 2026, aimed at enhancing accessibility and refining grant conditions for thermal modernization and heat pump installations. The changes include relaxed ownership rules, increased funding for select works, and extended deadlines for investment completion.",
       "imageUrl": "/news-images/pl-policy-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -78,6 +216,7 @@
       "titleEn": "Polish Heat Pump Market Shows Robust Q1 2026 Growth Amidst Energy Security Concerns",
       "summaryEn": "The Polish residential heat pump market experienced significant growth in the first quarter of 2026, with sales increasing by 20%. This surge, part of a broader European trend, is largely attributed to rising energy prices and heightened concerns over energy security, particularly following global events affecting fossil fuel supplies.",
       "imageUrl": "/news-images/common-market-04.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -111,6 +250,7 @@
       "titleEn": "EU F-Gas Regulations Reshape Refrigerant Landscape for Heat Pump Sector",
       "summaryEn": "The European Union's revised F-Gas Regulation, effective March 11, 2024, is profoundly impacting the heat pump sector by accelerating the phase-down of fluorinated greenhouse gases (F-gases). The regulation introduces stricter GWP limits and bans, compelling manufacturers and installers to transition rapidly towards low-GWP refrigerants and sustainable practices.",
       "imageUrl": "/news-images/common-tech-04.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -144,6 +284,7 @@
       "titleEn": "Moje Ciepło Program Eyes Extension, Continues to Drive Heat Pump Adoption in New Polish Homes",
       "summaryEn": "Poland's 'Moje Ciepło' (My Heat) program, designed to support heat pump installations in new single-family homes, is progressing towards its 2026 deadline with a significant unused budget. The National Fund for Environmental Protection and Water Management (NFOŚiGW) is exploring options to extend the program, recognizing its crucial role in promoting renewable energy sources in new residential construction.",
       "imageUrl": "/news-images/pl-policy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -177,6 +318,7 @@
       "titleEn": "Czyste Powietrze Program Undergoes Significant Reforms as Heat Pumps Become Sole Electric Heating Focus",
       "summaryEn": "Poland's flagship 'Czyste Powietrze' (Clean Air) program has introduced substantial changes effective July 20, 2026, enhancing support for energy efficiency and streamlining application processes. Notably, electric heating subsidies will exclusively target heat pumps from January 1, 2027, marking a pivotal shift in the nation's decarbonization strategy.",
       "imageUrl": "/news-images/pl-policy-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -210,6 +352,7 @@
       "titleEn": "Polish Heat Pump Market Navigates Volatility with Projected Growth to 2031",
       "summaryEn": "After a challenging 2025 marked by declining sales, the Polish heat pump market is showing signs of recovery, with residential sales in Q1 2026 seeing a significant average increase. The market is projected to expand to USD 911.72 million by 2031, driven by decarbonization mandates and rising fossil fuel costs, despite ongoing challenges like installer shortages.",
       "imageUrl": "/news-images/common-energy-05.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -243,6 +386,7 @@
       "titleEn": "EU F-Gas Regulation Tightens Grip on Heat Pump Refrigerants, Industry Calls for Adaptation Time",
       "summaryEn": "The European Union's revised F-Gas Regulation (EU) 2024/573 is set to significantly impact the heat pump sector in Poland and across Europe, with a servicing ban on high-GWP virgin fluorinated gases taking effect in 2026. Stricter GWP limits and eventual phase-outs for various heat pump systems are scheduled through 2035, prompting industry concerns over adaptation timelines and the availability of natural refrigerant alternatives.",
       "imageUrl": "/news-images/common-tech-06.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -276,6 +420,7 @@
       "titleEn": "NFOŚiGW Programs Continue Strong Support for Heat Pump Installations in Poland",
       "summaryEn": "Poland's National Fund for Environmental Protection and Water Management (NFOŚiGW) is actively running its key programs, 'Moje Ciepło' and 'Ciepłe Mieszkanie', providing substantial financial incentives for heat pump installations. 'Moje Ciepło' continues to support new, energy-efficient single-family homes, while 'Ciepłe Mieszkanie' focuses on improving energy efficiency in multi-family dwellings, with both programs accepting applications until the end of 2026.",
       "imageUrl": "/news-images/pl-policy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -309,6 +454,7 @@
       "titleEn": "Czyste Powietrze Program Undergoes Significant Revisions, Prioritizing Heat Pumps",
       "summaryEn": "Poland's flagship 'Czyste Powietrze' program is implementing substantial changes from July 20, 2026, aimed at increasing accessibility and enhancing support for energy efficiency upgrades, with a clear focus on heat pump technology for heating systems. The revisions will introduce higher grant amounts and streamline application processes, according to the Ministry of Climate and Environment.",
       "imageUrl": "/news-images/pl-policy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -342,6 +488,7 @@
       "titleEn": "Polish Heat Pump Market Rebounds with Double-Digit Growth in Early 2026",
       "summaryEn": "After a period of stagnation, the Polish heat pump market has shown a strong resurgence in the first quarter of 2026, with overall sales increasing by approximately 20% year-on-year. This growth, particularly in ground-source and monoblock air-to-water units, signals a maturing market driven by investor awareness and economic considerations, according to data from the Polish Organisation for the Development of Heat Pump Technology (PORT PC).",
       "imageUrl": "/news-images/common-market-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -375,6 +522,7 @@
       "titleEn": "EU F-Gas Regulations Drive Shift to Low GWP Refrigerants in Heat Pumps from 2027",
       "summaryEn": "New European Union F-Gas Regulations are poised to significantly transform the heat pump industry in Poland and across the EU, introducing stricter criteria for refrigerant use and device production. From January 1, 2027, the market introduction of new split heat pumps under 12 kW with refrigerants having a Global Warming Potential (GWP) of 150 or higher will be prohibited, accelerating the adoption of natural, low-GWP alternatives like R290 (propane).",
       "imageUrl": "/news-images/common-tech-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",

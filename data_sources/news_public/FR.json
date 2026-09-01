@@ -1,6 +1,6 @@
 {
   "market": "FR",
-  "generatedAt": "2026-08-31T12:24:30.884Z",
+  "generatedAt": "2026-09-01T14:31:49.980Z",
   "items": [
     {
       "id": "news-20260816-fr-sr1",
@@ -29,6 +29,138 @@
         {
           "title": "EHPA — European market data (updated 2026)",
           "url": "https://ehpa.org/market-data/"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-fr-001",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "La France renforce les aides aux pompes à chaleur pour la qualité et la décarbonation dès le 1er septembre",
+      "summary": "À partir du 1er septembre 2026, la France durcit les conditions d'éligibilité aux subventions pour les pompes à chaleur, exigeant un agrément européen pour les primes « Coup de pouce Chauffage » et interdisant la conservation du chauffage au gaz dans les rénovations globales « MaPrimeRénov’ ». Ces mesures visent à accélérer la décarbonation et à assurer la qualité des installations à travers le secteur résidentiel.",
+      "body": "De nouvelles règles pour MaPrimeRénov’ et le Coup de pouce Chauffage entrent en vigueur ce 1er septembre 2026, avec des répercussions significatives pour les propriétaires et les installateurs de pompes à chaleur en France. Ces réformes visent à renforcer la qualité des installations et à accélérer la décarbonation du chauffage résidentiel, selon les déclarations des ministères économiques et environnementaux français.\n\nPour les projets de rénovation globale soutenus par MaPrimeRénov’, le maintien d'un système de chauffage au gaz après les travaux entraînera l'inéligibilité à l'aide. Cette mesure étend les interdictions antérieures concernant le chauffage au fioul ou au charbon et exclut également les pompes à chaleur hybrides avec appoint fossile.\n\nLes bonifications importantes offertes par le dispositif « Coup de pouce Chauffage », inscrit dans le mécanisme des CEE, sont désormais exclusivement réservées aux modèles de pompes à chaleur bénéficiant d'un agrément européen officiel. Cet agrément est fondé sur des certifications de qualité rigoureuses, telles que Heat Pump KEYMARK ou NF PAC, et exige que l'assemblage final du circuit frigorifique soit réalisé au sein de l'Espace Économique Européen.\n\nLes propriétaires prévoyant l'installation d'une pompe à chaleur, en particulier ceux qui remplacent une chaudière à énergie fossile, doivent désormais vérifier que le modèle choisi figure sur la liste officielle des pompes à chaleur agréées, publiée par l'ADEME depuis le 1er juillet 2026, pour bénéficier de la bonification CEE. Les projets dont les devis ont été signés avant le 31 août 2026 restent soumis à la réglementation antérieure.\n\nCes évolutions s'inscrivent dans la stratégie nationale d'électrification de la France et les objectifs de la RE2020, favorisant une plus grande indépendance énergétique et une réduction des émissions de carbone dans le secteur du bâtiment. Ces changements renforcent également l'importance des professionnels certifiés RGE (Reconnu Garant de l'Environnement), essentiels pour garantir des installations éligibles et faciliter les demandes d'aides.\n\nParallèlement, la plateforme France Rénov’ a été améliorée avec un nouveau compte personnel unique, sécurisé via France Connect+, opérationnel depuis le 17 août 2026, visant à simplifier et à sécuriser le processus de demande pour l'ensemble des aides de l'Anah, fluidifiant ainsi le parcours de rénovation pour les ménages.",
+      "titleEn": "France Tightens Heat Pump Aid for Quality and Decarbonization from September 1",
+      "summaryEn": "Starting September 1, 2026, France introduces stricter eligibility for heat pump subsidies, requiring European agrément for 'Coup de pouce Chauffage' bonuses and prohibiting gas heating retention in 'MaPrimeRénov' comprehensive renovations. These measures aim to accelerate decarbonization and ensure installation quality across the residential sector.",
+      "imageUrl": "/news-images/fr-policy-03.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Ce qui change en septembre 2026 | economie.gouv.fr",
+          "url": "https://www.economie.gouv.fr/particuliers/ce-qui-change-septembre-2026"
+        },
+        {
+          "title": "Aides pompe à chaleur : ce qui change à partir du 1er septembre 2026 - M-Energies",
+          "url": "https://m-energies.fr/actualites/aides-pompe-a-chaleur-ce-qui-change-a-partir-du-1er-septembre-2026"
+        },
+        {
+          "title": "MaPrimeRénov' (MPR) - Service Public",
+          "url": "https://www.service-public.fr/particuliers/actualites/A16450"
+        },
+        {
+          "title": "Coup de Pouce Chauffage : ce qui change au 1er septembre 2026 - Mon Atout Energie",
+          "url": "https://monatoutenergie.fr/actualites/coup-de-pouce-chauffage-ce-qui-change-au-1er-septembre-2026"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-fr-002",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "MARKET",
+      "title": "Le marché français des pompes à chaleur affiche des tendances mitigées malgré la croissance européenne",
+      "summary": "Alors que le marché européen des pompes à chaleur a enregistré une augmentation des ventes de 13 % en 2025, la France, bien que leader en volume total, a connu une performance contrastée avec de légers reculs dans certaines catégories de pompes à chaleur. Cette situation a été influencée par l'instabilité des politiques d'aides et un secteur de la construction ralenti.",
+      "body": "Le marché européen des pompes à chaleur a montré une croissance robuste en 2025, avec des ventes en hausse de 13 % pour atteindre 2,9 millions d'unités dans 21 pays, selon l'Association Européenne des Pompes à Chaleur (EHPA). Cependant, la France, bien qu'étant un marché majeur en volume global, a présenté une image plus nuancée avec des tendances variées selon les segments de pompes à chaleur.\n\nLa France demeure un acteur prépondérant, en tête de l'Europe en termes de ventes totales de pompes à chaleur en 2025, avec 528 000 unités, et du parc installé global, estimé à environ 7 millions d'unités. Le marché français des pompes à chaleur est évalué à 1,83 milliard de dollars en 2026, avec des projections de croissance continue vers 2,32 milliards de dollars d'ici 2031, affichant un taux de croissance annuel composé de 4,86 %.\n\nLes données du rapport 2025 d'Uniclima révèlent une légère contraction dans plusieurs segments clés. Les ventes de pompes à chaleur air/eau ont diminué de 1,8 % pour atteindre 179 377 unités, et les unités air/air ont connu une baisse marginale de 0,1 %, avec 803 661 unités vendues. Les ventes de pompes à chaleur géothermiques ont également reculé de 6,2 %, s'établissant à 2 513 unités. Ces chiffres contrastent avec une étude d'Observ'ER qui a noté une stabilisation des PAC aérothermiques et une légère augmentation de 4 % pour les PAC géothermiques, bien que ce dernier reste un segment de marché marginal.\n\nCette performance mitigée est attribuée par les observateurs de l'industrie à plusieurs facteurs, notamment l'instabilité des dispositifs d'aides publiques comme MaPrimeRénov’ pour les pompes à chaleur air/eau, et un ralentissement général du marché de la construction neuve. Malgré ces défis, les épisodes de fortes chaleurs ont soutenu la demande pour les systèmes air/air, souvent utilisés à des fins de climatisation.\n\nUniclima souligne que l'incohérence des politiques d'aides et le manque de clarté pour les équipements performants continuent de freiner les décisions de rénovation, exhortant les pouvoirs publics à établir un cadre réglementaire stable et transparent. Malgré les fluctuations récentes, les perspectives à long terme restent ambitieuses, avec la Stratégie Nationale Bas-Carbone (SNBC 3) fixant un objectif de 8,8 millions de pompes à chaleur installées d'ici 2030, soulignant le rôle central de cette technologie dans la transition énergétique française.",
+      "titleEn": "French Heat Pump Market Shows Mixed Trends Amidst European Growth",
+      "summaryEn": "While Europe's heat pump market saw a 13% sales increase in 2025, France, despite leading in total units sold, experienced a mixed performance with slight declines in certain heat pump categories. This was influenced by unstable aid policies and a subdued construction sector.",
+      "imageUrl": "/news-images/common-market-04.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Market data - European Heat Pump Association",
+          "url": "https://www.ehpa.org/market-data/"
+        },
+        {
+          "title": "Bilan 2025 du marché du génie climatique et perspectives 2026 - Uniclima",
+          "url": "https://www.uniclima.fr/bilan-2025-marche-genie-climatique-perspectives-2026"
+        },
+        {
+          "title": "Crash des ventes de chauffage, mais cet équipement limite la casse en 2025 - Hello Watt",
+          "url": "https://www.hellowatt.fr/actualites/ventes-chauffage-bilan-uniclima-2025"
+        },
+        {
+          "title": "Étude 2026 sur le marché des pompes à chaleur 2025 - Observ'ER",
+          "url": "https://www.observer.fr/etude-2026-sur-le-marche-des-pompes-a-chaleur-2025/"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-fr-003",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "INSTALLER INSIGHT",
+      "title": "Réglementations acoustiques et normes RGE : Clés pour l'installation de pompes à chaleur en France",
+      "summary": "Les réglementations françaises imposent des limites sonores strictes pour l'installation des pompes à chaleur, exigeant une planification minutieuse et le respect des bonnes pratiques pour éviter les litiges de voisinage. La certification RGE demeure cruciale pour les installateurs, garantissant la qualité et permettant l'accès aux subventions publiques significatives.",
+      "body": "Alors que le nombre d'installations de pompes à chaleur continue d'augmenter en France, des réglementations strictes encadrent les émissions sonores afin d'assurer la tranquillité du voisinage, nécessitant une planification méticuleuse et une expertise certifiée de la part des installateurs. Le respect des normes RGE est non seulement un gage de qualité, mais aussi une condition préalable pour que les propriétaires puissent accéder aux diverses aides financières.\n\nLa législation française, notamment le décret du 31 août 2006 et les articles R.1334-33 et R.1337-7 du Code de la santé publique, stipule que le bruit généré par une pompe à chaleur ne doit pas dépasser le bruit ambiant de plus de 5 dB(A) en journée (7h à 22h) et de 3 dB(A) la nuit (22h à 7h), mesuré en limite de propriété. Ces seuils sont essentiels pour prévenir les litiges juridiques et assurer le confort résidentiel.\n\nPour atténuer les nuisances sonores potentielles, il est conseillé aux installateurs de choisir avec soin les emplacements d'installation. Les recommandations clés incluent le maintien d'une distance minimale de 20 mètres par rapport à la limite de propriété du voisin, le positionnement des unités éloignées des fenêtres, et l'orientation du ventilateur de manière à ne pas pointer directement vers les habitations adjacentes. De plus, l'installation d'unités dans des angles ou des cours intérieures peut amplifier les niveaux sonores jusqu'à 9 dB(A), rendant les emplacements ouverts et surélevés préférables.\n\nLa certification « Reconnu Garant de l'Environnement » (RGE) demeure indispensable pour les professionnels des pompes à chaleur en France. Ce label atteste d'un engagement envers la qualité et la compétence technique, ce qui est essentiel pour que les propriétaires puissent bénéficier des incitations financières de l'État telles que MaPrimeRénov’ et les primes CEE.\n\nLe Conseil National du Bruit (CNB) examine activement les questions liées au bruit de voisinage, y compris celui des pompes à chaleur, dans le cadre de sa feuille de route 2023-2026. Le CNB pourrait proposer de nouveaux outils ou des ajustements réglementaires pour faciliter davantage les installations conformes et répondre aux préoccupations acoustiques, soulignant un engagement continu envers une intégration environnementale responsable.",
+      "titleEn": "Navigating Noise Regulations and RGE Standards for Heat Pump Installations in France",
+      "summaryEn": "French regulations impose strict noise limits for heat pump installations, requiring careful planning and adherence to best practices to avoid neighborhood disputes. The 'Reconnu Garant de l'Environnement' (RGE) certification remains crucial for installers, ensuring quality and enabling access to significant public subsidies.",
+      "imageUrl": "/news-images/common-install-02.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Réglementation Pompe à Chaleur 2026 : bruit, installation, entretien | Quelle Energie",
+          "url": "https://www.quelleenergie.fr/economies-energie/pompe-chaleur/reglementation-pompe-chaleur"
+        },
+        {
+          "title": "Pompe à chaleur : réglementation 2026, bruit et voisinage - Hello Watt",
+          "url": "https://www.hellowatt.fr/chauffage/pompe-a-chaleur/reglementation-bruit-installation"
+        },
+        {
+          "title": "Quelle est la distance réglementaire entre une pompe à chaleur et le voisinage",
+          "url": "https://www.guidepompeachaleur.fr/installation-pompe-chaleur/distance-reglementaire-voisinage"
+        },
+        {
+          "title": "Question n°15154 : Pompes à chaleur - Assemblée nationale",
+          "url": "https://questions.assemblee-nationale.fr/q16/16-15154QE.htm"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-fr-004",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "INSTALLER INSIGHT",
+      "title": "Simplification de l'Installation et Réduction de la TVA Stimulent le Marché Français des Pompes à Chaleur",
+      "summary": "La France a introduit des procédures administratives simplifiées pour l'installation de pompes à chaleur et un taux de TVA réduit pour les systèmes air-air éligibles, accélérant ainsi l'adoption de solutions de chauffage durables. Ces mesures visent à lever les obstacles pour les propriétaires et à soutenir la stratégie nationale de décarbonation.",
+      "body": "Dans le but de stimuler davantage la transition vers un chauffage bas carbone, le gouvernement français a simplifié les exigences administratives pour l'installation de pompes à chaleur et a introduit un taux de TVA favorable pour certains équipements. Ces développements politiques sont conçus pour rendre l'adoption des pompes à chaleur plus accessible et attrayante pour les propriétaires à travers le pays.\n\nDepuis le 1er mars 2026, les propriétaires ne sont plus tenus de soumettre une déclaration préalable pour l'installation de pompes à chaleur, à condition que l'unité extérieure ne soit pas visible depuis la voie publique, les espaces publics ou les bâtiments voisins. Cette simplification administrative significative, codifiée par le décret n° 2026-117, vise à réduire les délais d'installation et à surmonter une barrière psychologique historique pour les consommateurs.\n\nPour les installateurs et les distributeurs, ces règles assouplies se traduisent par des approbations de projets plus rapides, des cycles de vente plus courts et davantage d'opportunités d'installation. Cette politique encourage spécifiquement la demande de systèmes de pompes à chaleur compacts, silencieux et esthétiquement optimisés qui peuvent être intégrés discrètement aux propriétés résidentielles.\n\nEn complément des incitations financières, la France a également abaissé le taux de TVA à 5,5 % à partir du 18 juillet 2026 pour les pompes à chaleur air-air fixes et réversibles. Pour bénéficier de ce taux réduit, les unités doivent respecter des normes strictes d'efficacité et de connectivité, y compris des classements énergétiques élevés (A++ pour les unités intérieures simples, A+ pour les unités multiples) et des fonctions de télécommande.\n\nCes changements de politique complètent les subventions existantes telles que MaPrimeRénov' et les CEE, qui, bien que subissant leurs propres réformes, continuent de fournir un soutien financier substantiel pour les installations de pompes à chaleur. L'effet combiné des processus simplifiés et des avantages financiers devrait renforcer la position de la France en tant que leader sur le marché européen des pompes à chaleur.",
+      "titleEn": "Simplified Heat Pump Installation and VAT Reduction Boost French Market",
+      "summaryEn": "France has introduced streamlined administrative procedures for heat pump installations and a reduced VAT rate for qualifying air-to-air systems, further accelerating the adoption of sustainable heating solutions. These measures aim to remove barriers for homeowners and support the national decarbonization strategy.",
+      "imageUrl": "/news-images/common-install-05.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "France Heat Pump Market 2026: Subsidies, Installation Rules & R290 Guide",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhAPreFbIKoIsyECCsemZBxIGS1xS1l-PNe24zkjFUYPqZ4zX5Il_2RxF325qqba79_kw3_fLc3PiMCN81Fj3PfHnAqK7NZwUlbbFcftDO7Fd7IVhZDrPrzZwewrYc18Z7UJ-xt07n04c4VhDYAmvhXIrL30JyZeKQg0M_qqM4wUK_W6E9rMdRNgA1TeiQqG8I7Cj77CzEpIEu3uNc8_zLTJ_omX7jgxMBwuM_tjHeczUW85GbkA=="
+        },
+        {
+          "title": "Why France Is Becoming Europe's Fastest-Growing Heat Pump Market: Opportunities For Suppliers - News",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiPdq_EuBNo48k2IkWxNdElkHqhakKrj4Mo8o3mOg42ei6omLYY5Paa9qLzoY-TYjMTWKzu4ZpVZek7KNcP4OiZDBB-1AB0xpBJJlKYdc0zzpVw0bj12fOQ3ShCL5v7bKMiCGg2rTy6PxUCQ5S011N7bo812D7R_f8t2dK6IvsWMlGApdhqE7-1JZr3MZj1Ko4s5rZyDVwUQ=="
+        },
+        {
+          "title": "France Links 5.5% VAT to Connected Air-to-Air Heat Pumps - HVAC365",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG64361MBMlb1QWEhf7mbrAMF4xlvKgNJbTb4Z9G8rnAamPZax8nuvrrO0x7AHPJrKzEDc_tsKVwXFoG_xDdSArYPVV0d6dLI_kTemwaQw1DRMp46X4_atTndoXc4Wi3V_al7QKyfIOayJj_zjVT8vVZVu0KIXrTFD71LHM8MM6MMRtjutUGMZ1Qag=="
         }
       ]
     },
@@ -80,40 +212,6 @@
         {
           "title": "Ministère de la Transition écologique — Coup de pouce Chauffage",
           "url": "https://www.ecologie.gouv.fr/politiques-publiques/coup-pouce-chauffage"
-        }
-      ]
-    },
-    {
-      "id": "news-20260901-fr-001",
-      "date": "2026-08-31T00:00:00Z",
-      "category": "FUNDING",
-      "title": "France : les modèles de pompes à chaleur devront être agréés au 1er septembre pour ouvrir le Coup de pouce",
-      "summary": "À partir du 1er septembre 2026, un modèle de pompe à chaleur devra disposer d'un agrément officiel pour ouvrir droit à la bonification « Coup de pouce Chauffage » sur les fiches BAR-TH-171 et BAR-TH-172. Le numéro d'agrément devra figurer sur le devis, la facture, l'attestation sur l'honneur et au dépôt Emmy.",
-      "body": "À partir du 1er septembre 2026, un modèle de pompe à chaleur devra disposer d'un agrément officiel pour ouvrir droit à la bonification « Coup de pouce Chauffage » des certificats d'économies d'énergie (CEE). L'agrément est délivré par arrêté conjoint des ministres chargés de l'industrie et de l'énergie, après avis de l'ADEME ; le registre des modèles agréés est publié par l'ADEME.\n\nUn modèle non agréé ne perd pas les CEE : dès lors que les critères techniques des deux fiches sont respectés, la prime de base reste due, et c'est la seule bonification ×5 que l'agrément conditionne. Le dispositif ne vise que les pompes à chaleur individuelles de type air/eau, eau/eau ou eau glycolée/eau, relevant des fiches d'opération standardisée BAR-TH-171 et BAR-TH-172. Les PAC air/air ne sont pas couvertes par le dispositif d'agrément. Ce n'est pas la même chose que d'être « refusées » : une PAC air/air absente du registre est simplement hors du champ d'application.\n\nL'agrément repose sur deux exigences cumulatives. D'abord une certification tierce partie — Heat Pump KEYMARK, NF PAC, Eurovent Certified Performance (LCP-HP) ou une certification équivalente, délivrée par un organisme établi dans l'Espace économique européen et accrédité selon la norme NF EN ISO/CEI 17065. Ensuite un assemblage final dans l'EEE : pour un équipement monobloc, l'assemblage final du circuit frigorifique ; pour un équipement split, l'assemblage final d'au moins un sous-ensemble de ce circuit. Le cadre est fixé par le décret n° 2026-413 du 29 mai 2026 et l'arrêté du même jour.\n\nLa date qui compte est la date d'engagement de l'opération, qui correspond en pratique à la date d'acceptation du devis par le bénéficiaire. C'est à cette date que la détention de l'agrément est appréciée. D'après les textes, un modèle agréé à cette date conserve le bénéfice de la bonification même si l'agrément est perdu par la suite ; à l'inverse, un devis accepté avant l'agrément du modèle n'en bénéficie pas. Le calendrier de signature devient donc un paramètre commercial, et pas seulement administratif.\n\nLe numéro d'agrément du modèle installé est obligatoire sur la facture, sur l'attestation sur l'honneur signée par le professionnel et contresignée par le bénéficiaire, et au dépôt sur le registre Emmy. Sur le devis, il est recommandé plutôt qu'explicitement imposé par les textes — mais le devis doit identifier le modèle assez précisément pour établir qu'il était agréé le jour de son acceptation, si bien que l'y inscrire est la voie pratique. La qualification RGE reste par ailleurs requise pour faire bénéficier le client des aides financières.\n\nLe registre n'est pas une liste figée. Les dossiers déposés par les fabricants font l'objet d'une relève mensuelle le 15 de chaque mois à 12 h, reportée au premier jour ouvrable suivant si le 15 tombe un samedi, un dimanche ou un jour férié, Il s'agit d'une date de clôture des dépôts, non de la date de mise à jour de la liste : l'ADEME instruit les dossiers après chaque relève et les décisions sont publiées une fois l'instruction achevée. Deux conséquences pratiques : un modèle absent aujourd'hui peut être agréé le mois suivant, et toute vérification doit être datée — un contrôle effectué en septembre ne répond pas d'un devis signé en novembre.\n\nUn fabricant dont un modèle ne satisfait pas encore les conditions de droit commun peut obtenir un agrément transitoire, s'il présente un plan d'investissement crédible permettant d'y parvenir, typiquement la création ou l'extension d'un site d'assemblage dans l'EEE. Sa durée ne peut excéder un an, renouvelable une seule fois pour un an au maximum, et tout agrément transitoire est réputé invalide à compter du 31 décembre 2028, quelle que soit sa date de délivrance.\n\nUne nuance juridique mérite l'attention. L'ADEME indique que les modèles figurant sur sa page sont les produits éligibles à date, et que la liste faisant foi du point de vue de l'obtention des aides — laquelle tient compte des périodes transitoires éventuelles — est celle de l'arrêté dans sa version en vigueur. La page en ligne est l'outil de travail ; l'arrêté est l'instrument juridique.\n\nCet article décrit un cadre réglementaire. Il ne vaut pas confirmation d'éligibilité pour un projet ou un modèle donné : en cas de doute sur un dossier précis, l'éligibilité doit être vérifiée auprès de l'ADEME et du texte en vigueur avant l'établissement du devis.",
-      "titleEn": "France: heat pump models need an official agrément from 1 September to open the Coup de pouce bonus",
-      "summaryEn": "From 1 September 2026 a heat pump model must hold an official agrément for a project to qualify for the Coup de pouce Chauffage bonification on the BAR-TH-171 and BAR-TH-172 CEE operations. The agrément number has to appear on the quotation, the invoice, the sworn statement and at the Emmy filing.",
-      "imageUrl": "/news-images/fr-policy-04.webp",
-      "images": [],
-      "author": "HeatPump DB France Editorial Team",
-      "pinned": false,
-      "ctaUrl": "",
-      "ctaLabel": "",
-      "sources": [
-        {
-          "title": "ADEME — Agrément des pompes à chaleur",
-          "url": "https://bonus-pac.ademe.fr/"
-        },
-        {
-          "title": "Décret n° 2026-413 du 29 mai 2026",
-          "url": "https://www.legifrance.gouv.fr/"
-        },
-        {
-          "title": "Arrêté du 29 mai 2026",
-          "url": "https://www.legifrance.gouv.fr/"
-        },
-        {
-          "title": "Fiches d'opération standardisée BAR-TH-171 et BAR-TH-172",
-          "url": "https://www.ecologie.gouv.fr/politiques-publiques/dispositif-certificats-deconomies-denergie"
         }
       ]
     },

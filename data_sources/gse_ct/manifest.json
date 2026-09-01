@@ -16,6 +16,16 @@
         "2026-07"
       ],
       "generated_at": "2026-08-12T00:13:55.344Z"
+    },
+    "2026-09": {
+      "total_entries": 10268,
+      "in_latest": 10268,
+      "absent_from_latest": 0,
+      "snapshots_covered": [
+        "2026-07",
+        "2026-09"
+      ],
+      "generated_at": "2026-09-01T14:13:39.222Z"
     }
   }
 }

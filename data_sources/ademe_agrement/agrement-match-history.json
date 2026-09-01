@@ -1,6 +1,6 @@
 {
  "version": 1,
- "updated_at": "2026-08-19T22:25:22.865Z",
+ "updated_at": "2026-09-01T14:13:37.609Z",
  "note": "Confirmed canonical↔ADEME agrément mappings. A mapping that stops matching becomes review_required, never \"not agréé\".",
  "matches": {
   "16000577": {
@@ -9,8 +9,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16000579": {
    "agrement_number": "62-2026-000059",
@@ -18,8 +18,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16002241": {
    "agrement_number": "9-2026-000001",
@@ -27,8 +27,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16002242": {
    "agrement_number": "9-2026-000007",
@@ -36,8 +36,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16003010": {
    "agrement_number": "152-2026-000079",
@@ -45,8 +45,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16003012": {
    "agrement_number": "152-2026-000081",
@@ -54,8 +54,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16003013": {
    "agrement_number": "152-2026-000082",
@@ -63,8 +63,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16003014": {
    "agrement_number": "152-2026-000083",
@@ -72,8 +72,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16003015": {
    "agrement_number": "152-2026-000084",
@@ -81,8 +81,134 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004202": {
+   "agrement_number": "1-2026-000025",
+   "register_model": "AW-YHPSA04-H91 + AW-WHPSA0406-N91",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004203": {
+   "agrement_number": "1-2026-000026",
+   "register_model": "AW-YHPSA06-H91 + AW-WHPSA0406-N91",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004204": {
+   "agrement_number": "1-2026-000023",
+   "register_model": "AW-YHPSA08-H91 + AW-WHPSA0810-N91",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004205": {
+   "agrement_number": "1-2026-000024",
+   "register_model": "AW-YHPSA10-H91 + AW-WHPSA0810-N91",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004206": {
+   "agrement_number": "1-2026-000027",
+   "register_model": "AW-YHPSA12-H91 + AW-WHPSA1216-N91",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004208": {
+   "agrement_number": "1-2026-000029",
+   "register_model": "AW-YHPSA14-H91 + AW-WHPSA1216-N91",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004209": {
+   "agrement_number": "1-2026-000031",
+   "register_model": "AW-YHPSA16-H91 + AW-WHPSA1216-N91",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004210": {
+   "agrement_number": "1-2026-000028",
+   "register_model": "AW-YHPSA12-H93 + AW-WHPSA1216-N93",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004211": {
+   "agrement_number": "1-2026-000030",
+   "register_model": "AW-YHPSA14-H93 + AW-WHPSA1216-N93",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16004212": {
+   "agrement_number": "1-2026-000032",
+   "register_model": "AW-YHPSA16-H93 + AW-WHPSA1216-N93",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16006472": {
+   "agrement_number": "39-2026-000012",
+   "register_model": "ecoAIR+ 1-7 PRO",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16006473": {
+   "agrement_number": "39-2026-000013",
+   "register_model": "ecoAIR+ 1-9 PRO",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16006474": {
+   "agrement_number": "39-2026-000014",
+   "register_model": "ecoAIR+ 3-12 PRO",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16006475": {
+   "agrement_number": "39-2026-000017",
+   "register_model": "ecoAIR+ 3-18 PRO",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006644": {
    "agrement_number": "54-2026-000031",
@@ -90,8 +216,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006646": {
    "agrement_number": "54-2026-000033",
@@ -99,8 +225,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006715": {
    "agrement_number": "54-2026-000024",
@@ -108,8 +234,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006726": {
    "agrement_number": "54-2026-000079",
@@ -117,8 +243,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006727": {
    "agrement_number": "54-2026-000082",
@@ -126,8 +252,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16006731": {
    "agrement_number": "54-2026-000083",
@@ -135,8 +261,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16007734": {
    "agrement_number": "54-2026-000026",
@@ -144,8 +270,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16007735": {
    "agrement_number": "54-2026-000027",
@@ -153,8 +279,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16007736": {
    "agrement_number": "54-2026-000029",
@@ -162,8 +288,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16007737": {
    "agrement_number": "54-2026-000030",
@@ -171,8 +297,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010825": {
    "agrement_number": "54-2026-000005",
@@ -180,8 +306,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010826": {
    "agrement_number": "54-2026-000007",
@@ -189,8 +315,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010864": {
    "agrement_number": "64-2026-000099",
@@ -198,8 +324,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010865": {
    "agrement_number": "64-2026-000045",
@@ -207,8 +333,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010866": {
    "agrement_number": "64-2026-000048",
@@ -216,8 +342,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010867": {
    "agrement_number": "64-2026-000051",
@@ -225,8 +351,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010872": {
    "agrement_number": "64-2026-000101",
@@ -234,8 +360,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010873": {
    "agrement_number": "64-2026-000047",
@@ -243,8 +369,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010874": {
    "agrement_number": "64-2026-000050",
@@ -252,8 +378,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010882": {
    "agrement_number": "54-2026-000006",
@@ -261,8 +387,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010897": {
    "agrement_number": "64-2026-000040",
@@ -270,8 +396,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010902": {
    "agrement_number": "64-2026-000037",
@@ -279,8 +405,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010903": {
    "agrement_number": "64-2026-000042",
@@ -288,8 +414,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010907": {
    "agrement_number": "64-2026-000063",
@@ -297,8 +423,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010910": {
    "agrement_number": "64-2026-000066",
@@ -315,8 +441,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010912": {
    "agrement_number": "64-2026-000054",
@@ -324,8 +450,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010913": {
    "agrement_number": "64-2026-000056",
@@ -333,8 +459,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010914": {
    "agrement_number": "54-2026-000008",
@@ -342,8 +468,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010918": {
    "agrement_number": "64-2026-000058",
@@ -351,8 +477,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010919": {
    "agrement_number": "64-2026-000103",
@@ -360,8 +486,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010920": {
    "agrement_number": "64-2026-000055",
@@ -369,8 +495,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010921": {
    "agrement_number": "64-2026-000059",
@@ -378,8 +504,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010922": {
    "agrement_number": "64-2026-000033",
@@ -387,8 +513,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010924": {
    "agrement_number": "64-2026-000043",
@@ -396,8 +522,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010925": {
    "agrement_number": "64-2026-000034",
@@ -405,8 +531,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010926": {
    "agrement_number": "64-2026-000039",
@@ -414,8 +540,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010927": {
    "agrement_number": "64-2026-000044",
@@ -423,8 +549,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16010928": {
    "agrement_number": "64-2026-000067",
@@ -432,8 +558,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011185": {
    "agrement_number": "64-2026-000064",
@@ -441,8 +567,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011187": {
    "agrement_number": "64-2026-000068",
@@ -450,8 +576,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011238": {
    "agrement_number": "64-2026-000053",
@@ -459,8 +585,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011239": {
    "agrement_number": "64-2026-000030",
@@ -468,8 +594,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011250": {
    "agrement_number": "64-2026-000057",
@@ -477,8 +603,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16011503": {
    "agrement_number": "64-2026-000072",
@@ -495,8 +621,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16014522": {
    "agrement_number": "129-2026-000002",
@@ -504,8 +630,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16014523": {
    "agrement_number": "129-2026-000003",
@@ -513,8 +639,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16014524": {
    "agrement_number": "129-2026-000004",
@@ -522,8 +648,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16015393": {
    "agrement_number": "62-2026-000005",
@@ -531,8 +657,8 @@
    "match_method": "component_identity",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16015394": {
    "agrement_number": "62-2026-000008",
@@ -540,8 +666,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016415": {
    "agrement_number": "54-2026-000023",
@@ -549,8 +675,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016416": {
    "agrement_number": "54-2026-000025",
@@ -558,8 +684,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016421": {
    "agrement_number": "54-2026-000014",
@@ -567,8 +693,26 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16016431": {
+   "agrement_number": "39-2026-000016",
+   "register_model": "ecoAIR+ T 3-18 PRO",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16016432": {
+   "agrement_number": "39-2026-000015",
+   "register_model": "ecoAIR+ T 3-12 PRO",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016480": {
    "agrement_number": "64-2026-000024",
@@ -576,8 +720,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016481": {
    "agrement_number": "64-2026-000026",
@@ -585,8 +729,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016883": {
    "agrement_number": "141-2026-000001",
@@ -594,8 +738,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016884": {
    "agrement_number": "141-2026-000006",
@@ -603,8 +747,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016885": {
    "agrement_number": "141-2026-000005",
@@ -612,8 +756,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16016888": {
    "agrement_number": "142-2026-000002",
@@ -621,8 +765,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017070": {
    "agrement_number": "64-2026-000028",
@@ -630,8 +774,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017302": {
    "agrement_number": "141-2026-000003",
@@ -639,8 +783,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017304": {
    "agrement_number": "142-2026-000003",
@@ -648,8 +792,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017351": {
    "agrement_number": "129-2026-000001",
@@ -657,8 +801,8 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017733": {
    "agrement_number": "54-2026-000053",
@@ -666,8 +810,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017735": {
    "agrement_number": "54-2026-000055",
@@ -675,8 +819,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017736": {
    "agrement_number": "54-2026-000057",
@@ -684,8 +828,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017737": {
    "agrement_number": "54-2026-000059",
@@ -693,8 +837,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017738": {
    "agrement_number": "54-2026-000054",
@@ -702,8 +846,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017739": {
    "agrement_number": "54-2026-000056",
@@ -711,8 +855,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017744": {
    "agrement_number": "54-2026-000067",
@@ -720,8 +864,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017745": {
    "agrement_number": "54-2026-000069",
@@ -729,8 +873,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017746": {
    "agrement_number": "54-2026-000071",
@@ -738,8 +882,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017748": {
    "agrement_number": "54-2026-000068",
@@ -747,8 +891,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017749": {
    "agrement_number": "54-2026-000070",
@@ -756,8 +900,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017750": {
    "agrement_number": "54-2026-000072",
@@ -765,8 +909,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017774": {
    "agrement_number": "54-2026-000084",
@@ -774,8 +918,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017776": {
    "agrement_number": "54-2026-000086",
@@ -783,8 +927,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017777": {
    "agrement_number": "54-2026-000087",
@@ -792,8 +936,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017779": {
    "agrement_number": "54-2026-000091",
@@ -801,8 +945,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017780": {
    "agrement_number": "54-2026-000088",
@@ -810,8 +954,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017781": {
    "agrement_number": "54-2026-000090",
@@ -819,8 +963,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16017782": {
    "agrement_number": "54-2026-000092",
@@ -828,8 +972,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018069": {
    "agrement_number": "149-2026-000035",
@@ -837,8 +981,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018071": {
    "agrement_number": "149-2026-000034",
@@ -846,8 +990,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018072": {
    "agrement_number": "149-2026-000033",
@@ -855,8 +999,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018197": {
    "agrement_number": "155-2026-000001",
@@ -864,8 +1008,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018199": {
    "agrement_number": "155-2026-000003",
@@ -873,8 +1017,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018202": {
    "agrement_number": "155-2026-000002",
@@ -882,8 +1026,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018382": {
    "agrement_number": "54-2026-000061",
@@ -891,8 +1035,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018383": {
    "agrement_number": "54-2026-000050",
@@ -900,8 +1044,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018384": {
    "agrement_number": "54-2026-000062",
@@ -909,8 +1053,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018385": {
    "agrement_number": "54-2026-000051",
@@ -918,8 +1062,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018386": {
    "agrement_number": "54-2026-000063",
@@ -927,8 +1071,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018387": {
    "agrement_number": "54-2026-000052",
@@ -936,8 +1080,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018388": {
    "agrement_number": "54-2026-000064",
@@ -945,8 +1089,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018439": {
    "agrement_number": "141-2026-000004",
@@ -954,8 +1098,17 @@
    "match_method": "exact_model",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16018518": {
+   "agrement_number": "64-2026-000108",
+   "register_model": "Aquarea Haute Performance Bi-bloc Série K 16 kW triphasé",
+   "match_method": "eprel_bridge",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018638": {
    "agrement_number": "64-2026-000075",
@@ -963,8 +1116,8 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   },
   "16018642": {
    "agrement_number": "64-2026-000077",
@@ -972,8 +1125,44 @@
    "match_method": "eprel_bridge",
    "match_confidence": "high",
    "status": "confirmed",
-   "last_confirmed_at": "2026-08-19T22:25:22.865Z",
-   "snapshot": "2026-08"
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16019957": {
+   "agrement_number": "152-2026-000165",
+   "register_model": "Vitocal 200-A AWMOF-201.A1.06-230-V005",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16019958": {
+   "agrement_number": "152-2026-000158",
+   "register_model": "Vitocal 200-A AWMOF-201.A1.08-230-V005",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16019959": {
+   "agrement_number": "152-2026-000155",
+   "register_model": "Vitocal 200-A AWMOF-201.A1.10-230-V005",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
+  },
+  "16019960": {
+   "agrement_number": "152-2026-000144",
+   "register_model": "Vitocal 200-A AWMOF-201.A1.12-230-V005",
+   "match_method": "exact_model",
+   "match_confidence": "high",
+   "status": "confirmed",
+   "last_confirmed_at": "2026-09-01T14:13:37.609Z",
+   "snapshot": "2026-09"
   }
  }
 }

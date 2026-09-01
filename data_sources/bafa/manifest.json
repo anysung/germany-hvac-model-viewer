@@ -28,6 +28,26 @@
   "snapshot_retention_policy": "raw/YYYY-MM/ and parsed/YYYY-MM/ are gitignored (large files, rebuilt by scripts). manifest.json and fetch-log.md are committed. diffs/YYYY-MM/ are gitignored. listing_history.json is gitignored (derived, rebuilt by diff-snapshots.mjs).",
   "known_snapshots": [
     {
+      "snapshot_id": "2026-09",
+      "fetched_at": "2026-09-01T08:26:04.073Z",
+      "record_count": 3658,
+      "total_available": 3658,
+      "format": "raw_api",
+      "test_mode": false,
+      "complete": true,
+      "fetch_script": "scripts/bafa/fetch-bafa-raw.mjs v2.0",
+      "parse_complete": true,
+      "diff_available": false,
+      "parsed_at": "2026-09-01T08:26:04.501Z",
+      "parsed_record_count": 3658,
+      "parse_validation": {
+        "record_count": "PASS",
+        "hash_complete": "PASS",
+        "malformed": "PASS",
+        "duplicates": "PASS"
+      }
+    },
+    {
       "snapshot_id": "2026-07",
       "fetched_at": "2026-07-29T23:50:31.539Z",
       "record_count": 3415,
@@ -101,7 +121,7 @@
     "Presence in the BAFA registry (or in a snapshot of it) does NOT confirm current BEG subsidy application eligibility. Verify current eligibility and application requirements directly at www.bafa.de.",
     "Snapshot data reflects the state of the BAFA registry at the time of extraction only."
   ],
-  "next_recommended_step": "Master seed ready at master_seed/2026-07/. Review schema before app integration.",
+  "next_recommended_step": "Master seed ready at master_seed/2026-09/. Review schema before app integration.",
   "known_diffs": [
     {
       "diff_key": "2026-03-to-2026-06",
@@ -148,6 +168,18 @@
       "bafa_list_yes": 3415,
       "bafa_list_no": 3865,
       "output_file": "master_seed/2026-07/bafa-master-seed.json",
+      "build_script": "scripts/bafa/build-master-seed.mjs",
+      "validation_overall": "PASS"
+    },
+    {
+      "out_label": "2026-09",
+      "reference_baseline_snapshot": "2026-03",
+      "latest_snapshot": "2026-09",
+      "generated_at": "2026-09-01T14:13:26.016Z",
+      "total_products": 7426,
+      "bafa_list_yes": 3658,
+      "bafa_list_no": 3768,
+      "output_file": "master_seed/2026-09/bafa-master-seed.json",
       "build_script": "scripts/bafa/build-master-seed.mjs",
       "validation_overall": "PASS"
     }

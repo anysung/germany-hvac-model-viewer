@@ -1,6 +1,6 @@
 {
   "market": "IT",
-  "generatedAt": "2026-08-16T11:59:44.772Z",
+  "generatedAt": "2026-09-01T14:31:50.215Z",
   "items": [
     {
       "id": "news-20260816-it-sr1",
@@ -12,6 +12,7 @@
       "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
       "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
       "imageUrl": "/special-report/img/special-report-2026-08-it.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": true,
       "ctaUrl": "https://www.heatpumpdb.it/special-report/2026-08/",
@@ -32,6 +33,108 @@
       ]
     },
     {
+      "id": "news-20260901-it-001",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Italia Lancia Incentivi Rinnovati Conto Termico 3.0 per Pompe di Calore",
+      "summary": "L'Italia ha attivato pienamente il suo schema incentivante aggiornato Conto Termico 3.0, progettato per stimolare significativamente l'adozione di pompe di calore e altre soluzioni ad alta efficienza energetica. Il programma, operativo da fine 2025, offre rimborsi consistenti fino al 65% per i soggetti privati e fino al 100% per le pubbliche amministrazioni.",
+      "body": "Il nuovo Conto Termico 3.0, gestito dal Gestore dei Servizi Energetici (GSE), è diventato ufficialmente operativo il 25 dicembre 2025, in seguito al Decreto Ministeriale del 7 agosto 2025. Questo meccanismo aggiornato mira a incentivare interventi di piccole dimensioni volti all'incremento dell'efficienza energetica e alla produzione di energia termica da fonti rinnovabili negli edifici esistenti in tutta Italia.\n\nPossono accedere agli incentivi soggetti privati, imprese, Pubbliche Amministrazioni ed Enti del Terzo Settore non economici. Il programma prevede un contributo diretto a fondo perduto, rendendolo un'alternativa interessante alle detrazioni fiscali tradizionali. Il nuovo Portaltermico 3.0, la piattaforma online per l'invio delle domande, è stato attivato il 2 febbraio 2026 e riaperto il 13 aprile 2026 dopo una temporanea sospensione, garantendo un accesso continuo ai richiedenti.\n\nPer i beneficiari privati, il Conto Termico 3.0 può coprire fino al 65% delle spese ammissibili, riducendo significativamente il costo iniziale dell'investimento. Le Pubbliche Amministrazioni e gli Enti del Terzo Settore non economici possono beneficiare di incentivi ancora più elevati, arrivando potenzialmente fino al 100% dei costi per interventi specifici, in particolare nei comuni con meno di 15.000 abitanti.\n\nGli interventi ammissibili includono la sostituzione di impianti di riscaldamento e produzione di acqua calda sanitaria esistenti con pompe di calore (compresi modelli aria-acqua e scaldacqua a pompa di calore), nonché sistemi ibridi factory-made. La portata si estende anche a interventi di isolamento, sostituzione di infissi, sistemi di building automation e, a determinate condizioni, impianti solari termici e fotovoltaici se abbinati a pompe di calore.\n\nLa dotazione finanziaria per il Conto Termico 3.0 è considerevole, con un budget annuale di 900 milioni di euro. Questo è suddiviso, con 500 milioni di euro destinati ai soggetti privati (di cui 150 milioni specificamente riservati alle imprese) e 400 milioni di euro dedicati alle Pubbliche Amministrazioni, con 20 milioni di questi destinati alle diagnosi energetiche. L'erogazione del rimborso è generalmente rapida per importi inferiori, con pagamenti fino a 15.000 euro erogati in un'unica soluzione entro 60-90 giorni. Importi superiori vengono erogati in 2-5 rate annuali.",
+      "titleEn": "Italy Launches Enhanced Conto Termico 3.0 Incentives for Heat Pumps",
+      "summaryEn": "Italy has fully activated its updated Conto Termico 3.0 incentive scheme, designed to significantly boost the adoption of heat pumps and other energy-efficient solutions. The program, operational since late 2025, offers substantial reimbursements up to 65% for private entities and up to 100% for public administrations.",
+      "imageUrl": "/news-images/it-policy-01.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Bonus Pompa di Calore 2026: incentivi e Conto Termico 3.0 - Buderus",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtyUjafSdNuhGoHF-fw7fK7DuKR_3-p1p5BfYkyHrejQt_PulpkLjn6VGprxQjVLdqSs8XFhZdZfYun1rApFCK_xeFtqkpnxOZpEnExz2MFAxPGTpzIAUhygVLOqdMbEDHoc1NS0Yu1_NtGzlItLbJSvxYiUS14IOaiCd5s5f3ZR6wIR7Aa4cdxBwgHV3OT-_3Z5mXDIobrP6dxSB7RCI4_7d_7-Bv54_z5yaCHoNDjQ"
+        },
+        {
+          "title": "Incentivi pompe di calore 2026: Guida completa alle detrazioni fiscali e bonus - Enpal",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH0J2i_1hIzrRSnTs1qt00r4VEKWTv45Q7OKqxTBqEYwBS3z2fQQ88S_cYIYcQ9oQynrvF66VKdyr6LS7XVUjOqmGNA_tvx0fl7ZIHjyYVAiPqKZPYYSOVogMMaRLOX7Rn0FcCfeWXK9L_54LoE2IvY3QPxzw2XBk3K9Zsq8AScYA_kJDQNZHVn2PeRKStFS7v5wiXxCCmlWbME"
+        },
+        {
+          "title": "Conto Termico 3.0 nel 2026: guida completa per la pompa di calore - Aira",
+          "url": "https://www.airahome.com/it-it/blog/conto-termico"
+        },
+        {
+          "title": "Conto Termico 3.0: novità per il 2026 - Bosch Home Comfort",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFS6qpgPp4v8RvIyWdhB3ExyqOuZ3kA0SL4ENXMDmzEDe3gAiDUOfZxNyII-JLNWj3a5YlTz7ZFIIoFPXJ5xJY_oUICOjYBd4z0oJRi4LNwI7juzlMqN_7WdaPvMSO_G4VPMxz_-YRAWTHnrPY6D6f9E4x8gZ3A1rvfWMj3Khqi4kYjxE36dKEMg9NaQGZolhOHvMQLZ24wN4sQExLzg3L1qyBuqFjX679xif-oLK2Qd8wQ0NAf96K9lEEM3z2l6Lc"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-it-002",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "MARKET",
+      "title": "L'Italia Consolida la Leadership nel Mercato Europeo delle Pompe di Calore tra Tendenze in Evoluzione",
+      "summary": "Nel 2025 l'Italia ha mantenuto una posizione di forza nel mercato europeo delle pompe di calore, classificandosi al secondo posto per volume di vendite e parco installato. I dati del primo semestre 2026 evidenziano una crescita robusta per le pompe di calore aria-acqua, nonostante un calo nei sistemi ibridi e split convenzionali, segnalando un chiaro orientamento verso soluzioni full electric ad alta efficienza.",
+      "body": "L'Italia si è affermata con decisione come attore chiave nel mercato europeo delle pompe di calore, conquistando la seconda posizione sia nelle vendite annuali che nel totale delle unità installate nel 2025, secondo i dati dell'European Heat Pump Association (EHPA) e di Assoclima. Nel 2025, l'Italia ha registrato 423.000 unità di pompe di calore vendute, posizionandosi appena dietro la Francia, leader con 528.000 unità. Il paese vanta anche un impressionante parco installato di quasi 5 milioni di pompe di calore, secondo solo ai circa 7 milioni della Francia.\n\nIl mercato europeo più ampio ha registrato un aumento delle vendite del 13% nel 2025 in 21 paesi, raggiungendo 2,88 milioni di unità e portando lo stock totale installato a 29,3 milioni di unità. Questa ripresa ha fatto seguito a un periodo di contrazione nel 2023 e 2024, spinta da un rinnovato focus sulla decarbonizzazione, sull'efficienza energetica e sull'incertezza dei prezzi del gas.\n\nIl rapporto semestrale di Assoclima per il 2026 rivela un quadro misto ma in evoluzione nel settore italiano della climatizzazione. Sebbene il mercato complessivo abbia registrato una lieve diminuzione dei ricavi dello 0,6% rispetto al primo semestre 2025, raggiungendo 1,79 miliardi di euro, alcuni segmenti specifici hanno mostrato una forte crescita. Le vendite di condizionatori monosplit e multisplit convenzionali hanno subito una flessione, diminuendo rispettivamente del 9,8% e del 5,5% in volume, attribuita in gran parte a un ritardo nell'ondata di caldo estivo e a una maggiore cautela dei consumatori riguardo ai costi energetici.\n\nAl contrario, il mercato delle tecnologie ad alta efficienza, in particolare le pompe di calore aria-acqua fino a 17 kW, ha mostrato una crescita robusta, con un aumento delle vendite del 20,2% nel primo semestre 2026 rispetto allo stesso periodo del 2025, per un totale di 41.360 unità. Le pompe di calore reversibili all'interno di questa categoria hanno registrato un aumento significativo del 24%. Allo stesso modo, anche i sistemi VRF e le soluzioni multisplit in grado di produrre acqua calda sanitaria hanno registrato una crescita sostanziale, con aumenti di volume rispettivamente del 12,3% e del 25,5%. Questa tendenza sottolinea una chiara preferenza del mercato per soluzioni integrate e completamente elettriche basate su pompe di calore.\n\nTuttavia, i sistemi ibridi di pompe di calore, che combinano una pompa di calore con una caldaia a condensazione, hanno registrato un calo delle vendite del 10% nel primo semestre 2026. Ciò suggerisce una crescente propensione tra consumatori e installatori verso sistemi basati esclusivamente su pompe di calore, in linea con gli obiettivi di decarbonizzazione a lungo termine. Nonostante le tendenze positive, permangono sfide, tra cui il costo relativamente elevato dell'elettricità rispetto al gas, l'investimento iniziale richiesto e le passate incoerenze nelle politiche di incentivazione, che continuano a influenzare il ritmo di adozione, in particolare nel settore residenziale per la sostituzione delle caldaie.",
+      "titleEn": "Italy Solidifies Leadership in European Heat Pump Market Amidst Shifting Trends",
+      "summaryEn": "Italy maintained its strong position in the European heat pump market in 2025, ranking second in both sales volume and installed base. While air-to-water heat pumps saw significant growth in early 2026, the market observed a decline in hybrid systems and conventional split units, indicating a clear shift towards fully electric, high-efficiency solutions.",
+      "imageUrl": "/news-images/common-market-03.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Pompe di calore, nel 2025 cresce il mercato italiano: avanzano split e sistemi medio-grandi - pv magazine Italia",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHP4yIbHdvahKmu07e2K5Xf835BEmC8IkyHYgXCyG8StTIYpDdr8sLptNozpPvN3SRHSb_FDHmAO41vct8yE0EkHj6T37AgVpO6uvDOxCd1YAn_feF1gtgDYl7a_7Tq4Od3_K5jnIhaxrC3ZaELShIwnURDY-KRbFz-inEjQmAV7HELlSa_w7L1kj1NbqXlUWZljgAqfB4RmRXGB5TJOJWAzxfmf47fgiHQ1g26cBd7VcBvZpSw5bX0Joon"
+        },
+        {
+          "title": "Crescita Vendite Pompe di Calore Aria-Acqua nel 2026 - I&F ONLINE",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsGhAmCR7KQ6iv9c3nzfrlWJxpXcllFUUiKpj7cL68TsVSda7p7SdFUFsgC5DaStRNKKoY6QaulDPVrZ7Jdk5iRclf30ju_DTmGguOfpyQUGNBhEmGOS1C8Nrw1fNVcS9FEKUQbzdaAaO3Tt699K49zHkRRmPgFiIsQy9JDjesRaDm1l03T6vTbmKVEqfAEd7vMaNv4_nqAj1lSYCWWSzpBNK-vMqYLyMTZLtGfQ"
+        },
+        {
+          "title": "Pubblicato l'European Heat Pump Market Report 2026 - Anima Confindustria",
+          "url": "https://www.anima.it/associazioni/elenco/assoclima/media/news/tutte-le-news/pubblicato-l-european-heat-pump-market-report-2026.kl"
+        },
+        {
+          "title": "Le vendite di pompe di calore in Europa sono aumentate del 13% lo scorso anno",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHoCBEhbF1y_jURMtFrSbMffxb7Bs9b0QtHBg8cBhr4orXRXarEhSZyO43OPdRykFfQ1NQHtj_gKi4C9fuQd7TP71O0x7g9qf7kYAFgR-yX3xquNEJr6pE7U-ceMlU5KzCUZ036XXjUbvl-0ZveN84SQlDLbP43zhA3i3R0wGLEuicrP7GqhvDcDz_lnuYZrX_Y26HJ0dmQDnJKF7ulrkWSK96Ed_tvnEtri8BogA"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-it-003",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "TECHNOLOGY",
+      "title": "Sistemi Ibridi di Pompe di Calore: Soluzione Transitoria in un Contesto di Passaggio al Full Electric",
+      "summary": "I sistemi ibridi di pompe di calore continuano a rappresentare una via pratica per i proprietari di casa in Italia che desiderano migliorare l'efficienza energetica negli edifici esistenti. Tuttavia, le recenti tendenze di mercato per l'inizio del 2026 indicano una crescente preferenza dei consumatori per le installazioni di pompe di calore completamente elettriche, segnando un passaggio verso la decarbonizzazione completa.",
+      "body": "I sistemi ibridi di pompe di calore, che integrano una pompa di calore elettrica con una caldaia a condensazione a gas, rimangono una \"tecnologia ponte\" rilevante nella transizione energetica italiana. Questi sistemi sono particolarmente adatti per gli edifici italiani più datati, molti dei quali sono dotati di impianti a radiatori progettati per temperature di esercizio più elevate, che possono essere impegnative per le sole pompe di calore. Una centralina di controllo intelligente è il cuore di questi sistemi, selezionando autonomamente la fonte di energia più efficiente – elettricità o gas – in base alle temperature esterne e ai costi energetici in tempo reale.\n\nL'attrattiva dei sistemi ibridi risiede nella loro capacità di fornire riscaldamento e acqua calda sanitaria in modo efficiente, offrendo una soluzione flessibile che riduce la dipendenza dai combustibili fossili senza richiedere revisioni estese dell'infrastruttura di riscaldamento esistente. Possono operare in diverse modalità, dall'essere completamente alimentati dalla pompa di calore in condizioni più miti, al supporto della caldaia o all'operazione solo caldaia durante freddi estremi, ottimizzando prestazioni e comfort.\n\nQuesti sistemi continuano a essere supportati da vari programmi di incentivazione italiani, tra cui Ecobonus, Bonus Ristrutturazioni e Conto Termico 3.0, sebbene con specifici criteri di ammissibilità. Questo supporto continuo sottolinea il loro ruolo nel facilitare una transizione più fluida per i proprietari di casa verso soluzioni di riscaldamento più sostenibili.\n\nNonostante i loro vantaggi e la continua ammissibilità agli incentivi, i recenti dati di mercato per il primo semestre 2026 suggeriscono una preferenza mutevole tra i consumatori italiani. Mentre le vendite complessive di pompe di calore aria-acqua sono in aumento, i sistemi ibridi hanno registrato un calo del 10% nelle vendite in questo periodo. Questa tendenza indica una crescente inclinazione verso soluzioni basate esclusivamente su pompe di calore, riflettendo una più ampia spinta politica europea ad abbandonare il riscaldamento a combustibili fossili.\n\nLe prospettive a lungo termine, influenzate dalle direttive UE come l'EPBD, indicano una completa elettrificazione del riscaldamento. Sebbene i sistemi ibridi offrano un eccellente passo intermedio per molti edifici esistenti, specialmente quelli meno adatti a una conversione immediata a pompe di calore complete, le dinamiche di mercato in evoluzione suggeriscono che una transizione completa alle pompe di calore elettriche è l'obiettivo finale per un riscaldamento domestico sostenibile in Italia.",
+      "titleEn": "Hybrid Heat Pump Systems Positioned as Transitional Solution Amidst Shift Towards Full Electrification",
+      "summaryEn": "Hybrid heat pump systems continue to offer a practical pathway for homeowners in Italy looking to enhance energy efficiency in existing buildings. However, recent market trends for early 2026 indicate a growing preference among consumers for fully electric heat pump installations, signaling a move towards complete decarbonization.",
+      "imageUrl": "/news-images/common-energy-05.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Bonus Pompa di Calore 2026: incentivi e Conto Termico 3.0 - Buderus",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtyUjafSdNuhGoHF-fw7fK7DuKR_3-p1p5BfYkyHrejQt_PulpkLjn6VGprxQjVLdqSs8XFhZdZfYun1rApFCK_xeFtqkpnxOZpEnExz2MFAxPGTpzIAUhygVLOqdMbEDHoc1NlS0Yu1_NtGzlItLbJSvxYiUS14IOaiCd5s5f3ZR6wIR7Aa4cdxBwgHV3OT-_3Z5mXDIobrP6dxSB7RCI4_7d_7-Bv54_z5yaCHoNDjQ"
+        },
+        {
+          "title": "Crescita Vendite Pompe di Calore Aria-Acqua nel 2026 - I&F ONLINE",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFsGhAmCR7KQ6iv9c3nzfrlWJxpXcllFUUiKpj7cL68TsVSda7p7SdFUFsgC5DaStRNKKoY6QaulDPVrZ7Jdk5iRclf30ju_DTmGguOfpyQUGNBhEmGOS1C8Nrw1fNVcS9FEKUQbzdaAaO3Tt699K49zHkRRmPgFiIsQy9JDjesRaDm1l03T6vTbmKVEqfAEd7vMaNv4_nqAj1lSYCWWSzpBNK-vMqYLyMTZLtGfQ"
+        },
+        {
+          "title": "Pompe di calore ibride: guida 2026 su efficienza, tecnologia e costi | Magazine E.ON",
+          "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHyY1sKnwy3GpryFm8Dsv7GW8RRM9FY6Q-8o-j-5dci06Fyorut19pByPlpPx_JAoRZweFbrxE4LViMh2OCZbY-McaT9YZg-2S5j7hvXueznyr5MNpynjBPeUiS2Ph4AxTvdPvo7h52aw1bO83MHdyWxKbK8rLRZ7GfKJ-D2BTVhWzSkSWrAbtvR43Q0ZJlm_HK2nIc"
+        },
+        {
+          "title": "Sistema ibrido pompa di calore e caldaia: conviene ancora nel 2026? - Aira",
+          "url": "https://www.airahome.com/it-it/blog/sistema-ibrido-pompa-di-calore-caldaia"
+        }
+      ]
+    },
+    {
       "id": "news-20260802-it-001",
       "date": "2026-08-02T00:00:00Z",
       "category": "FUNDING",
@@ -41,6 +144,7 @@
       "titleEn": "Italy's Heat Pump Incentives Face 2027 Cuts, Urging Immediate Action",
       "summaryEn": "Italian homeowners and businesses are encouraged to capitalize on current heat pump incentives, including the Conto Termico 3.0 and Ecobonus, as significant reductions are slated for 2027. The current year offers favorable rates up to 65% for direct grants and 50% for tax deductions on primary residences, but these are set to decrease, making 2026 a crucial period for energy efficiency investments.",
       "imageUrl": "/news-images/it-policy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -74,6 +178,7 @@
       "titleEn": "Italian Heat Pump Market Thrives Amidst Overall Climate Sector Adjustments",
       "summaryEn": "Italy's heat pump sector experienced robust growth in 2025 and continues to expand in the first half of 2026, positioning the country as Europe's second-largest market. This surge in high-efficiency systems contrasts with a decline in traditional mono and multi-split air conditioners, indicating a significant market shift towards sustainable heating and cooling solutions.",
       "imageUrl": "/news-images/common-market-05.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -107,6 +212,7 @@
       "titleEn": "F-Gas Regulation Drives Shift to Natural Refrigerants in Italian Heat Pump Sector",
       "summaryEn": "Italy's heat pump industry is undergoing a significant transformation driven by the stricter EU F-Gas Regulation 2024/573, effective from January 1, 2026. This regulation imposes a ban on high Global Warming Potential (GWP) refrigerants for maintaining existing equipment, accelerating the transition towards natural refrigerants and influencing new efficiency metrics for incentives.",
       "imageUrl": "/news-images/common-tech-05.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -140,6 +246,7 @@
       "titleEn": "Conto Termico 3.0 Sees Key Enhancements and Portal Reopening for 2026",
       "summaryEn": "The Conto Termico 3.0 incentive scheme has entered full operation in 2026 with significant updates, including increased single payment thresholds, expanded beneficiary categories, and a recently reopened application portal. These reforms aim to streamline access to funding for energy efficiency and renewable thermal energy projects across Italy.",
       "imageUrl": "/news-images/it-policy-02.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -173,6 +280,7 @@
       "titleEn": "Italian Tax Incentives for Heat Pumps Undergo 2026 Adjustments with Future Reductions",
       "summaryEn": "Italy's fiscal incentives for heat pump installations, including the Ecobonus and Bonus Ristrutturazioni, have been confirmed for 2026 with specific rates: 50% for main residences and 36% for other properties. These rates, however, are slated for further reduction starting in 2027, highlighting the current year as a critical window for homeowners.",
       "imageUrl": "/news-images/it-policy-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -206,6 +314,7 @@
       "titleEn": "EU F-Gas Regulation Shifts Heat Pump Industry Towards Natural Refrigerants from 2026",
       "summaryEn": "The new European F-gas Regulation (UE) 2024/573, effective March 11, 2024, is imposing stringent restrictions on fluorinated gases, with a critical ban on high Global Warming Potential (GWP) refrigerants for heat pump and air conditioning maintenance starting January 1, 2026. This mandate accelerates the industry's transition towards natural and low-GWP refrigerants.",
       "imageUrl": "/news-images/common-tech-06.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -239,6 +348,7 @@
       "titleEn": "Italian Heat Pump Market Shows Growth Amidst Electricity Price Challenges in 2025-2026",
       "summaryEn": "The Italian heat pump market demonstrated robust growth in 2025, contributing to a broader European expansion, but faces ongoing challenges from high electricity prices relative to gas. While direct expansion systems saw significant gains, the first half of 2026 indicates a mixed performance with traditional segments contracting while high-efficiency solutions continue to advance.",
       "imageUrl": "/news-images/common-market-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -272,6 +382,7 @@
       "titleEn": "Italy Delays Transposition of EU Green Buildings Directive Amidst Infringement Procedure",
       "summaryEn": "Italy has yet to transpose the revised EU Energy Performance of Buildings Directive (EPBD IV), commonly known as the 'Casa Green' directive, missing the May 29, 2026, deadline and facing an infringement procedure from the European Commission. The directive sets national aggregate targets for reducing primary energy consumption in residential buildings, emphasizing a collective rather than individual property obligation.",
       "imageUrl": "/news-images/common-market-04.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -305,6 +416,7 @@
       "titleEn": "Italy Adjusts Heat Pump Incentives for 2026 with Conto Termico 3.0 and Revised Ecobonus",
       "summaryEn": "Italy's landscape for heat pump incentives sees significant adjustments in 2026, with the full operationalization of Conto Termico 3.0 offering direct, non-repayable grants and a recalibration of Ecobonus fiscal deductions, according to recent updates from the GSE and Agenzia delle Entrate. These changes aim to streamline access to support while prioritizing high-efficiency solutions.",
       "imageUrl": "/news-images/it-policy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -338,6 +450,7 @@
       "titleEn": "Italy Maintains Strong Position in Expanding European Heat Pump Market",
       "summaryEn": "Italy has cemented its status as a key player in Europe's growing heat pump sector, securing the second-highest sales volume in 2025, according to the European Heat Pump Association's (EHPA) latest report. The continent as a whole experienced robust growth, with sales increasing by 13% across monitored countries.",
       "imageUrl": "/news-images/common-market-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -371,6 +484,7 @@
       "titleEn": "EU F-Gas Regulation Triggers Transformative Shift to Natural Refrigerants in Italian Heat Pump Sector",
       "summaryEn": "The Italian heat pump industry is undergoing a significant transformation, driven by the new EU F-Gas Regulation (UE) 2024/573. Strict prohibitions on high Global Warming Potential (GWP) refrigerants, effective from January 1, 2026, are accelerating the adoption of natural refrigerants and promoting hybrid heating solutions across the market.",
       "imageUrl": "/news-images/common-tech-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",

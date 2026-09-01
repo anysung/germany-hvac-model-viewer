@@ -29,6 +29,7 @@
  */
 
 import { execSync } from 'node:child_process';
+import { gunzipSync } from 'node:zlib';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -273,24 +274,65 @@ console.log('  publish:  node scripts/upload-datasets.mjs  &&  node scripts/data
 
 /* ── Shrink guard: new counts must be >= currently-live counts ────────────── */
 
+/* The served objects are stored gzipped (the gzip re-publish, 2026-07-27), and
+   `gcloud storage cat` hands back the STORED bytes without decoding them. So
+   the guard's JSON.parse threw on every file, the bare catch printed
+   "live check failed — skipped", and from that day until 2026-09-01 the one
+   check that exists to stop a shrunken catalogue reaching production was off —
+   ten reassuring lines in a row, each one saying nothing had been compared. */
+const liveDataset = (gcs) => {
+  const raw = execSync(`gcloud storage cat ${gcs}`,
+    { cwd: ROOT, maxBuffer: 256 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] });
+  const buf = (raw[0] === 0x1f && raw[1] === 0x8b) ? gunzipSync(raw) : raw;
+  return JSON.parse(buf.toString('utf8'));
+};
+
 console.log('\n════ Shrink guard (vs live Storage datasets) ════');
+let guardChecked = 0, guardAbsent = 0;
 for (const code of order) {
   for (const rel of PIPELINES[code].datasets ?? []) {
     const gcs = LIVE_GCS[rel];
     if (!gcs) continue;
+    let live;
     try {
-      const raw = execSync(`gcloud storage cat ${gcs}`, { cwd: ROOT, maxBuffer: 256 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
-      const liveN = (JSON.parse(raw.toString()).items?.length ?? 0) - CANARIES_PER_FILE;
-      const newN = JSON.parse(readFileSync(resolve(ROOT, rel), 'utf8')).items?.length ?? 0;
-      const shrink = newN < liveN;
-      console.log(`  [${code}] ${rel}: live ${liveN.toLocaleString()} → new ${newN.toLocaleString()} ${shrink ? '(SHRINK ✗)' : '✓'}`);
-      if (shrink && !ALLOW_SHRINK) {
-        console.error('ABORT: catalogue shrank vs live — delisted preservation forbids this.');
-        console.error('If the reduction is intentional (e.g. a policy change), rerun with --allow-shrink.');
-        process.exit(1);
+      live = liveDataset(gcs);
+    } catch (e) {
+      const msg = String(e.stderr ?? e.message ?? e);
+      // A market that has never published yet has nothing to compare against;
+      // that is the ONE reason this check may be skipped.
+      if (/matched no objects|NotFound|404/i.test(msg)) {
+        guardAbsent++;
+        console.log(`  [${code}] ${rel}: not published yet — nothing to compare`);
+        continue;
       }
-    } catch { console.log(`  [${code}] ${rel}: live check failed — skipped`); }
+      // Anything else means the guard could not run. It must never be reported
+      // as a skipped line among nine green ones: a guard that cannot check is
+      // indistinguishable from a guard that passed, which is how this one
+      // spent six weeks switched off.
+      console.error(`\nABORT: the shrink guard could not read the live dataset for ${rel}.`);
+      console.error(`  ${gcs}`);
+      console.error(`  ${msg.trim().split('\n').slice(0, 3).join('\n  ')}`);
+      console.error('Fix the read (gcloud auth / bucket access) — do not publish blind.');
+      process.exit(1);
+    }
+    const liveN = (live.items?.length ?? 0) - CANARIES_PER_FILE;
+    const newN = JSON.parse(readFileSync(resolve(ROOT, rel), 'utf8')).items?.length ?? 0;
+    const shrink = newN < liveN;
+    guardChecked++;
+    const delta = newN - liveN;
+    console.log(`  [${code}] ${rel}: live ${liveN.toLocaleString()} → new ${newN.toLocaleString()}`
+      + ` (${delta >= 0 ? '+' : ''}${delta.toLocaleString()}) ${shrink ? '(SHRINK ✗)' : '✓'}`);
+    if (shrink && !ALLOW_SHRINK) {
+      console.error('ABORT: catalogue shrank vs live — delisted preservation forbids this.');
+      console.error('If the reduction is intentional (e.g. a policy change), rerun with --allow-shrink.');
+      process.exit(1);
+    }
   }
+}
+console.log(`  ${guardChecked} compared against live${guardAbsent ? `, ${guardAbsent} not published yet` : ''}.`);
+if (guardChecked === 0) {
+  console.error('\nABORT: the shrink guard compared nothing at all.');
+  process.exit(1);
 }
 
 /* ── Deploy (opt-in): all editions in one atomic hosting release ──────────── */

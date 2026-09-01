@@ -1,6 +1,6 @@
 {
   "market": "DE",
-  "generatedAt": "2026-08-16T11:59:44.329Z",
+  "generatedAt": "2026-09-01T14:31:49.739Z",
   "items": [
     {
       "id": "news-20260816-de-sr1",
@@ -12,6 +12,7 @@
       "titleEn": "Europe's Heating Transition: Five Markets, Five Realities",
       "summaryEn": "HeatPump DataBase Europe launches a new monthly interactive market report covering the latest heat-pump and heating-market developments across Europe.",
       "imageUrl": "/special-report/img/special-report-2026-08-de.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": true,
       "ctaUrl": "https://www.heatpumpdb.de/special-report/2026-08/",
@@ -36,6 +37,142 @@
       ]
     },
     {
+      "id": "news-20260901-de-001",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Deutschland Überarbeitet Wärmepumpen-Förderung: Neue KfW 458 Konditionen Treten in Kraft",
+      "summary": "Deutschland hat zum 21. Juli 2026 umfassende Reformen seines Wärmepumpen-Förderprogramms KfW 458 umgesetzt. Diese beinhalten niedrigere förderfähige Kosten, eine überarbeitete einkommensbasierte Bonusstruktur und strengere Umweltkriterien, um die Förderung zu straffen und gleichzeitig nachhaltige Technologien sowie heimische Produktion zu fördern.",
+      "body": "Die Bundesregierung hat wesentliche Anpassungen am Programm „Bundesförderung für effiziente Gebäude (BEG)“ vorgenommen, die speziell das KfW 458 „Heizungsförderung für Privatpersonen – Wohngebäude“ betreffen. Diese Änderungen, die seit dem 21. Juli 2026 in Kraft sind, kalibrieren die finanziellen Anreize für Hausbesitzer neu, die in klimafreundliche Heizsysteme, insbesondere Wärmepumpen, investieren.\n\nIm Rahmen des überarbeiteten KfW 458 Programms wurden die maximal förderfähigen Kosten für ein Einfamilienhaus von 30.000 € auf 28.000 € gesenkt. Die Basisförderung bleibt für alle Antragsteller bei 30 % dieser förderfähigen Kosten.\n\nDer maximale Zuschussbetrag beläuft sich nun auf 22.400 € für ein Einfamilienhaus (80 % der 28.000 € förderfähigen Kosten). Eine weitere wesentliche Änderung ist die schrittweise Reduzierung der maximal förderfähigen Kosten um 750 € alle sechs Monate, beginnend am 1. Februar 2027, bis zu einer Obergrenze von 22.000 € in der zweiten Hälfte des Jahres 2030.\n\nDer Einkommensbonus für selbstnutzende Eigentümer wurde neu strukturiert und ist nun gestaffelt. Haushalte mit einem zu versteuernden jährlichen Haushaltseinkommen von bis zu 30.000 € können einen Bonus von 40 % erhalten, was einer Erhöhung gegenüber den vorherigen 30 % entspricht. Für Einkommen zwischen 30.001 € und 40.000 € gilt ein Bonus von 30 %, während diejenigen mit Einkommen zwischen 40.001 € und 50.000 € für einen Bonus von 10 % in Frage kommen. Haushalte mit mindestens einem minderjährigen Kind profitieren zusätzlich von einer Reduzierung der relevanten Einkommensschwelle um 10.000 €.\n\nDer Klimageschwindigkeitsbonus, der den schnellen Austausch fossiler Heizungen fördern soll, wurde mit Wirkung zum 21. Juli 2026 von 20 % auf 16 % reduziert. Dieser Bonus wird alle sechs Monate um weitere 4 Prozentpunkte reduziert und läuft schließlich bis August 2028 vollständig aus. Im Gegensatz dazu wurden der bisherige Effizienzbonus für besonders effiziente Wärmepumpen und der Emissionsminderungszuschlag für Biomasseheizungen gestrichen.\n\nUm die ökologische Nachhaltigkeit weiter zu fördern, ist die Verwendung natürlicher Kältemittel oder solcher mit geringem Treibhauspotenzial (GWP) nun eine zwingende Voraussetzung für die Förderfähigkeit von Wärmepumpen. Zukünftig wird voraussichtlich ab dem ersten Quartal 2027 ein „Made in Europe“-Bonus von 15 % eingeführt, der Wärmepumpen aus EU- oder assoziierten Märkten begünstigt. Dies könnte die gesamte Förderquote für qualifizierte, in Europa hergestellte Einheiten wieder erhöhen.\n\nAntragsteller sollten beachten, dass das KfW 458 Programm zwar der Hauptkanal für Wärmepumpen-Förderungen ist, die Anträge jedoch über das Online-Kundenportal „Meine KfW“ eingereicht werden. Für selbstnutzende Eigentümer, die den Einkommensbonus unter den neuen Bedingungen beantragen, wird die Einreichung der Nachweise voraussichtlich ab Januar 2027 möglich sein.",
+      "titleEn": "Germany Overhauls Heat Pump Subsidies: New KfW 458 Conditions Take Effect",
+      "summaryEn": "Germany has enacted significant reforms to its heat pump subsidy program, KfW 458, effective July 21, 2026, introducing lower eligible costs, a revised income-based bonus structure, and stricter environmental criteria. The changes aim to streamline funding while incentivizing sustainable technology and domestic production.",
+      "imageUrl": "/news-images/de-policy-02.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Wärmepumpen-Markt 2026: 299.000 verkauft 2025, Prognose 332.500 - EMA Energiewelt",
+          "url": "https://www.ema-energiewelt.de/waermepumpen-markt-2026-absatz-prognose-foerderung/"
+        },
+        {
+          "title": "Wärmepumpe Deutschland 2026: Kosten & Förderung - kipode",
+          "url": "https://kipode.de/waermepumpe-deutschland-2026/"
+        },
+        {
+          "title": "Wärmepumpen-Förderung 2026: BAFA, KfW & Land - FörderBase",
+          "url": "https://www.foerderbase.de/waermepumpen-foerderung-2026/"
+        },
+        {
+          "title": "Wärmepumpen-Förderung 2026: BEG-Zuschuss, Höhe & Antrag - Solarwatt",
+          "url": "https://www.solarwatt.de/energie-management/heizung/waermepumpe/foerderung-2026/"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-de-002",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "MARKET",
+      "title": "Deutscher Wärmepumpenmarkt Erholt sich mit Rekordabsatz 2025 und Positivem Ausblick für 2026",
+      "summary": "Der deutsche Wärmepumpenmarkt verzeichnete 2025 eine starke Erholung mit einem Absatzplus von 55 % und avancierte zum meistverkauften Heizsystem. Branchenprognosen erwarten für 2026 weiteres Wachstum, getragen von stabilen politischen Rahmenbedingungen und zunehmendem Verbrauchervertrauen.",
+      "body": "Der deutsche Wärmepumpenmarkt zeigte 2025 einen deutlichen Aufschwung, mit rund 299.000 abgesetzten Heizungswärmepumpen. Dies entspricht einem beachtlichen Anstieg von 55 % gegenüber den Verkaufszahlen von 2024. Erstmals machten Wärmepumpen fast die Hälfte (48 %) aller in Deutschland verkauften Wärmeerzeuger aus und übertrafen damit traditionelle Gas- und Ölheizsysteme als beliebteste Wahl.\n\nNach Angaben des Bundesverbandes Wärmepumpe (BWP) erreichte der Gesamtbestand an Heizungswärmepumpen in Deutschland Ende 2025 etwa 1,9 Millionen Einheiten, wobei der BWP im Juli 2026 von fast zwei Millionen Geräten sprach. Luft-Wasser-Wärmepumpen dominieren weiterhin den Markt und machten 2025 rund 87 % der Verkäufe aus.\n\nMit Blick auf die Zukunft prognostiziert der BWP für 2026 einen Absatz zwischen 330.000 und 332.500 Einheiten, was einen anhaltend positiven Trend signalisiert. Dieses Wachstum wird maßgeblich auf die Stabilisierung der Förderbedingungen, einen rückläufigen Trend bei Gasheizungen und die klare politische Unterstützung für erneuerbare Heiztechnologien zurückgeführt.\n\nTrotz des positiven Ausblicks stellen hohe Anfangsinvestitionskosten weiterhin eine erhebliche Hürde für einige Verbraucher dar. Hersteller wie Viessmann und Bosch erweitern jedoch aktiv ihre Produktionskapazitäten in Deutschland, um der steigenden Nachfrage gerecht zu werden, was das Vertrauen in das langfristige Potenzial des Marktes unterstreicht. Der Markt wird voraussichtlich seinen Aufwärtstrend fortsetzen, wobei ein Bericht eine durchschnittliche jährliche Wachstumsrate (CAGR) von 7,56 % von 2026 bis 2034 voraussagt und eine Marktgröße von 3,78 Milliarden USD bis 2034 erwartet.",
+      "titleEn": "German Heat Pump Market Rebounds with Record 2025 Sales and Positive 2026 Outlook",
+      "summaryEn": "Germany's heat pump market experienced a strong recovery in 2025, with sales increasing by 55% and heat pumps becoming the most frequently sold heating system nationwide. Industry forecasts anticipate continued growth in 2026, driven by stable policy frameworks and increasing consumer confidence.",
+      "imageUrl": "/news-images/common-market-01.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Wärmepumpen-Markt 2026: 299.000 verkauft 2025, Prognose 332.500 - EMA Energiewelt",
+          "url": "https://www.ema-energiewelt.de/waermepumpen-markt-2026-absatz-prognose-foerderung/"
+        },
+        {
+          "title": "Wärmepumpenmarkt: Absatzerwartungen übertroffen - ZVEH",
+          "url": "https://www.zveh.de/aktuelles/meldungen/detail/waermepumpenmarkt-absatzerwartungen-uebertroffen/"
+        },
+        {
+          "title": "Branchenstudie 2026 - Bundesverband Wärmepumpe",
+          "url": "https://www.waermepumpe.de/service/publikationen/branchenstudie/"
+        },
+        {
+          "title": "Wärmepumpe Deutschland 2026: Kosten & Förderung - kipode",
+          "url": "https://kipode.de/waermepumpe-deutschland-2026/"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-de-003",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "TECHNOLOGY",
+      "title": "Strengere Schallgrenzwerte und natürliche Kältemittel prägen die deutsche Wärmepumpentechnologie",
+      "summary": "Der deutsche Wärmepumpensektor passt sich an neue regulatorische Anforderungen an, die Anfang 2026 in Kraft traten. Diese schreiben einen deutlich leiseren Betrieb für geförderte Einheiten vor und machen die Verwendung natürlicher Kältemittel wie Propan (R290) zur Förderbedingung. Diese Änderungen treiben Innovationen hin zu umweltfreundlicheren und nachbarschaftsfreundlicheren Systemen voran.",
+      "body": "Seit dem 1. Januar 2026 gelten in Deutschland strengere Lärmschutzvorschriften für Wärmepumpen, um staatliche Förderungen zu erhalten, was Deutschlands Engagement für hohe Lebensstandards und nachhaltige Energie unterstreicht. Um im Rahmen der Bundesförderung für effiziente Gebäude (BEG) förderfähig zu sein, müssen Außengeräte von Wärmepumpen nun 10 Dezibel (dB) leiser sein als die Grenzwerte der EU-Ökodesign-Verordnung, eine Verschärfung gegenüber dem bisherigen 5-dB-Spielraum.\n\nDiese aktualisierte Anforderung betrifft explizit die Förderfähigkeit und untersagt nicht die Installation lauterer Geräte, diese erhalten jedoch keine staatliche Unterstützung. Zum Beispiel dürfen Luft-Wasser-Wärmepumpen mit einer maximalen Leistung von 6 bis 12 Kilowatt 60 dB nicht überschreiten, während kleinere Einheiten auf 55 dB (Schallleistung direkt am Gerät) begrenzt sind. Deutsche Vorschriften, wie die TA Lärm, legen auch Wert auf Schallimmissionswerte, die Grenzwerte am Immissionsort, beispielsweise am Nachbarfenster, auf 35 dB(A) in reinen Wohngebieten während der Nacht festlegen.\n\nDer Markt scheint auf diese neuen Lärmschutzstandards gut vorbereitet zu sein, da viele moderne Wärmepumpenmodelle die strengeren Kriterien bereits erfüllen oder übertreffen. Hersteller integrieren Funktionen wie leise oder Nachtmodi, die den Geräuschpegel um 3-6 dB(A) reduzieren können, auch wenn dies mit einer vorübergehenden Verringerung der Heizleistung einhergehen kann.\n\nErgänzend zu den Lärmschutzvorschriften gibt es eine signifikante Verschiebung hin zu natürlichen Kältemitteln. Seit dem 21. Juli 2026 ist die Verwendung natürlicher Kältemittel oder solcher mit sehr geringem Treibhauspotenzial (GWP) nun eine zwingende Voraussetzung, um BEG-Förderungen für Wärmepumpen zu erhalten. Diese Änderung ersetzt den früheren 5 %-Bonus für natürliche Kältemittel und macht deren Einsatz zur Fördervoraussetzung.\n\nPropan (R290) etabliert sich als wichtiges natürliches Kältemittel aufgrund seines extrem niedrigen GWP und seiner vorteilhaften thermodynamischen Eigenschaften, die eine hohe Energieeffizienz und höhere Vorlauftemperaturen ermöglichen. Führende Hersteller, darunter BITZER und Alpha Innotec, erweitern aktiv ihre Portfolios mit R290-basierten Lösungen, einschließlich Innen- und Erdreichwärmepumpen. Obwohl die Kosten für Propan-Systeme aufgrund komplexer Sicherheitskomponenten derzeit 10-15 % höher sind, setzt sich die Branche zunehmend für diese zukunftssicheren Technologien ein.",
+      "titleEn": "Stricter Noise Limits and Natural Refrigerants Shape German Heat Pump Technology Landscape",
+      "summaryEn": "Germany's heat pump sector is adapting to new regulatory requirements that came into effect in early 2026, mandating significantly quieter operation for subsidized units and making the use of natural refrigerants, such as R290 propane, a condition for funding. These changes are driving innovation towards more environmentally friendly and neighbor-friendly systems.",
+      "imageUrl": "/news-images/common-tech-01.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Quieter Heat Pumps from 2026: What Germany's New Noise Rules Really Mean for Homeowners | LumenHaus",
+          "url": "https://lumenhaus.de/heat-pump-noise-rules-2026/"
+        },
+        {
+          "title": "Heat pumps - subsidies in 2026 only if stricter noise limits are met - Blackout News",
+          "url": "https://blackout-news.de/aktuelles/waermepumpen-subventionen-2026-nur-noch-bei-einhaltung-strenger-laermgrenzwerte/"
+        },
+        {
+          "title": "The Silent Revolution: How EU Regulations Leading Heat Pump Noise Standards",
+          "url": "https://www.sprsunheatpump.com/news/eu-regulations-heat-pump-noise-standards.html"
+        },
+        {
+          "title": "Heat Pump Noise Requirements: Limits, Standards & Compliance Guide",
+          "url": "https://www.idm-energie.at/en/heat-pump-installation-noise-requirements-guide"
+        }
+      ]
+    },
+    {
+      "id": "news-20260901-de-004",
+      "date": "2026-09-01T00:00:00Z",
+      "category": "FUNDING",
+      "title": "Deutschland Ersetzt Heizungsgesetz durch Neues Gebäudemodernisierungsgesetz, Streicht 65%-Erneuerbaren-Vorgabe",
+      "summary": "Die Bundesregierung hat das umstrittene Gebäudeenergiegesetz (GEG) durch das neue Gebäudemodernisierungsgesetz (GModG) ersetzt, das am 29. Juli 2026 in Kraft trat. Diese bedeutende Gesetzesreform schafft die pauschale 65%-Erneuerbaren-Pflicht für neue Heizsysteme ab und führt stattdessen eine „Bio-Treppe“ für fossile Heizungen ein, während sie technologieoffene Entscheidungen fördert.",
+      "body": "Deutschlands energiepolitische Landschaft für Gebäude hat sich mit der Ersetzung des Gebäudeenergiegesetzes (GEG) durch das neue Gebäudemodernisierungsgesetz (GModG) grundlegend gewandelt. Dieses wegweisende Gesetz ist am 29. Juli 2026 in Kraft getreten und markiert eine entscheidende Neuausrichtung des nationalen Ansatzes bei der Regulierung von Heizsystemen.\n\nEin zentrales Element des GModG ist die Abschaffung der zuvor viel diskutierten 65%-Erneuerbaren-Energie-Pflicht für neue Heizsysteme. Dieser Schritt signalisiert eine Abkehr von starren Vorgaben hin zu einem technologieoffeneren Rahmen, der Hausbesitzern mehr Flexibilität bei der Wahl ihrer Heizlösungen ermöglicht.\n\nAnstelle einer pauschalen Erneuerbaren-Quote führt das GModG eine „Bio-Treppe“ für neue Gas-, Öl- oder Flüssiggasheizungen ein, die nach dem 29. Juli 2026 in Bestandsgebäuden installiert werden. Dies schreibt einen schrittweisen Anstieg des Anteils biogener oder definierter Wasserstoffanteile in diesen Brennstoffen vor: mindestens 10 % ab dem 1. Januar 2029, ansteigend auf 15 % ab 2030, 30 % ab 2035 und 60 % ab 2040. Wärmepumpen erfüllen diese Anforderung naturgemäß, ohne die Auflagen der „Bio-Treppe“ beachten zu müssen.\n\nDas neue Gesetz stellt zudem klar, dass es keine generelle Austauschpflicht für bestehende, funktionierende Heizsysteme gibt. Immobilieneigentümer behalten die Freiheit, ihre derzeitigen Systeme zu betreiben, solange diese andere gesetzliche Bestimmungen einhalten. Das GModG konzentriert sich hauptsächlich auf Anforderungen, die beim Austausch eines Heizsystems in einem Bestandsgebäude greifen.\n\nDie Rolle der kommunalen Wärmeplanung bleibt relevant, auch wenn ihre direkte Verknüpfung mit einer 65%-Erneuerbaren-Energie-Vorgabe entfallen ist. Kommunen sind weiterhin mit der Erstellung von Wärmeplänen beauftragt, wobei die Fristen für Großstädte Mitte 2026 und für kleinere Kommunen Mitte 2028 liegen. Diese Pläne werden weiterhin die Entwicklung der lokalen Wärmeversorgungsinfrastruktur leiten.\n\nDas GModG regelt auch spezifische Anforderungen für Mietobjekte. Vermieter, die Wärmepumpen installieren, müssen sicherstellen, dass diese eine Jahresarbeitszahl (JAZ) von mindestens 2,5 erreichen, um Modernisierungskosten vollständig auf die Mieter umlegen zu können. Diese Bestimmung soll Mieter vor unverhältnismäßigen Kostensteigerungen durch weniger effiziente Installationen schützen.",
+      "titleEn": "Germany Replaces Heating Act with New Buildings Modernisation Law, Drops 65% Renewable Mandate",
+      "summaryEn": "The German government has replaced the contentious Building Energy Act (GEG) with the new Buildings Modernisation Act (GModG), effective July 29, 2026. This significant legislative overhaul abolishes the blanket 65% renewable energy requirement for new heating systems, instead introducing a 'bio-staircase' for fossil fuel heating and emphasizing technology-neutral choices.",
+      "imageUrl": "/news-images/de-policy-03.webp",
+      "images": [],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": [
+        {
+          "title": "Heizungsgesetz: Alle Infos zur GEG-Novelle 2026 - Viessmann",
+          "url": "https://www.viessmann.news/heizungsgesetz-geg-novelle-2026"
+        },
+        {
+          "title": "Wärmepumpe und GEG 2026: keine 65-Prozent-Pflicht mehr, Bio-Treppe statt Zwangstausch | AmtsGuide",
+          "url": "https://amtsguide.de/waermepumpe-geg-2026/"
+        },
+        {
+          "title": "Heizungsgesetz (GEG) 2026 — Obligations for property owners in Bavaria | Guides by enbe",
+          "url": "https://www.enbe.de/blog/heizungsgesetz-geg-2026"
+        },
+        {
+          "title": "The German Buildings Energy Act: Mandatory Measures for Non-Residential Buildings | aedifion Blog",
+          "url": "https://www.aedifion.com/blog/the-german-buildings-energy-act-mandatory-measures-for-non-residential-buildings"
+        }
+      ]
+    },
+    {
       "id": "news-20260802-de-001",
       "date": "2026-08-02T00:00:00Z",
       "category": "FUNDING",
@@ -45,6 +182,7 @@
       "titleEn": "Germany Adjusts Heat Pump Grants: New Conditions for KfW 458 Program Effective July 21",
       "summaryEn": "The German government has implemented significant changes to the KfW 458 'Heating Grant for Private Individuals – Residential Buildings' program, effective July 21, 2026. The reform introduces revised eligible costs, altered bonus structures, and a new family supplement, while discontinuing the efficiency bonus.",
       "imageUrl": "/news-images/de-policy-01.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -78,6 +216,7 @@
       "titleEn": "German Heat Pump Market Rebounds Strongly in 2025, Forecasts Continued Growth Amid Policy Shifts",
       "summaryEn": "After a challenging 2024, the German heat pump market experienced a robust recovery in 2025, with sales surging by 55%. The technology is now the most frequently sold heating system, driving optimistic forecasts for 2026, though sustained growth hinges on stable policy frameworks.",
       "imageUrl": "/news-images/common-market-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",
@@ -111,6 +250,7 @@
       "titleEn": "Stricter Noise Limits and Natural Refrigerants Drive German Heat Pump Innovation",
       "summaryEn": "Germany's heat pump sector is navigating significant technological shifts in 2026, driven by new, stricter noise emission requirements for funding eligibility and a growing industry push towards natural refrigerants like R290 (Propane) for enhanced environmental performance and regulatory compliance.",
       "imageUrl": "/news-images/common-tech-03.webp",
+      "images": [],
       "author": "HeatPump DataBase (Europe)",
       "pinned": false,
       "ctaUrl": "",

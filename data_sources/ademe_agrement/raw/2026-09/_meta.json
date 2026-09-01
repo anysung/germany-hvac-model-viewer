@@ -1,0 +1,11 @@
+{
+ "source": "https://bonus-pac.ademe.fr/",
+ "endpoint": "https://bonus-pac.ademe.fr/eligibilite/recherche",
+ "fetched_at": "2026-09-01T08:30:25.055Z",
+ "import_date": "19/08/2026",
+ "total_reported": 2215,
+ "records_read": 2215,
+ "complete": true,
+ "pages": 83,
+ "note": "Public register, facts only. No ADEME logo or branding is used. The web list is the working reference; the arrêté is the legal instrument."
+}
