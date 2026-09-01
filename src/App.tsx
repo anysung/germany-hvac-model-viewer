@@ -215,7 +215,14 @@ const SubscribeGate: React.FC<{
 };
 
 const AppInner: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewState>(IS_ADMIN_BUILD ? 'LOGIN' : 'LANDING');
+  /* Returning from the confirmation link (?verified=1) opens the LOGIN screen
+     directly. The "registration complete" notice lives there, and landing on
+     LANDING instead meant the one message the person came back for was never
+     shown — they clicked Confirm and got a marketing page. */
+  const [currentView, setCurrentView] = useState<ViewState>(
+    IS_ADMIN_BUILD || new URLSearchParams(window.location.search).get('verified') === '1'
+      ? 'LOGIN' : 'LANDING',
+  );
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   /* Onboarding sheet — the three questions, shown once. The "seen" mark is
      per-device localStorage rather than a profile field on purpose: it is a UI
@@ -472,7 +479,7 @@ const AppInner: React.FC = () => {
     setIsLoading(true);
     try {
       const { consent, ...data } = values;   // consent is recorded as termsAcceptedAt/version
-      const result = await registerUser(data);
+      const result = await registerUser(data, language);
       if (result.state === 'active') {
         // Free-access grant applied — the account is live, go straight in.
         setCurrentUser(result.user);
@@ -556,7 +563,7 @@ const AppInner: React.FC = () => {
 
   const handleVerifyResend = async () => {
     try {
-      await resendVerificationEmail();
+      await resendVerificationEmail(language);
       alert((t as any).verifyResent);
     } catch {
       alert((t as any).verifyFailed);

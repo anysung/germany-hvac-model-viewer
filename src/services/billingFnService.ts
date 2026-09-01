@@ -66,6 +66,22 @@ export const createDiscountFn = (payload: {
 export const archiveDiscountFn = (discountId: string): Promise<{ ok: boolean; error?: string }> =>
   call('archiveDiscount', { discountId });
 
+/**
+ * Verification mail on OUR letterhead (logo, market language, support@ reply)
+ * instead of the Firebase default, whose subject carries the raw project id.
+ * The server generates the same oobCode Firebase would have sent, so the
+ * verification itself is unchanged — only the envelope.
+ *
+ * The RETURN URL is not passed: the function derives it from the Origin it is
+ * called from, checked against its own allowlist. A verification link is
+ * clicked without being read, so the client does not get to aim it.
+ *
+ * Never let a failure here block a signup — every caller falls back to
+ * Firebase’s own mail (see authService).
+ */
+export const sendVerificationEmailFn = (lang: string): Promise<{ ok: boolean; error?: string; retryAfter?: number }> =>
+  call('sendVerificationEmail', { lang });
+
 /** Activate the account (server checks Auth email verification + consents). */
 export const finalizeSignupFn = (): Promise<FinalizeResult> =>
   call<FinalizeResult>('finalizeSignup', {

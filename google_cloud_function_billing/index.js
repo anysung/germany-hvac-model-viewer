@@ -1487,10 +1487,34 @@ function mailAttachments() {
 const esc = (s) => String(s)
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+/** Escaped text → HTML with real anchors on any http(s) URL.
+ *  A bare URL in an HTML part is NOT linked by most clients (Gmail auto-links
+ *  the PLAIN part only), so a mail whose whole purpose is a click — a
+ *  verification link, a trial-renewal link — was arriving unclickable.
+ *  Runs AFTER esc(), so the href already carries &amp; — which is exactly how
+ *  an ampersand must be written inside an attribute. */
+function linkify(escaped) {
+  return escaped.replace(/https?:\/\/[^\s<]+/g, (u) => {
+    // Trailing sentence punctuation belongs to the sentence, not the URL.
+    const m = /[.,;:)\]]+$/.exec(u);
+    const tail = m ? m[0] : '';
+    const href = tail ? u.slice(0, -tail.length) : u;
+    return `<a href="${href}" style="color:#0066cc;text-decoration:underline;word-break:break-all;">${href}</a>${tail}`;
+  });
+}
+
 /** Plain text → paragraphs. Blank line starts one; a single newline breaks. */
 function bodyHtml(text) {
-  return String(text).trim().split(/\n\s*\n/).map((para) =>
-    `<p style="margin:0 0 15px;">${esc(para).replace(/\n/g, '<br>')}</p>`).join('');
+  return String(text).trim().split(/\n\s*\n/).map((para) => {
+    // A paragraph that is NOTHING but a URL is the copy-and-paste fallback,
+    // not prose. At body size a Firebase action link is four wrapped lines and
+    // dominates the message it is only the backup for.
+    const small = /^https?:\/\/\S+$/.test(para.trim());
+    const style = small
+      ? 'margin:0 0 15px;font-size:12.5px;line-height:1.55;'
+      : 'margin:0 0 15px;';
+    return `<p style="${style}">${linkify(esc(para)).replace(/\n/g, '<br>')}</p>`;
+  }).join('');
 }
 
 const TEXT_SIGNATURE = `
@@ -1514,7 +1538,37 @@ function inlineAssets(html) {
   return out;
 }
 
-function letterhead(bodyText, to) {
+/** A bulletproof (table-based) button. Outlook ignores padding on an <a>,
+ *  so the padding lives on the <td> and the <a> only carries the colour. */
+function ctaButton(label, url) {
+  return `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:4px 0 20px;">
+      <tr><td align="center" bgcolor="#0066cc" style="border-radius:8px;">
+        <a href="${esc(url)}" style="display:inline-block;padding:13px 26px;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;line-height:1;color:#ffffff;text-decoration:none;border-radius:8px;">${esc(label)}</a>
+      </td></tr></table>`;
+}
+
+/** Where the button goes. A `{{CTA}}` line in the body marks the spot — which
+ *  matters, because in a verification mail the button belongs directly under
+ *  the first sentence, ABOVE the "if you did not request this" paragraph, not
+ *  stranded at the bottom of the message. No marker → appended at the end.
+ *  The plain-text part strips the marker (see CTA_MARK). */
+const CTA_MARK = '{{CTA}}';
+function withCta(bodyText, cta) {
+  const text = String(bodyText);
+  if (!cta || !cta.url) return bodyHtml(text.split(CTA_MARK).join(''));
+  const i = text.indexOf(CTA_MARK);
+  if (i < 0) return bodyHtml(text) + ctaButton(cta.label, cta.url);
+  const head = text.slice(0, i), tail = text.slice(i + CTA_MARK.length);
+  return bodyHtml(head) + ctaButton(cta.label, cta.url) + (tail.trim() ? bodyHtml(tail) : '');
+}
+
+/** Body text as the plain part: the marker is a layout instruction, not copy. */
+const plainBody = (bodyText) => String(bodyText).split(CTA_MARK).join('').replace(/\n{3,}/g, '\n\n').trim();
+
+/** `cta` (optional): { label, url } — see withCta for placement.
+ *  The URL must ALSO appear in bodyText, because a reader whose client strips
+ *  the button still has to be able to copy the address. */
+function letterhead(bodyText, to, cta) {
   const INK = '#1d1d1f', MUTED = '#6e6e73', FAINT = '#9a9aa0', LINE = '#ececf0';
   return `<!doctype html>
 <html><head><meta charset="utf-8">
@@ -1530,7 +1584,7 @@ function letterhead(bodyText, to) {
          style="display:block;border:0;outline:none;text-decoration:none;height:auto;">
   </td></tr>
   <tr><td style="padding:26px 32px 8px;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.65;color:${INK};">
-    ${bodyHtml(bodyText)}
+    ${withCta(bodyText, cta)}
   </td></tr>
   <tr><td style="padding:10px 32px 0;"><div style="border-top:1px solid ${LINE};font-size:0;line-height:0;">&nbsp;</div></td></tr>
   <tr><td style="padding:18px 32px 4px;">
@@ -1632,6 +1686,193 @@ async function previewMemberEmail(req, res) {
     if (snap.exists && snap.data().email) to = String(snap.data().email);
   }
   return res.status(200).json({ ok: true, html: inlineAssets(letterhead(text, to)) });
+}
+
+/* ── Verification email, on our own letterhead ────────────────────────────────
+   Firebase's built-in verification mail is fine mechanically and wrong
+   commercially: it is titled with the Firebase PROJECT id
+   ("gen-lang-client-0324244302"), carries no logo, no market language and no
+   support address — the first thing a new account ever received from us read
+   like a misdirected system message. Custom SMTP already routes it through
+   support@heatpumpdb.eu, but the SUBJECT and BODY still come from Firebase's
+   template and it cannot carry an inline logo.
+
+   So we generate the link and send the mail ourselves. admin.auth()
+   .generateEmailVerificationLink() produces exactly the same oobCode the
+   built-in mail would carry — the verification itself is unchanged, only the
+   envelope around it is ours.
+
+   THE RETURN URL IS NEVER TAKEN FROM THE REQUEST BODY. It is the caller's
+   Origin, and only if that Origin is already on ALLOWED_ORIGINS; otherwise it
+   falls back to the member's own market site. A verification link is the one
+   URL a reader clicks without looking, so it must not be possible to aim one
+   at someone else's domain.
+
+   The client falls back to Firebase's own mail if this call fails: a signup
+   blocked by our SMTP being down is far worse than an unbranded mail.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const VERIFY_COPY = {
+  en: {
+    subject: 'Confirm your email address — HeatPump DB',
+    cta: 'Confirm email address',
+    body: (link) => `Please confirm this address to finish creating your HeatPump DB account.
+
+{{CTA}}
+
+If the button does not work, copy this address into your browser:
+
+${link}
+
+The link can be used once. If it no longer works, request a new one from the sign-in screen.
+
+If you did not create a HeatPump DB account, no action is needed — an account is never activated without this confirmation.`,
+  },
+  de: {
+    subject: 'Bestätigen Sie Ihre E-Mail-Adresse — HeatPump DB',
+    cta: 'E-Mail-Adresse bestätigen',
+    body: (link) => `Bitte bestätigen Sie diese Adresse, um die Erstellung Ihres HeatPump DB Kontos abzuschließen.
+
+{{CTA}}
+
+Falls die Schaltfläche nicht funktioniert, kopieren Sie diese Adresse in Ihren Browser:
+
+${link}
+
+Der Link ist einmal verwendbar. Falls er nicht mehr funktioniert, fordern Sie über die Anmeldeseite einen neuen an.
+
+Wenn Sie kein HeatPump DB Konto erstellt haben, müssen Sie nichts tun — ohne diese Bestätigung wird kein Konto aktiviert.`,
+  },
+  fr: {
+    subject: 'Confirmez votre adresse e-mail — HeatPump DB',
+    cta: "Confirmer l'adresse e-mail",
+    body: (link) => `Merci de confirmer cette adresse pour terminer la création de votre compte HeatPump DB.
+
+{{CTA}}
+
+Si le bouton ne fonctionne pas, copiez cette adresse dans votre navigateur :
+
+${link}
+
+Ce lien est à usage unique. S'il ne fonctionne plus, demandez-en un nouveau depuis l'écran de connexion.
+
+Si vous n'avez pas créé de compte HeatPump DB, aucune action n'est nécessaire : aucun compte n'est activé sans cette confirmation.`,
+  },
+  pl: {
+    subject: 'Potwierdź swój adres e-mail — HeatPump DB',
+    cta: 'Potwierdź adres e-mail',
+    body: (link) => `Potwierdź ten adres, aby dokończyć tworzenie konta HeatPump DB.
+
+{{CTA}}
+
+Jeśli przycisk nie działa, skopiuj ten adres do przeglądarki:
+
+${link}
+
+Link można wykorzystać jeden raz. Jeśli przestał działać, poproś o nowy na ekranie logowania.
+
+Jeśli nie zakładałeś konta HeatPump DB, nie musisz nic robić — bez tego potwierdzenia konto nie zostanie aktywowane.`,
+  },
+  it: {
+    subject: 'Conferma il tuo indirizzo e-mail — HeatPump DB',
+    cta: 'Conferma indirizzo e-mail',
+    body: (link) => `Conferma questo indirizzo per completare la creazione del tuo account HeatPump DB.
+
+{{CTA}}
+
+Se il pulsante non funziona, copia questo indirizzo nel browser:
+
+${link}
+
+Il link può essere usato una sola volta. Se non funziona più, richiedine uno nuovo dalla schermata di accesso.
+
+Se non hai creato un account HeatPump DB non devi fare nulla: senza questa conferma nessun account viene attivato.`,
+  },
+};
+
+/** Send gate. Not abuse prevention so much as blast prevention: a resend button
+ *  that a frustrated person taps eight times must not produce eight mails, and
+ *  a loop in a client build must not turn one account into a sending campaign
+ *  from our support address. The slot is RELEASED again if the send fails. */
+const VERIFY_MIN_GAP_MS = 45_000;
+const VERIFY_DAY_MAX = 8;
+
+async function sendVerificationEmail(req, res) {
+  const caller = await verifyCaller(req);
+  if (!caller) return sendErr(res, 401, 'unauthenticated');
+  const uid = caller.uid;
+
+  const authUser = await admin.auth().getUser(uid);
+  const to = String(authUser.email || '').trim();
+  if (!to) return sendErr(res, 400, 'no-email');
+  // Nothing to confirm. The client treats this as success — re-sending a link
+  // for an address already verified can only confuse the reader.
+  if (authUser.emailVerified) return res.status(200).json({ ok: true, alreadyVerified: true });
+
+  const profile = await db.collection('users').doc(uid).get();
+  const country = profile.exists ? String(profile.data().country || '') : '';
+  const asked = String((req.body || {}).lang || '').toLowerCase();
+  const lang = VERIFY_COPY[asked] ? asked
+    : (VERIFY_COPY[MARKET_LANG[country]] ? MARKET_LANG[country] : 'en');
+
+  const origin = String(req.headers.origin || '');
+  const site = ALLOWED_ORIGINS.includes(origin)
+    ? origin
+    : (MARKET_SITE[country] || 'https://www.heatpumpdb.de');
+
+  const rlRef = db.collection('verificationMails').doc(uid);
+  const nowMs = Date.now();
+  const gate = await db.runTransaction(async (t) => {
+    const snap = await t.get(rlRef);
+    const d = snap.exists ? (snap.data() || {}) : {};
+    const lastMs = tsMillis(d.lastAt) || 0;
+    const sends = (Array.isArray(d.sends) ? d.sends : []).filter(ms => ms > nowMs - 86400000);
+    if (nowMs - lastMs < VERIFY_MIN_GAP_MS) {
+      return { ok: false, error: 'too-soon', retryAfter: Math.ceil((VERIFY_MIN_GAP_MS - (nowMs - lastMs)) / 1000) };
+    }
+    if (sends.length >= VERIFY_DAY_MAX) return { ok: false, error: 'daily-limit' };
+    t.set(rlRef, {
+      uid, email: emailKey(to), lastAt: nowMs,
+      sends: sends.concat(nowMs).slice(-VERIFY_DAY_MAX),
+    }, { merge: true });
+    return { ok: true, previousLastAt: lastMs };
+  });
+  if (!gate.ok) return res.status(429).json(gate);
+
+  /** Hand the slot back, so a failed send does not cost the member 45 seconds. */
+  const releaseSlot = () => rlRef.set({ lastAt: gate.previousLastAt || 0 }, { merge: true }).catch(() => {});
+
+  const mailer = transport();
+  if (!mailer) { await releaseSlot(); return sendErr(res, 503, 'smtp-not-configured'); }
+
+  let link;
+  try {
+    link = await admin.auth().generateEmailVerificationLink(to, {
+      url: `${site}/?verified=1`,
+      handleCodeInApp: false,
+    });
+  } catch (e) {
+    console.error('generateEmailVerificationLink failed', e);
+    await releaseSlot();
+    return sendErr(res, 502, 'link-failed');
+  }
+
+  const copy = VERIFY_COPY[lang];
+  const text = copy.body(link);
+  try {
+    const info = await mailer.sendMail({
+      from: `HeatPump DB <${SUPPORT_FROM}>`,
+      to, replyTo: SUPPORT_FROM, subject: copy.subject,
+      text: plainBody(text) + TEXT_SIGNATURE,
+      html: letterhead(text, to, { label: copy.cta, url: link }),
+      attachments: mailAttachments(),
+    });
+    return res.status(200).json({ ok: true, messageId: info.messageId || null, lang });
+  } catch (e) {
+    console.error('sendVerificationEmail failed', e);
+    await releaseSlot();
+    return sendErr(res, 502, 'send-failed');
+  }
 }
 
 /* ── Trial reminders ──────────────────────────────────────────────────────────
@@ -1844,6 +2085,7 @@ functions.http('accountBilling', async (req, res) => {
       return res.status(200).json({ ok: true, service: 'accountBilling' });
     }
     if (req.method !== 'POST') return sendErr(res, 405, 'method-not-allowed');
+    if (path.endsWith('/sendVerificationEmail')) return await sendVerificationEmail(req, res);
     if (path.endsWith('/finalizeSignup')) return await finalizeSignup(req, res);
     if (path.endsWith('/createTeamOrg')) return await createTeamOrg(req, res);
     if (path.endsWith('/deleteAccount')) return await deleteAccount(req, res);

@@ -28,15 +28,16 @@ import {
   Timestamp,
 } from 'firebase/firestore';
 import { auth, db } from '../firebase';
-import { User, ActivityLog, UserSubscription, UserGrant } from '../types';
+import { User, ActivityLog, UserSubscription, UserGrant, Language } from '../types';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
 import { REGISTRATION_OPEN } from '../config/registration';
 import { getValidGrant, joinOrg, joinOrgIfInvited, emailKey, getOrg } from './subscriptionService';
 import { SUB_PLANS, TRIAL_DAYS } from '../config/subscriptionPlans';
 import { TERMS_VERSION, PRIVACY_VERSION, DATA_USE_VERSION } from '../config/legal';
 import { compact } from '../utils/profile';
-import { TRIAL_FLOW_ENABLED, finalizeSignupFn } from './billingFnService';
+import { TRIAL_FLOW_ENABLED, finalizeSignupFn, sendVerificationEmailFn } from './billingFnService';
 import { pendingSignupRef } from './signupRef';
+import { DEFAULT_LANGUAGE } from '../hpiq/market';
 
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
 
@@ -177,6 +178,33 @@ const verificationReturn = () => ({
   handleCodeInApp: false,
 });
 
+/**
+ * Send the verification mail — OURS first, Firebase’s as the safety net.
+ *
+ * Ours (billing function) carries the logo, the market language and a
+ * support@heatpumpdb.eu reply address; Firebase’s carries the raw project id
+ * ("gen-lang-client-0324244302") in its subject, which is what a new account
+ * used to receive as its very first message from us.
+ *
+ * The fallback is not optional politeness: a verification mail that never
+ * arrives is a signup that cannot complete, so ANY failure on our side — SMTP
+ * down, function not deployed, network — falls through to the built-in mail.
+ * The one exception is 429: the gate refused because a mail went out seconds
+ * ago, and another one is the last thing the reader needs.
+ */
+const deliverVerificationEmail = async (fbUser: FirebaseUser, lang: Language): Promise<void> => {
+  if (TRIAL_FLOW_ENABLED) {
+    try {
+      const r = await sendVerificationEmailFn(lang);
+      if (r.ok) return;
+    } catch (e: any) {
+      if (String(e?.message ?? e).endsWith('-429')) return;   // one just went out
+      console.error('branded verification mail failed, falling back', e);
+    }
+  }
+  await sendEmailVerification(fbUser, verificationReturn());
+};
+
 export const tryFinalizeSignup = async (): Promise<
   { state: 'active'; user: User; trial: boolean } | { state: 'unverified' } | { state: 'error'; message: string }
 > => {
@@ -199,10 +227,10 @@ export const tryFinalizeSignup = async (): Promise<
 };
 
 /** Re-send the verification mail for the signed-in, not-yet-verified account. */
-export const resendVerificationEmail = async (): Promise<void> => {
+export const resendVerificationEmail = async (lang: Language = DEFAULT_LANGUAGE): Promise<void> => {
   const fbUser = auth.currentUser;
   if (!fbUser) throw new Error('unauthenticated');
-  await sendEmailVerification(fbUser, verificationReturn());
+  await deliverVerificationEmail(fbUser, lang);
 };
 
 export type RegisterResult =
@@ -217,7 +245,7 @@ export type RegisterResult =
 // Trial flow (VITE_BILLING_FN_URL set): create the pending profile, send the
 // verification mail and STAY SIGNED IN — the VERIFY_EMAIL screen finishes via
 // tryFinalizeSignup(). Legacy flow: pending profile + sign-out (admin approval).
-export const registerUser = async (data: SignupData): Promise<RegisterResult> => {
+export const registerUser = async (data: SignupData, lang: Language = DEFAULT_LANGUAGE): Promise<RegisterResult> => {
   let userCredential;
   try {
     userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
@@ -270,7 +298,7 @@ export const registerUser = async (data: SignupData): Promise<RegisterResult> =>
 
   if (TRIAL_FLOW_ENABLED) {
     // New flow: verification mail, session kept open for the verify screen.
-    await sendEmailVerification(userCredential.user, verificationReturn())
+    await deliverVerificationEmail(userCredential.user, lang)
       .catch(e => console.error('verification mail failed', e));
     await logActivity(uid, 'REGISTER_PENDING', `Registration awaiting email verification: ${data.email}`, data.email, `${data.firstName} ${data.lastName}`);
     return { state: 'verify-email' };
