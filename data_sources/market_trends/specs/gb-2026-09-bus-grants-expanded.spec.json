@@ -1,0 +1,57 @@
+{
+ "country": "GB",
+ "countryLabel": "United Kingdom",
+ "month": "SEPTEMBER 2026",
+ "motif": "coins",
+ "title": [
+  "BUS Grants Boosted",
+  "Off-Gas Grid & Air-to-Air"
+ ],
+ "sub": "Enhanced Boiler Upgrade Scheme grants target off-gas grid homes and include air-to-air systems.",
+ "sections": [
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": "£9,000",
+     "label": "Max grant for off-gas grid homes"
+    },
+    {
+     "value": "70,000",
+     "label": "Installations supported to date"
+    },
+    {
+     "value": "£485 million",
+     "label": "Total scheme funding paid out"
+    }
+   ]
+  },
+  {
+   "type": "checks",
+   "icon": "coins",
+   "title": "Key Scheme Updates",
+   "rows": [
+    {
+     "label": "Increased grants of £9,000 for off-gas grid properties."
+    },
+    {
+     "label": "Air-to-air heat pumps now eligible for £2,500 grants."
+    },
+    {
+     "label": "EPC insulation recommendations no longer a barrier."
+    },
+    {
+     "label": "Scheme extended until at least 2030, installer-led."
+    }
+   ]
+  },
+  {
+   "type": "fazit",
+   "title": "Strategic Impact",
+   "lines": [
+    "Broadens low-carbon heating access for UK homes.",
+    "Simplifies application, reinforces long-term commitment."
+   ]
+  }
+ ]
+}

@@ -1,5 +1,28 @@
 [
  {
+  "slug": "2026-09-aides-pac-france",
+  "date": "2026-09-01",
+  "image": "fr-2026-09-aides-pac-france.webp",
+  "title": "La France renforce les aides aux PAC pour qualité et décarbonation dès le 1er septembre",
+  "excerpt": "De nouvelles règles pour MaPrimeRénov’ et le Coup de pouce Chauffage entrent en vigueur, avec des répercussions significatives pour les propriétaires et installateurs.",
+  "body": [
+   "Dès le 1er septembre 2026, la France ajuste ses dispositifs d'aide à la rénovation énergétique, MaPrimeRénov’ et le Coup de pouce Chauffage, pour privilégier la qualité des installations et la décarbonation. Ces réformes, portées par les ministères économiques et environnementaux, visent à aligner les subventions sur les objectifs nationaux d'électrification et de réduction des émissions de carbone.",
+   "Pour MaPrimeRénov’, les projets de rénovation globale ne seront plus éligibles si un système de chauffage au gaz est maintenu ou si des pompes à chaleur hybrides avec appoint fossile sont installées. Cette mesure étend les exclusions déjà en place pour le fioul et le charbon, marquant une orientation claire vers les solutions 100% décarbonées.",
+   "Le dispositif « Coup de pouce Chauffage » se durcit également. Les bonifications sont désormais réservées aux pompes à chaleur bénéficiant d'un agrément européen officiel, basé sur des certifications comme Heat Pump KEYMARK ou NF PAC. L'assemblage final du circuit frigorifique doit impérativement être réalisé au sein de l'Espace Économique Européen pour bénéficier de ces aides.",
+   "Les professionnels certifiés RGE (Reconnu Garant de l'Environnement) voient leur rôle renforcé, étant essentiels pour garantir l'éligibilité des installations. Parallèlement, la plateforme France Rénov’ a été améliorée avec un compte personnel unique sécurisé via France Connect+, opérationnel depuis le 17 août 2026, pour simplifier les démarches de demande d'aides."
+  ],
+  "sourceNote": "Quelle: HeatPump DB France News, 1er septembre 2026. Ministères économiques et environnementaux français, ADEME, Anah.",
+  "titleEn": "France Strengthens Heat Pump Aid for Quality and Decarbonization from September 1st",
+  "excerptEn": "New rules for MaPrimeRénov’ and Coup de pouce Chauffage come into effect, with significant repercussions for heat pump owners and installers.",
+  "bodyEn": [
+   "As of September 1st, 2026, France is adjusting its energy renovation aid schemes, MaPrimeRénov’ and Coup de pouce Chauffage, to prioritize installation quality and decarbonization. These reforms, driven by the economic and environmental ministries, aim to align subsidies with national electrification goals and carbon emission reduction targets.",
+   "For MaPrimeRénov’, comprehensive renovation projects will no longer be eligible if a gas heating system is maintained or if hybrid heat pumps with fossil fuel backup are installed. This measure extends existing exclusions for oil and coal, signaling a clear shift towards 100% decarbonized solutions.",
+   "The « Coup de pouce Chauffage » scheme is also becoming stricter. Bonuses are now exclusively reserved for heat pumps with official European approval, based on certifications such as Heat Pump KEYMARK or NF PAC. The final assembly of the refrigeration circuit must be carried out within the European Economic Area to qualify for these aids.",
+   "RGE (Reconnu Garant de l'Environnement) certified professionals see their role strengthened, being essential to ensure installation eligibility. Concurrently, the France Rénov’ platform has been enhanced with a secure, single personal account via France Connect+, operational since August 17th, 2026, to simplify aid application procedures."
+  ],
+  "sourceNoteEn": "Source: HeatPump DB France News, September 1st, 2026. French Economic and Environmental Ministries, ADEME, Anah."
+ },
+ {
   "slug": "2026-09-agrement",
   "date": "2026-08-25",
   "image": "fr-2026-09-agrement.webp",

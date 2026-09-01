@@ -103,7 +103,11 @@ npm aliases: `npm run update:all` / `npm run update:all:deploy`.
   such a month, and a window that cannot finish is worse than a long one — the
   guard lifts the notice on last month's data.
 - **News is NOT independent.** It runs inside this window (step 3), after the
-  database it describes. There is no separate news scheduler — the only Cloud
+  database it describes. **Market & Trends cards ride the same window** (step
+  4b, since 2026-10): `scripts/trends/generate-monthly-cards.mjs` condenses one
+  article per market from the month's news snapshot into an infographic card +
+  write-up (verbatim-number rule enforced mechanically; content-rule lint;
+  idempotent per month; never fatal). There is no separate news scheduler — the only Cloud
   Scheduler job in the project is `trial-reminders-daily`. If the window does
   not open, no news is published either.
 

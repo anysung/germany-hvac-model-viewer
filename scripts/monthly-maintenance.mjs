@@ -267,6 +267,15 @@ try {
   saveState({ phase: 'running', step: 'news-snapshot' });
   if (newsOk) step('export public news snapshot', 'node scripts/export-news-public.mjs', { fatal: false });
 
+  // 4b — Market & Trends: one card per market, condensed from the month's own
+  // news (owner, 2026-09-02). Reads the snapshot step 4 just wrote, publishes
+  // into data_sources/market_trends/, and the build below ships it. Never
+  // fatal, and internally idempotent — a market that already has a card this
+  // month is skipped, and a card that fails the content lint is dropped.
+  saveState({ phase: 'running', step: 'trends-cards' });
+  if (newsOk) step("Market & Trends monthly cards (from this month's news)",
+    'node scripts/trends/generate-monthly-cards.mjs', { fatal: false });
+
   // 5 — every surface ships one epoch, the admin console included: it runs the
   // same app code, so leaving it on last month's bundle is how an ops screen
   // starts disagreeing with the service it is meant to describe.

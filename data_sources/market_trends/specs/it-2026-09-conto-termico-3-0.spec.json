@@ -1,0 +1,57 @@
+{
+ "country": "IT",
+ "countryLabel": "Italia",
+ "month": "SETTEMBRE 2026",
+ "motif": "coins",
+ "title": [
+  "Conto Termico 3.0",
+  "Al via i nuovi incentivi"
+ ],
+ "sub": "Incentivi per efficienza energetica e rinnovabili, con contributi diretti a fondo perduto.",
+ "sections": [
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": "900 milioni di euro",
+     "label": "Budget annuale complessivo"
+    },
+    {
+     "value": "65%",
+     "label": "Copertura spese per privati"
+    },
+    {
+     "value": "15.000 euro",
+     "label": "Pagamento rapido in unica soluzione"
+    }
+   ]
+  },
+  {
+   "type": "checks",
+   "icon": "coins",
+   "title": "Punti chiave del Conto Termico",
+   "rows": [
+    {
+     "label": "Beneficiari: privati, imprese, PA, enti Terzo Settore."
+    },
+    {
+     "label": "Interventi: pompe di calore, ibridi, isolamento, infissi, building automation."
+    },
+    {
+     "label": "Contributo: diretto a fondo perduto, alternativa alle detrazioni fiscali."
+    },
+    {
+     "label": "Gestione: GSE tramite il nuovo Portaltermico 3.0."
+    }
+   ]
+  },
+  {
+   "type": "fazit",
+   "title": "Impatto sul mercato",
+   "lines": [
+    "Supporto significativo per l'adozione di pompe di calore.",
+    "Stimolo all'efficienza energetica e alle rinnovabili."
+   ]
+  }
+ ]
+}

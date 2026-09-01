@@ -1,0 +1,54 @@
+{
+ "country": "PL",
+ "countryLabel": "Polska",
+ "month": "WRZESIEŃ 2026",
+ "motif": "coins",
+ "title": [
+  "Czyste Powietrze",
+  "Większe Wsparcie"
+ ],
+ "sub": "Program „Czyste Powietrze” zwiększa dotacje i elastyczność dla właścicieli domów modernizujących ogrzewanie.",
+ "sections": [
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": "10%",
+     "label": "Wzrost limitów dotacji indywidualnych"
+    },
+    {
+     "value": "83 000 zł",
+     "label": "Maksymalna dotacja na termomodernizację"
+    }
+   ]
+  },
+  {
+   "type": "checks",
+   "icon": "coins",
+   "title": "Kluczowe Zmiany Programu",
+   "rows": [
+    {
+     "label": "Łatwiejszy dostęp do środków i dłuższy czas na realizację projektów."
+    },
+    {
+     "label": "Wsparcie na izolację, wymianę okien i energooszczędne systemy grzewcze."
+    },
+    {
+     "label": "Dotacje łączą się z ulgą termomodernizacyjną, zwiększając korzyści."
+    },
+    {
+     "label": "Od stycznia 2025 brak zachęt na kotły na paliwa kopalne.",
+     "no": true
+    }
+   ]
+  },
+  {
+   "type": "fazit",
+   "title": "Wnioski dla Branży",
+   "lines": [
+    "Program promuje pompy ciepła jako kluczowe rozwiązanie grzewcze.",
+    "Większe wsparcie i elastyczność sprzyjają inwestycjom w OZE."
+   ]
+  }
+ ]
+}

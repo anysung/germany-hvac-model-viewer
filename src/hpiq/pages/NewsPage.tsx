@@ -348,10 +348,19 @@ export const NewsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                   key={item.id}
                   onClick={() => openArticle(item)}
                   className="hp-row"
-                  style={{ display: 'flex', alignItems: 'baseline', gap: 14, padding: '13px 20px', borderBottom: i < archiveFiltered.length - 1 ? '1px solid #f0f0f0' : undefined, cursor: 'pointer' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 20px', borderBottom: i < archiveFiltered.length - 1 ? '1px solid #f0f0f0' : undefined, cursor: 'pointer' }}
                 >
                   <span style={{ flex: 'none', fontSize: 12, color: '#7a7a7a', width: 92 }}>{shortDate(item.date, t.locale)}</span>
-                  <span style={{ flex: 'none', fontSize: 9.5, fontWeight: 700, letterSpacing: '.08em', color: '#7a7a7a' }}>{t.news.categories[categoryOf(item)] ?? categoryOf(item)}</span>
+                  {/* Fixed-width chip: category names vary wildly in length
+                      (AIDES vs TECHNOLOGIE), and as bare inline text they
+                      pushed every headline to a different x. One width, small
+                      type, wrapping inside the box — headlines line up. */}
+                  <span style={{
+                    flex: 'none', width: 100, boxSizing: 'border-box',
+                    border: '1px solid #e0e0e0', borderRadius: 8, padding: '3px 6px',
+                    fontSize: 9, fontWeight: 700, letterSpacing: '.06em', lineHeight: 1.3,
+                    color: '#7a7a7a', textAlign: 'center', overflowWrap: 'break-word',
+                  }}>{t.news.categories[categoryOf(item)] ?? categoryOf(item)}</span>
                   <span style={{ fontFamily: NEWS_SERIF, fontSize: 15, fontWeight: 700, lineHeight: 1.35, minWidth: 0, color: '#1d1d1f' }}>{localizedNews(item, app.lang).title}</span>
                 </div>
               ))}

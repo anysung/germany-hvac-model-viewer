@@ -164,7 +164,10 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
     <div style={{ flex: 'none', display: 'flex', flexDirection: 'column', minHeight: 0, height: 'calc(100vh - 60px)' }}>
 
       {/* toolbar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 28px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(255,255,255,.9)', ...frosted, flex: 'none' }}>
+      {/* zIndex 45: frosted creates a stacking context, and without a lift the
+          ⓘ tooltip paints BEHIND the later-painted content area (compare tray
+          sits at 40). */}
+      <div style={{ position: 'relative', zIndex: 45, display: 'flex', alignItems: 'center', gap: 14, padding: '13px 28px', borderBottom: '1px solid rgba(0,0,0,.08)', background: 'rgba(255,255,255,.9)', ...frosted, flex: 'none' }}>
         <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.products.title}</span>
         {/* Segment choice — step ONE of any search, so it must read as a real
             control: larger type, a visible border and a hover state (the old

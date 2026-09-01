@@ -1,0 +1,40 @@
+{
+ "country": "FR",
+ "countryLabel": "France",
+ "month": "SEPTEMBRE 2026",
+ "motif": "coins",
+ "title": [
+  "Aides PAC : Qualité et",
+  "Décarbonation en France"
+ ],
+ "sub": "Les aides MaPrimeRénov' et Coup de pouce Chauffage évoluent pour renforcer qualité et décarbonation.",
+ "sections": [
+  {
+   "type": "checks",
+   "icon": "shield",
+   "title": "Principales évolutions",
+   "rows": [
+    {
+     "label": "MaPrimeRénov' : Inéligibilité si chauffage gaz ou PAC hybride fossile."
+    },
+    {
+     "label": "Coup de pouce Chauffage : Exige agrément européen (KEYMARK/NF PAC)."
+    },
+    {
+     "label": "Assemblage circuit frigorifique en EEE requis pour bonification."
+    },
+    {
+     "label": "Liste ADEME officielle : Référence pour la bonification CEE."
+    }
+   ]
+  },
+  {
+   "type": "fazit",
+   "title": "Impact pour le secteur",
+   "lines": [
+    "Renforcement des standards de qualité et d'origine des PAC.",
+    "Accélération de la décarbonation du chauffage résidentiel."
+   ]
+  }
+ ]
+}

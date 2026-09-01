@@ -1,0 +1,57 @@
+{
+ "country": "DE",
+ "countryLabel": "Deutschland",
+ "month": "SEPTEMBER 2026",
+ "motif": "coins",
+ "title": [
+  "KfW 458 Förderung",
+  "Neu Kalibriert"
+ ],
+ "sub": "Bundesregierung passt Heizungsförderung an: Neue Konditionen für Wärmepumpen in Kraft.",
+ "sections": [
+  {
+   "type": "stats",
+   "items": [
+    {
+     "value": "28.000 €",
+     "label": "Max. förderfähige Kosten (EFH)"
+    },
+    {
+     "value": "30 %",
+     "label": "Basisförderung für alle Antragsteller"
+    },
+    {
+     "value": "40 %",
+     "label": "Max. Einkommensbonus (bis 30.000 €)"
+    }
+   ]
+  },
+  {
+   "type": "checks",
+   "icon": "coins",
+   "title": "Wesentliche Änderungen",
+   "rows": [
+    {
+     "label": "Max. förderfähige Kosten für EFH auf 28.000 € gesenkt."
+    },
+    {
+     "label": "Einkommensbonus neu gestaffelt, bis zu 40 % für Geringverdiener."
+    },
+    {
+     "label": "Klimageschwindigkeitsbonus auf 16 % reduziert, läuft bis 2028 aus."
+    },
+    {
+     "label": "Natürliche Kältemittel oder geringes GWP nun zwingend."
+    }
+   ]
+  },
+  {
+   "type": "fazit",
+   "title": "Ausblick & Hinweise",
+   "lines": [
+    "Anpassungen sollen Anreize für klimafreundliche Heizungen neu setzen.",
+    "Künftiger \"Made in Europe\"-Bonus könnte Förderquote erhöhen."
+   ]
+  }
+ ]
+}
