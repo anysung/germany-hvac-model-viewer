@@ -243,6 +243,8 @@ try {
   saveState({ phase: 'running', step: 'origin-contracts' });
   step('origin-contract matrix (sites, bundles, four allowlists)',
     'node scripts/verify-origins.mjs', { fatal: false });
+  step('payment-contract matrix (webhook, events, live prices vs code)',
+    'node scripts/verify-paddle.mjs', { fatal: false });
 
   // 1 — everything reversible: fetch, build every market, gate.
   saveState({ phase: 'running', step: 'sources+build+gate' });
