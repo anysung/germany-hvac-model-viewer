@@ -69,7 +69,12 @@ const TYPE_START_MS = 800;
 const TYPE_CHAR_MS = 115;
 const TYPE_TAIL_MS = 1700;
 
-export const OnboardingTour: React.FC<{ app: HpApp; viewport: 'desktop' | 'phone' }> = ({ app, viewport }) => {
+/** `hold`: the onboarding sheet (three profile questions) is on screen. A new
+ *  account triggers BOTH first-run surfaces at once, and until 2026-09-03 they
+ *  simply stacked — the tour card painted over the half-visible sheet. The
+ *  sheet goes first (it is account data, asked once); the invite waits here
+ *  and fires when `hold` drops. `?tour=1` still forces through. */
+export const OnboardingTour: React.FC<{ app: HpApp; viewport: 'desktop' | 'phone'; hold?: boolean }> = ({ app, viewport, hold }) => {
   const t = tr(app.lang);
   const uid = app.user.id;
   const steps = STEPS.filter(s => s.when === 'both' || s.when === viewport);
@@ -85,12 +90,13 @@ export const OnboardingTour: React.FC<{ app: HpApp; viewport: 'desktop' | 'phone
   useEffect(() => {
     const forced = new URLSearchParams(window.location.search).get('tour') === '1';
     if (uid === 'preview' && !forced) return;
+    if (hold && !forced) return;            // the onboarding sheet has the stage
     if (forced || shouldInvite(uid)) {
       if (!forced) markShown(uid);
       setView('invite');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uid]);
+  }, [uid, hold]);
   useEffect(() => {
     const open = () => setView('invite');
     window.addEventListener('hpdb-tour-open', open);

@@ -51,6 +51,8 @@ interface Props {
   setLanguage: (l: Language) => void;
   /** Concurrent-session grace deadline (epoch ms) — drives the countdown banner. */
   sessionGraceUntil?: number | null;
+  /** First-run onboarding sheet is on screen — the tour invite waits for it. */
+  tourHold?: boolean;
 }
 
 type NavPage = Exclude<HpPage, 'account'>;
@@ -78,7 +80,7 @@ const groupTarget = (g: { id: string; pages: NavPage[] }): NavPage => {
 };
 
 
-export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage, sessionGraceUntil }) => {
+export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage, sessionGraceUntil, tourHold }) => {
   // Profile edits are written to Firestore; this overlay reflects them at once
   // (the auth listener would only refresh the profile on the next sign-in).
   const [userPatch, setUserPatch] = useState<Partial<User>>({});
@@ -477,7 +479,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
         {(dataBanner || sessionBanner || trialBanner) && (
           <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 120 }}>{dataBanner}{sessionBanner || trialBanner}</div>
         )}
-        <OnboardingTour app={app} viewport="phone" />
+        <OnboardingTour app={app} viewport="phone" hold={tourHold} />
         <MobileApp app={app} viewport={viewport} />
         {notice && (
           <div style={{ position: 'fixed', bottom: 84, left: '50%', transform: 'translateX(-50%)', zIndex: 100, background: '#1d1d1f', color: '#fff', borderRadius: 999, padding: '11px 22px', fontSize: 13.5, boxShadow: '0 8px 24px rgba(0,0,0,.22)', maxWidth: '86vw' }}>
@@ -491,7 +493,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   return (
     <div className="hpiq-root" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#fff' }}>
       {printPortal}
-      <OnboardingTour app={app} viewport="desktop" />
+      <OnboardingTour app={app} viewport="desktop" hold={tourHold} />
 
       {/* ============ Global nav ============ */}
       <div className="hp-gnav" style={{ background: '#000', color: '#fff', display: 'flex', alignItems: 'center', gap: 28, padding: '0 28px', height: 60, position: 'sticky', top: 0, zIndex: 50, flex: 'none' }}>

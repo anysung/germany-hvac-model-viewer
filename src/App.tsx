@@ -229,6 +229,12 @@ const AppInner: React.FC = () => {
      convenience, and giving it a Firestore field would mean another writable
      key in the security rules for something that does not need protecting. */
   const [showOnboarding, setShowOnboarding] = useState(false);
+  /* Closing the sheet must be STATE, not just localStorage: when the sheet was
+     shown by onboardingDue (computed each render), onSkip's
+     setShowOnboarding(false) set a value that was already false — React bails
+     out of the re-render, onboardingDue is never recomputed, and the "Later"
+     button did nothing (found live, 2026-09-03). */
+  const [onboardingClosed, setOnboardingClosed] = useState(false);
   // One-email-one-country redirect screen: { country } for a login/social block
   // (registered elsewhere), or null-country for a signup with an existing email.
   const [mismatch, setMismatch] = useState<{ country: string | null } | null>(null);
@@ -1150,6 +1156,7 @@ const AppInner: React.FC = () => {
   const onboardingKey = currentUser ? `hpdb.onboarded.${currentUser.id}` : '';
   const onboardingDue = !!currentUser
     && currentView === 'APP'
+    && !onboardingClosed
     && !hasDisplayName(currentUser)
     && !currentUser.companyType
     && !currentUser.jobRole
@@ -1186,6 +1193,7 @@ const AppInner: React.FC = () => {
         language={language}
         setLanguage={setLanguage}
         sessionGraceUntil={sessionGraceUntil}
+        tourHold={showOnboarding || onboardingDue}
       />
       {(showOnboarding || onboardingDue) && (
         <OnboardingSheet
@@ -1194,11 +1202,13 @@ const AppInner: React.FC = () => {
           onDone={(patch) => {
             try { localStorage.setItem(onboardingKey, '1'); } catch { /* private mode */ }
             setShowOnboarding(false);
+            setOnboardingClosed(true);
             setCurrentUser({ ...currentUser, ...patch } as User);
           }}
           onSkip={() => {
             try { localStorage.setItem(onboardingKey, '1'); } catch { /* private mode */ }
             setShowOnboarding(false);
+            setOnboardingClosed(true);
           }}
         />
       )}
