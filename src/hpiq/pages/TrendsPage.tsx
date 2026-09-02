@@ -47,8 +47,11 @@ interface TrendsFeed {
   items: TrendsCard[];
 }
 
+/* Natural document flow (2026-09-02): the fixed calc(100vh-60px) box made the
+   page double-scroll inside the mobile shell, and a plain scroll page never
+   needed it on desktop either — Bafa and Guide flow the same way. */
 const PAGE: React.CSSProperties = {
-  height: 'calc(100vh - 60px)', overflowY: 'auto', background: '#fff',
+  flex: 1, background: '#fff',
 };
 
 /** Page title, typed exactly as the News page types "Market intelligence." —
@@ -58,7 +61,7 @@ const PAGE: React.CSSProperties = {
  *  drops the whole declaration, which is how this page shipped looking like
  *  body text.) */
 const PAGE_TITLE: React.CSSProperties = {
-  fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px', color: '#1d1d1f',
+  fontFamily: FD, fontSize: 'clamp(25px, 4vw, 34px)', fontWeight: 600, letterSpacing: '-0.374px', color: '#1d1d1f',
 };
 const PILL: React.CSSProperties = {
   fontSize: 12.5, color: '#7a7a7a', border: '1px solid #e0e0e0', borderRadius: 999,
@@ -106,7 +109,7 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
     const v = textOf(open);
     return (
       <div style={PAGE}>
-        <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 56px', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '24px clamp(16px, 4vw, 48px) 56px', boxSizing: 'border-box' }}>
           <SubTabs
             group="newsTrends"
             tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
@@ -114,7 +117,7 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
             onSelect={id => app.go(id as 'news' | 'trends')}
             style={{ marginBottom: 18 }}
           />
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginBottom: 22 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px 14px', flexWrap: 'wrap', marginBottom: 22 }}>
             <span style={PAGE_TITLE}>{pageName}</span>
             {pill && <span style={PILL}>{pill}</span>}
           </div>
@@ -154,7 +157,7 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   /* ── Feed grid ── */
   return (
     <div style={PAGE}>
-      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 56px', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '24px clamp(16px, 4vw, 48px) 56px', boxSizing: 'border-box' }}>
         <SubTabs
           group="newsTrends"
           tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
@@ -162,14 +165,14 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
           onSelect={id => app.go(id as 'news' | 'trends')}
           style={{ marginBottom: 18 }}
         />
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px 14px', flexWrap: 'wrap' }}>
           <span style={PAGE_TITLE}>{pageName}</span>
           {pill && <span style={PILL}>{pill}</span>}
         </div>
         {subhead && <p style={{ color: '#6e6e73', fontSize: 15.5, margin: '10px 0 30px', maxWidth: 720 }}>{subhead}</p>}
 
         {feed && feed.items.length > 0 ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 24 }}>
             {feed.items.map(c => {
               const v = textOf(c);
               return (

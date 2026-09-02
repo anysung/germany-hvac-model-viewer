@@ -99,7 +99,7 @@ const Grid: React.FC<{ videos: Video[]; t: ReturnType<typeof tr> }> = ({ videos,
       {Object.entries(byMfr).map(([mfr, vids]) => (
         <div key={mfr} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <span style={sectionLabel}>{mfr}</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(300px, 100%), 1fr))', gap: 16 }}>
             {vids.map(v => <VideoCard key={v.videoId} v={v} t={t} />)}
           </div>
         </div>
@@ -122,12 +122,12 @@ export const InstallPage: React.FC<{ app: HpApp }> = ({ app }) => {
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <div data-tour="install" style={{ background: '#f5f5f7', padding: '44px 48px 36px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        <span style={{ fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px' }}>{t.install.title}</span>
+      <div data-tour="install" style={{ background: '#f5f5f7', padding: 'clamp(20px, 4vw, 44px) clamp(16px, 4vw, 48px) clamp(18px, 3vw, 36px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <span style={{ fontFamily: FD, fontSize: 'clamp(25px, 4vw, 34px)', fontWeight: 600, letterSpacing: '-0.374px' }}>{t.install.title}</span>
         <span style={{ fontSize: 17, color: '#7a7a7a', letterSpacing: '-0.374px', maxWidth: 680 }}>{t.install.sub}</span>
         <span style={{ fontSize: 12, color: '#7a7a7a', maxWidth: 680, lineHeight: 1.5 }}>{t.install.criteria}</span>
       </div>
-      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 48px', display: 'flex', flexDirection: 'column', gap: 30, boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '24px clamp(16px, 4vw, 48px) 48px', display: 'flex', flexDirection: 'column', gap: 30, boxSizing: 'border-box' }}>
         {local.length > 0 && <Grid videos={local} t={t} />}
         {eu.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, borderTop: local.length ? '1px solid #ececf0' : undefined, paddingTop: local.length ? 26 : 0 }}>

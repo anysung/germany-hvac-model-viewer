@@ -32,9 +32,12 @@ import { showInstallUi, canPromptInstall, isIos, promptInstall, onInstallStateCh
 import { shortDate } from '../model';
 import { NEWS_SERIF, localizedNews, newsEyebrow, articleDeepLink, emailArticleHref, makeArticlePdf } from '../newsModel';
 import { NewsGallery, galleryOf } from '../NewsGallery';
+import { TrendsPage } from '../pages/TrendsPage';
+import { InstallPage } from '../pages/InstallPage';
+import { SubTabs, recallSubTab } from '../ui';
 import { printPdfViaShareSheet } from '../pdf/deliverPdf';
 
-type MTab = Extract<HpPage, 'find' | 'products' | 'bafa' | 'datasheet' | 'news' | 'account' | 'label'> | 'guide';
+type MTab = Extract<HpPage, 'find' | 'products' | 'bafa' | 'datasheet' | 'news' | 'account' | 'label' | 'trends' | 'install'> | 'guide';
 
 /* ── Tiny tab icons (stroke style matching the desktop icon set) ─────────── */
 
@@ -53,6 +56,10 @@ const ICONS: Record<MTab, string> = {
   datasheet: 'M6 2h9l5 5v15H6zM15 2v5h5M9 12h8M9 16h8M9 8h3',
   // EU energy label: tag outline with the class arrow
   label: 'M4 4h10l6 8-6 8H4zM8 9v6M8 12h5',
+  // Market & Trends: rising chart
+  trends: 'M4 20V10M10 20V4M16 20v-7M20 20H2M20 8l-4-4-3 3-3-3',
+  // Installation videos: play button in a frame
+  install: 'M3 5h18v14H3zM10 9l5 3-5 3z',
 };
 
 /* ── PWA install (mobile browsers never volunteer the prompt themselves) ── */
@@ -121,6 +128,12 @@ const MobileFunding: React.FC<{ app: HpApp; goGuide: (tab: 'home' | 'pro') => vo
   const card: React.CSSProperties = { border: '1px solid #e0e0e0', borderRadius: 14, padding: '15px 17px', display: 'flex', flexDirection: 'column', gap: 5, background: '#fff' };
   return (
     <div style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <SubTabs
+        group="funding"
+        tabs={[{ id: 'bafa', label: t.nav.bafa }, { id: 'guide', label: t.nav.guide }]}
+        active="bafa"
+        onSelect={id => app.go(id as HpPage)}
+      />
       <div data-tour="funding" style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
         <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.bafa.heroTitle}</span>
         <span style={{ fontSize: 13.5, color: '#7a7a7a', lineHeight: 1.5 }}>{t.bafa.heroSub}</span>
@@ -334,6 +347,12 @@ const MobileGuide: React.FC<{ app: HpApp }> = ({ app }) => {
   const checks = pro ? t.guide.checkPro : t.guide.checkHome;
   return (
     <div style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <SubTabs
+        group="funding"
+        tabs={[{ id: 'bafa', label: t.nav.bafa }, { id: 'guide', label: t.nav.guide }]}
+        active="guide"
+        onSelect={id => app.go(id as HpPage)}
+      />
       <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.guide.heroTitle}</span>
       <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', fontSize: 13, width: 'fit-content' }}>
         {([['home', t.guide.tabHome], ['pro', t.guide.tabPro]] as const).map(([id, label]) => (
@@ -514,6 +533,12 @@ const MobileNews: React.FC<{ app: HpApp }> = ({ app }) => {
 
   return (
     <div data-tour="news" style={{ padding: '20px 16px 24px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <SubTabs
+        group="newsTrends"
+        tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
+        active="news"
+        onSelect={id => app.go(id as HpPage)}
+      />
       <span style={{ fontFamily: FD, fontSize: 25, fontWeight: 600, letterSpacing: '-0.3px' }}>{t.news.title}</span>
       <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{t.news.pill}</span>
       <input
@@ -846,14 +871,27 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
   // not a destination you browse to, so it left the tab bar (and deliberately
   // does NOT appear in the header menu either). Pages the footer cannot show
   // (Funding, EU energy label) live in the header dropdown menu instead.
-  const MOBILE_TABS: MTab[] = ['find', 'products', 'news', 'guide', 'account'];
-  const MENU_PAGES: MTab[] = ['bafa', 'label'];
-  const VALID_PAGES = ['find', 'products', 'datasheet', 'guide', 'bafa', 'news', 'account', 'label'];
+  /* Grouped IA, mirroring the desktop nav (2026-09-02): ONE funding tab
+     (policy + guide behind SubTabs, landing on the remembered one) and ONE
+     news tab (news + trends the same way). The freed slots put the EU label
+     into the header menu next to the new Installation page. */
+  const MOBILE_TABS: MTab[] = ['find', 'products', 'bafa', 'news', 'account'];
+  const MENU_PAGES: MTab[] = ['label', 'install'];
+  const VALID_PAGES = ['find', 'products', 'datasheet', 'guide', 'bafa', 'news', 'trends', 'install', 'account', 'label'];
   const page: MTab = VALID_PAGES.includes(app.page) ? (app.page as MTab) : 'find';
   const tabLabel: Record<MTab, string> = {
     find: t.m.tabSearch, products: t.products.title, datasheet: t.m.mdsTitle,
     bafa: t.m.tabFunding, news: t.nav.news, guide: t.nav.guide, account: t.nav.account,
-    label: t.nav.label,
+    label: t.nav.label, trends: t.nav.trends, install: t.nav.install,
+  };
+  /** A grouped tab lands on the sub-page the person used last (same memory the
+   *  desktop nav reads — localStorage survives shell switches). */
+  const groupGo = (id: MTab) => {
+    const groups: Record<string, HpPage[]> = { bafa: ['bafa', 'guide'], news: ['news', 'trends'] };
+    const pages = groups[id];
+    if (!pages) return app.go(id as HpPage);
+    const remembered = recallSubTab(id === 'bafa' ? 'funding' : 'newsTrends');
+    app.go((pages as string[]).includes(remembered ?? '') ? (remembered as HpPage) : pages[0]);
   };
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -880,8 +918,8 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
         <WavingFlag height={20} />
         {isTablet && (
           <div style={{ display: 'flex', gap: 3, fontSize: 13, marginLeft: 10, overflowX: 'auto' }}>
-            {(['find', 'products', 'label', 'bafa', 'guide', 'news'] as MTab[]).map(id => (
-              <span key={id} onClick={() => { app.go(id as HpPage); }} style={{ padding: '6px 12px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap', ...(page === id ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' } : { color: 'rgba(255,255,255,.65)' }) }}>
+            {(['find', 'products', 'label', 'bafa', 'news', 'install'] as MTab[]).map(id => (
+              <span key={id} onClick={() => { groupGo(id); }} style={{ padding: '6px 12px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap', ...((page === id || (id === 'bafa' && page === 'guide') || (id === 'news' && page === 'trends')) ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' } : { color: 'rgba(255,255,255,.65)' }) }}>
                 {tabLabel[id]}
               </span>
             ))}
@@ -960,6 +998,8 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
         {page === 'label' && <MobileLabel app={app} />}
         {page === 'guide' && <MobileGuide app={app} />}
         {page === 'news' && <MobileNews app={app} />}
+        {page === 'trends' && <TrendsPage app={app} />}
+        {page === 'install' && <InstallPage app={app} />}
         {page === 'account' && <MobileAccount app={app} />}
       </div>
 
@@ -972,9 +1012,9 @@ export const MobileApp: React.FC<{ app: HpApp; viewport: Viewport }> = ({ app, v
       {viewport === 'phone' && (
         <div style={{ flex: 'none', display: 'flex', background: 'rgba(255,255,255,.92)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderTop: '1px solid rgba(0,0,0,.1)', paddingBottom: 'env(safe-area-inset-bottom)', zIndex: 85, position: 'relative' }}>
           {MOBILE_TABS.map(id => {
-            const active = page === id || (id === 'guide' && page === 'bafa');
+            const active = page === id || (id === 'bafa' && page === 'guide') || (id === 'news' && page === 'trends');
             return (
-              <span key={id} onClick={() => { setDetailOpen(false); app.go(id as HpPage); }} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: '8px 0 7px', cursor: 'pointer' }}>
+              <span key={id} onClick={() => { setDetailOpen(false); groupGo(id); }} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: '8px 0 7px', cursor: 'pointer' }}>
                 <Ic d={ICONS[id]} active={active} />
                 <span style={{ fontSize: 10, fontWeight: active ? 600 : 400, color: active ? '#1d1d1f' : '#9a9aa0' }}>{tabLabel[id]}</span>
               </span>
