@@ -3,7 +3,7 @@ import * as XLSX from 'xlsx';
 import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
 import { sendMemberEmail, listMemberEmails, previewMemberEmail, type SentMemberEmail } from '../../services/memberMailService';
 import { MEMBER_EMAIL_TEMPLATES } from '../../config/memberEmailTemplates';
-import { TRIAL_FLOW_ENABLED } from '../../services/billingFnService';
+import { TRIAL_FLOW_ENABLED, adminFinalizeSignupFn } from '../../services/billingFnService';
 import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
 import { adminClearSessions } from '../../services/opsService';
 import { COUNTRY_PROFILES } from '../../config/countryProfiles';
@@ -100,6 +100,11 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
       'Subscription': u.subscription ? `${SUB_PLAN_NAMES[u.subscription.planCode]} (${u.subscription.status})` : '-',
       'Term': u.subscription?.billingTerm ? TERM_NAMES[u.subscription.billingTerm] : '-',
       'Period End': u.subscription?.currentPeriodEndsAt?.slice(0, 10) || '-',
+      'Trial Ends': (() => {
+        const t = u.trialEndsAt as { seconds?: number } | string | undefined;
+        const ms = t == null ? null : typeof t === 'string' ? Date.parse(t) : typeof t.seconds === 'number' ? t.seconds * 1000 : null;
+        return ms ? new Date(ms).toISOString().slice(0, 10) : '-';
+      })(),
       'Status': u.status || (u.isActive ? 'active' : 'disabled'),
       'Registered': u.registeredAt ? new Date(u.registeredAt).toLocaleDateString() : '',
     }));
@@ -111,7 +116,22 @@ export const MembersPage: React.FC<MembersPageProps> = ({ al, country, embedded 
 
   const handleAction = async (action: string, user: User) => {
     switch (action) {
-      case 'approve': await approveUser(user.id); break;
+      case 'approve':
+        if (TRIAL_FLOW_ENABLED) {
+          // The exception path runs the SAME server transaction as
+          // self-service (trial, registry, consent stamp) — and the server
+          // still refuses unverified email accounts. The old client-side
+          // approve could not touch the one-trial-per-email ledger.
+          try {
+            const r = await adminFinalizeSignupFn(user.id);
+            if (r.ok) alert(r.alreadyActive ? A.mbAlreadyActive : A.mbActivated(!!r.trial));
+            else if (r.error === 'email-not-verified') { alert(A.mbNotVerified); return; }
+            else { alert(A.mbActivateFailed(r.error ?? 'unknown')); return; }
+          } catch (e) { alert(A.mbActivateFailed(String((e as Error).message ?? e))); return; }
+        } else {
+          await approveUser(user.id);
+        }
+        break;
       case 'reject': if (confirm(`Reject ${user.email}?`)) await rejectUser(user.id); else return; break;
       case 'suspend': if (confirm(`Suspend ${user.email}?`)) await suspendUser(user.id); else return; break;
       case 'disable': if (confirm(`Disable ${user.email}? They will be blocked from logging in.`)) await disableUser(user.id); else return; break;

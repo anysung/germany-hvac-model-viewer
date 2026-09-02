@@ -60,6 +60,20 @@ export const SubBadge: React.FC<{ user: UserLike }> = ({ user }) => {
   // active marketing grant shows as "<plan> · active · free".
   const sub = effectiveSubscription(user as any);
   if (!sub) {
+    // Trial-flow accounts without a subscription still have a STATE worth
+    // showing: an open 7-day window, or one that has closed (checkout-only
+    // access). '—' hid exactly the number an operator asks first.
+    const t = (user as { trialEndsAt?: { toMillis?: () => number; seconds?: number } | string }).trialEndsAt;
+    const ms = t == null ? null
+      : typeof t === 'string' ? Date.parse(t)
+        : typeof t.toMillis === 'function' ? t.toMillis()
+          : typeof t.seconds === 'number' ? t.seconds * 1000 : null;
+    if (ms != null && Number.isFinite(ms)) {
+      const daysLeft = Math.ceil((ms - Date.now()) / 86_400_000);
+      return daysLeft >= 0
+        ? <span className="px-2 py-0.5 text-xs font-bold rounded-full whitespace-nowrap border bg-blue-100 text-blue-800 border-blue-200">Trial · D-{daysLeft}</span>
+        : <span className="px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap border bg-gray-100 text-gray-500 border-gray-200">Trial ended</span>;
+    }
     return <span className="px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap border bg-gray-50 text-gray-400 border-gray-200">—</span>;
   }
   const cls = SUB_STATUS_COLORS[sub.status] ?? SUB_STATUS_COLORS.expired;

@@ -90,12 +90,16 @@ const EN = {
    *  'pending' only until the USER confirms their email, after which the
    *  server activates it and starts the trial. Saying "awaiting approval"
    *  here sent the owner looking for a switch that does not exist. */
-  mbVerifyNotice: (n: number) => `${n} account${n > 1 ? 's' : ''} not yet email-verified. `
+  mbVerifyNotice: (n: number) => `${n} account${n > 1 ? 's' : ''} awaiting activation — usually the member simply hasn't clicked the verification mail yet (self-resolves; nothing to do). If one lingers for hours WITH the person active, suspect a delivery or technical failure on our side: "Activate" runs the full server activation (trial + registry) and still refuses unverified email accounts. `
     + `They activate automatically once the user confirms the address — no approval needed. `
     + `Approve manually only to override (e.g. the verification mail never arrived).`,
   mbExport: 'Export Excel',
-  mbApprove: '✓ Approve',
-  mbReject: '✗ Reject',
+  mbApprove: '✓ Activate (start trial)',
+  mbReject: '✗ Block',
+  mbActivated: (trial: boolean): string => trial ? 'Activated — 7-day trial started.' : 'Activated (already had a trial — access window closed, checkout available).',
+  mbAlreadyActive: 'Already active — nothing to do.',
+  mbNotVerified: 'Refused by the server: this email account has not verified its address. Manual activation is for delivery failures on our side, not for skipping verification. Ask the member to use the resend button on the sign-in screen.',
+  mbActivateFailed: (e: string): string => `Activation failed: ${e}`,
   mbSuspend: 'Suspend',
   mbDisable: 'Disable',
   mbReactivate: 'Reactivate',
@@ -361,12 +365,16 @@ const KO: typeof EN = {
   mbAllTypes: '모든 회사 유형',
   mbAllMarkets: '모든 마켓',
   mbPendingNotice: (n: number) => `승인 대기 중인 가입 신청 ${n}건이 있습니다.`,
-  mbVerifyNotice: (n: number) => `이메일 인증을 마치지 않은 계정 ${n}건. `
+  mbVerifyNotice: (n: number) => `활성화 대기 계정 ${n}건 — 대개는 회원이 아직 인증 메일을 클릭하지 않은 상태이며 스스로 해결됩니다(조치 불필요). 회원이 활동 중인데 수 시간째 대기라면 우리 쪽 전달·기술 장애를 의심하세요: "활성화"는 서버의 정식 활성화(체험+원장)를 수행하며, 미인증 이메일 계정은 여전히 거부됩니다. `
     + `사용자가 인증하면 자동으로 활성화되며 승인은 필요하지 않습니다. `
     + `수동 승인은 예외 처리용입니다(예: 인증 메일이 도착하지 않은 경우).`,
   mbExport: '엑셀 내보내기',
-  mbApprove: '✓ 승인',
-  mbReject: '✗ 거절',
+  mbApprove: '✓ 활성화(체험 시작)',
+  mbReject: '✗ 차단',
+  mbActivated: (trial: boolean): string => trial ? '활성화 완료 — 7일 체험이 시작되었습니다.' : '활성화 완료 (이미 체험을 사용한 이메일 — 접근 창은 닫힌 상태로 활성화, 결제는 가능).',
+  mbAlreadyActive: '이미 활성 상태입니다.',
+  mbNotVerified: '서버가 거부했습니다: 이 이메일 계정은 아직 주소 인증을 마치지 않았습니다. 수동 활성화는 우리 쪽 전달 장애를 구제하는 용도이며 인증 생략용이 아닙니다. 회원에게 로그인 화면의 재발송 버튼을 안내하세요.',
+  mbActivateFailed: (e: string): string => `활성화 실패: ${e}`,
   mbSuspend: '정지',
   mbDisable: '비활성화',
   mbReactivate: '재활성화',

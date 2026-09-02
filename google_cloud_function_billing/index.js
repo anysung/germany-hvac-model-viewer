@@ -132,6 +132,14 @@ async function verifyAdmin(req) {
 const DEFAULT_ORIGINS = [
   'https://heatpumpdb.de', 'https://www.heatpumpdb.de',
   'https://heatpumpdb.pl', 'https://www.heatpumpdb.pl',
+  // The 2026-09-01 lesson: France's custom domain came online and its first
+  // Google-SSO signup was stuck pending for five hours — the preflight
+  // returned 204 with no CORS grant, so the browser never let finalizeSignup
+  // through. EVERY owned market domain is listed ahead of its DNS going live.
+  'https://heatpumpdb.fr', 'https://www.heatpumpdb.fr',
+  'https://heatpumpdb.uk', 'https://www.heatpumpdb.uk',
+  'https://heatpumpdb.it', 'https://www.heatpumpdb.it',
+  'https://heatpumpdb.eu', 'https://www.heatpumpdb.eu',
   'https://gen-lang-client-0324244302.web.app', 'https://gen-lang-client-0324244302.firebaseapp.com',
   'https://heatpumpdb-uk.web.app', 'https://heatpumpdb-fr.web.app',
   'https://heatpumpdb-pl.web.app', 'https://heatpumpdb-it.web.app',
@@ -228,10 +236,25 @@ async function finalizeSignup(req, res) {
     return sendErr(res, 400, 'consent-required');
   }
 
+  const result = await activateAccount(uid, email, consent);
+
+  if (result.error) return res.status(200).json({ ok: false, error: result.error });
+  return res.status(200).json(result);
+}
+
+/**
+ * The ONE activation transaction — self-service (/finalizeSignup) and the
+ * admin exception path (/adminFinalizeSignup) both run exactly this, so a
+ * manually activated account gets the same trial, the same registry entry and
+ * the same server-stamped consent as one that activated itself. The old admin
+ * "approve" button only flipped Firestore flags: the account worked for seven
+ * days and then hit entitlement rules with no window and no history.
+ */
+async function activateAccount(uid, email, consent) {
   const userRef = db.collection('users').doc(uid);
   const regRef = db.collection('emailRegistry').doc(email);
 
-  const result = await db.runTransaction(async (tx) => {
+  return db.runTransaction(async (tx) => {
     const [userSnap, regSnap] = await Promise.all([tx.get(userRef), tx.get(regRef)]);
     if (!userSnap.exists) return { error: 'no-profile' };
     const user = userSnap.data();
@@ -300,7 +323,55 @@ async function finalizeSignup(req, res) {
     tx.update(userRef, patch);
     return { ok: true, activated: true, trial: grantTrial, trialDays: TRIAL_DAYS };
   });
+}
 
+// ---------------------------------------------------------------------------
+// /adminFinalizeSignup — the exception path, done RIGHT.
+//
+// Body: { uid }
+// For an account stuck in pending (a CORS gap, a lost verification mail, a
+// client crash mid-flow), an admin activates it through the SAME transaction
+// as self-service. The server still decides: an email-provider account whose
+// address the Auth record has not verified is refused — manual activation is
+// for delivery problems on OUR side, never for skipping verification.
+// Consent versions are re-used from the profile (the person accepted them at
+// registration; the admin is not consenting on their behalf).
+// ---------------------------------------------------------------------------
+async function adminFinalizeSignup(req, res) {
+  const admin_ = await verifyAdmin(req);
+  if (!admin_) return sendErr(res, 403, 'admin-only');
+  const uid = String((req.body || {}).uid || '');
+  if (!/^[A-Za-z0-9_-]{6,128}$/.test(uid)) return sendErr(res, 400, 'bad-uid');
+
+  const authUser = await admin.auth().getUser(uid).catch(() => null);
+  if (!authUser) return sendErr(res, 404, 'no-auth-user');
+  const email = emailKey(authUser.email);
+  if (!email) return sendErr(res, 400, 'no-email');
+
+  const providers = (authUser.providerData || []).map(p => p.providerId);
+  const social = providers.includes('google.com') || providers.includes('apple.com');
+  if (!social && !authUser.emailVerified) {
+    return res.status(200).json({ ok: false, error: 'email-not-verified' });
+  }
+
+  const profSnap = await db.collection('users').doc(uid).get();
+  if (!profSnap.exists) return sendErr(res, 404, 'no-profile');
+  const prof = profSnap.data();
+  const consent = {
+    termsVersion: String(prof.termsVersion || ''),
+    privacyVersion: String(prof.privacyVersion || ''),
+    dataUseVersion: String(prof.dataUseConsentVersion || ''),
+  };
+  if (!consent.termsVersion || !consent.dataUseVersion) {
+    return res.status(200).json({ ok: false, error: 'consent-missing' });
+  }
+
+  const result = await activateAccount(uid, email, consent);
+  await db.collection('opsAuditLog').add({
+    action: 'adminFinalizeSignup', targetUid: uid, targetEmail: email,
+    result: result.error ?? (result.activated ? 'activated' : 'already-active'),
+    trial: !!result.trial, by: admin_.email || admin_.uid, at: nowIso(),
+  });
   if (result.error) return res.status(200).json({ ok: false, error: result.error });
   return res.status(200).json(result);
 }
@@ -2087,6 +2158,7 @@ functions.http('accountBilling', async (req, res) => {
     if (req.method !== 'POST') return sendErr(res, 405, 'method-not-allowed');
     if (path.endsWith('/sendVerificationEmail')) return await sendVerificationEmail(req, res);
     if (path.endsWith('/finalizeSignup')) return await finalizeSignup(req, res);
+    if (path.endsWith('/adminFinalizeSignup')) return await adminFinalizeSignup(req, res);
     if (path.endsWith('/createTeamOrg')) return await createTeamOrg(req, res);
     if (path.endsWith('/deleteAccount')) return await deleteAccount(req, res);
     if (path.endsWith('/paddleWebhook')) return await paddleWebhook(req, res);

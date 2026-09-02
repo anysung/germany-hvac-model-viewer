@@ -82,6 +82,17 @@ export const archiveDiscountFn = (discountId: string): Promise<{ ok: boolean; er
 export const sendVerificationEmailFn = (lang: string): Promise<{ ok: boolean; error?: string; retryAfter?: number }> =>
   call('sendVerificationEmail', { lang });
 
+/**
+ * ADMIN: activate a stuck pending account through the SAME server transaction
+ * as self-service — trial grant, email registry, server consent stamp. The
+ * server still refuses an email account whose address is unverified: manual
+ * activation exists for delivery failures on OUR side (the 2026-09-01 case: a
+ * CORS gap blocked France's first SSO signup from finalizing for five hours),
+ * never for skipping verification.
+ */
+export const adminFinalizeSignupFn = (uid: string): Promise<FinalizeResult> =>
+  call<FinalizeResult>('adminFinalizeSignup', { uid });
+
 /** Activate the account (server checks Auth email verification + consents). */
 export const finalizeSignupFn = (): Promise<FinalizeResult> =>
   call<FinalizeResult>('finalizeSignup', {

@@ -46,7 +46,10 @@ export function hasIndustryInsightAccess(plan: PlanCode): boolean {
 export type UserStatus = 'pending' | 'active' | 'rejected' | 'suspended' | 'disabled' | 'deletion_requested' | 'deleted' | 'archived';
 
 export const USER_STATUS_OPTIONS: { value: UserStatus; label: string; color: string }[] = [
-  { value: 'pending',            label: 'Pending',                   color: 'yellow' },
+  // Trial flow: 'pending' means the account has not FINALIZED — normally
+  // awaiting email verification, occasionally a finalize that failed (the
+  // 2026-09-01 CORS incident). Never an application awaiting judgement.
+  { value: 'pending',            label: 'Awaiting verification',     color: 'yellow' },
   { value: 'active',             label: 'Active',                         color: 'green' },
   { value: 'rejected',           label: 'Rejected',                   color: 'red' },
   { value: 'suspended',          label: 'Suspended',                   color: 'orange' },
