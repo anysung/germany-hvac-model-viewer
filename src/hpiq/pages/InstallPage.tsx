@@ -29,6 +29,7 @@ import store from '../../../data_sources/install_videos/videos.json';
 type Video = {
   manufacturer: string; family: string; videoId: string; title: string;
   channel: string; audio: string; subs: string | null; scope: string; segment?: string;
+  tier?: 'official' | 'third_party'; uploadYear?: number; captions?: string[];
 };
 
 const AUDIO_NAME: Record<string, string> = { de: 'Deutsch', en: 'English', fr: 'Français', pl: 'Polski', it: 'Italiano' };
@@ -76,7 +77,18 @@ const VideoCard: React.FC<{ v: Video; t: ReturnType<typeof tr> }> = ({ v, t }) =
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
           <span style={chip}>{AUDIO_NAME[v.audio] ?? v.audio.toUpperCase()}</span>
           <span style={chip}>{(t.install.scope as Record<string, string>)[v.scope] ?? v.scope}</span>
+          {/* The refrigerant transition makes age part of the meaning — the
+              year is always visible, exactly so a 2011 install reads as one. */}
+          {v.uploadYear != null && <span style={chip}>{v.uploadYear}</span>}
+          {/* CC badge ONLY for a detected creator-provided track (never
+              auto-translate — house rule). */}
+          {(v.captions ?? []).filter(c => c !== v.audio).map(c => (
+            <span key={c} style={chip}>CC · {AUDIO_NAME[c] ?? c.toUpperCase()}</span>
+          ))}
           {v.segment === 'commercial' && <span style={chip}>{t.products.commercial}</span>}
+          {v.tier === 'third_party' && (
+            <span style={{ ...chip, background: '#f0f0f2', color: '#6e6e73', borderColor: '#d8d8dd' }}>{t.install.thirdBadge}</span>
+          )}
         </div>
         <a
           href={`https://www.youtube.com/watch?v=${v.videoId}`}
@@ -114,11 +126,13 @@ export const InstallPage: React.FC<{ app: HpApp }> = ({ app }) => {
   // The monthly health check stamps entries whose video has gone away; they
   // stay in the store (editorial removal is a human decision) but never render.
   const alive = (l: (Video & { unavailableSince?: string })[] = []) => l.filter(v => !v.unavailableSince);
-  const local = alive(markets[ACTIVE_COUNTRY.code]);
+  const mine = alive(markets[ACTIVE_COUNTRY.code]);
+  const local = mine.filter(v => v.tier !== 'third_party');
+  const third = mine.filter(v => v.tier === 'third_party');
   // GB's market list is already English — the EU section would duplicate its
   // sourcing tier, so it still renders (extra manufacturers), minus dupes.
-  const seen = new Set(local.map(v => v.videoId));
-  const eu = alive(markets.EU).filter(v => !seen.has(v.videoId));
+  const seen = new Set(mine.map(v => v.videoId));
+  const eu = alive(markets.EU).filter(v => !seen.has(v.videoId) && v.tier !== 'third_party');
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -133,6 +147,13 @@ export const InstallPage: React.FC<{ app: HpApp }> = ({ app }) => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 14, borderTop: local.length ? '1px solid #ececf0' : undefined, paddingTop: local.length ? 26 : 0 }}>
             <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600 }}>{t.install.euTitle}</span>
             <Grid videos={eu} t={t} />
+          </div>
+        )}
+        {third.length > 0 && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, borderTop: '1px solid #ececf0', paddingTop: 26 }} data-testid="third-party-videos">
+            <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600 }}>{t.install.thirdTitle}</span>
+            <span style={{ fontSize: 12, color: '#7a7a7a', lineHeight: 1.55, maxWidth: 760 }}>{t.install.thirdNote}</span>
+            <div style={{ marginTop: 6 }}><Grid videos={third} t={t} /></div>
           </div>
         )}
         {/* The professional disclaimer — the one paragraph that must never be

@@ -278,10 +278,15 @@ assumption that gitignored means disposable — keep at least the newest seed.
   (`searchCapabilities.localListingFilter`). Tests: `tests/segmentation.unit.mjs`,
   `tests/products-segmentation.e2e.mjs` (fails if BAFA appears on GB/FR pages).
 - **Installation videos** (`data_sources/install_videos/videos.json` → in-app
-  Installation page, nav id `install`): OFFICIAL manufacturer channels ONLY —
-  third-party installer videos are never admitted without a written vetting
-  policy (a listing reads as vetted by us; refrigerant work is F-gas-certified
-  territory). Sourced market-share-leaders-first per market; DISPLAYED
+  Installation page, nav id `install`): THREE TIERS per
+  `data_sources/install_videos/POLICY.md` (owner 2026-09-03) — A: manufacturer
+  official market-language; B: manufacturer official English; C: qualified
+  third parties (associations, trade media, identifiable professional
+  installers) admitted ONLY through the written per-video gate, rendered in a
+  SEPARATE section with a grey third-party badge + disclaimer, removal on
+  request. Upload year always on the card (refrigerant-era honesty); CC badge
+  only for DETECTED creator caption tracks (`scripts/enrich-install-videos.mjs`)
+  — auto-translate is never surfaced as subtitle support. Sourced market-share-leaders-first per market; DISPLAYED
   alphabetically (ranking = endorsement). Click-to-load youtube-nocookie
   embeds (no YouTube cookies pre-click); frames never captured or re-hosted.
   Never conflate creator-provided subtitles with YouTube auto-translate.

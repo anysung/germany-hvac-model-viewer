@@ -23,7 +23,10 @@
         "channel": "STIEBEL ELTRON",
         "audio": "de",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2017,
+        "captions": []
       },
       {
         "manufacturer": "STIEBEL ELTRON",
@@ -33,7 +36,10 @@
         "channel": "STIEBEL ELTRON",
         "audio": "de",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2022,
+        "captions": []
       },
       {
         "manufacturer": "Vaillant",
@@ -43,7 +49,10 @@
         "channel": "Vaillant Schweiz",
         "audio": "de",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
       },
       {
         "manufacturer": "Vaillant",
@@ -53,7 +62,10 @@
         "channel": "Vaillant Schweiz",
         "audio": "de",
         "subs": null,
-        "scope": "commissioning"
+        "scope": "commissioning",
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
       },
       {
         "manufacturer": "Panasonic",
@@ -63,7 +75,72 @@
         "channel": "Panasonic Heating & Cooling Solutions Europe",
         "audio": "de",
         "subs": null,
-        "scope": "planning"
+        "scope": "planning",
+        "tier": "official",
+        "uploadYear": 2021,
+        "captions": []
+      },
+      {
+        "manufacturer": "STIEBEL ELTRON",
+        "family": "WPL ACS classic",
+        "videoId": "Z92qVHnRyjw",
+        "title": "Installation WPL ACS classic",
+        "channel": "STIEBEL ELTRON",
+        "audio": "de",
+        "scope": "install",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2017,
+        "captions": []
+      },
+      {
+        "manufacturer": "STIEBEL ELTRON",
+        "family": "WPM (Wärmepumpenmanager)",
+        "videoId": "eChJ9yLH5xc",
+        "title": "Installation Wärmepumpenmanager WPM",
+        "channel": "STIEBEL ELTRON",
+        "audio": "de",
+        "scope": "commissioning",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2017,
+        "captions": []
+      },
+      {
+        "manufacturer": "Viessmann",
+        "family": "Vitocal 250-A",
+        "videoId": "SroKYJJq-Jk",
+        "title": "Viessmann Vitocal 250 A — Montage (Fachbetrieb)",
+        "channel": "Schwanitz GmbH",
+        "audio": "de",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2023,
+        "captions": []
+      },
+      {
+        "manufacturer": "STIEBEL ELTRON",
+        "family": "WPL 15-25 AC",
+        "videoId": "phwy8BA6-8U",
+        "title": "Montage: Stiebel Eltron WPL 15-25 AC (SHK-TV)",
+        "channel": "SHK-TV",
+        "audio": "de",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2019,
+        "captions": []
       }
     ],
     "GB": [
@@ -75,7 +152,10 @@
         "channel": "VaillantUK",
         "audio": "en",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
       },
       {
         "manufacturer": "Mitsubishi Electric",
@@ -85,7 +165,10 @@
         "channel": "Mitsubishi Electric Residential UK",
         "audio": "en",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2025,
+        "captions": []
       },
       {
         "manufacturer": "Mitsubishi Electric",
@@ -96,7 +179,72 @@
         "audio": "en",
         "subs": null,
         "scope": "install",
-        "segment": "commercial"
+        "segment": "commercial",
+        "tier": "official",
+        "uploadYear": 2024,
+        "captions": []
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus (hydraulic station)",
+        "videoId": "-kPdh2UxjTc",
+        "title": "aroTHERM plus: how to install the hydraulic station",
+        "channel": "VaillantUK",
+        "audio": "en",
+        "scope": "install",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus (uniTOWER)",
+        "videoId": "5h-Ap_qKmes",
+        "title": "aroTHERM plus: commissioning the uniTOWER",
+        "channel": "VaillantUK",
+        "audio": "en",
+        "scope": "commissioning",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus",
+        "videoId": "UX5KxXtZX4M",
+        "title": "Vaillant aroTHERM Plus — full installation (installer)",
+        "channel": "Greenhome Heating Ltd",
+        "audio": "en",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2026,
+        "captions": []
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus 10 kW",
+        "videoId": "7Ml_xOJsLTo",
+        "title": "Vaillant Arotherm Plus 10kW installation guide (installer)",
+        "channel": "Urban Plumbers",
+        "audio": "en",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2025,
+        "captions": []
       }
     ],
     "FR": [
@@ -108,7 +256,10 @@
         "channel": "Daikin France",
         "audio": "fr",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2021,
+        "captions": []
       },
       {
         "manufacturer": "Mitsubishi Electric",
@@ -118,7 +269,10 @@
         "channel": "Mitsubishi Electric France Chauffage et Climatisation",
         "audio": "fr",
         "subs": null,
-        "scope": "commissioning"
+        "scope": "commissioning",
+        "tier": "official",
+        "uploadYear": 2024,
+        "captions": []
       },
       {
         "manufacturer": "Atlantic",
@@ -128,7 +282,59 @@
         "channel": "Atlantic France",
         "audio": "fr",
         "subs": null,
-        "scope": "accessory"
+        "scope": "accessory",
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (loi d'eau)",
+        "videoId": "76K-wBNJZ3o",
+        "title": "Tuto PAC Aquarea — la loi d'eau pour un système une zone",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "fr",
+        "scope": "commissioning",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
+      },
+      {
+        "manufacturer": "Daikin",
+        "family": "Altherma 3 M",
+        "videoId": "AmDiVvAYjx8",
+        "title": "Comment installer une PAC air-eau Daikin Altherma 3M ? (distributeur)",
+        "channel": "Climshop .com",
+        "audio": "fr",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2024,
+        "captions": []
+      },
+      {
+        "manufacturer": "Mitsubishi Electric",
+        "family": "Ecodan",
+        "videoId": "HaesNhe4668",
+        "title": "Installation PAC air/eau Mitsubishi Ecodan (installateur)",
+        "channel": "AD PLUS CONFORT",
+        "audio": "fr",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2021,
+        "captions": []
       }
     ],
     "PL": [
@@ -140,7 +346,10 @@
         "channel": "Vaillant Polska",
         "audio": "pl",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
       },
       {
         "manufacturer": "Vaillant",
@@ -150,7 +359,10 @@
         "channel": "Vaillant Polska",
         "audio": "pl",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
       },
       {
         "manufacturer": "Vaillant",
@@ -160,7 +372,10 @@
         "channel": "Vaillant Polska",
         "audio": "pl",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2022,
+        "captions": []
       },
       {
         "manufacturer": "Viessmann",
@@ -170,7 +385,10 @@
         "channel": "Viessmann Climate Solutions PL",
         "audio": "pl",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2011,
+        "captions": []
       },
       {
         "manufacturer": "Panasonic",
@@ -180,7 +398,28 @@
         "channel": "Pompy Ciepła Panasonic Aquarea",
         "audio": "pl",
         "subs": null,
-        "scope": "training"
+        "scope": "training",
+        "tier": "official",
+        "uploadYear": 2026,
+        "captions": []
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea seria K",
+        "videoId": "4AH_DVNSs58",
+        "title": "Panasonic Aquarea seria K — instalacja bez bufora (instalator)",
+        "channel": "Hydraulik Kraków",
+        "audio": "pl",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2024,
+        "captions": []
       }
     ],
     "IT": [
@@ -192,7 +431,10 @@
         "channel": "Vaillant Italia",
         "audio": "it",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2021,
+        "captions": []
       },
       {
         "manufacturer": "Daikin",
@@ -202,7 +444,10 @@
         "channel": "Daikin Air Conditioning Italy",
         "audio": "it",
         "subs": null,
-        "scope": "commissioning"
+        "scope": "commissioning",
+        "tier": "official",
+        "uploadYear": 2023,
+        "captions": []
       },
       {
         "manufacturer": "Panasonic",
@@ -212,7 +457,10 @@
         "channel": "Panasonic Heating & Cooling Solutions Europe",
         "audio": "it",
         "subs": null,
-        "scope": "accessory"
+        "scope": "accessory",
+        "tier": "official",
+        "uploadYear": 2022,
+        "captions": []
       },
       {
         "manufacturer": "Viessmann",
@@ -222,7 +470,74 @@
         "channel": "Viessmann Climate Solutions IT",
         "audio": "it",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2012,
+        "captions": [
+          "it"
+        ]
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM split (unità esterna)",
+        "videoId": "6c-SxJ0uvs8",
+        "title": "Installazione dell'unità esterna — aroTHERM split",
+        "channel": "Vaillant Italia",
+        "audio": "it",
+        "scope": "install",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM split R410A",
+        "videoId": "qpN-VzfL5u4",
+        "title": "Pompa di calore aroTHERM split R410A: come installare",
+        "channel": "Vaillant Italia",
+        "audio": "it",
+        "scope": "install",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2018,
+        "captions": []
+      },
+      {
+        "manufacturer": "Ariston",
+        "family": "Nimbus Monoblocco",
+        "videoId": "BwJe0_cjxxo",
+        "title": "Pompa di calore Ariston Nimbus Monoblocco idronico (installatore)",
+        "channel": "termoidraulicamica",
+        "audio": "it",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2024,
+        "captions": []
+      },
+      {
+        "manufacturer": "Ariston",
+        "family": "Nimbus Split",
+        "videoId": "_RLV83vATE0",
+        "title": "Pompa di calore Ariston Nimbus Split (installatore)",
+        "channel": "termoidraulicamica",
+        "audio": "it",
+        "scope": "install",
+        "subs": null,
+        "tier": "third_party",
+        "review": {
+          "at": "2026-09-03",
+          "by": "claude-code+owner-policy",
+          "note": "channel identity + professional context + embeddability verified; era recorded"
+        },
+        "uploadYear": 2024,
+        "captions": []
       }
     ],
     "EU": [
@@ -234,7 +549,10 @@
         "channel": "DaikinEurope",
         "audio": "en",
         "subs": null,
-        "scope": "commissioning"
+        "scope": "commissioning",
+        "tier": "official",
+        "uploadYear": 2019,
+        "captions": []
       },
       {
         "manufacturer": "Panasonic",
@@ -244,7 +562,10 @@
         "channel": "Panasonic Heating & Cooling Solutions Europe",
         "audio": "en",
         "subs": null,
-        "scope": "commissioning"
+        "scope": "commissioning",
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
       },
       {
         "manufacturer": "Panasonic",
@@ -254,7 +575,10 @@
         "channel": "Panasonic Heating & Cooling Solutions Europe",
         "audio": "en",
         "subs": null,
-        "scope": "accessory"
+        "scope": "accessory",
+        "tier": "official",
+        "uploadYear": 2021,
+        "captions": []
       },
       {
         "manufacturer": "LG",
@@ -264,7 +588,10 @@
         "channel": "LG Global",
         "audio": "en",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2024,
+        "captions": []
       },
       {
         "manufacturer": "LG",
@@ -274,7 +601,10 @@
         "channel": "LG HVAC Solution Europe",
         "audio": "en",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2024,
+        "captions": []
       },
       {
         "manufacturer": "Daikin",
@@ -284,7 +614,36 @@
         "channel": "DaikinEurope",
         "audio": "en",
         "subs": null,
-        "scope": "install"
+        "scope": "install",
+        "tier": "official",
+        "uploadYear": 2021,
+        "captions": []
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (ground stand)",
+        "videoId": "xI5GB4017YA",
+        "title": "Aquarea — A Guide to Mounting Groundstand System",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "en",
+        "scope": "install",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea Split (quickstart)",
+        "videoId": "yAmi1mlgfTI",
+        "title": "How to Perform a Quickstart on Panasonic's Aquarea Split",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "en",
+        "scope": "commissioning",
+        "subs": null,
+        "tier": "official",
+        "uploadYear": 2020,
+        "captions": []
       }
     ]
   }
