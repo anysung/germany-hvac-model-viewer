@@ -35,6 +35,7 @@ import { BafaPage } from './pages/BafaPage';
 import { GuidePage } from './pages/GuidePage';
 import { NewsPage } from './pages/NewsPage';
 import { TrendsPage } from './pages/TrendsPage';
+import { InstallPage } from './pages/InstallPage';
 import { AccountPage } from './pages/AccountPage';
 
 interface Props {
@@ -67,6 +68,7 @@ const NAV_GROUPS: { id: string; pages: NavPage[] }[] = [
   { id: 'datasheet', pages: ['datasheet'] },
   { id: 'funding', pages: ['bafa', 'guide'] },
   { id: 'newsTrends', pages: ['news', 'trends'] },
+  { id: 'install', pages: ['install'] },
 ];
 const groupOf = (page: HpPage) => NAV_GROUPS.find(g => (g.pages as HpPage[]).includes(page));
 /** Where a group's nav entry lands: the remembered sub-tab, else the first page. */
@@ -652,6 +654,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
       {page === 'guide' && <GuidePage app={app} />}
       {page === 'news' && <NewsPage app={app} />}
       {page === 'trends' && <TrendsPage app={app} />}
+      {page === 'install' && <InstallPage app={app} />}
       {page === 'account' && <AccountPage app={app} />}
 
       {/* ============ Toast ============ */}

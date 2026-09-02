@@ -1,0 +1,211 @@
+{
+  "_readme": [
+    "Manufacturer installation videos — the committed review point (owner, 2026-09-02).",
+    "RULES: OFFICIAL manufacturer channels only (priority 1: market-language official;",
+    "priority 3: English official). Third-party installer videos are NOT admitted",
+    "without a written vetting policy — a listed video reads as vetted by us, and",
+    "installation involves electrical work and F-gas-certified refrigerant handling.",
+    "Sourcing priority follows MARKET SHARE / brand power per market, not our",
+    "catalogue counts. Every entry was verified via YouTube oEmbed (exists, embeddable,",
+    "channel name) on verifiedAt. scripts/verify-install-videos.mjs re-checks monthly.",
+    "audio: video's spoken language. subs: 'official-<lang>' ONLY when a creator-",
+    "provided track was confirmed; never conflate with YouTube auto-translate.",
+    "scope: install | commissioning | accessory. EU = English videos shown on every market."
+  ],
+  "verifiedAt": "2026-09-02",
+  "markets": {
+    "DE": [
+      {
+        "manufacturer": "STIEBEL ELTRON",
+        "family": "WPL 15-25 AC",
+        "videoId": "ACz9B68wcxs",
+        "title": "Installation WPL 15-25 AC",
+        "channel": "STIEBEL ELTRON",
+        "audio": "de",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "STIEBEL ELTRON",
+        "family": "WPL-A Premium",
+        "videoId": "3QlDWe6TVc4",
+        "title": "Installation WPL-A Premium",
+        "channel": "STIEBEL ELTRON",
+        "audio": "de",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM VWL (Split)",
+        "videoId": "wrXalA-XaMQ",
+        "title": "aroTHERM VWL AS — Planung der Installation",
+        "channel": "Vaillant Schweiz",
+        "audio": "de",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus",
+        "videoId": "DRW85mvOlpw",
+        "title": "aroTHERM plus Hydraulikstation — Inbetriebnahme (VRC 700)",
+        "channel": "Vaillant Schweiz",
+        "audio": "de",
+        "subs": null,
+        "scope": "commissioning"
+      }
+    ],
+    "GB": [
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus",
+        "videoId": "jGDx1l5tUbI",
+        "title": "aroTHERM plus installation guide",
+        "channel": "VaillantUK",
+        "audio": "en",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Mitsubishi Electric",
+        "family": "Ecodan R290",
+        "videoId": "eapldGV2Ako",
+        "title": "Ecodan R290 and Pre-Plumbed Cylinder Installation",
+        "channel": "Mitsubishi Electric Residential UK",
+        "audio": "en",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Mitsubishi Electric",
+        "family": "Ecodan CAHV-R",
+        "videoId": "-Q6fqhsKYzk",
+        "title": "Technical Help: Unpacking and installing the Ecodan CAHV-R",
+        "channel": "Mitsubishi Electric - Living Environmental Systems (UK)",
+        "audio": "en",
+        "subs": null,
+        "scope": "install",
+        "segment": "commercial"
+      }
+    ],
+    "FR": [
+      {
+        "manufacturer": "Daikin",
+        "family": "Altherma 3 M",
+        "videoId": "l5G6APCtL1A",
+        "title": "Installation d'une pompe à chaleur Daikin Altherma 3 M",
+        "channel": "Daikin France",
+        "audio": "fr",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Mitsubishi Electric",
+        "family": "Ecodan (Génération E)",
+        "videoId": "jjyCkzihCUM",
+        "title": "Tuto Quick Start — démarrage rapide PAC air/eau Ecodan",
+        "channel": "Mitsubishi Electric France Chauffage et Climatisation",
+        "audio": "fr",
+        "subs": null,
+        "scope": "commissioning"
+      }
+    ],
+    "PL": [
+      {
+        "manufacturer": "Vaillant",
+        "family": "flexoTHERM",
+        "videoId": "DWu3TQTpK40",
+        "title": "Pompa ciepła flexoTHERM — montaż urządzenia",
+        "channel": "Vaillant Polska",
+        "audio": "pl",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM Split",
+        "videoId": "Em8DQmL1_LI",
+        "title": "Instalacja jednostki zewnętrznej — aroTHERM Split",
+        "channel": "Vaillant Polska",
+        "audio": "pl",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus",
+        "videoId": "CnBYgu_gA88",
+        "title": "Montaż wraz ze standardowymi podłączeniami — aroTHERM plus",
+        "channel": "Vaillant Polska",
+        "audio": "pl",
+        "subs": null,
+        "scope": "install"
+      }
+    ],
+    "IT": [
+      {
+        "manufacturer": "Vaillant",
+        "family": "aroTHERM plus",
+        "videoId": "-3wgqG52GUA",
+        "title": "Installazione della pompa di calore aroTHERM plus",
+        "channel": "Vaillant Italia",
+        "audio": "it",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Daikin",
+        "family": "Altherma 3 M",
+        "videoId": "_BqXml5Iy7k",
+        "title": "Altherma 3 M — Primo avviamento e configurazione (Monobloc R32)",
+        "channel": "Daikin Air Conditioning Italy",
+        "audio": "it",
+        "subs": null,
+        "scope": "commissioning"
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (Smart Cloud)",
+        "videoId": "LMxUMb3Fye8",
+        "title": "Come installare l'adattatore Aquarea Smart Cloud",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "it",
+        "subs": null,
+        "scope": "accessory"
+      }
+    ],
+    "EU": [
+      {
+        "manufacturer": "Daikin",
+        "family": "Altherma (e-Care)",
+        "videoId": "zFs9zEyq270",
+        "title": "Daikin e-Care Commissioning Assistant",
+        "channel": "DaikinEurope",
+        "audio": "en",
+        "subs": null,
+        "scope": "commissioning"
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea Split",
+        "videoId": "fEdGiMAPvjU",
+        "title": "How to Perform Installer Settings on Panasonic's Aquarea Split",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "en",
+        "subs": null,
+        "scope": "commissioning"
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (Smart Cloud)",
+        "videoId": "77R0wdq6Ueo",
+        "title": "How to install the Aquarea Smart Cloud adapter",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "en",
+        "subs": null,
+        "scope": "accessory"
+      }
+    ]
+  }
+}

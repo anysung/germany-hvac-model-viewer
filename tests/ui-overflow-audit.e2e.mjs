@@ -26,8 +26,8 @@ fs.mkdirSync(OUT, { recursive: true });
 
 // Grouped nav (2026-09-02): six entries; the two merged entries carry a
 // SubTabs switcher, and the audit visits BOTH tabs of each.
-const NAV_COUNT = 6;
-const PAGE_NAMES = ['find', 'products', 'label', 'datasheet', 'funding', 'newsTrends'];
+const NAV_COUNT = 7;
+const PAGE_NAMES = ['find', 'products', 'label', 'datasheet', 'funding', 'newsTrends', 'install'];
 const SECOND_TABS = { funding: 'subtab-guide', newsTrends: 'subtab-trends' };
 
 const AUDIT_JS = `(() => {

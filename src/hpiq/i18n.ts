@@ -37,6 +37,7 @@ const EN = {
     // keep their registry names as sub-tabs.
     funding: 'Subsidies',
     newsTrends: 'News & Trends',
+    install: 'Installation',
     account: 'Account',
     signOut: 'Sign out',
   },
@@ -65,9 +66,19 @@ const EN = {
   },
 
   /* Feature tour (onboarding invitation + 6 UVP steps — owner 2026-07-31). */
+
+  install: {
+    title: 'Installation videos.',
+    sub: 'Official manufacturer installation and commissioning videos, collected for installers — in this market\u2019s language where the manufacturer provides it, in English otherwise.',
+    criteria: 'Selection: official manufacturer channels only, sourced leading-brands-first for this market. Manufacturers are listed alphabetically — a listing is not a recommendation, and brands without official videos are simply not shown yet.',
+    euTitle: 'English videos — all markets',
+    watchOn: 'Watch on YouTube \u203a',
+    scope: { install: 'Installation', commissioning: 'Commissioning', accessory: 'Accessory' },
+    disclaimer: 'These are manufacturer materials for professionals. The installation manual of the exact model and local regulations always take precedence over any video; refrigerant work is reserved for certified personnel. Videos load from YouTube (nocookie) only after you click a thumbnail — no YouTube cookies before that.',
+  },
   tour: {
     inviteTitle: 'New here? Take the 2-minute tour.',
-    inviteBody: 'Six quick cards showing what this app does best — from instant model search to print-ready data sheets.',
+    inviteBody: 'Quick cards showing what this app does best — from instant model search to print-ready data sheets and installation videos.',
     inviteStart: 'Start the tour',
     inviteLater: 'Maybe later',
     inviteToday: 'Not today',
@@ -86,9 +97,10 @@ const EN = {
       { title: 'Open a model', body: 'This is real data from the official European sources. Click to open the full product view.' },
       { title: 'Compare up to 4 side by side', body: 'Tick the box on any row and it lands in this tray — capacity, COP, sound power and refrigerant lined up next to each other. Up to four models.' },
       { title: 'One sheet, two documents', body: 'Every product prints as a clean PDF with its official registry ID. This switch flips the SAME product between the technical data sheet and the EU energy label sheet.' },
-      { title: 'The funding workflow', body: 'Confirmed programme changes are tracked here — with the current programmes list refreshed monthly. The step-by-step guide and installer FAQ are one click away.' },
-      { title: 'Your monthly briefing', body: 'Curated funding, market and technology news for this market — published with every monthly update. Open any story for sources and a shareable link.' },
+      { title: 'The funding workflow', body: 'Confirmed programme changes are tracked here — with the current programmes list refreshed monthly. The step-by-step guide and installer FAQ sit one tab away, on this same menu.' },
+      { title: 'Your monthly briefing', body: 'Curated funding, market and technology news for this market — published with every monthly update. Open any story for sources and a shareable link \u2014 the Market & Trends tab adds monthly infographic briefings.' },
       { title: 'From product to paper', body: 'Tap the Data sheet button — every product view ends in a print-ready document with its official listing status.' },
+      { title: 'Installation, on video', body: 'Official manufacturer installation and commissioning videos for this market \u2014 leading brands first, in the market language where the manufacturer provides it.' },
     ] as { title: string; body: string }[],
   },
 
@@ -769,6 +781,7 @@ const DE: HpStrings = {
     trends: 'Markt & Trends',
     funding: 'Förderung',
     newsTrends: 'News & Trends',
+    install: 'Installation',
     account: 'Konto',
     signOut: 'Abmelden',
   },
@@ -817,9 +830,19 @@ const DE: HpStrings = {
     noneOther: 'Keine weiteren Sitzungen.',
   },
 
+
+  install: {
+    title: 'Installationsvideos.',
+    sub: 'Offizielle Installations- und Inbetriebnahme-Videos der Hersteller, gesammelt f\u00fcr Fachhandwerker \u2014 auf Deutsch, wo der Hersteller es anbietet, sonst auf Englisch.',
+    criteria: 'Auswahl: ausschlie\u00dflich offizielle Herstellerkan\u00e4le, recherchiert nach Marktbedeutung. Hersteller sind alphabetisch gelistet \u2014 eine Listung ist keine Empfehlung; Marken ohne offizielle Videos fehlen schlicht noch.',
+    euTitle: 'Englische Videos \u2014 alle M\u00e4rkte',
+    watchOn: 'Auf YouTube ansehen \u203a',
+    scope: { install: 'Installation', commissioning: 'Inbetriebnahme', accessory: 'Zubeh\u00f6r' },
+    disclaimer: 'Dies sind Herstellermaterialien f\u00fcr Fachleute. Die Montageanleitung des exakten Modells und die \u00f6rtlichen Vorschriften gehen jedem Video vor; Arbeiten am K\u00e4ltemittelkreis sind zertifiziertem Personal vorbehalten. Videos werden erst nach Klick auf das Vorschaubild von YouTube (nocookie) geladen \u2014 vorher werden keine YouTube-Cookies gesetzt.',
+  },
   tour: {
     inviteTitle: 'Neu hier? Die 2-Minuten-Tour.',
-    inviteBody: 'Sechs kurze Karten zeigen, was diese App am besten kann \u2014 von der Sofortsuche bis zum druckfertigen Datenblatt.',
+    inviteBody: 'Kurze Karten zeigen, was diese App am besten kann \u2014 von der Sofortsuche \u00fcber druckfertige Datenbl\u00e4tter bis zu Installationsvideos.',
     inviteStart: 'Tour starten',
     inviteLater: 'Vielleicht sp\u00e4ter',
     inviteToday: 'Heute nicht',
@@ -838,9 +861,10 @@ const DE: HpStrings = {
       { title: 'Modell öffnen', body: 'Das sind echte Daten aus den offiziellen europäischen Quellen. Klicken Sie, um die vollständige Produktansicht zu öffnen.' },
       { title: 'Bis zu 4 Modelle nebeneinander', body: 'Haken Sie eine Zeile an und sie landet in dieser Leiste — Leistung, COP, Schallleistung und Kältemittel direkt nebeneinander. Bis zu vier Modelle.' },
       { title: 'Ein Blatt, zwei Dokumente', body: 'Jedes Produkt druckt als sauberes PDF mit offizieller Register-ID. Dieser Schalter wechselt dasselbe Produkt zwischen technischem Datenblatt und EU-Energielabel-Blatt.' },
-      { title: 'Der Förder-Workflow', body: 'Bestätigte Programmänderungen werden hier verfolgt — die Liste der aktuellen Programme monatlich aktualisiert. Leitfaden und Installateur-FAQ sind einen Klick entfernt.' },
-      { title: 'Ihr Monats-Briefing', body: 'Kuratierte Förder-, Markt- und Technik-Nachrichten für diesen Markt — mit jedem Monats-Update. Jeder Artikel mit Quellen und teilbarem Link.' },
+      { title: 'Der Förder-Workflow', body: 'Bestätigte Programmänderungen werden hier verfolgt — die Liste der aktuellen Programme monatlich aktualisiert. Leitfaden und Installateur-FAQ liegen im selben Men\u00fc, einen Tab weiter.' },
+      { title: 'Ihr Monats-Briefing', body: 'Kuratierte Förder-, Markt- und Technik-Nachrichten für diesen Markt — mit jedem Monats-Update. Jeder Artikel mit Quellen und teilbarem Link \u2014 der Tab \u201eMarkt & Trends\u201c erg\u00e4nzt monatliche Infografik-Briefings.' },
       { title: 'Vom Produkt zum Papier', body: 'Tippen Sie auf den Datenblatt-Button — jede Produktansicht endet in einem druckfertigen Dokument mit offiziellem Listenstatus.' },
+      { title: 'Installation im Video', body: 'Offizielle Installations- und Inbetriebnahme-Videos der Hersteller f\u00fcr diesen Markt \u2014 f\u00fchrende Marken zuerst, auf Deutsch, wo der Hersteller es anbietet.' },
     ] as { title: string; body: string }[],
   },
 
@@ -1919,6 +1943,7 @@ const FR_FR: HpStrings = {
     trends: 'Marché & Tendances',
     funding: 'Aides',
     newsTrends: 'Actus & Tendances',
+    install: 'Installation',
     account: 'Compte',
     signOut: 'Se déconnecter',
   },
@@ -1944,9 +1969,19 @@ const FR_FR: HpStrings = {
     noneOther: 'Aucune autre session.',
   },
 
+
+  install: {
+    title: 'Vid\u00e9os d\u2019installation.',
+    sub: 'Vid\u00e9os officielles d\u2019installation et de mise en service des fabricants, r\u00e9unies pour les installateurs \u2014 en fran\u00e7ais lorsque le fabricant le propose, sinon en anglais.',
+    criteria: 'S\u00e9lection : cha\u00eenes officielles des fabricants uniquement, recherch\u00e9es en priorit\u00e9 selon leur poids sur le march\u00e9. Les fabricants sont list\u00e9s par ordre alphab\u00e9tique \u2014 figurer ici n\u2019est pas une recommandation ; les marques sans vid\u00e9o officielle ne sont simplement pas encore affich\u00e9es.',
+    euTitle: 'Vid\u00e9os en anglais \u2014 tous march\u00e9s',
+    watchOn: 'Voir sur YouTube \u203a',
+    scope: { install: 'Installation', commissioning: 'Mise en service', accessory: 'Accessoire' },
+    disclaimer: 'Ces contenus sont des supports fabricants destin\u00e9s aux professionnels. La notice d\u2019installation du mod\u00e8le exact et la r\u00e9glementation locale priment toujours sur toute vid\u00e9o ; les interventions sur le circuit frigorifique sont r\u00e9serv\u00e9es au personnel certifi\u00e9. Les vid\u00e9os ne se chargent depuis YouTube (nocookie) qu\u2019apr\u00e8s un clic sur la vignette \u2014 aucun cookie YouTube avant cela.',
+  },
   tour: {
     inviteTitle: 'Nouveau ici ? La visite en 2 minutes.',
-    inviteBody: 'Six cartes rapides montrent ce que cette app fait de mieux \u2014 de la recherche instantan\u00e9e \u00e0 la fiche technique pr\u00eate \u00e0 imprimer.',
+    inviteBody: 'Des cartes rapides montrent ce que cette app fait de mieux \u2014 de la recherche instantan\u00e9e aux fiches techniques et vid\u00e9os d\u2019installation.',
     inviteStart: 'Commencer la visite',
     inviteLater: 'Plus tard',
     inviteToday: 'Pas aujourd\u2019hui',
@@ -1965,9 +2000,10 @@ const FR_FR: HpStrings = {
       { title: 'Ouvrir un modèle', body: 'Ce sont des données réelles issues des sources européennes officielles. Cliquez pour ouvrir la vue produit complète.' },
       { title: 'Jusqu’à 4 modèles côte à côte', body: 'Cochez une ligne et elle rejoint ce bandeau — puissance, COP, puissance acoustique et fluide alignés côte à côte. Jusqu’à quatre modèles.' },
       { title: 'Une fiche, deux documents', body: 'Chaque produit s’imprime en PDF net. Ce commutateur bascule le MÊME produit entre la fiche technique et la fiche étiquette énergie UE.' },
-      { title: 'Le parcours des aides', body: 'Les changements confirmés des programmes sont suivis ici — la liste des programmes en vigueur est actualisée chaque mois. Le guide pas à pas et la FAQ installateurs sont à un clic.' },
-      { title: 'Votre briefing mensuel', body: 'Actualités curées — aides, marché, technologies — pour ce marché, publiées à chaque mise à jour mensuelle. Chaque article avec sources et lien partageable.' },
+      { title: 'Le parcours des aides', body: 'Les changements confirmés des programmes sont suivis ici — la liste des programmes en vigueur est actualisée chaque mois. Le guide pas \u00e0 pas et la FAQ installateurs sont \u00e0 un onglet, dans ce m\u00eame menu.' },
+      { title: 'Votre briefing mensuel', body: 'Actualités curées — aides, marché, technologies — pour ce marché, publiées à chaque mise à jour mensuelle. Chaque article avec sources et lien partageable \u2014 l\u2019onglet March\u00e9 & Tendances ajoute des infographies mensuelles.' },
       { title: 'Du produit au papier', body: 'Touchez le bouton Fiche technique — chaque vue produit aboutit à un document prêt à imprimer avec son statut officiel.' },
+      { title: 'L\u2019installation en vid\u00e9o', body: 'Vid\u00e9os officielles d\u2019installation et de mise en service des fabricants pour ce march\u00e9 \u2014 grandes marques d\u2019abord, en fran\u00e7ais lorsque le fabricant le propose.' },
     ] as { title: string; body: string }[],
   },
 
@@ -2852,6 +2888,7 @@ const PL_PL: HpStrings = {
     trends: 'Rynek i Trendy',
     funding: 'Dofinansowanie',
     newsTrends: 'Aktualności i trendy',
+    install: 'Montaż',
     account: 'Konto',
     signOut: 'Wyloguj się',
   },
@@ -2877,9 +2914,19 @@ const PL_PL: HpStrings = {
     noneOther: 'Brak innych sesji.',
   },
 
+
+  install: {
+    title: 'Filmy monta\u017cowe.',
+    sub: 'Oficjalne filmy producent\u00f3w o monta\u017cu i uruchomieniu, zebrane dla instalator\u00f3w \u2014 po polsku tam, gdzie producent je udost\u0119pnia, w pozosta\u0142ych przypadkach po angielsku.',
+    criteria: 'Wyb\u00f3r: wy\u0142\u0105cznie oficjalne kana\u0142y producent\u00f3w, wyszukiwane wed\u0142ug znaczenia rynkowego. Producenci s\u0105 uporz\u0105dkowani alfabetycznie \u2014 obecno\u015b\u0107 na li\u015bcie nie jest rekomendacj\u0105; marki bez oficjalnych film\u00f3w po prostu jeszcze si\u0119 tu nie pojawi\u0142y.',
+    euTitle: 'Filmy po angielsku \u2014 wszystkie rynki',
+    watchOn: 'Obejrzyj w YouTube \u203a',
+    scope: { install: 'Monta\u017c', commissioning: 'Uruchomienie', accessory: 'Akcesoria' },
+    disclaimer: 'To materia\u0142y producent\u00f3w przeznaczone dla profesjonalist\u00f3w. Instrukcja monta\u017cu dok\u0142adnego modelu i lokalne przepisy zawsze maj\u0105 pierwsze\u0144stwo przed jakimkolwiek filmem; prace przy uk\u0142adzie ch\u0142odniczym s\u0105 zastrze\u017cone dla certyfikowanego personelu. Filmy \u0142aduj\u0105 si\u0119 z YouTube (nocookie) dopiero po klikni\u0119ciu miniatury \u2014 wcze\u015bniej \u017cadne pliki cookie YouTube nie s\u0105 zapisywane.',
+  },
   tour: {
     inviteTitle: 'Nowy tutaj? Przewodnik w 2 minuty.',
-    inviteBody: 'Sze\u015b\u0107 szybkich kart pokazuje, co ta aplikacja robi najlepiej \u2014 od b\u0142yskawicznej wyszukiwarki po gotowe do druku karty danych.',
+    inviteBody: 'Szybkie karty pokazuj\u0105, co ta aplikacja robi najlepiej \u2014 od b\u0142yskawicznej wyszukiwarki po karty danych i filmy monta\u017cowe.',
     inviteStart: 'Rozpocznij przewodnik',
     inviteLater: 'Mo\u017ce p\u00f3\u017aniej',
     inviteToday: 'Nie dzisiaj',
@@ -2898,9 +2945,10 @@ const PL_PL: HpStrings = {
       { title: 'Otwórz model', body: 'To prawdziwe dane z oficjalnych źródeł europejskich. Kliknij, aby otworzyć pełny widok produktu.' },
       { title: 'Do 4 modeli obok siebie', body: 'Zaznacz wiersz, a trafi do tego paska — moc, COP, moc akustyczna i czynnik obok siebie. Maksymalnie cztery modele.' },
       { title: 'Jedna karta, dwa dokumenty', body: 'Każdy produkt drukuje się jako czytelny PDF ze statusem ZUM. Ten przełącznik zmienia TEN SAM produkt między kartą techniczną a kartą etykiety energetycznej UE.' },
-      { title: 'Przepływ dotacji', body: 'Potwierdzone zmiany programów są śledzone tutaj — lista bieżących programów odświeżana co miesiąc. Przewodnik krok po kroku i FAQ instalatora są o klik dalej.' },
-      { title: 'Twój miesięczny briefing', body: 'Wyselekcjonowane wiadomości o dotacjach, rynku i technologii dla Polski — z każdą comiesięczną aktualizacją. Każdy artykuł ze źródłami i linkiem do udostępnienia.' },
+      { title: 'Przepływ dotacji', body: 'Potwierdzone zmiany programów są śledzone tutaj — lista bieżących programów odświeżana co miesiąc. Przewodnik krok po kroku i FAQ instalatora s\u0105 o jedn\u0105 zak\u0142adk\u0119 dalej, w tym samym menu.' },
+      { title: 'Twój miesięczny briefing', body: 'Wyselekcjonowane wiadomości o dotacjach, rynku i technologii dla Polski — z każdą comiesięczną aktualizacją. Ka\u017cdy artyku\u0142 ze \u017ar\u00f3d\u0142ami i linkiem do udost\u0119pnienia \u2014 zak\u0142adka Rynek i Trendy dodaje comiesi\u0119czne infografiki.' },
       { title: 'Od produktu do dokumentu', body: 'Dotknij przycisku Karta danych — każdy widok produktu kończy się dokumentem gotowym do druku ze statusem ZUM.' },
+      { title: 'Monta\u017c na filmie', body: 'Oficjalne filmy producent\u00f3w o monta\u017cu i uruchomieniu dla tego rynku \u2014 najpierw wiod\u0105ce marki, po polsku tam, gdzie producent je udost\u0119pnia.' },
     ] as { title: string; body: string }[],
   },
 
@@ -3791,6 +3839,7 @@ const IT_IT: HpStrings = {
     trends: 'Mercato & Trend',
     funding: 'Incentivi',
     newsTrends: 'Notizie e tendenze',
+    install: 'Installazione',
     account: 'Account',
     signOut: 'Esci',
   },
@@ -3816,9 +3865,19 @@ const IT_IT: HpStrings = {
     noneOther: 'Nessun’altra sessione.',
   },
 
+
+  install: {
+    title: 'Video di installazione.',
+    sub: 'Video ufficiali dei produttori su installazione e messa in servizio, raccolti per gli installatori \u2014 in italiano dove il produttore li offre, altrimenti in inglese.',
+    criteria: 'Selezione: solo canali ufficiali dei produttori, ricercati partendo dai marchi pi\u00f9 rilevanti sul mercato. I produttori sono in ordine alfabetico \u2014 la presenza qui non \u00e8 una raccomandazione; i marchi senza video ufficiali semplicemente non compaiono ancora.',
+    euTitle: 'Video in inglese \u2014 tutti i mercati',
+    watchOn: 'Guarda su YouTube \u203a',
+    scope: { install: 'Installazione', commissioning: 'Messa in servizio', accessory: 'Accessorio' },
+    disclaimer: 'Si tratta di materiali dei produttori destinati ai professionisti. Il manuale di installazione del modello esatto e le norme locali prevalgono sempre su qualsiasi video; gli interventi sul circuito frigorifero sono riservati a personale certificato. I video si caricano da YouTube (nocookie) solo dopo un clic sulla miniatura \u2014 prima nessun cookie YouTube.',
+  },
   tour: {
     inviteTitle: 'Nuovo qui? Il tour in 2 minuti.',
-    inviteBody: 'Sei schede rapide mostrano il meglio di questa app \u2014 dalla ricerca istantanea alle schede tecniche pronte da stampare.',
+    inviteBody: 'Schede rapide mostrano il meglio di questa app \u2014 dalla ricerca istantanea alle schede tecniche e ai video di installazione.',
     inviteStart: 'Inizia il tour',
     inviteLater: 'Forse pi\u00f9 tardi',
     inviteToday: 'Non oggi',
@@ -3837,9 +3896,10 @@ const IT_IT: HpStrings = {
       { title: 'Apri un modello', body: 'Sono dati reali dalle fonti europee ufficiali. Tocca per aprire la vista prodotto completa.' },
       { title: 'Fino a 4 modelli affiancati', body: 'Spunta una riga e finisce in questa barra — potenza, COP, potenza sonora e refrigerante allineati. Fino a quattro modelli.' },
       { title: 'Una scheda, due documenti', body: 'Ogni prodotto stampa un PDF pulito con lo stato nel catalogo GSE. Questo selettore alterna lo STESSO prodotto tra scheda tecnica e scheda etichetta energetica UE.' },
-      { title: 'Il flusso degli incentivi', body: 'I cambiamenti confermati dei programmi sono tracciati qui — con l’elenco dei programmi in vigore aggiornato ogni mese. Guida passo-passo e FAQ installatori a un tocco.' },
-      { title: 'Il tuo briefing mensile', body: 'Notizie curate su incentivi, mercato e tecnologia per l’Italia — con ogni aggiornamento mensile. Ogni articolo con fonti e link condivisibile.' },
+      { title: 'Il flusso degli incentivi', body: 'I cambiamenti confermati dei programmi sono tracciati qui — con l’elenco dei programmi in vigore aggiornato ogni mese. Guida passo-passo e FAQ installatori a una scheda di distanza, nello stesso menu.' },
+      { title: 'Il tuo briefing mensile', body: 'Notizie curate su incentivi, mercato e tecnologia per l’Italia — con ogni aggiornamento mensile. Ogni articolo con fonti e link condivisibile \u2014 la scheda Mercato & Trend aggiunge infografiche mensili.' },
       { title: 'Dal prodotto alla carta', body: 'Tocca il pulsante Scheda tecnica — ogni vista prodotto termina in un documento pronto da stampare con lo stato a catalogo.' },
+      { title: 'L\u2019installazione in video', body: 'Video ufficiali dei produttori su installazione e messa in servizio per questo mercato \u2014 prima i marchi principali, in italiano dove il produttore li offre.' },
     ] as { title: string; body: string }[],
   },
 

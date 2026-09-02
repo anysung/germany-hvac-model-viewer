@@ -277,6 +277,16 @@ assumption that gitignored means disposable — keep at least the newest seed.
   and a filter is offered only where it actually divides the catalogue
   (`searchCapabilities.localListingFilter`). Tests: `tests/segmentation.unit.mjs`,
   `tests/products-segmentation.e2e.mjs` (fails if BAFA appears on GB/FR pages).
+- **Installation videos** (`data_sources/install_videos/videos.json` → in-app
+  Installation page, nav id `install`): OFFICIAL manufacturer channels ONLY —
+  third-party installer videos are never admitted without a written vetting
+  policy (a listing reads as vetted by us; refrigerant work is F-gas-certified
+  territory). Sourced market-share-leaders-first per market; DISPLAYED
+  alphabetically (ranking = endorsement). Click-to-load youtube-nocookie
+  embeds (no YouTube cookies pre-click); frames never captured or re-hosted.
+  Never conflate creator-provided subtitles with YouTube auto-translate.
+  Health-checked monthly (`scripts/verify-install-videos.mjs`, window step 4c —
+  stamps `unavailableSince`, never deletes; removal is editorial).
 - Refrigerant filtering always uses `.includes()` contains logic (values like
   `R290(estimated)` must match), never exact match.
 - **Auth flow (2026-07-27 program): 7-day in-app free trial, no payment method.**

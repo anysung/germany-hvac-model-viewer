@@ -276,6 +276,12 @@ try {
   if (newsOk) step("Market & Trends monthly cards (from this month's news)",
     'node scripts/trends/generate-monthly-cards.mjs', { fatal: false });
 
+  // 4c — installation-video health check: manufacturers reorganize channels,
+  // and a dead embed is a grey box on the page. Reports and stamps only; an
+  // entry's removal stays an editorial decision. Never fatal.
+  saveState({ phase: 'running', step: 'install-videos' });
+  step('installation-video availability check', 'node scripts/verify-install-videos.mjs', { fatal: false });
+
   // 5 — every surface ships one epoch, the admin console included: it runs the
   // same app code, so leaving it on last month's bundle is how an ops screen
   // starts disagreeing with the service it is meant to describe.

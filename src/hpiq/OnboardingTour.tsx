@@ -60,6 +60,7 @@ const STEPS: StepDef[] = [
   { page: 'find',      target: 'detail-sheet', advance: 'click', copy: 6, when: 'phone' },
   { page: 'datasheet', target: 'ds-mode',      advance: 'next',  copy: 3, when: 'both' },
   { page: 'bafa',      target: 'funding',      advance: 'next',  copy: 4, when: 'both' },
+  { page: 'install',   target: 'install',      advance: 'next',  copy: 7, when: 'desktop' },
   { page: 'news',      target: 'news',         advance: 'next',  copy: 5, when: 'both' },
 ];
 

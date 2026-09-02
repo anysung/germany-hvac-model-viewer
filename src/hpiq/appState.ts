@@ -5,7 +5,7 @@
 import { NewsItem, PolicyItem, User, Language } from '../types';
 import { ProductStore } from './productService';
 
-export type HpPage = 'find' | 'products' | 'label' | 'datasheet' | 'bafa' | 'guide' | 'news' | 'trends' | 'account';
+export type HpPage = 'find' | 'products' | 'label' | 'datasheet' | 'bafa' | 'guide' | 'news' | 'trends' | 'install' | 'account';
 export type DsMode = 'product' | 'label';
 export type DsSectionKey = 'identity' | 'performance' | 'env' | 'bafa';
 export type HpSegment = 'residential' | 'commercial';
