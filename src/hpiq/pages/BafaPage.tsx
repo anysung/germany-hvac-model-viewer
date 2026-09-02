@@ -3,7 +3,7 @@ import React from 'react';
 import { HpApp } from '../appState';
 import { tr } from '../i18n';
 import { FUNDING_SOURCE_LINKS } from '../market';
-import { FD, sectionLabel } from '../ui';
+import { FD, SubTabs, sectionLabel } from '../ui';
 
 // Official source links — titles/subs come from the i18n dictionary (zipped by index).
 const SOURCES = FUNDING_SOURCE_LINKS;
@@ -14,6 +14,13 @@ export const BafaPage: React.FC<{ app: HpApp }> = ({ app }) => {
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <div style={{ background: '#f5f5f7', padding: '44px 48px 36px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <SubTabs
+          group="funding"
+          tabs={[{ id: 'bafa', label: t.nav.bafa }, { id: 'guide', label: t.nav.guide }]}
+          active="bafa"
+          onSelect={id => app.go(id as 'bafa' | 'guide')}
+          style={{ marginBottom: 12 }}
+        />
         <span style={{ fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px' }}>{t.bafa.heroTitle}</span>
         <span style={{ fontSize: 17, color: '#7a7a7a', letterSpacing: '-0.374px', maxWidth: 640 }}>
           {t.bafa.heroSub}

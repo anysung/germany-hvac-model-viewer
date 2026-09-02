@@ -16,7 +16,7 @@
 import React, { useEffect, useState } from 'react';
 import { HpApp } from '../appState';
 import { tr } from '../i18n';
-import { FD } from '../ui';
+import { FD, SubTabs } from '../ui';
 
 /** The article text in one language. The infographic is NOT part of this:
  *  the card image ships in the market language and is never translated
@@ -81,7 +81,8 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
    * page, where it is the SEO H1; repeating it here only buried the page name
    * in a two-line sentence.
    */
-  const pageName = tr(app.lang).nav.trends;
+  const t = tr(app.lang);
+  const pageName = t.nav.trends;
   const subhead = feed ? (en ? feed.subEn || feed.sub : feed.sub) : '';
   const pill = feed ? (en ? feed.pillEn || feed.pill : feed.pill) : '';
 
@@ -105,7 +106,14 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
     const v = textOf(open);
     return (
       <div style={PAGE}>
-        <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '40px 48px 56px', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 56px', boxSizing: 'border-box' }}>
+          <SubTabs
+            group="newsTrends"
+            tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
+            active="trends"
+            onSelect={id => app.go(id as 'news' | 'trends')}
+            style={{ marginBottom: 18 }}
+          />
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginBottom: 22 }}>
             <span style={PAGE_TITLE}>{pageName}</span>
             {pill && <span style={PILL}>{pill}</span>}
@@ -146,7 +154,14 @@ export const TrendsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   /* ── Feed grid ── */
   return (
     <div style={PAGE}>
-      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '40px 48px 56px', boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 56px', boxSizing: 'border-box' }}>
+        <SubTabs
+          group="newsTrends"
+          tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
+          active="trends"
+          onSelect={id => app.go(id as 'news' | 'trends')}
+          style={{ marginBottom: 18 }}
+        />
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
           <span style={PAGE_TITLE}>{pageName}</span>
           {pill && <span style={PILL}>{pill}</span>}

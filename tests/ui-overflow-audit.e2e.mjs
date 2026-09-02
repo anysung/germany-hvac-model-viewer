@@ -24,8 +24,11 @@ const VIEW = { width: 1440, height: 900 };   // common MacBook logical resolutio
 
 fs.mkdirSync(OUT, { recursive: true });
 
-const NAV_COUNT = 8; // find, products, label, datasheet, bafa, guide, news, trends
-const PAGE_NAMES = ['find', 'products', 'label', 'datasheet', 'bafa', 'guide', 'news', 'trends'];
+// Grouped nav (2026-09-02): six entries; the two merged entries carry a
+// SubTabs switcher, and the audit visits BOTH tabs of each.
+const NAV_COUNT = 6;
+const PAGE_NAMES = ['find', 'products', 'label', 'datasheet', 'funding', 'newsTrends'];
+const SECOND_TABS = { funding: 'subtab-guide', newsTrends: 'subtab-trends' };
 
 const AUDIT_JS = `(() => {
   const issues = [];
@@ -121,6 +124,15 @@ for (const lang of languages) {
     const issues = await page.evaluate(AUDIT_JS);
     report[`${lang}/${name}`] = issues;
     await page.screenshot({ path: `${OUT}/${COUNTRY}-${lang}-${name}.png`, fullPage: false });
+
+    // Merged entries: audit the second tab too.
+    const second = SECOND_TABS[name];
+    if (second && await page.locator(`[data-testid="${second}"]`).count()) {
+      await page.locator(`[data-testid="${second}"]`).first().click();
+      await page.waitForTimeout(1500);
+      report[`${lang}/${name}#2`] = await page.evaluate(AUDIT_JS);
+      await page.screenshot({ path: `${OUT}/${COUNTRY}-${lang}-${name}-2.png`, fullPage: false });
+    }
   }
 }
 

@@ -11,6 +11,7 @@ import { shortDate } from './model';
 import { HpApp, HpPage, HpSegment, DsMode, DsSectionKey } from './appState';
 import { tr } from './i18n';
 import { UI_LANGUAGES, SOURCE_ID_ABBR, IS_GB, IS_PL, IS_IT } from './market';
+import { recallSubTab, rememberSubTab } from './ui';
 import { LOCAL_LISTING_FILTER, LOCAL_LISTING_FILTER_DEFAULT_ON } from './listing';
 import { splitBySegment } from '../config/segmentation';
 import { ACTIVE_COUNTRY } from '../config/countryProfiles';
@@ -51,7 +52,28 @@ interface Props {
   sessionGraceUntil?: number | null;
 }
 
-const NAV_IDS: Exclude<HpPage, 'account'>[] = ['find', 'products', 'label', 'datasheet', 'bafa', 'guide', 'news', 'trends'];
+type NavPage = Exclude<HpPage, 'account'>;
+/**
+ * Grouped nav (owner, 2026-09-02): eight destinations became six entries.
+ * The two subsidy pages share one market-native subsidy word, News and
+ * Market & Trends share one editorial entry; the pages themselves carry a
+ * SubTabs switcher and remember which tab the reader used last, so the menu
+ * click lands where that person actually works.
+ */
+const NAV_GROUPS: { id: string; pages: NavPage[] }[] = [
+  { id: 'find', pages: ['find'] },
+  { id: 'products', pages: ['products'] },
+  { id: 'label', pages: ['label'] },
+  { id: 'datasheet', pages: ['datasheet'] },
+  { id: 'funding', pages: ['bafa', 'guide'] },
+  { id: 'newsTrends', pages: ['news', 'trends'] },
+];
+const groupOf = (page: HpPage) => NAV_GROUPS.find(g => (g.pages as HpPage[]).includes(page));
+/** Where a group's nav entry lands: the remembered sub-tab, else the first page. */
+const groupTarget = (g: { id: string; pages: NavPage[] }): NavPage => {
+  const remembered = recallSubTab(g.id);
+  return (g.pages as string[]).includes(remembered ?? '') ? (remembered as NavPage) : g.pages[0];
+};
 
 
 export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAccess, dbData, datasetsFailed, onRetryDatasets, language, setLanguage, sessionGraceUntil }) => {
@@ -101,7 +123,14 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   const navSizerRef = useRef<HTMLDivElement>(null);
   const navMoreRef = useRef<HTMLSpanElement>(null);
   const navMenuRef = useRef<HTMLDivElement>(null);
-  const [navVisible, setNavVisible] = useState(NAV_IDS.length);
+  const [navVisible, setNavVisible] = useState(NAV_GROUPS.length);
+
+  // Any arrival on a merged page — sub-tab click, tour, deep link — becomes the
+  // group's remembered tab, so the next nav click returns there.
+  useEffect(() => {
+    const g = groupOf(page);
+    if (g && g.pages.length > 1) rememberSubTab(g.id, page);
+  }, [page]);
   const [navMenu, setNavMenu] = useState(false);
   const [navMenuLeft, setNavMenuLeft] = useState(0);
 
@@ -166,7 +195,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
   }, [navMenu]);
   useEffect(() => { setNavMenu(false); }, [page]);
 
-  const navOverflowActive = NAV_IDS.slice(navVisible).includes(page as Exclude<HpPage, 'account'>);
+  const navOverflowActive = NAV_GROUPS.slice(navVisible).some(g => (g.pages as HpPage[]).includes(page));
   const navLinkStyle = (active: boolean): React.CSSProperties => ({
     padding: '8px 14px', borderRadius: 999, cursor: 'pointer', whiteSpace: 'nowrap',
     ...(active
@@ -472,16 +501,19 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
           <WavingFlag height={26} className="waving-flag" />
         </span>
         <div ref={navRowRef} className="hp-gnav-links" style={{ display: 'flex', gap: 5, fontSize: 14, position: 'relative' }}>
-          {NAV_IDS.slice(0, navVisible).map(id => (
-            <span
-              key={id}
-              className={page === id ? undefined : 'hp-navlink'}
-              onClick={() => setPage(id)}
-              style={navLinkStyle(page === id)}
-            >
-              {t.nav[id]}
-            </span>
-          ))}
+          {NAV_GROUPS.slice(0, navVisible).map(g => {
+            const on = (g.pages as HpPage[]).includes(page);
+            return (
+              <span
+                key={g.id}
+                className={on ? undefined : 'hp-navlink'}
+                onClick={() => setPage(groupTarget(g))}
+                style={navLinkStyle(on)}
+              >
+                {(t.nav as Record<string, string>)[g.id]}
+              </span>
+            );
+          })}
 
           {/* Overflow menu — the eight destinations do not fit every window in
               every language (Polish and French labels are the longest), and a
@@ -489,7 +521,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
               What does not fit collapses into this menu instead, and when the
               CURRENT page is one of them the button wears its name so the user
               still sees where they are. */}
-          {navVisible < NAV_IDS.length && (
+          {navVisible < NAV_GROUPS.length && (
             <span
               ref={navMoreRef}
               className={navOverflowActive ? undefined : 'hp-navlink'}
@@ -497,7 +529,7 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
               data-testid="nav-more"
               style={{ ...navLinkStyle(navOverflowActive), display: 'inline-flex', alignItems: 'center', gap: 6 }}
             >
-              {navOverflowActive ? t.nav[page as Exclude<HpPage, 'account'>] : '•••'}
+              {navOverflowActive ? (t.nav as Record<string, string>)[groupOf(page)?.id ?? ''] : '•••'}
               <svg width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
             </span>
           )}
@@ -516,14 +548,14 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
             {/* Measured in the ACTIVE weight (600) on purpose: the selected item
                 renders bold, so measuring the lighter weight under-reserves by a
                 few pixels and clips the last item. Over-reserving is harmless. */}
-            {NAV_IDS.map(id => <span key={id} style={navLinkStyle(true)}>{t.nav[id]}</span>)}
+            {NAV_GROUPS.map(g => <span key={g.id} style={navLinkStyle(true)}>{(t.nav as Record<string, string>)[g.id]}</span>)}
           </div>
         </div>
 
         {/* The overflow panel is `fixed`, not absolute inside the row: the row
             clips its own overflow (so the full set never flashes wider than the
             bar on first paint), and a clipped dropdown would be unusable. */}
-        {navMenu && navVisible < NAV_IDS.length && (
+        {navMenu && navVisible < NAV_GROUPS.length && (
           <div
             ref={navMenuRef}
             data-testid="nav-more-menu"
@@ -533,21 +565,24 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
               padding: 6, boxShadow: '0 12px 32px rgba(0,0,0,.45)', zIndex: 60,
             }}
           >
-            {NAV_IDS.slice(navVisible).map(id => (
-              <div
-                key={id}
-                className="hp-navlink"
-                onClick={() => { setPage(id); setNavMenu(false); }}
-                style={{
-                  padding: '9px 13px', borderRadius: 9, cursor: 'pointer', fontSize: 13.5, whiteSpace: 'nowrap',
-                  ...(page === id
-                    ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' }
-                    : { color: 'rgba(255,255,255,.72)' }),
-                }}
-              >
-                {t.nav[id]}
-              </div>
-            ))}
+            {NAV_GROUPS.slice(navVisible).map(g => {
+              const on = (g.pages as HpPage[]).includes(page);
+              return (
+                <div
+                  key={g.id}
+                  className="hp-navlink"
+                  onClick={() => { setPage(groupTarget(g)); setNavMenu(false); }}
+                  style={{
+                    padding: '9px 13px', borderRadius: 9, cursor: 'pointer', fontSize: 13.5, whiteSpace: 'nowrap',
+                    ...(on
+                      ? { color: '#fff', fontWeight: 600, background: 'rgba(255,255,255,.12)' }
+                      : { color: 'rgba(255,255,255,.72)' }),
+                  }}
+                >
+                  {(t.nav as Record<string, string>)[g.id]}
+                </div>
+              );
+            })}
           </div>
         )}
         <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 14, fontSize: 13, color: 'rgba(255,255,255,.75)', flex: 'none' }}>

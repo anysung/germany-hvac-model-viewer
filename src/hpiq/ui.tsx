@@ -205,3 +205,60 @@ export const CheckBox: React.FC<{
     <Check size={size >= 17 ? 10 : 9} visible={on} strokeWidth={size >= 18 ? 3.2 : 3.4} />
   </span>
 );
+
+/* ── Grouped-nav sub-tabs ─────────────────────────────────────────────────────
+   The 2026-09-02 nav consolidation: two page pairs (bafa+guide, news+trends)
+   share one menu entry each, and the pages themselves wear this switcher.
+   Same pill grammar as the Data-sheet studio toggle, so the pattern reads as
+   "one destination, two views" everywhere it appears.
+
+   The chosen tab is remembered per group (localStorage) and the GLOBAL NAV
+   reads that memory on click — a person who lives in the funding guide lands
+   back in the guide, not on the policy page, every time. */
+export const SUBTAB_MEMORY_PREFIX = 'hpdb.subtab.';
+
+export const rememberSubTab = (group: string, page: string): void => {
+  try { localStorage.setItem(SUBTAB_MEMORY_PREFIX + group, page); } catch { /* private mode */ }
+};
+export const recallSubTab = (group: string): string | null => {
+  try { return localStorage.getItem(SUBTAB_MEMORY_PREFIX + group); } catch { return null; }
+};
+
+export const SubTabs: React.FC<{
+  group: string;
+  tabs: { id: string; label: string }[];
+  active: string;
+  onSelect: (id: string) => void;
+  /** 'light' sits on white/grey heroes; 'dark' on the guide's charcoal hero. */
+  tone?: 'light' | 'dark';
+  style?: React.CSSProperties;
+}> = ({ group, tabs, active, onSelect, tone = 'light', style }) => (
+  <div
+    data-testid={`subtabs-${group}`}
+    style={{
+      display: 'inline-flex', alignSelf: 'flex-start', borderRadius: 999, overflow: 'hidden', fontSize: 12.5,
+      border: tone === 'dark' ? '1px solid rgba(255,255,255,.3)' : '1px solid #d2d2d7',
+      background: tone === 'dark' ? 'transparent' : '#fff',
+      ...style,
+    }}
+  >
+    {tabs.map(tab => {
+      const on = tab.id === active;
+      return (
+        <span
+          key={tab.id}
+          data-testid={`subtab-${tab.id}`}
+          onClick={() => { if (!on) { rememberSubTab(group, tab.id); onSelect(tab.id); } }}
+          style={{
+            padding: '7px 16px', cursor: on ? 'default' : 'pointer', fontWeight: on ? 600 : 400, whiteSpace: 'nowrap',
+            ...(on
+              ? (tone === 'dark' ? { background: '#fff', color: '#1d1d1f' } : { background: '#1d1d1f', color: '#fff' })
+              : (tone === 'dark' ? { color: 'rgba(255,255,255,.8)' } : { color: '#1d1d1f' })),
+          }}
+        >
+          {tab.label}
+        </span>
+      );
+    })}
+  </div>
+);

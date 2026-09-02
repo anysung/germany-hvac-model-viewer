@@ -15,7 +15,7 @@ import { HpApp } from '../appState';
 import { NewsItem } from '../../types';
 import { shortDate } from '../model';
 import { tr } from '../i18n';
-import { FD } from '../ui';
+import { FD, SubTabs } from '../ui';
 import { BrandLogo, WavingFlag } from '../../components/BrandLogo';
 import { MARKET_ICON_32 } from '../market';
 import { NewsGallery, galleryOf } from '../NewsGallery';
@@ -253,7 +253,14 @@ export const NewsPage: React.FC<{ app: HpApp }> = ({ app }) => {
   /* ── Feed view (press front page) ──────────────────────────────────────── */
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '40px 48px 48px', display: 'flex', flexDirection: 'column', gap: 26, boxSizing: 'border-box' }}>
+      <div style={{ maxWidth: 1160, width: '100%', margin: '0 auto', padding: '28px 48px 48px', display: 'flex', flexDirection: 'column', gap: 26, boxSizing: 'border-box' }}>
+        <SubTabs
+          group="newsTrends"
+          tabs={[{ id: 'news', label: t.nav.news }, { id: 'trends', label: t.nav.trends }]}
+          active="news"
+          onSelect={id => app.go(id as 'news' | 'trends')}
+          style={{ marginBottom: -6 }}
+        />
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
           <span style={{ fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px' }}>{t.news.title}</span>
           <span style={{ fontSize: 12.5, color: '#7a7a7a', border: '1px solid #e0e0e0', borderRadius: 999, padding: '4px 13px' }}>{t.news.pill}</span>

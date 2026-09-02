@@ -33,6 +33,10 @@ const EN = {
     guide: 'Funding guide',
     news: 'News',
     trends: 'Market & Trends',
+    // Grouped-nav entries — the menu says what the USER calls it; the pages
+    // keep their registry names as sub-tabs.
+    funding: 'Subsidies',
+    newsTrends: 'News & Trends',
     account: 'Account',
     signOut: 'Sign out',
   },
@@ -763,6 +767,8 @@ const DE: HpStrings = {
     guide: 'Förder-Leitfaden',
     news: 'News',
     trends: 'Markt & Trends',
+    funding: 'Förderung',
+    newsTrends: 'News & Trends',
     account: 'Konto',
     signOut: 'Abmelden',
   },
@@ -1473,7 +1479,7 @@ const DE: HpStrings = {
 const GB: HpStrings = {
   ...EN,
 
-  nav: { ...EN.nav, bafa: 'BUS / MCS' },
+  nav: { ...EN.nav, bafa: 'BUS / MCS', funding: 'Grants & Support' },
 
   footer: {
     edition: 'United Kingdom edition',
@@ -1911,6 +1917,8 @@ const FR_FR: HpStrings = {
     guide: 'Guide des aides',
     news: 'Actualités',
     trends: 'Marché & Tendances',
+    funding: 'Aides',
+    newsTrends: 'Actus & Tendances',
     account: 'Compte',
     signOut: 'Se déconnecter',
   },
@@ -2842,6 +2850,8 @@ const PL_PL: HpStrings = {
     guide: 'Przewodnik po dotacjach',
     news: 'Aktualności',
     trends: 'Rynek i Trendy',
+    funding: 'Dofinansowanie',
+    newsTrends: 'Aktualności i trendy',
     account: 'Konto',
     signOut: 'Wyloguj się',
   },
@@ -3779,6 +3789,8 @@ const IT_IT: HpStrings = {
     guide: 'Guida agli incentivi',
     news: 'Notizie',
     trends: 'Mercato & Trend',
+    funding: 'Incentivi',
+    newsTrends: 'Notizie e tendenze',
     account: 'Account',
     signOut: 'Esci',
   },

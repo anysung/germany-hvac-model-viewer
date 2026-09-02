@@ -2,7 +2,7 @@
 import React from 'react';
 import { HpApp } from '../appState';
 import { tr } from '../i18n';
-import { FD, Check, VideoExplainer, sectionLabel } from '../ui';
+import { FD, Check, SubTabs, VideoExplainer, sectionLabel } from '../ui';
 import { GUIDE_VIDEO_ID } from '../market';
 
 export const GuidePage: React.FC<{ app: HpApp }> = ({ app }) => {
@@ -38,6 +38,14 @@ export const GuidePage: React.FC<{ app: HpApp }> = ({ app }) => {
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
       <div style={{ background: '#272729', color: '#fff', padding: '52px 48px 44px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <SubTabs
+          group="funding"
+          tabs={[{ id: 'bafa', label: t.nav.bafa }, { id: 'guide', label: t.nav.guide }]}
+          active="guide"
+          onSelect={id => app.go(id as 'bafa' | 'guide')}
+          tone="dark"
+          style={{ marginBottom: 12 }}
+        />
         <span style={{ fontFamily: FD, fontSize: 34, fontWeight: 600, letterSpacing: '-0.374px' }}>{t.guide.heroTitle}</span>
         <span style={{ fontSize: 17, color: '#ccc', letterSpacing: '-0.374px', maxWidth: 640 }}>
           {t.guide.heroSub}
