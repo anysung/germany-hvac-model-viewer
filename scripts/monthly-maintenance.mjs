@@ -236,6 +236,14 @@ try {
   await setMaintenance(true, until);
   saveState({ phase: 'running', step: 'maintenance-on' });
 
+  // 0 — origin contracts BEFORE anything else. The 2026-09-01 class of
+  // failure (a custom domain missing from one per-origin allowlist) logs no
+  // errors anywhere; only a matrix probe notices. Non-fatal — a probe hiccup
+  // must not block the data window — but it prints loudly.
+  saveState({ phase: 'running', step: 'origin-contracts' });
+  step('origin-contract matrix (sites, bundles, four allowlists)',
+    'node scripts/verify-origins.mjs', { fatal: false });
+
   // 1 — everything reversible: fetch, build every market, gate.
   saveState({ phase: 'running', step: 'sources+build+gate' });
   step('fetch sources, build all markets, verify (DE first; GB/FR/PL/IT derive from it)',

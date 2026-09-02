@@ -93,8 +93,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ al, productCount, la
   const alerts: Alert[] = [];
   markets.forEach(m => {
     const name = A.marketNames[m.code] ?? m.name;
-    const pending = byCc(m.code).filter(u => u.status === 'pending').length;
-    if (pending > 0) alerts.push({ icon: '⚠️', tone: 'yellow', text: A.ovAlertPending(pending, name), go: () => openMarket(m.code) });
+    const pendingUsers = byCc(m.code).filter(u => u.status === 'pending');
+    const pending = pendingUsers.length;
+    // A pending account older than 24h is no longer "hasn't clicked the mail
+    // yet" — it is the 2026-09-01 signature (a silent per-origin failure kept
+    // France's first SSO signup pending for five hours with zero error logs).
+    const stuck = pendingUsers.filter(u => u.registeredAt && Date.now() - Date.parse(u.registeredAt) > 24 * 3600_000).length;
+    if (stuck > 0) alerts.push({ icon: '🚨', tone: 'red', text: A.ovAlertStuckPending(stuck, name), go: () => openMarket(m.code) });
+    if (pending > stuck) alerts.push({ icon: '⚠️', tone: 'yellow', text: A.ovAlertPending(pending - stuck, name), go: () => openMarket(m.code) });
     const open = openTicketsByCc(m.code).length;
     if (open > 0) alerts.push({ icon: '📬', tone: 'blue', text: A.ovAlertTickets(open, name), go: () => openMarket(m.code) });
   });

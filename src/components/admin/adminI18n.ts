@@ -86,6 +86,7 @@ const EN = {
   mbAllTypes: 'All company types',
   mbAllMarkets: 'All markets',
   mbPendingNotice: (n: number) => `${n} pending application${n > 1 ? 's' : ''} awaiting approval.`,
+  ovAlertStuckPending: (n: number, market: string): string => `${n} account${n > 1 ? 's' : ''} in ${market} pending for OVER 24 HOURS — suspect a technical failure on our side (verification mail undelivered, or a blocked activation call). Open the workspace and use Activate; if it recurs, run scripts/verify-origins.mjs.`,
   /** Trial flow: nobody is waiting for the admin. An account sits at
    *  'pending' only until the USER confirms their email, after which the
    *  server activates it and starts the trial. Saying "awaiting approval"
@@ -365,6 +366,7 @@ const KO: typeof EN = {
   mbAllTypes: '모든 회사 유형',
   mbAllMarkets: '모든 마켓',
   mbPendingNotice: (n: number) => `승인 대기 중인 가입 신청 ${n}건이 있습니다.`,
+  ovAlertStuckPending: (n: number, market: string): string => `${market}에 24시간 이상 pending인 계정 ${n}건 — 우리 쪽 기술 장애(인증 메일 미전달 또는 활성화 호출 차단)를 의심하세요. 워크스페이스에서 활성화를 실행하고, 반복되면 scripts/verify-origins.mjs를 돌리세요.`,
   mbVerifyNotice: (n: number) => `활성화 대기 계정 ${n}건 — 대개는 회원이 아직 인증 메일을 클릭하지 않은 상태이며 스스로 해결됩니다(조치 불필요). 회원이 활동 중인데 수 시간째 대기라면 우리 쪽 전달·기술 장애를 의심하세요: "활성화"는 서버의 정식 활성화(체험+원장)를 수행하며, 미인증 이메일 계정은 여전히 거부됩니다. `
     + `사용자가 인증하면 자동으로 활성화되며 승인은 필요하지 않습니다. `
     + `수동 승인은 예외 처리용입니다(예: 인증 메일이 도착하지 않은 경우).`,
