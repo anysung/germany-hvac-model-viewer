@@ -360,8 +360,9 @@ export const DataSheetPage: React.FC<{ app: HpApp }> = ({ app }) => {
     : [['identity', t.ds.sections.identityP], ['performance', t.ds.sections.perfP], ['env', t.ds.sections.envP], ['bafa', t.ds.sections.bafa]];
 
   // (Footnote numbering + the printable document now live in <DataSheetDoc>.)
+  // Equal-width halves, same reasoning as SubTabs: two modes of equal standing.
   const segStyle = (on: boolean): React.CSSProperties => ({
-    padding: '6px 16px', fontSize: 12.5, cursor: 'pointer',
+    padding: '6px 18px', fontSize: 12.5, cursor: 'pointer', textAlign: 'center', whiteSpace: 'nowrap',
     ...(on ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : { color: '#1d1d1f' }),
   });
 
@@ -369,7 +370,7 @@ export const DataSheetPage: React.FC<{ app: HpApp }> = ({ app }) => {
     <div style={{ flex: 'none', display: 'flex', flexDirection: 'column', minHeight: 0, height: 'calc(100vh - 60px)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '13px 28px', borderBottom: '1px solid rgba(0,0,0,.08)', flex: 'none' }}>
         <span style={{ fontFamily: FD, fontSize: 19, fontWeight: 600, letterSpacing: '-0.2px' }}>{t.ds.title}</span>
-        <div data-tour="ds-mode" style={{ display: 'flex', border: '1px solid #e0e0e0', borderRadius: 999, overflow: 'hidden', fontSize: 12.5 }}>
+        <div data-tour="ds-mode" style={{ display: 'inline-grid', gridAutoFlow: 'column', gridAutoColumns: '1fr', border: '1px solid #e0e0e0', borderRadius: 999, overflow: 'hidden', fontSize: 12.5 }}>
           <span onClick={() => app.setDsMode('product')} style={segStyle(!isLabelMode)}>{t.ds.modeProduct}</span>
           <span onClick={() => app.setDsMode('label')} style={segStyle(isLabelMode)}>{t.ds.modeLabel}</span>
         </div>

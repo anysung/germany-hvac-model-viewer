@@ -236,7 +236,11 @@ export const SubTabs: React.FC<{
   <div
     data-testid={`subtabs-${group}`}
     style={{
-      display: 'inline-flex', alignSelf: 'flex-start', borderRadius: 999, overflow: 'hidden', fontSize: 12.5,
+      // Equal-width tabs: grid auto-columns 1fr sizes every tab to the widest
+      // label. Two views of equal standing must not LOOK weighted by how many
+      // letters their names happen to have.
+      display: 'inline-grid', gridAutoFlow: 'column', gridAutoColumns: '1fr',
+      alignSelf: 'flex-start', borderRadius: 999, overflow: 'hidden', fontSize: 12.5,
       border: tone === 'dark' ? '1px solid rgba(255,255,255,.3)' : '1px solid #d2d2d7',
       background: tone === 'dark' ? 'transparent' : '#fff',
       ...style,
@@ -250,7 +254,7 @@ export const SubTabs: React.FC<{
           data-testid={`subtab-${tab.id}`}
           onClick={() => { if (!on) { rememberSubTab(group, tab.id); onSelect(tab.id); } }}
           style={{
-            padding: '7px 16px', cursor: on ? 'default' : 'pointer', fontWeight: on ? 600 : 400, whiteSpace: 'nowrap',
+            padding: '7px 18px', textAlign: 'center', cursor: on ? 'default' : 'pointer', fontWeight: on ? 600 : 400, whiteSpace: 'nowrap',
             ...(on
               ? (tone === 'dark' ? { background: '#fff', color: '#1d1d1f' } : { background: '#1d1d1f', color: '#fff' })
               : (tone === 'dark' ? { color: 'rgba(255,255,255,.8)' } : { color: '#1d1d1f' })),
