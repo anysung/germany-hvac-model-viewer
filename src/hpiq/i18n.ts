@@ -73,7 +73,7 @@ const EN = {
     criteria: 'Selection: official manufacturer channels only, sourced leading-brands-first for this market. Manufacturers are listed alphabetically — a listing is not a recommendation, and brands without official videos are simply not shown yet.',
     euTitle: 'English videos — all markets',
     watchOn: 'Watch on YouTube \u203a',
-    scope: { install: 'Installation', commissioning: 'Commissioning', accessory: 'Accessory' },
+    scope: { install: 'Installation', commissioning: 'Commissioning', accessory: 'Accessory', planning: 'Planning', training: 'Training' },
     disclaimer: 'These are manufacturer materials for professionals. The installation manual of the exact model and local regulations always take precedence over any video; refrigerant work is reserved for certified personnel. Videos load from YouTube (nocookie) only after you click a thumbnail — no YouTube cookies before that.',
   },
   tour: {
@@ -837,7 +837,7 @@ const DE: HpStrings = {
     criteria: 'Auswahl: ausschlie\u00dflich offizielle Herstellerkan\u00e4le, recherchiert nach Marktbedeutung. Hersteller sind alphabetisch gelistet \u2014 eine Listung ist keine Empfehlung; Marken ohne offizielle Videos fehlen schlicht noch.',
     euTitle: 'Englische Videos \u2014 alle M\u00e4rkte',
     watchOn: 'Auf YouTube ansehen \u203a',
-    scope: { install: 'Installation', commissioning: 'Inbetriebnahme', accessory: 'Zubeh\u00f6r' },
+    scope: { install: 'Installation', commissioning: 'Inbetriebnahme', accessory: 'Zubeh\u00f6r', planning: 'Planung', training: 'Schulung' },
     disclaimer: 'Dies sind Herstellermaterialien f\u00fcr Fachleute. Die Montageanleitung des exakten Modells und die \u00f6rtlichen Vorschriften gehen jedem Video vor; Arbeiten am K\u00e4ltemittelkreis sind zertifiziertem Personal vorbehalten. Videos werden erst nach Klick auf das Vorschaubild von YouTube (nocookie) geladen \u2014 vorher werden keine YouTube-Cookies gesetzt.',
   },
   tour: {
@@ -1976,7 +1976,7 @@ const FR_FR: HpStrings = {
     criteria: 'S\u00e9lection : cha\u00eenes officielles des fabricants uniquement, recherch\u00e9es en priorit\u00e9 selon leur poids sur le march\u00e9. Les fabricants sont list\u00e9s par ordre alphab\u00e9tique \u2014 figurer ici n\u2019est pas une recommandation ; les marques sans vid\u00e9o officielle ne sont simplement pas encore affich\u00e9es.',
     euTitle: 'Vid\u00e9os en anglais \u2014 tous march\u00e9s',
     watchOn: 'Voir sur YouTube \u203a',
-    scope: { install: 'Installation', commissioning: 'Mise en service', accessory: 'Accessoire' },
+    scope: { install: 'Installation', commissioning: 'Mise en service', accessory: 'Accessoire', planning: '\u00c9tude', training: 'Formation' },
     disclaimer: 'Ces contenus sont des supports fabricants destin\u00e9s aux professionnels. La notice d\u2019installation du mod\u00e8le exact et la r\u00e9glementation locale priment toujours sur toute vid\u00e9o ; les interventions sur le circuit frigorifique sont r\u00e9serv\u00e9es au personnel certifi\u00e9. Les vid\u00e9os ne se chargent depuis YouTube (nocookie) qu\u2019apr\u00e8s un clic sur la vignette \u2014 aucun cookie YouTube avant cela.',
   },
   tour: {
@@ -2921,7 +2921,7 @@ const PL_PL: HpStrings = {
     criteria: 'Wyb\u00f3r: wy\u0142\u0105cznie oficjalne kana\u0142y producent\u00f3w, wyszukiwane wed\u0142ug znaczenia rynkowego. Producenci s\u0105 uporz\u0105dkowani alfabetycznie \u2014 obecno\u015b\u0107 na li\u015bcie nie jest rekomendacj\u0105; marki bez oficjalnych film\u00f3w po prostu jeszcze si\u0119 tu nie pojawi\u0142y.',
     euTitle: 'Filmy po angielsku \u2014 wszystkie rynki',
     watchOn: 'Obejrzyj w YouTube \u203a',
-    scope: { install: 'Monta\u017c', commissioning: 'Uruchomienie', accessory: 'Akcesoria' },
+    scope: { install: 'Monta\u017c', commissioning: 'Uruchomienie', accessory: 'Akcesoria', planning: 'Projektowanie', training: 'Szkolenie' },
     disclaimer: 'To materia\u0142y producent\u00f3w przeznaczone dla profesjonalist\u00f3w. Instrukcja monta\u017cu dok\u0142adnego modelu i lokalne przepisy zawsze maj\u0105 pierwsze\u0144stwo przed jakimkolwiek filmem; prace przy uk\u0142adzie ch\u0142odniczym s\u0105 zastrze\u017cone dla certyfikowanego personelu. Filmy \u0142aduj\u0105 si\u0119 z YouTube (nocookie) dopiero po klikni\u0119ciu miniatury \u2014 wcze\u015bniej \u017cadne pliki cookie YouTube nie s\u0105 zapisywane.',
   },
   tour: {
@@ -3872,7 +3872,7 @@ const IT_IT: HpStrings = {
     criteria: 'Selezione: solo canali ufficiali dei produttori, ricercati partendo dai marchi pi\u00f9 rilevanti sul mercato. I produttori sono in ordine alfabetico \u2014 la presenza qui non \u00e8 una raccomandazione; i marchi senza video ufficiali semplicemente non compaiono ancora.',
     euTitle: 'Video in inglese \u2014 tutti i mercati',
     watchOn: 'Guarda su YouTube \u203a',
-    scope: { install: 'Installazione', commissioning: 'Messa in servizio', accessory: 'Accessorio' },
+    scope: { install: 'Installazione', commissioning: 'Messa in servizio', accessory: 'Accessorio', planning: 'Progettazione', training: 'Formazione' },
     disclaimer: 'Si tratta di materiali dei produttori destinati ai professionisti. Il manuale di installazione del modello esatto e le norme locali prevalgono sempre su qualsiasi video; gli interventi sul circuito frigorifero sono riservati a personale certificato. I video si caricano da YouTube (nocookie) solo dopo un clic sulla miniatura \u2014 prima nessun cookie YouTube.',
   },
   tour: {

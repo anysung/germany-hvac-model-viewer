@@ -12,7 +12,7 @@
     "provided track was confirmed; never conflate with YouTube auto-translate.",
     "scope: install | commissioning | accessory. EU = English videos shown on every market."
   ],
-  "verifiedAt": "2026-09-02",
+  "verifiedAt": "2026-09-03",
   "markets": {
     "DE": [
       {
@@ -54,6 +54,16 @@
         "audio": "de",
         "subs": null,
         "scope": "commissioning"
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (Planung)",
+        "videoId": "izP5JkhVryY",
+        "title": "Panasonic erklärt: AQUAREA Hydraulikschema-Generator",
+        "channel": "Panasonic Heating & Cooling Solutions Europe",
+        "audio": "de",
+        "subs": null,
+        "scope": "planning"
       }
     ],
     "GB": [
@@ -109,6 +119,16 @@
         "audio": "fr",
         "subs": null,
         "scope": "commissioning"
+      },
+      {
+        "manufacturer": "Atlantic",
+        "family": "Alféa A.I.",
+        "videoId": "MD95g6ltLGk",
+        "title": "Comment associer le thermostat de ma pompe à chaleur Alféa A.I. ?",
+        "channel": "Atlantic France",
+        "audio": "fr",
+        "subs": null,
+        "scope": "accessory"
       }
     ],
     "PL": [
@@ -141,6 +161,26 @@
         "audio": "pl",
         "subs": null,
         "scope": "install"
+      },
+      {
+        "manufacturer": "Viessmann",
+        "family": "Vitocal 200-S",
+        "videoId": "v3DshngAE3A",
+        "title": "Vitocal 200-S — montaż pompy ciepła powietrze-woda Split",
+        "channel": "Viessmann Climate Solutions PL",
+        "audio": "pl",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Panasonic",
+        "family": "Aquarea (generacja L/M)",
+        "videoId": "x4S6lU5WzrA",
+        "title": "Instalatorskie Vademecum — najnowsza generacja pomp ciepła",
+        "channel": "Pompy Ciepła Panasonic Aquarea",
+        "audio": "pl",
+        "subs": null,
+        "scope": "training"
       }
     ],
     "IT": [
@@ -173,6 +213,16 @@
         "audio": "it",
         "subs": null,
         "scope": "accessory"
+      },
+      {
+        "manufacturer": "Viessmann",
+        "family": "Vitocal 200-S",
+        "videoId": "yqo8KVZtoEo",
+        "title": "Come installare la pompa di calore Vitocal 200-S",
+        "channel": "Viessmann Climate Solutions IT",
+        "audio": "it",
+        "subs": null,
+        "scope": "install"
       }
     ],
     "EU": [
@@ -205,6 +255,36 @@
         "audio": "en",
         "subs": null,
         "scope": "accessory"
+      },
+      {
+        "manufacturer": "LG",
+        "family": "THERMA V R290 Monobloc",
+        "videoId": "bgPCBbjCXnI",
+        "title": "LG THERMA V: R290 Monobloc Installation Guide",
+        "channel": "LG Global",
+        "audio": "en",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "LG",
+        "family": "THERMA V R290",
+        "videoId": "RZ4kNuckaBI",
+        "title": "LG THERMA V R290 Installation Guide",
+        "channel": "LG HVAC Solution Europe",
+        "audio": "en",
+        "subs": null,
+        "scope": "install"
+      },
+      {
+        "manufacturer": "Daikin",
+        "family": "Altherma R Hybrid",
+        "videoId": "FP2rsFZPIQw",
+        "title": "Daikin Altherma R Hybrid — installation video",
+        "channel": "DaikinEurope",
+        "audio": "en",
+        "subs": null,
+        "scope": "install"
       }
     ]
   }
