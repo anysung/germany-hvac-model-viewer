@@ -172,7 +172,11 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
         {/* Segment choice — step ONE of any search, so it must read as a real
             control: larger type, a visible border and a hover state (the old
             hairline pill looked like a static label — 2026-07-27). */}
-        <div style={{ display: 'flex', flex: 'none', border: '1.5px solid #b0b0b6', borderRadius: 999, overflow: 'hidden', fontSize: 14, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
+        {/* Equal-width segments (SubTabs rule): auto-columns 1fr sizes BOTH
+            to the widest label, so "Wohngebäude" vs "Gewerbe" cannot render as
+            differently sized buttons — two categories of equal standing must
+            not look weighted by their letter count (owner, 2026-09-03). */}
+        <div style={{ display: 'inline-grid', gridAutoFlow: 'column', gridAutoColumns: '1fr', flex: 'none', border: '1.5px solid #b0b0b6', borderRadius: 999, overflow: 'hidden', fontSize: 14, background: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,.07)' }}>
           {(['residential', 'commercial'] as const).map(s => {
             const on = app.segment === s;
             return (
@@ -181,7 +185,7 @@ export const ProductsPage: React.FC<{ app: HpApp }> = ({ app }) => {
                 className={on ? undefined : 'hp-press hp-seg-off'}
                 onClick={() => app.setSegment(s)}
                 style={{
-                  padding: '9px 22px', cursor: on ? 'default' : 'pointer', fontWeight: 600, whiteSpace: 'nowrap',
+                  padding: '9px 22px', cursor: on ? 'default' : 'pointer', fontWeight: 600, whiteSpace: 'nowrap', textAlign: 'center',
                   ...(on ? { background: '#1d1d1f', color: '#fff' } : { color: '#1d1d1f' }),
                 }}
               >

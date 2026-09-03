@@ -272,9 +272,10 @@ export const MobileProducts: React.FC<{ app: HpApp; viewport: Viewport; onOpen: 
             <span style={{ fontSize: 11.5, color: '#7a7a7a' }}>{t.products.countLine(fmtInt(filteredTotal), fmtInt(store?.total ?? 0), app.segment)}</span>
           </div>
           <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 2 }}>
-            <div style={{ display: 'flex', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', flex: 'none', fontSize: 12.5 }}>
+            {/* Equal-width segments — same rule as desktop (owner, 2026-09-03). */}
+            <div style={{ display: 'inline-grid', gridAutoFlow: 'column', gridAutoColumns: '1fr', border: '1px solid #d2d2d7', borderRadius: 999, overflow: 'hidden', flex: 'none', fontSize: 12.5 }}>
               {(['residential', 'commercial'] as const).map(s => (
-                <span key={s} onClick={() => app.setSegment(s)} style={{ padding: '7px 13px', cursor: 'pointer', ...(app.segment === s ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : {}) }}>
+                <span key={s} onClick={() => app.setSegment(s)} style={{ padding: '7px 13px', cursor: 'pointer', textAlign: 'center', whiteSpace: 'nowrap', ...(app.segment === s ? { background: '#1d1d1f', color: '#fff', fontWeight: 600 } : {}) }}>
                   {s === 'residential' ? t.products.residential : t.products.commercial}
                 </span>
               ))}
