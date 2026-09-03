@@ -1,5 +1,26 @@
 [
  {
+  "slug": "2026-09-tco-vergleich",
+  "date": "2026-09-03",
+  "image": "de-2026-09-tco-vergleich.webp",
+  "title": "Kostenvorteil der Wärmepumpe nach 20 Jahren: 9.840 € gegenüber Gas, 11.580 € gegenüber Öl",
+  "titleEn": "The heat pump's 20-year cost advantage: €9,840 vs gas, €11,580 vs oil",
+  "excerpt": "Eine illustrative TCO-Beispielrechnung 2026 für einen 4-Personen-Haushalt im bestehenden Einfamilienhaus: Die Wärmepumpe hat die höchsten Anfangskosten, ist aber ab Jahr 7,1 günstiger als Öl und ab Jahr 9,2 günstiger als Gas — und spart über 20 Jahre 9.840 € gegenüber Gas und 11.580 € gegenüber Öl.",
+  "excerptEn": "An illustrative 2026 TCO calculation for a 4-person household in an existing single-family home: the heat pump carries the highest upfront cost, but is cheaper than oil from year 7.1 and cheaper than gas from year 9.2 — saving €9,840 vs gas and €11,580 vs oil over 20 years.",
+  "body": [
+   "Über 20 Jahre gerechnet summieren sich die Gesamtkosten (Anschaffung + Energie + Wartung) in der Beispielrechnung auf 61.160 € für die Wärmepumpe, 71.000 € für die Gasheizung und 72.740 € für die Ölheizung. Der Kostenvorteil der Wärmepumpe: 9.840 € gegenüber Gas, 11.580 € gegenüber Öl.",
+   "Der Grund ist strukturell: Netto-Anfangskosten von 22.400 € (nach unterstelltem KfW-Zuschuss von 30 %) stehen jährlichen Betriebskosten von nur 1.938 € gegenüber — gegen 2.850 € (Gas) und 2.837 € (Öl). Ab dem Break-even (Jahr 7,1 gegenüber Öl, Jahr 9,2 gegenüber Gas) bleibt die Wärmepumpe dauerhaft die günstigste Lösung.",
+   "Es ist ein illustratives Szenario, kein Angebot: Gebäude, Dämmung, Tarife und die tatsächliche Förderung verändern das Ergebnis. Die vollständige Rechnung mit allen Annahmen steht im begleitenden Artikel auf der News-Seite — die ηs- und SCOP-Werte für die eigene Rechnung liefert das Datenblatt jedes Modells im Katalog."
+  ],
+  "bodyEn": [
+   "Summed over 20 years, the illustrative totals (purchase + energy + maintenance) come to €61,160 for the heat pump, €71,000 for the gas boiler and €72,740 for the oil boiler. The heat pump's cost advantage: €9,840 versus gas, €11,580 versus oil.",
+   "The reason is structural: net upfront costs of €22,400 (after an assumed 30% KfW subsidy) stand against annual running costs of just €1,938 — versus €2,850 (gas) and €2,837 (oil). From break-even onward (year 7.1 vs oil, year 9.2 vs gas) the heat pump stays the lowest-cost option for good.",
+   "It is an illustrative scenario, not a quote: the building, insulation, tariffs and the actual subsidy all move the result. The full calculation with every assumption is in the companion article on the News page — and the ηs and SCOP values for your own calculation are on each model's data sheet in the catalogue."
+  ],
+  "sourceNote": "Quelle: HeatPump DB TCO-Beispielrechnung 2026 — alle Annahmen in der Infografik und im begleitenden News-Artikel",
+  "sourceNoteEn": "Source: HeatPump DB illustrative TCO calculation 2026 — all assumptions in the infographic and the companion News article"
+ },
+ {
   "slug": "2026-09-kfw-458-update",
   "date": "2026-09-01",
   "image": "de-2026-09-kfw-458-update.webp",

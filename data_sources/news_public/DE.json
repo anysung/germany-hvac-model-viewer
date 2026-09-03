@@ -1,6 +1,6 @@
 {
   "market": "DE",
-  "generatedAt": "2026-09-01T14:31:49.739Z",
+  "generatedAt": "2026-09-03T20:07:27.360Z",
   "items": [
     {
       "id": "news-20260816-de-sr1",
@@ -35,6 +35,26 @@
           "url": "https://ehpa.org/market-data/"
         }
       ]
+    },
+    {
+      "id": "news-20260903-de-001",
+      "date": "2026-09-03T00:00:00Z",
+      "category": "MARKET",
+      "title": "TCO-Vergleich über 20 Jahre: Wärmepumpe gegen Gas- und Ölheizung im Einfamilienhaus",
+      "summary": "Eine illustrative Beispielrechnung 2026 für einen 4-Personen-Haushalt zeigt: Die Wärmepumpe hat die höchsten Anfangskosten, erreicht den Break-even gegenüber der Ölheizung aber um Jahr 7 und gegenüber Gas um Jahr 9 — und liegt nach 20 Jahren 9.840 € unter der Gasheizung und 11.580 € unter der Ölheizung.",
+      "body": "Welches Heizsystem wirklich am günstigsten ist, entscheidet sich über Jahrzehnte — nicht auf der Rechnung für die Anschaffung. Eine neue illustrative Beispielrechnung von HeatPump DB vergleicht die kumulierten Gesamtkosten (Total Cost of Ownership, TCO) über 20 Jahre für eine Luft/Wasser-Wärmepumpe, eine Gas-Brennwertheizung und eine Ölheizung in einem konkreten Szenario: eine 4-köpfige Familie im bestehenden Einfamilienhaus mit einem nutzbaren Wärmebedarf von 20.000 kWh pro Jahr, Raumheizung und Warmwasser eingeschlossen.\n\nDie Wärmepumpe startet als teuerstes System. Die Rechnung setzt Installationskosten von brutto 32.000 € an; mit einem unterstellten KfW-Zuschuss von 30 % (−9.600 €) bleiben Netto-Anfangskosten von 22.400 € — deutlich über den 14.000 € für eine neue Gasheizung oder 16.000 € für eine Ölheizung. Bei den Betriebskosten dreht sich das Bild. Mit einer Jahresarbeitszahl von 3,2 verbraucht die Wärmepumpe 6.250 kWh Strom pro Jahr; das kostet im Wärmepumpentarif von 0,27 €/kWh 1.688 €, plus 250 € Wartung — zusammen 1.938 € pro Jahr. Die Gasheizung verbrennt 21.739 kWh Gas pro Jahr (92 % Wirkungsgrad) für 2.500 € Brennstoffkosten plus 350 € Service und Schornsteinfeger — 2.850 € gesamt. Die Ölheizung braucht 2.273 Liter pro Jahr (88 % Wirkungsgrad, 1,05 €/l), 2.387 € Brennstoff plus 450 € für Service, Schornsteinfeger und Tank — 2.837 € gesamt.\n\nÜber die Jahre kreuzen sich die Kostenkurven früh im Lebenszyklus der Anlagen: Die kumulierten Kosten der Wärmepumpe unterschreiten die der Ölheizung um Jahr 7,1 und die der Gasheizung um Jahr 9,2. Ab diesen Punkten bleibt sie dauerhaft die günstigste Lösung. Nach 20 Jahren stehen 61.160 € für die Wärmepumpe gegen 71.000 € für Gas und 72.740 € für Öl — ein Kostenvorteil von 9.840 € gegenüber Gas und 11.580 € gegenüber Öl. Dabei wurden Gas- und Ölfall ohne Förderung, aber auch ohne CO₂-Preis-Eskalation gerechnet: Alle Energiepreise wurden konstant gehalten — angesichts des ab 2027 auf Heizbrennstoffe wirkenden EU-Emissionshandels (ETS2) eine eher konservative Annahme zugunsten der fossilen Systeme.\n\nDie ehrlichen Einschränkungen gehören direkt neben die Zahlen. Dies ist ein illustratives Szenario, kein Angebot: Die tatsächliche Wirtschaftlichkeit hängt von Gebäude, Dämmung, Heizkörpern, lokalen Tarifen, Nutzungsverhalten und Finanzierung ab. Die 30 % KfW-Förderung sind eine Annahme — die tatsächliche Förderung richtet sich nach der Situation des Antragstellers und den Programmbedingungen zum Antragszeitpunkt; diese Rechnung verspricht nichts. Was das Szenario strukturell zeigt: Wärmepumpen bündeln ihre Kosten am Anfang und gewinnen im Betrieb. Je länger der Betrachtungszeitraum, desto schwerer ist das zu schlagen.\n\nDie Infografik liegt diesem Artikel in deutscher und englischer Fassung bei. Das vollständige Datenblatt jedes Wärmepumpenmodells am deutschen Markt — einschließlich der ηs- und SCOP-Werte, mit denen eine seriöse TCO-Rechnung beginnt — steht im HeatPump DB Katalog bereit.",
+      "titleEn": "20-Year Cost Comparison: Heat Pump vs Gas vs Oil in a German Single-Family Home",
+      "summaryEn": "An illustrative 2026 total-cost-of-ownership calculation for a 4-person household finds the heat pump — despite the highest upfront cost — breaking even against oil heating around year 7 and against gas around year 9, ending 20 years €9,840 cheaper than gas and €11,580 cheaper than oil.",
+      "imageUrl": "/news-images/de-tco-vergleich-2026.webp",
+      "images": [
+        "/news-images/de-tco-vergleich-2026.webp",
+        "/news-images/de-tco-vergleich-2026-en.webp"
+      ],
+      "author": "HeatPump DataBase (Europe)",
+      "pinned": false,
+      "ctaUrl": "",
+      "ctaLabel": "",
+      "sources": []
     },
     {
       "id": "news-20260901-de-001",
