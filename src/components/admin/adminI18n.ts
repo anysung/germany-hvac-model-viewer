@@ -113,6 +113,8 @@ const EN = {
   // Member email (support@heatpumpdb.eu)
   meTitle: 'Send a message',
   meTemplate: 'Template',
+  meKind: 'Filed as',
+  meKindHint: 'How this message is filed and searched later — set it to what the message actually is, not to whichever template you started from.',
   meSubject: 'Subject',
   meBody: 'Message',
   meSend: 'Send from support@heatpumpdb.eu',
@@ -389,6 +391,8 @@ const KO: typeof EN = {
   // 회원 메일 (support@heatpumpdb.eu)
   meTitle: '메시지 보내기',
   meTemplate: '템플릿',
+  meKind: '분류',
+  meKindHint: '나중에 검색·조회되는 기준입니다. 시작한 템플릿이 아니라 실제 메시지 성격에 맞게 지정하세요.',
   meSubject: '제목',
   meBody: '본문',
   meSend: 'support@heatpumpdb.eu 로 발송',

@@ -1687,7 +1687,8 @@ function letterhead(bodyText, to, cta) {
 
 /** Message kinds an admin may send. Free text is still the admin's, but the
  *  kind is what the member record and the audit log are searchable by. */
-const MEMBER_EMAIL_KINDS = ['suspension', 'verification_request', 'reactivation', 'support_reply', 'notice'];
+const MEMBER_EMAIL_KINDS = ['suspension', 'verification_request', 'reactivation',
+  'support_reply', 'notice', 'trial', 'billing', 'announcement'];
 
 async function sendMemberEmail(req, res) {
   const admin = await verifyAdmin(req);

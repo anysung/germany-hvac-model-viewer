@@ -17,8 +17,19 @@ export type MemberEmailKind =
   | 'suspension'
   | 'verification_request'
   | 'reactivation'
+  | 'trial'
+  | 'billing'
+  | 'announcement'
   | 'support_reply'
   | 'notice';
+
+/** Every kind the server accepts, in the order the composer offers them.
+ *  Keep in step with MEMBER_EMAIL_KINDS in the billing function — the server
+ *  silently rewrites anything it does not recognise to 'notice'. */
+export const MEMBER_EMAIL_KIND_OPTIONS: MemberEmailKind[] = [
+  'notice', 'trial', 'billing', 'support_reply', 'announcement',
+  'verification_request', 'reactivation', 'suspension',
+];
 
 export interface SentMemberEmail {
   id: string;

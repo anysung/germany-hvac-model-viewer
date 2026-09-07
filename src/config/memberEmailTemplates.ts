@@ -78,6 +78,17 @@ const APPEAL = (days = 14) =>
 
 export const MEMBER_EMAIL_TEMPLATES: MemberEmailTemplate[] = [
   {
+    id: 'blank',
+    label: 'Blank message',
+    kind: 'notice',
+    build: (u) => ({
+      subject: 'HeatPump DB',
+      body: `${salutation(u)}
+
+${signOff}`,
+    }),
+  },
+  {
     id: 'suspension_irregularity',
     label: 'Suspension — irregularity found in review',
     kind: 'suspension',
@@ -167,12 +178,69 @@ ${signOff}`,
     }),
   },
   {
-    id: 'blank',
-    label: 'Blank message',
-    kind: 'notice',
+    id: 'trial_extended',
+    label: 'Trial — extended',
+    kind: 'trial',
+    fillIn: ['the new end date'],
     build: (u) => ({
-      subject: 'HeatPump DB',
+      subject: 'HeatPump DB — your trial has been extended',
       body: `${salutation(u)}
+
+We have extended the free trial, and the change applies to your account as well.
+
+Your access to the full database is open again and runs until [DATE]. There is nothing for you to do — simply sign in as usual. No payment details are held and nothing is charged.
+
+If something was missing during your first days, reply to this message. We read every answer.
+
+${signOff}`,
+    }),
+  },
+  {
+    id: 'trial_ending',
+    label: 'Trial — ending soon (personal note)',
+    kind: 'trial',
+    fillIn: ['the end date', 'anything specific this member searched for'],
+    build: (u) => ({
+      subject: 'HeatPump DB — your trial ends on [DATE]',
+      body: `${salutation(u)}
+
+Your free trial runs until [DATE]. After that the catalogue closes, though your account and settings stay exactly as you left them.
+
+If you have questions before deciding — about coverage, a particular manufacturer, or what a data sheet contains — reply here and we will answer them directly.
+
+${signOff}`,
+    }),
+  },
+  {
+    id: 'billing_followup',
+    label: 'Billing — follow-up on a payment matter',
+    kind: 'billing',
+    fillIn: ['what happened', 'what you are asking the member to do, if anything'],
+    build: (u) => ({
+      subject: 'HeatPump DB — about your subscription',
+      body: `${salutation(u)}
+
+[Describe the matter plainly, in one or two sentences.]
+
+[What happens next, and what — if anything — the member needs to do.]
+
+Payments are handled by Paddle as our merchant of record; if you need an invoice or a receipt, we can arrange it from here.
+
+${signOff}`,
+    }),
+  },
+  {
+    id: 'announcement',
+    label: 'Announcement — new feature or market',
+    kind: 'announcement',
+    fillIn: ['what is new', 'why it matters to this member'],
+    build: (u) => ({
+      subject: 'HeatPump DB — [what is new]',
+      body: `${salutation(u)}
+
+[One sentence on what is new.]
+
+[One or two sentences on what it changes for the reader — concretely, not in adjectives.]
 
 ${signOff}`,
     }),

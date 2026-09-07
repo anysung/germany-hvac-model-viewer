@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 import { getUsers, approveUser, rejectUser, suspendUser, reactivateUser, disableUser, deleteUser } from '../../services/authService';
-import { sendMemberEmail, listMemberEmails, previewMemberEmail, type SentMemberEmail } from '../../services/memberMailService';
+import { sendMemberEmail, listMemberEmails, previewMemberEmail, MEMBER_EMAIL_KIND_OPTIONS, type SentMemberEmail, type MemberEmailKind } from '../../services/memberMailService';
 import { MEMBER_EMAIL_TEMPLATES } from '../../config/memberEmailTemplates';
 import { TRIAL_FLOW_ENABLED, adminFinalizeSignupFn } from '../../services/billingFnService';
 import { requestDeletion, updateAdminNotes, setUserCountry } from '../../services/adminService';
@@ -516,6 +516,12 @@ const SubscriptionAdminPanel: React.FC<{ al: AdminLang; user: User; onChanged: (
 const MemberEmail: React.FC<{ al: AdminLang; user: User }> = ({ al, user }) => {
   const A = ADMIN_I18N[al];
   const [templateId, setTemplateId] = useState(MEMBER_EMAIL_TEMPLATES[0].id);
+  /* The FILING kind is its own field, not the template's. It used to follow
+     the template, so a message written from scratch over the first template
+     was filed as a suspension notice — which is what happened to a trial
+     extension on 2026-09-07. A picker that starts from the template and can
+     be overridden keeps the history searchable by what a message WAS. */
+  const [kind, setKind] = useState<MemberEmailKind>(MEMBER_EMAIL_TEMPLATES[0].kind);
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
   const [busy, setBusy] = useState(false);
@@ -532,6 +538,7 @@ const MemberEmail: React.FC<{ al: AdminLang; user: User }> = ({ al, user }) => {
     const d = template.build(user);
     setSubject(d.subject);
     setBody(d.body);
+    setKind(template.kind);          // a starting point, overridable below
     setMsg('');
     setPreview(null);
   }, [user.id, templateId]);
@@ -559,7 +566,7 @@ const MemberEmail: React.FC<{ al: AdminLang; user: User }> = ({ al, user }) => {
     setBusy(true);
     setMsg('');
     try {
-      const r = await sendMemberEmail(user.id, subject, body, template.kind);
+      const r = await sendMemberEmail(user.id, subject, body, kind);
       setMsg(`${A.meSent} ${r.to}`);
       loadHistory();
     } catch (e: any) {
@@ -581,6 +588,14 @@ const MemberEmail: React.FC<{ al: AdminLang; user: User }> = ({ al, user }) => {
             <select value={templateId} onChange={e => setTemplateId(e.target.value)}
               className="flex-1 px-2 py-1 border rounded text-xs bg-white">
               {MEMBER_EMAIL_TEMPLATES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-gray-600 w-16" title={A.meKindHint}>{A.meKind}</span>
+            <select value={kind} onChange={e => setKind(e.target.value as MemberEmailKind)}
+              className="flex-1 px-2 py-1 border rounded text-xs bg-white" data-testid="me-kind">
+              {MEMBER_EMAIL_KIND_OPTIONS.map(k => <option key={k} value={k}>{k}</option>)}
             </select>
           </div>
 
