@@ -16,7 +16,7 @@
  * hard-coded outside this file.
  *
  * The live catalogue (created 2026-07) intentionally carries NO Paddle trial:
- * the free period is the in-app 7-day signup trial, so live checkout charges
+ * the free period is the in-app 15-day signup trial, so live checkout charges
  * immediately (see subscriptionPlans.ts). Sandbox prices still carry the old
  * 7-day Paddle trial — that difference is expected and harmless for testing.
  *

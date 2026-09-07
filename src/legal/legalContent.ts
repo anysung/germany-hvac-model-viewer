@@ -193,7 +193,7 @@ const EN = {
       {
         h: 'Free trial',
         p: [
-          'Every subscription starts with a 7-day free trial. A valid payment method is required to start the trial. Nothing is charged during the trial.',
+          'Every subscription starts with a 15-day free trial. A valid payment method is required to start the trial. Nothing is charged during the trial.',
           'If you do not cancel before the trial ends, the first payment is taken and the subscription begins.',
         ],
       },
@@ -231,7 +231,7 @@ const EN = {
     updated: ver.terms,
     intro: `This policy explains what happens when you cancel your ${SERVICE_NAME} subscription, and when a refund is or is not due. Paddle is our merchant of record and handles all payments.`,
     sections: [
-      { h: 'During the free trial', p: ['Every subscription begins with a 7-day free trial. Nothing is charged during the trial. Cancel before the trial ends and no payment is taken.'] },
+      { h: 'During the free trial', p: ['Every subscription begins with a 15-day free trial. Nothing is charged during the trial. Cancel before the trial ends and no payment is taken.'] },
       { h: 'After the trial', p: ['If you do not cancel before the trial ends, the first payment is taken and the paid period begins.'] },
       { h: '14-day refund on your first payment', p: [`If your first payment is taken after the free trial, you may request a full refund of that first payment within 14 days of the charge, for any reason. Send a New inquiry from the Account page or email ${SUPPORT_EMAIL}, and we will process it with Paddle. This 14-day right applies to the first payment only; later renewals are governed by the sections below.`] },
       {
@@ -389,7 +389,7 @@ const DE = {
       {
         h: 'Kostenlose Testphase',
         p: [
-          'Jedes Abonnement beginnt mit einer 7-tägigen kostenlosen Testphase. Für den Start ist eine gültige Zahlungsmethode erforderlich. Während der Testphase erfolgt keine Abbuchung.',
+          'Jedes Abonnement beginnt mit einer 15-tägigen kostenlosen Testphase. Für den Start ist eine gültige Zahlungsmethode erforderlich. Während der Testphase erfolgt keine Abbuchung.',
           'Wird nicht vor Ablauf der Testphase gekündigt, erfolgt die erste Zahlung und das Abonnement beginnt.',
         ],
       },
@@ -425,7 +425,7 @@ const DE = {
     updated: ver.terms,
     intro: `Diese Regelung erläutert, was bei der Kündigung Ihres ${SERVICE_NAME}-Abonnements geschieht und wann eine Erstattung erfolgt bzw. nicht erfolgt. Paddle ist unser Merchant of Record und wickelt alle Zahlungen ab.`,
     sections: [
-      { h: 'Während der Testphase', p: ['Jedes Abonnement beginnt mit einer 7-tägigen kostenlosen Testphase. Während der Testphase erfolgt keine Abbuchung. Bei Kündigung vor Ablauf der Testphase wird nichts berechnet.'] },
+      { h: 'Während der Testphase', p: ['Jedes Abonnement beginnt mit einer 15-tägigen kostenlosen Testphase. Während der Testphase erfolgt keine Abbuchung. Bei Kündigung vor Ablauf der Testphase wird nichts berechnet.'] },
       { h: 'Nach der Testphase', p: ['Wird nicht vor Ablauf der Testphase gekündigt, erfolgt die erste Zahlung und die bezahlte Periode beginnt.'] },
       { h: '14-tägiges Rückerstattungsrecht für Ihre erste Zahlung', p: [`Erfolgt Ihre erste Zahlung nach der kostenlosen Testphase, können Sie innerhalb von 14 Tagen nach der Abbuchung ohne Angabe von Gründen die vollständige Erstattung dieser ersten Zahlung verlangen. Senden Sie eine „Neue Anfrage“ über die Kontoseite oder schreiben Sie an ${SUPPORT_EMAIL} — wir wickeln die Erstattung gemeinsam mit Paddle ab. Dieses 14-Tage-Recht gilt nur für die erste Zahlung; spätere Verlängerungen richten sich nach den nachstehenden Abschnitten.`] },
       {
@@ -583,7 +583,7 @@ const FR = {
       {
         h: "Essai gratuit",
         p: [
-          "Chaque abonnement commence par un essai gratuit de 7 jours. Un moyen de paiement valide est requis pour démarrer l'essai. Aucun débit n'a lieu pendant l'essai.",
+          "Chaque abonnement commence par un essai gratuit de 15 jours. Un moyen de paiement valide est requis pour démarrer l'essai. Aucun débit n'a lieu pendant l'essai.",
           "Sans résiliation avant la fin de l'essai, le premier paiement est prélevé et l'abonnement débute.",
         ],
       },
@@ -619,7 +619,7 @@ const FR = {
     updated: ver.terms,
     intro: `Cette politique explique ce qui se passe lorsque vous résiliez votre abonnement ${SERVICE_NAME}, et quand un remboursement est dû ou non. Paddle est notre marchand officiel et gère tous les paiements.`,
     sections: [
-      { h: "Pendant l'essai gratuit", p: ["Chaque abonnement commence par un essai gratuit de 7 jours. Aucun débit n'a lieu pendant l'essai. Résiliez avant la fin de l'essai et aucun paiement n'est prélevé."] },
+      { h: "Pendant l'essai gratuit", p: ["Chaque abonnement commence par un essai gratuit de 15 jours. Aucun débit n'a lieu pendant l'essai. Résiliez avant la fin de l'essai et aucun paiement n'est prélevé."] },
       { h: "Après l'essai", p: ["Sans résiliation avant la fin de l'essai, le premier paiement est prélevé et la période payée commence."] },
       { h: 'Remboursement sous 14 jours de votre premier paiement', p: [`Si votre premier paiement est prélevé après l'essai gratuit, vous pouvez demander le remboursement intégral de ce premier paiement dans les 14 jours suivant le débit, pour tout motif. Envoyez une « Nouvelle demande » depuis la page Compte ou écrivez à ${SUPPORT_EMAIL} ; nous procéderons au remboursement avec Paddle. Ce droit de 14 jours ne s'applique qu'au premier paiement ; les renouvellements ultérieurs sont régis par les sections ci-dessous.`] },
       {
@@ -791,7 +791,7 @@ const PL = {
       {
         h: 'Bezpłatny okres próbny',
         p: [
-          'Każda subskrypcja rozpoczyna się 7-dniowym bezpłatnym okresem próbnym. Do rozpoczęcia okresu próbnego wymagana jest ważna metoda płatności. W okresie próbnym nie są pobierane żadne opłaty.',
+          'Każda subskrypcja rozpoczyna się 15-dniowym bezpłatnym okresem próbnym. Do rozpoczęcia okresu próbnego wymagana jest ważna metoda płatności. W okresie próbnym nie są pobierane żadne opłaty.',
           'Jeżeli subskrypcja nie zostanie anulowana przed końcem okresu próbnego, pobierana jest pierwsza płatność i subskrypcja się rozpoczyna.',
         ],
       },
@@ -829,7 +829,7 @@ const PL = {
     updated: ver.terms,
     intro: `Niniejsze zasady wyjaśniają, co się dzieje po anulowaniu subskrypcji ${SERVICE_NAME} oraz kiedy zwrot przysługuje, a kiedy nie. Paddle jest naszym sprzedawcą rozliczeniowym (merchant of record) i obsługuje wszystkie płatności.`,
     sections: [
-      { h: 'W trakcie bezpłatnego okresu próbnego', p: ['Każda subskrypcja rozpoczyna się 7-dniowym bezpłatnym okresem próbnym. W okresie próbnym nie są pobierane żadne opłaty. Jeżeli anulują Państwo subskrypcję przed końcem okresu próbnego, żadna płatność nie zostanie pobrana.'] },
+      { h: 'W trakcie bezpłatnego okresu próbnego', p: ['Każda subskrypcja rozpoczyna się 15-dniowym bezpłatnym okresem próbnym. W okresie próbnym nie są pobierane żadne opłaty. Jeżeli anulują Państwo subskrypcję przed końcem okresu próbnego, żadna płatność nie zostanie pobrana.'] },
       { h: 'Po okresie próbnym', p: ['Jeżeli subskrypcja nie zostanie anulowana przed końcem okresu próbnego, pobierana jest pierwsza płatność i rozpoczyna się opłacony okres.'] },
       { h: 'Zwrot pierwszej płatności w ciągu 14 dni', p: [`Jeżeli pierwsza płatność zostanie pobrana po bezpłatnym okresie próbnym, mogą Państwo zażądać pełnego zwrotu tej pierwszej płatności w ciągu 14 dni od obciążenia, z dowolnego powodu. Prosimy wysłać „Nowe zapytanie” ze strony Konto lub napisać na adres ${SUPPORT_EMAIL} — zrealizujemy zwrot wspólnie z Paddle. To 14-dniowe prawo dotyczy wyłącznie pierwszej płatności; późniejsze odnowienia regulują poniższe sekcje.`] },
       {
@@ -1001,7 +1001,7 @@ const IT = {
       {
         h: 'Prova gratuita',
         p: [
-          'Ogni abbonamento inizia con una prova gratuita di 7 giorni. Per avviare la prova è richiesto un metodo di pagamento valido. Durante la prova non viene addebitato nulla.',
+          'Ogni abbonamento inizia con una prova gratuita di 15 giorni. Per avviare la prova è richiesto un metodo di pagamento valido. Durante la prova non viene addebitato nulla.',
           'Se non disdite prima della fine della prova, viene prelevato il primo pagamento e l’abbonamento ha inizio.',
         ],
       },
@@ -1039,7 +1039,7 @@ const IT = {
     updated: ver.terms,
     intro: `La presente politica spiega cosa accade quando disdite il vostro abbonamento ${SERVICE_NAME} e quando un rimborso è dovuto o meno. Paddle è il nostro venditore ufficiale (merchant of record) e gestisce tutti i pagamenti.`,
     sections: [
-      { h: 'Durante la prova gratuita', p: ['Ogni abbonamento inizia con una prova gratuita di 7 giorni. Durante la prova non viene addebitato nulla. Se disdite prima della fine della prova, nessun pagamento viene prelevato.'] },
+      { h: 'Durante la prova gratuita', p: ['Ogni abbonamento inizia con una prova gratuita di 15 giorni. Durante la prova non viene addebitato nulla. Se disdite prima della fine della prova, nessun pagamento viene prelevato.'] },
       { h: 'Dopo la prova', p: ['Se non disdite prima della fine della prova, viene prelevato il primo pagamento e inizia il periodo pagato.'] },
       { h: 'Rimborso entro 14 giorni sul primo pagamento', p: [`Se il primo pagamento viene prelevato dopo la prova gratuita, potete richiedere il rimborso completo di tale primo pagamento entro 14 giorni dall'addebito, per qualsiasi motivo. Inviate una «Nuova richiesta» dalla pagina Account oppure scrivete a ${SUPPORT_EMAIL}: procederemo al rimborso insieme a Paddle. Questo diritto di 14 giorni si applica solo al primo pagamento; i rinnovi successivi sono disciplinati dalle sezioni seguenti.`] },
       {

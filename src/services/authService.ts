@@ -846,7 +846,7 @@ export const getUsers = async (): Promise<User[]> => {
 export const approveUser = async (userId: string, adminName = 'Admin') => {
   const patch: Record<string, any> = { status: 'active', isActive: true };
   // Trial flow: a manual admin approval must not mint an un-gated (forever
-  // free) account — it opens the same 7-day window finalizeSignup would.
+  // free) account — it opens the same trial window finalizeSignup would.
   // Backstop path only: the emailRegistry one-trial bookkeeping stays with
   // the server function (2026-07-27 audit item 1). Legacy mode is untouched.
   if (TRIAL_FLOW_ENABLED) {

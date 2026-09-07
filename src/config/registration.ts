@@ -1,7 +1,8 @@
 /**
  * Registration availability — one shared flag for every country edition.
  *
- * REOPENED 2026-08-06 (launch): the 7-day in-app trial flow is live — email
+ * REOPENED 2026-08-06 (launch): the in-app trial flow is live (15 days since
+ * 2026-09-07; 7 before that) — email
  * signup → verification → finalizeSignup activates and starts the trial.
  * The pause (Jul 2026, European expansion review) is over; the paused-notice
  * branch in App.tsx stays in the code so any future pause is this one flag

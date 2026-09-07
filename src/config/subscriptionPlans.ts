@@ -5,7 +5,7 @@
  *   Professional (1 user) / Team 3 (admin + 2) / Team 5 (admin + 4)
  *   Terms: monthly / 6 months (~7% off) / annual (~17% off, "12 for the price of 10")
  *
- *   FREE TRIAL = the IN-APP signup trial: 7 days of full access with NO
+ *   FREE TRIAL = the IN-APP signup trial: 15 days of full access with NO
  *   payment method, granted server-side (finalizeSignup) at the account's
  *   first activation — ONE per email across the whole service, ever
  *   (emailRegistry). Paddle prices carry NO trial: checkout charges
@@ -37,7 +37,7 @@ export type SubPlanCode = 'professional' | 'team_3' | 'team_5';
 export type BillingTerm = 'monthly' | 'six_months' | 'annual';
 export type SubStatus = 'trialing' | 'active' | 'past_due' | 'canceled' | 'expired';
 
-export const TRIAL_DAYS = 7;
+export const TRIAL_DAYS = 15;
 
 export interface SubPlanDef {
   code: SubPlanCode;

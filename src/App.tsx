@@ -55,11 +55,11 @@ type ViewState = 'LANDING' | 'LOGIN' | 'SIGNUP' | 'PENDING_APPROVAL' | 'VERIFY_E
  *  that signing up is free and card-less BEFORE choosing a button — the
  *  industry-standard trust phrase is "no credit card required". */
 const FREE_SIGNUP_NOTE: Record<Language, string> = {
-  en: 'Free to join — 7 days of full access, no credit card required.',
-  de: 'Kostenlos registrieren — 7 Tage voller Zugang, keine Kreditkarte erforderlich.',
-  fr: 'Inscription gratuite — 7 jours d’accès complet, sans carte bancaire.',
-  pl: 'Dołącz za darmo — 7 dni pełnego dostępu, bez karty płatniczej.',
-  it: 'Registrazione gratuita — 7 giorni di accesso completo, senza carta di credito.',
+  en: 'Free to join — 15 days of full access, no credit card required.',
+  de: 'Kostenlos registrieren — 15 Tage voller Zugang, keine Kreditkarte erforderlich.',
+  fr: 'Inscription gratuite — 15 jours d’accès complet, sans carte bancaire.',
+  pl: 'Dołącz za darmo — 15 dni pełnego dostępu, bez karty płatniczej.',
+  it: 'Registrazione gratuita — 15 giorni di accesso completo, senza carta di credito.',
 };
 
 /** The two public, indexable pages, labelled as signposts rather than as calls

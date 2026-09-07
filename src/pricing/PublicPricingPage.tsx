@@ -129,7 +129,7 @@ export const PublicPricingPage: React.FC<{
                 </span>
                 <span style={{ fontSize: 12.5, color: '#333', lineHeight: 1.5, flex: 1 }}>{s.planBlurbs[code]}</span>
                 {/* No trial badge: Paddle checkout charges immediately — the free
-                    first week is an ACCOUNT property (granted at signup), not a
+                    free period is an ACCOUNT property (granted at signup), not a
                     property of any plan (program fix 2026-07-31). */}
               </div>
             );

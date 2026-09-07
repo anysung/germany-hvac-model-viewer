@@ -48,7 +48,8 @@ const EN = {
     copyright: (y: number) => `© ${y} ${BRAND_TM} · All rights reserved.`,
   },
 
-  /** Free-trial countdown nudge (shown on days 5–7; access closes on day 8). */
+  /** Free-trial countdown nudge (shown in the last three days; access closes when
+   *  the trial ends — see TRIAL_DAYS). */
   /** Concurrent sessions (docs/CONCURRENT_SESSIONS.md). */
   session: {
     banner: (t: string) => `Device limit exceeded — the least-used session signs out in ${t}. Unused devices clear automatically.`,
@@ -681,7 +682,7 @@ const EN = {
   /** Subscription program — Professional / Team 3 / Team 5 (config: subscriptionPlans.ts). */
   sub: {
     pickTitle: 'Choose your plan.',
-    pickSub: 'Subscribing starts your paid plan immediately — the free first week is already included with every new account.',
+    pickSub: 'Subscribing starts your paid plan immediately — the free 15 days are already included with every new account.',
     currentTitle: 'Your subscription.',
     planNames: { professional: 'Professional', team_3: 'Team 3', team_5: 'Team 5' } as Record<string, string>,
     planUsers: { professional: '1 user', team_3: 'Up to 3 users', team_5: 'Up to 5 users' } as Record<string, string>,
@@ -1413,7 +1414,7 @@ const DE: HpStrings = {
   },
   sub: {
     pickTitle: 'Wählen Sie Ihren Tarif.',
-    pickSub: 'Mit dem Abschluss beginnt Ihr kostenpflichtiger Tarif sofort — die kostenlose erste Woche ist bei jedem neuen Konto bereits enthalten.',
+    pickSub: 'Mit dem Abschluss beginnt Ihr kostenpflichtiger Tarif sofort — die 15 kostenlosen Tage sind bei jedem neuen Konto bereits enthalten.',
     currentTitle: 'Ihr Abonnement.',
     planNames: { professional: 'Professional', team_3: 'Team 3', team_5: 'Team 5' } as Record<string, string>,
     planUsers: { professional: '1 Nutzer', team_3: 'Bis zu 3 Nutzer', team_5: 'Bis zu 5 Nutzer' } as Record<string, string>,
@@ -2554,7 +2555,7 @@ const FR_FR: HpStrings = {
   },
   sub: {
     pickTitle: 'Choisissez votre offre.',
-    pickSub: 'La souscription démarre immédiatement votre offre payante — la première semaine gratuite est déjà incluse avec chaque nouveau compte.',
+    pickSub: 'La souscription démarre immédiatement votre offre payante — les 15 jours gratuits sont déjà inclus avec chaque nouveau compte.',
     currentTitle: 'Votre abonnement.',
     planNames: { professional: 'Professional', team_3: 'Team 3', team_5: 'Team 5' } as Record<string, string>,
     planUsers: { professional: '1 utilisateur', team_3: 'Jusqu’à 3 utilisateurs', team_5: 'Jusqu’à 5 utilisateurs' } as Record<string, string>,
@@ -3504,7 +3505,7 @@ const PL_PL: HpStrings = {
 
   sub: {
     pickTitle: 'Wybierz swój plan.',
-    pickSub: 'Subskrypcja rozpoczyna płatny plan od razu — bezpłatny pierwszy tydzień jest już zawarty w każdym nowym koncie.',
+    pickSub: 'Subskrypcja rozpoczyna płatny plan od razu — bezpłatne 15 dni jest już zawarte w każdym nowym koncie.',
     currentTitle: 'Twoja subskrypcja.',
     planNames: { professional: 'Professional', team_3: 'Team 3', team_5: 'Team 5' } as Record<string, string>,
     planUsers: { professional: '1 użytkownik', team_3: 'Do 3 użytkowników', team_5: 'Do 5 użytkowników' } as Record<string, string>,
@@ -4464,7 +4465,7 @@ const IT_IT: HpStrings = {
 
   sub: {
     pickTitle: 'Scegli il tuo piano.',
-    pickSub: 'L’abbonamento avvia subito il piano a pagamento — la prima settimana gratuita è già inclusa in ogni nuovo account.',
+    pickSub: 'L’abbonamento avvia subito il piano a pagamento — i 15 giorni gratuiti sono già inclusi in ogni nuovo account.',
     currentTitle: 'Il tuo abbonamento.',
     planNames: { professional: 'Professional', team_3: 'Team 3', team_5: 'Team 5' } as Record<string, string>,
     planUsers: { professional: '1 utente', team_3: 'Fino a 3 utenti', team_5: 'Fino a 5 utenti' } as Record<string, string>,

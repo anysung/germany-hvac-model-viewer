@@ -8,8 +8,9 @@
  * subscription ids (written by the payment webhook, server-side).
  *
  * Catalogue: 3 products (Professional / Team 3 / Team 5) × 3 recurring prices
- * (monthly / 6 months / annual), each with a 7-day trial configured on the price
- * in Paddle. The ids live in config/paddlePrices.ts, keyed by currency; a market
+ * (monthly / 6 months / annual). The LIVE prices carry NO Paddle trial — the
+ * free period is the in-app 15-day signup trial, so checkout charges the first
+ * term immediately. The ids live in config/paddlePrices.ts, keyed by currency; a market
  * whose currency has no catalogue keeps that option in "coming soon" mode.
  */
 import { PUBLIC_ENV } from '../config/env';

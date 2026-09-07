@@ -50,7 +50,7 @@ export const PUBLIC_ENV = {
    * endpoints /finalizeSignup /createTeamOrg /deleteAccount /paddleWebhook).
    * THIS IS THE TRIAL-FLOW SWITCH: unset → the app keeps the legacy
    * pending/admin-approval signup flow and the client-side deletion request;
-   * set → email-verification signup, server-granted 7-day trial and
+   * set → email-verification signup, server-granted 15-day trial and
    * server-side account deletion. Do not set it in production builds before
    * the function is deployed and verified.
    */

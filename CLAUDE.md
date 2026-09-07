@@ -300,12 +300,13 @@ assumption that gitignored means disposable — keep at least the newest seed.
   stamps `unavailableSince`, never deletes; removal is editorial).
 - Refrigerant filtering always uses `.includes()` contains logic (values like
   `R290(estimated)` must match), never exact match.
-- **Auth flow (2026-07-27 program): 7-day in-app free trial, no payment method.**
+- **Auth flow (2026-07-27 program): 15-day in-app free trial, no payment method**
+  (7 days until 2026-09-07; the length lives in `TRIAL_DAYS`, client + function).**
   Two modes, switched by `VITE_BILLING_FN_URL` (src/config/env.ts):
   - **Trial flow** (URL set): registration creates a `pending` profile; the
     server function `finalizeSignup` (google_cloud_function_billing/) activates
     it after **email verification against the Firebase Auth SERVER record**
-    (social = provider-verified) + required consents, and grants ONE 7-day
+    (social = provider-verified) + required consents, and grants ONE 15-day
     trial per email service-wide (`emailRegistry`, kept 1 year after deletion,
     Firestore TTL). Day 8 without payment → server rules close access
     (`accessUntilTs` on user/org; storage.rules + firestore.rules
@@ -334,7 +335,7 @@ assumption that gitignored means disposable — keep at least the newest seed.
 - Billing is web-only via Paddle (merchant of record) — no app-store
   distribution. **Subscription program (Jul 2026): Professional / Team 3 /
   Team 5 × monthly / 6 months / annual** — single source of truth is
-  `src/config/subscriptionPlans.ts` (prices VAT-excl, 7-day trial on every
+  `src/config/subscriptionPlans.ts` (prices VAT-excl, NO Paddle trial on any
   Paddle price, per-term price ids via `VITE_PADDLE_PRICE_*`; unset =
   'coming soon'). Operating rules: plan/term/seats are FIXED during a paid
   period — changes apply at the NEXT RENEWAL only (`subscriptionChangeRequests`,

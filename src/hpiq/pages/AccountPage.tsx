@@ -72,7 +72,8 @@ const DangerStepModal: React.FC<{
  * Two-step plan picker: (1) who — Professional / Team 3 / Team 5,
  * (2) how long — monthly / 6 months / annual. Defaults: annual term,
  * Team 3 Annual highlighted as Most Popular.
- * mode 'checkout' opens Paddle (7-day trial on the price itself);
+ * mode 'checkout' opens Paddle (no trial on the price — the free 15 days are an
+ * account property granted at signup, so checkout charges immediately);
  * mode 'schedule' registers a renewal-time change instead.
  */
 const PLAN_ORDER: Record<SubPlanCode, number> = { professional: 1, team_3: 2, team_5: 3 };

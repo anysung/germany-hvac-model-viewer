@@ -61,7 +61,7 @@ export const SubBadge: React.FC<{ user: UserLike }> = ({ user }) => {
   const sub = effectiveSubscription(user as any);
   if (!sub) {
     // Trial-flow accounts without a subscription still have a STATE worth
-    // showing: an open 7-day window, or one that has closed (checkout-only
+    // showing: an open 15-day window, or one that has closed (checkout-only
     // access). '—' hid exactly the number an operator asks first.
     const t = (user as { trialEndsAt?: { toMillis?: () => number; seconds?: number } | string }).trialEndsAt;
     const ms = t == null ? null

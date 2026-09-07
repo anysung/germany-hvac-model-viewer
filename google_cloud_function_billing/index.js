@@ -36,7 +36,7 @@ const gcs = admin.storage();
 const DATASET_BUCKET = 'heatpumpdb-datasets';
 
 const OWNER_EMAIL = 'sungyongsoo1976@gmail.com';
-const TRIAL_DAYS = 7;
+const TRIAL_DAYS = 15;
 const RETENTION_DAYS = 365;
 const TEAM_PLANS = { team_3: 3, team_5: 5 };
 const PLAN_SEATS = { professional: 1, team_3: 3, team_5: 5 };
@@ -1947,7 +1947,7 @@ async function sendVerificationEmail(req, res) {
 }
 
 /* ── Trial reminders ──────────────────────────────────────────────────────────
-   A 7-day trial with no touchpoints converts at roughly nothing, and until now
+   A short trial with no touchpoints converts at roughly nothing, and until now
    the service had none: the trial was granted at signup and expired in total
    silence — no warning, no notice, no way for the person to know the window had
    closed except by finding the app locked. One account's trial ended that way on

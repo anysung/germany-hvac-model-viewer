@@ -1,8 +1,9 @@
 # Trial & Subscription Gate (2026-07-27)
 
 The subscription program's free period moved OUT of Paddle and INTO the app:
-every new account gets **7 days of full access with no payment method**, and on
-day 8 the server closes access until a subscription is paid (checkout charges
+every new account gets **15 days of full access with no payment method** (7 days
+until 2026-09-07), and on
+the day after it ends the server closes access until a subscription is paid (checkout charges
 immediately — Paddle prices carry **no trial**).
 
 ## System principle (owner decision — binding)

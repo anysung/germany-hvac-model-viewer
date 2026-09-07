@@ -438,9 +438,10 @@ export const HpiqApp: React.FC<Props> = ({ user: userProp, onLogout, onAdminAcce
     </div>
   ) : null;
 
-  // Trial countdown (days 5/6/7 = D-3..D-1): a slim nudge under the nav on
+  // Trial countdown (the last three days, D-3..D-1 — relative to the end, so
+  // the trial's length can change without touching this): a slim nudge under the nav on
   // every app entry, linking to the Account subscription section. Pure UX —
-  // the server rules close the window on day 8 regardless.
+  // the server rules close the window when it ends regardless.
   const access = accessInfo(user);
   const trialBanner = access.state === 'trial' && access.daysLeft <= 3 ? (
     <div data-testid="trial-banner" style={{ background: '#0a6847', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, padding: '9px 20px', fontSize: 13.5, flex: 'none' }}>
